@@ -2,28 +2,49 @@
   {
     "__type__": "cc.SpriteFrame",
     "content": {
-      "name": "singleColor",
-      "texture": "a8Anh32NZGRZegUtSgEj26",
+      "name": "JoystickBG",
+      "texture": "7aYe+LcfNFTJ2POygLe36n",
       "rect": [
         0,
         0,
-        2,
-        2
+        103,
+        103
       ],
       "offset": [
         0,
         0
       ],
       "originalSize": [
-        2,
-        2
+        103,
+        103
+      ]
+    }
+  },
+  {
+    "__type__": "cc.SpriteFrame",
+    "content": {
+      "name": "Joystick",
+      "texture": "f0xpIerV5BxIr35gBr07jU",
+      "rect": [
+        0,
+        0,
+        73,
+        78
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "originalSize": [
+        73,
+        78
       ]
     }
   },
   [
     {
       "__type__": "cc.SceneAsset",
-      "_name": "start",
+      "_name": "joystick",
       "scene": {
         "__id__": 1
       },
@@ -53,7 +74,10 @@
           "__id__": 3
         },
         {
-          "__id__": 4
+          "__id__": 5
+        },
+        {
+          "__id__": 6
         }
       ],
       "_components": [
@@ -71,13 +95,13 @@
           "_fitHeight": false
         },
         {
-          "__type__": "69862RCK4lIOakuWgV4sGm0",
+          "__type__": "61ee5T8IIVORqDemqwaecMU",
           "node": {
             "__id__": 2
           }
         }
       ],
-      "_id": "4fyVm6J+dO+avdDy52NTHM",
+      "_id": "eekFZkkIpHOpHJ2YvEOtSt",
       "_contentSize": {
         "__type__": "cc.Size",
         "width": 960,
@@ -91,99 +115,20 @@
     },
     {
       "__type__": "cc.Node",
-      "_name": "background",
-      "_parent": {
-        "__id__": 2
-      },
-      "_components": [
-        {
-          "__type__": "cc.Widget",
-          "node": {
-            "__id__": 3
-          },
-          "_alignFlags": 45,
-          "_originalWidth": 200,
-          "_originalHeight": 150
-        },
-        {
-          "__type__": "cc.Sprite",
-          "node": {
-            "__id__": 3
-          },
-          "_spriteFrame": {
-            "__uuid__": "41D7kWhyFGY7q4NDlzkazn"
-          },
-          "_type": 1,
-          "_sizeMode": 0
-        }
-      ],
-      "_contentSize": {
-        "__type__": "cc.Size",
-        "width": 960,
-        "height": 540
-      }
-    },
-    {
-      "__type__": "cc.Node",
-      "_name": "menu",
+      "_name": "back",
       "_parent": {
         "__id__": 2
       },
       "_children": [
         {
-          "__id__": 5
-        },
-        {
-          "__id__": 7
+          "__id__": 4
         }
       ],
       "_components": [
         {
           "__type__": "cc.Sprite",
           "node": {
-            "__id__": 4
-          },
-          "_type": 1,
-          "_sizeMode": 0
-        },
-        {
-          "__type__": "cc.Layout",
-          "node": {
-            "__id__": 4
-          },
-          "_layoutSize": {
-            "__type__": "cc.Size",
-            "width": 960,
-            "height": 540
-          },
-          "_N$layoutType": 2,
-          "_N$paddingTop": 150,
-          "_N$paddingBottom": 150,
-          "_N$spacingY": 80
-        }
-      ],
-      "_contentSize": {
-        "__type__": "cc.Size",
-        "width": 960,
-        "height": 540
-      }
-    },
-    {
-      "__type__": "cc.Node",
-      "_name": "start",
-      "_parent": {
-        "__id__": 4
-      },
-      "_children": [
-        {
-          "__id__": 6
-        }
-      ],
-      "_components": [
-        {
-          "__type__": "cc.Sprite",
-          "node": {
-            "__id__": 5
+            "__id__": 3
           },
           "_spriteFrame": {
             "__uuid__": "e1t1hHrmBJhJfowr6TGpm6"
@@ -194,7 +139,7 @@
         {
           "__type__": "cc.Button",
           "node": {
-            "__id__": 5
+            "__id__": 3
           },
           "transition": 3,
           "pressedColor": {
@@ -206,8 +151,8 @@
               "target": {
                 "__id__": 2
               },
-              "component": "start",
-              "handler": "startGame"
+              "component": "setting",
+              "handler": "backStart"
             }
           ],
           "_N$normalColor": {
@@ -223,162 +168,177 @@
             "b": 255
           },
           "_N$target": {
-            "__id__": 5
+            "__id__": 3
           }
         },
         {
           "__type__": "cc.Widget",
           "node": {
-            "__id__": 5
+            "__id__": 3
           },
-          "_alignFlags": 16,
-          "_top": 50
+          "_alignFlags": 33,
+          "_right": 205,
+          "_top": 90,
+          "_bottom": 350,
+          "_verticalCenter": -748.8,
+          "_horizontalCenter": -180
         }
       ],
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 200,
-        "height": 80
+        "width": 150,
+        "height": 60
       },
       "_position": {
         "__type__": "cc.Vec2",
-        "y": 80
+        "x": 200,
+        "y": 150
       }
     },
     {
       "__type__": "cc.Node",
-      "_name": "Label",
+      "_name": "Back",
       "_parent": {
-        "__id__": 5
+        "__id__": 3
       },
       "_components": [
         {
           "__type__": "cc.Label",
           "node": {
-            "__id__": 6
+            "__id__": 4
           },
           "_useOriginalSize": false,
-          "_N$string": "Start",
+          "_actualFontSize": 30,
+          "_fontSize": 30,
+          "_lineHeight": 30,
+          "_N$string": "< Back",
           "_N$horizontalAlign": 1,
           "_N$verticalAlign": 1,
           "_N$fontFamily": "Lato, \"PingFang SC\", \"Microsoft YaHei\", Arial, sans-serif",
           "_N$overflow": 1
         }
       ],
-      "_color": {
-        "__type__": "cc.Color"
-      },
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 200,
-        "height": 80
+        "width": 150,
+        "height": 60
       }
     },
     {
       "__type__": "cc.Node",
-      "_name": "setting",
+      "_name": "Icon",
       "_parent": {
-        "__id__": 4
+        "__id__": 2
+      },
+      "_components": [
+        {
+          "__type__": "cc.Sprite",
+          "node": {
+            "__id__": 5
+          }
+        }
+      ],
+      "_contentSize": {
+        "__type__": "cc.Size",
+        "width": 1000,
+        "height": 1000
+      },
+      "_scaleX": 0.1,
+      "_scaleY": 0.1
+    },
+    {
+      "__type__": "cc.Node",
+      "_name": "Joy",
+      "_parent": {
+        "__id__": 2
       },
       "_children": [
+        {
+          "__id__": 7
+        },
+        {
+          "__id__": 9
+        }
+      ],
+      "_components": [
+        {
+          "__type__": "aab48BGt3tCj4s1/vilD88M",
+          "node": {
+            "__id__": 6
+          },
+          "dot": {
+            "__id__": 9
+          },
+          "dot_opacity": 100,
+          "ring": {
+            "__id__": 8
+          },
+          "ring_opacity": 100,
+          "stickX": -200,
+          "stickY": -150,
+          "sprite": {
+            "__id__": 5
+          }
+        }
+      ]
+    },
+    {
+      "__type__": "cc.Node",
+      "_name": "ring",
+      "_parent": {
+        "__id__": 6
+      },
+      "_components": [
+        {
+          "__type__": "cc.Sprite",
+          "node": {
+            "__id__": 7
+          },
+          "_spriteFrame": {
+            "__uuid__": "02gunMAstB3bas2ntDNIf/"
+          }
+        },
         {
           "__id__": 8
         }
       ],
+      "_contentSize": {
+        "__type__": "cc.Size",
+        "width": 103,
+        "height": 103
+      }
+    },
+    {
+      "__type__": "a0ce7WST1RFf7Sj+l6jGZ6V",
+      "node": {
+        "__id__": 7
+      },
+      "dot": {
+        "__id__": 9
+      },
+      "opacity": 122
+    },
+    {
+      "__type__": "cc.Node",
+      "_name": "dot",
+      "_parent": {
+        "__id__": 6
+      },
       "_components": [
         {
           "__type__": "cc.Sprite",
           "node": {
-            "__id__": 7
+            "__id__": 9
           },
           "_spriteFrame": {
-            "__uuid__": "e1t1hHrmBJhJfowr6TGpm6"
-          },
-          "_type": 1,
-          "_sizeMode": 0
-        },
-        {
-          "__type__": "cc.Button",
-          "node": {
-            "__id__": 7
-          },
-          "transition": 3,
-          "pressedColor": {
-            "__type__": "cc.Color"
-          },
-          "clickEvents": [
-            {
-              "__type__": "cc.ClickEvent",
-              "target": {
-                "__id__": 2
-              },
-              "component": "start",
-              "handler": "settingMenu"
-            }
-          ],
-          "_N$normalColor": {
-            "__type__": "cc.Color",
-            "r": 255,
-            "g": 255,
-            "b": 255
-          },
-          "_N$disabledColor": {
-            "__type__": "cc.Color",
-            "r": 255,
-            "g": 255,
-            "b": 255
-          },
-          "_N$target": {
-            "__id__": 7
+            "__uuid__": "351m2Zn0JKv4Ve7ZR5O0MM"
           }
-        },
-        {
-          "__type__": "cc.Widget",
-          "node": {
-            "__id__": 7
-          },
-          "_alignFlags": 20,
-          "_bottom": 150,
-          "_verticalCenter": -748.8
         }
       ],
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 200,
-        "height": 80
-      },
-      "_position": {
-        "__type__": "cc.Vec2",
-        "y": -80
-      }
-    },
-    {
-      "__type__": "cc.Node",
-      "_name": "Setting",
-      "_parent": {
-        "__id__": 7
-      },
-      "_components": [
-        {
-          "__type__": "cc.Label",
-          "node": {
-            "__id__": 8
-          },
-          "_useOriginalSize": false,
-          "_N$string": "Setting",
-          "_N$horizontalAlign": 1,
-          "_N$verticalAlign": 1,
-          "_N$fontFamily": "Lato, \"PingFang SC\", \"Microsoft YaHei\", Arial, sans-serif",
-          "_N$overflow": 1
-        }
-      ],
-      "_color": {
-        "__type__": "cc.Color"
-      },
-      "_contentSize": {
-        "__type__": "cc.Size",
-        "width": 200,
-        "height": 80
+        "width": 73,
+        "height": 78
       }
     }
   ],

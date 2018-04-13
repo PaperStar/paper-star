@@ -1,0 +1,119 @@
+[
+  [
+    {
+      "__type__": "cc.SceneAsset",
+      "_name": "logo",
+      "scene": {
+        "__id__": 1
+      },
+      "asyncLoadAssets": null
+    },
+    {
+      "__type__": "cc.Scene",
+      "_name": "New Node",
+      "_children": [
+        {
+          "__id__": 2
+        }
+      ],
+      "_anchorPoint": {
+        "__type__": "cc.Vec2"
+      },
+      "autoReleaseAssets": false
+    },
+    {
+      "__type__": "cc.Node",
+      "_name": "Canvas",
+      "_parent": {
+        "__id__": 1
+      },
+      "_children": [
+        {
+          "__id__": 3
+        }
+      ],
+      "_components": [
+        {
+          "__type__": "cc.Canvas",
+          "node": {
+            "__id__": 2
+          },
+          "_designResolution": {
+            "__type__": "cc.Size",
+            "width": 960,
+            "height": 540
+          }
+        }
+      ],
+      "_id": "c5BqPh4TNHHpcTHCpJHedb",
+      "_contentSize": {
+        "__type__": "cc.Size",
+        "width": 960,
+        "height": 540
+      },
+      "_position": {
+        "__type__": "cc.Vec2",
+        "x": 480,
+        "y": 270
+      }
+    },
+    {
+      "__type__": "cc.Node",
+      "_name": "logo",
+      "_parent": {
+        "__id__": 2
+      },
+      "_components": [
+        {
+          "__type__": "cc.Sprite",
+          "node": {
+            "__id__": 3
+          }
+        },
+        {
+          "__type__": "cc.Animation",
+          "node": {
+            "__id__": 3
+          },
+          "_defaultClip": {
+            "__uuid__": "f3VcYdNLlPqLgC3qB2/MPA"
+          },
+          "_clips": [
+            {
+              "__uuid__": "f3VcYdNLlPqLgC3qB2/MPA"
+            }
+          ],
+          "playOnLoad": true
+        }
+      ],
+      "_contentSize": {
+        "__type__": "cc.Size",
+        "width": 500,
+        "height": 500
+      }
+    }
+  ],
+  {
+    "__type__": "cc.AnimationClip",
+    "_name": "Logo",
+    "_duration": 1.5,
+    "curveData": {
+      "props": {
+        "opacity": [
+          {
+            "frame": 0,
+            "value": 0
+          },
+          {
+            "frame": 1,
+            "value": 255
+          },
+          {
+            "frame": 1.5,
+            "value": 0
+          }
+        ]
+      }
+    }
+  }
+]
