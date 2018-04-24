@@ -25,7 +25,8 @@
   for (var i = 0; i < entry.length; i++) newRequire(entry[i]);
   return newRequire;
 })({
-  1: [ (function(require, module, exports) {
+  1: [ (function(require, module, exports) {}), {} ],
+  2: [ (function(require, module, exports) {
     cc._LogInfos = cc._LogInfos || {};
     var engineVersion;
     engineVersion = "1.9.0";
@@ -87,10 +88,10 @@
       _engineInitCalled = true;
     };
   }), {
-    "./cocos2d/core/platform/CCSys": 185,
-    "./cocos2d/core/utils": 225
+    "./cocos2d/core/platform/CCSys": 186,
+    "./cocos2d/core/utils": 226
   } ],
-  2: [ (function(require, module, exports) {
+  3: [ (function(require, module, exports) {
     var logList;
     var Enum = require("./cocos2d/core/platform/CCEnum");
     cc.DebugMode = Enum({
@@ -216,9 +217,9 @@
       };
     }
   }), {
-    "./cocos2d/core/platform/CCEnum": 178
+    "./cocos2d/core/platform/CCEnum": 179
   } ],
-  3: [ (function(require, module, exports) {
+  4: [ (function(require, module, exports) {
     true;
     var logs = {
       "1000": "cc.ActionManager.addAction(): action must be non-null",
@@ -747,7 +748,7 @@
     };
     cc._LogInfos = logs;
   }), {} ],
-  4: [ (function(require, module, exports) {
+  5: [ (function(require, module, exports) {
     cc.Action = cc._Class.extend({
       ctor: function() {
         this.originalTarget = null;
@@ -954,7 +955,7 @@
       return new cc.Follow(followedNode, rect);
     };
   }), {} ],
-  5: [ (function(require, module, exports) {
+  6: [ (function(require, module, exports) {
     cc.cardinalSplineAt = function(p0, p1, p2, p3, tension, t) {
       var t2 = t * t;
       var t3 = t2 * t;
@@ -1148,7 +1149,7 @@
       return new cc.CatmullRomBy(dt, points);
     };
   }), {} ],
-  6: [ (function(require, module, exports) {
+  7: [ (function(require, module, exports) {
     cc.ActionEase = cc.ActionInterval.extend({
       _inner: null,
       ctor: function(action) {
@@ -2249,7 +2250,7 @@
       return cc._easeCubicActionInOut;
     };
   }), {} ],
-  7: [ (function(require, module, exports) {
+  8: [ (function(require, module, exports) {
     cc.ActionInstant = cc.FiniteTimeAction.extend({
       isDone: function() {
         return true;
@@ -2465,7 +2466,7 @@
       return new cc.CallFunc(selector, selectorTarget, data);
     };
   }), {} ],
-  8: [ (function(require, module, exports) {
+  9: [ (function(require, module, exports) {
     cc.ActionInterval = cc.FiniteTimeAction.extend({
       _elapsed: 0,
       _firstTick: false,
@@ -3908,7 +3909,7 @@
       return new cc.TargetedAction(target, action);
     };
   }), {} ],
-  9: [ (function(require, module, exports) {
+  10: [ (function(require, module, exports) {
     var HashElement = function() {
       this.actions = [];
       this.target = null;
@@ -4093,7 +4094,7 @@
     });
     false;
   }), {} ],
-  10: [ (function(require, module, exports) {
+  11: [ (function(require, module, exports) {
     require("./CCActionManager");
     require("./CCAction");
     require("./CCActionInterval");
@@ -4101,14 +4102,14 @@
     require("./CCActionEase");
     require("./CCActionCatmullRom");
   }), {
-    "./CCAction": 4,
-    "./CCActionCatmullRom": 5,
-    "./CCActionEase": 6,
-    "./CCActionInstant": 7,
-    "./CCActionInterval": 8,
-    "./CCActionManager": 9
+    "./CCAction": 5,
+    "./CCActionCatmullRom": 6,
+    "./CCActionEase": 7,
+    "./CCActionInstant": 8,
+    "./CCActionInterval": 9,
+    "./CCActionManager": 10
   } ],
-  11: [ (function(require, module, exports) {
+  12: [ (function(require, module, exports) {
     var JS = cc.js;
     var Playable = require("./playable");
     var DynamicAnimCurve = require("./animation-curves").DynamicAnimCurve;
@@ -4364,13 +4365,13 @@
     false;
     module.exports = AnimationAnimator;
   }), {
-    "../core/utils/binary-search": 222,
-    "./animation-curves": 13,
-    "./motion-path-helper": 19,
-    "./playable": 20,
-    "./types": 21
+    "../core/utils/binary-search": 223,
+    "./animation-curves": 14,
+    "./motion-path-helper": 20,
+    "./playable": 21,
+    "./types": 22
   } ],
-  12: [ (function(require, module, exports) {
+  13: [ (function(require, module, exports) {
     var AnimationClip = cc.Class({
       name: "cc.AnimationClip",
       extends: cc.Asset,
@@ -4430,7 +4431,7 @@
     });
     cc.AnimationClip = module.exports = AnimationClip;
   }), {} ],
-  13: [ (function(require, module, exports) {
+  14: [ (function(require, module, exports) {
     var bezierByTime = require("./bezier").bezierByTime;
     var binarySearch = require("../core/utils/binary-search").binarySearchEpsilon;
     var WrapModeMask = require("./types").WrapModeMask;
@@ -4629,11 +4630,11 @@
       quickFindIndex: quickFindIndex
     };
   }), {
-    "../core/utils/binary-search": 222,
-    "./bezier": 16,
-    "./types": 21
+    "../core/utils/binary-search": 223,
+    "./bezier": 17,
+    "./types": 22
   } ],
-  14: [ (function(require, module, exports) {
+  15: [ (function(require, module, exports) {
     var JS = cc.js;
     var AnimationManager = cc.Class({
       ctor: function() {
@@ -4674,7 +4675,7 @@
     });
     cc.AnimationManager = module.exports = AnimationManager;
   }), {} ],
-  15: [ (function(require, module, exports) {
+  16: [ (function(require, module, exports) {
     var JS = cc.js;
     var Playable = require("./playable");
     var Types = require("./types");
@@ -4878,10 +4879,10 @@
     }));
     cc.AnimationState = module.exports = AnimationState;
   }), {
-    "./playable": 20,
-    "./types": 21
+    "./playable": 21,
+    "./types": 22
   } ],
-  16: [ (function(require, module, exports) {
+  17: [ (function(require, module, exports) {
     function bezier(C1, C2, C3, C4, t) {
       var t1 = 1 - t;
       return C1 * t1 * t1 * t1 + 3 * C2 * t1 * t1 * t + 3 * C3 * t1 * t * t + C4 * t * t * t;
@@ -4933,7 +4934,7 @@
       bezierByTime: bezierByTime
     };
   }), {} ],
-  17: [ (function(require, module, exports) {
+  18: [ (function(require, module, exports) {
     var Easing = {
       constant: function() {
         return 0;
@@ -5095,7 +5096,7 @@
     Easing.bounceOutIn = _makeOutIn(Easing.bounceIn, Easing.bounceOut);
     cc.Easing = module.exports = Easing;
   }), {} ],
-  18: [ (function(require, module, exports) {
+  19: [ (function(require, module, exports) {
     require("./bezier");
     require("./easing");
     require("./types");
@@ -5106,17 +5107,17 @@
     require("./animation-state");
     require("./animation-animator");
   }), {
-    "./animation-animator": 11,
-    "./animation-clip": 12,
-    "./animation-curves": 13,
-    "./animation-manager": 14,
-    "./animation-state": 15,
-    "./bezier": 16,
-    "./easing": 17,
-    "./motion-path-helper": 19,
-    "./types": 21
+    "./animation-animator": 12,
+    "./animation-clip": 13,
+    "./animation-curves": 14,
+    "./animation-manager": 15,
+    "./animation-state": 16,
+    "./bezier": 17,
+    "./easing": 18,
+    "./motion-path-helper": 20,
+    "./types": 22
   } ],
-  19: [ (function(require, module, exports) {
+  20: [ (function(require, module, exports) {
     var DynamicAnimCurve = require("./animation-curves").DynamicAnimCurve;
     var computeRatioByType = require("./animation-curves").computeRatioByType;
     var bezier = require("./bezier").bezier;
@@ -5331,11 +5332,11 @@
       Bezier: Bezier
     };
   }), {
-    "../core/utils/binary-search": 222,
-    "./animation-curves": 13,
-    "./bezier": 16
+    "../core/utils/binary-search": 223,
+    "./animation-curves": 14,
+    "./bezier": 17
   } ],
-  20: [ (function(require, module, exports) {
+  21: [ (function(require, module, exports) {
     var JS = cc.js;
     function Playable() {
       this._isPlaying = false;
@@ -5390,7 +5391,7 @@
     };
     module.exports = Playable;
   }), {} ],
-  21: [ (function(require, module, exports) {
+  22: [ (function(require, module, exports) {
     var JS = cc.js;
     var WrapModeMask = {
       Loop: 2,
@@ -5434,7 +5435,7 @@
       WrappedInfo: WrappedInfo
     };
   }), {} ],
-  22: [ (function(require, module, exports) {
+  23: [ (function(require, module, exports) {
     var EventTarget = require("../core/event/event-target");
     var sys = require("../core/platform/CCSys");
     var touchBinded = false;
@@ -5716,10 +5717,10 @@
     })(WebAudioElement.prototype);
     module.exports = cc.Audio = Audio;
   }), {
-    "../core/event/event-target": 112,
-    "../core/platform/CCSys": 185
+    "../core/event/event-target": 113,
+    "../core/platform/CCSys": 186
   } ],
-  23: [ (function(require, module, exports) {
+  24: [ (function(require, module, exports) {
     var Audio = require("./CCAudio");
     var instanceId = 0;
     var id2audio = {};
@@ -5939,10 +5940,10 @@
     Module.removed(audioEngine);
     Module.deprecated(audioEngine);
   }), {
-    "./CCAudio": 22,
-    "./deprecated": 24
+    "./CCAudio": 23,
+    "./deprecated": 25
   } ],
-  24: [ (function(require, module, exports) {
+  25: [ (function(require, module, exports) {
     var js = cc.js;
     exports.removed = function(audioEngine) {
       function willPlayMusicError() {
@@ -6094,7 +6095,7 @@
       }));
     };
   }), {} ],
-  25: [ (function(require, module, exports) {
+  26: [ (function(require, module, exports) {
     cc.ClippingNode = _ccsg.Node.extend({
       inverted: false,
       _alphaThreshold: 0,
@@ -6168,7 +6169,7 @@
     cc.defineGetterSetter(_p, "stencil", _p.getStencil, _p.setStencil);
     cc.defineGetterSetter(_p, "alphaThreshold", _p.getAlphaThreshold, _p.setAlphaThreshold);
   }), {} ],
-  26: [ (function(require, module, exports) {
+  27: [ (function(require, module, exports) {
     require("../shape-nodes/CCDrawNode");
     cc.ClippingNode.CanvasRenderCmd = function(renderable) {
       this._rootCtor(renderable);
@@ -6221,9 +6222,9 @@
       this._dirtyFlag = 0;
     };
   }), {
-    "../shape-nodes/CCDrawNode": 275
+    "../shape-nodes/CCDrawNode": 276
   } ],
-  27: [ (function(require, module, exports) {
+  28: [ (function(require, module, exports) {
     require("../core/CCDrawingPrimitives");
     function setProgram(node, program) {
       node.shaderProgram = program;
@@ -6376,9 +6377,9 @@
       cc.ClippingNode.WebGLRenderCmd._layer--;
     };
   }), {
-    "../core/CCDrawingPrimitives": 36
+    "../core/CCDrawingPrimitives": 37
   } ],
-  28: [ (function(require, module, exports) {
+  29: [ (function(require, module, exports) {
     cc.Codec = {
       name: "Jacob__Codec"
     };
@@ -6414,10 +6415,10 @@
       return ar;
     };
   }), {
-    "./base64": 29,
-    "./gzip": 30
+    "./base64": 30,
+    "./gzip": 31
   } ],
-  29: [ (function(require, module, exports) {
+  30: [ (function(require, module, exports) {
     var Misc = require("../core/utils/misc");
     var strValue = Misc.BASE64_VALUES;
     var Base64 = {
@@ -6451,9 +6452,9 @@
     };
     module.exports = Base64;
   }), {
-    "../core/utils/misc": 226
+    "../core/utils/misc": 227
   } ],
-  30: [ (function(require, module, exports) {
+  31: [ (function(require, module, exports) {
     var GZip = function Jacob__GZip(data) {
       this.data = data;
       this.debug = false;
@@ -6847,7 +6848,7 @@
     };
     module.exports = GZip;
   }), {} ],
-  31: [ (function(require, module, exports) {
+  32: [ (function(require, module, exports) {
     (function() {
       "use strict";
       function i(a) {
@@ -7836,7 +7837,7 @@
     _p.Inflate.prototype.decompress = _p.Inflate.prototype["decompress"];
     module.exports = _p;
   }), {} ],
-  32: [ (function(require, module, exports) {
+  33: [ (function(require, module, exports) {
     cc.configuration = {
       ERROR: 0,
       STRING: 1,
@@ -7948,7 +7949,7 @@
       }
     };
   }), {} ],
-  33: [ (function(require, module, exports) {
+  34: [ (function(require, module, exports) {
     var EventTarget = require("./event/event-target");
     var Class = require("./platform/_CCClass");
     var AutoReleaseUtils = require("./load-pipeline/auto-release-utils");
@@ -8515,15 +8516,15 @@
     cc.Director.PROJECTION_CUSTOM = 3;
     cc.Director.PROJECTION_DEFAULT = cc.Director.PROJECTION_2D;
   }), {
-    "./component-scheduler": 70,
-    "./event-manager": 110,
-    "./event/event-listeners": 111,
-    "./event/event-target": 112,
-    "./load-pipeline/auto-release-utils": 134,
-    "./node-activator": 147,
-    "./platform/_CCClass": 188
+    "./component-scheduler": 71,
+    "./event-manager": 111,
+    "./event/event-listeners": 112,
+    "./event/event-target": 113,
+    "./load-pipeline/auto-release-utils": 135,
+    "./node-activator": 148,
+    "./platform/_CCClass": 189
   } ],
-  34: [ (function(require, module, exports) {
+  35: [ (function(require, module, exports) {
     require("./CCDirector");
     require("./CCGame");
     var eventManager = require("./event-manager");
@@ -8557,11 +8558,11 @@
       }
     }));
   }), {
-    "./CCDirector": 33,
-    "./CCGame": 39,
-    "./event-manager": 110
+    "./CCDirector": 34,
+    "./CCGame": 40,
+    "./event-manager": 111
   } ],
-  35: [ (function(require, module, exports) {
+  36: [ (function(require, module, exports) {
     require("./CCDirector");
     require("./CCGame");
     require("../kazmath");
@@ -8681,23 +8682,23 @@
       };
     }));
   }), {
-    "../kazmath": 247,
-    "./CCDirector": 33,
-    "./CCGame": 39,
-    "./event-manager": 110
+    "../kazmath": 248,
+    "./CCDirector": 34,
+    "./CCGame": 40,
+    "./event-manager": 111
   } ],
-  36: [ (function(require, module, exports) {
+  37: [ (function(require, module, exports) {
     var game = require("./CCGame");
     cc._drawingUtil = null;
     game.once(game.EVENT_RENDERER_INITED, (function() {
       cc._renderType === game.RENDER_TYPE_WEBGL ? cc._drawingUtil = new (require("./CCDrawingPrimitivesWebGL"))(cc._renderContext) : cc._drawingUtil = new (require("./CCDrawingPrimitivesCanvas"))(cc._renderContext);
     }));
   }), {
-    "./CCDrawingPrimitivesCanvas": 37,
-    "./CCDrawingPrimitivesWebGL": 38,
-    "./CCGame": 39
+    "./CCDrawingPrimitivesCanvas": 38,
+    "./CCDrawingPrimitivesWebGL": 39,
+    "./CCGame": 40
   } ],
-  37: [ (function(require, module, exports) {
+  38: [ (function(require, module, exports) {
     var DrawingPrimitiveCanvas = cc._Class.extend({
       _cacheArray: [],
       ctor: function(renderContext) {
@@ -8900,7 +8901,7 @@
     });
     module.exports = DrawingPrimitiveCanvas;
   }), {} ],
-  38: [ (function(require, module, exports) {
+  39: [ (function(require, module, exports) {
     var macro = cc.macro;
     var DrawingPrimitiveWebGL = cc._Class.extend({
       _initialized: false,
@@ -9147,7 +9148,7 @@
     });
     module.exports = DrawingPrimitiveWebGL;
   }), {} ],
-  39: [ (function(require, module, exports) {
+  40: [ (function(require, module, exports) {
     var EventTarget = require("./event/event-target");
     var View;
     true;
@@ -9494,13 +9495,13 @@
     cc.js.addon(game, EventTarget.prototype);
     cc.game = module.exports = game;
   }), {
-    "../audio/CCAudioEngine": 23,
-    "./event/event-target": 112,
-    "./platform/BKInputManager": 174,
-    "./platform/CCInputManager": 180,
-    "./platform/CCView": 186
+    "../audio/CCAudioEngine": 24,
+    "./event/event-target": 113,
+    "./platform/BKInputManager": 175,
+    "./platform/CCInputManager": 181,
+    "./platform/CCView": 187
   } ],
-  40: [ (function(require, module, exports) {
+  41: [ (function(require, module, exports) {
     "use strict";
     var PrefabHelper = require("./utils/prefab-helper");
     var SgHelper = require("./utils/scene-graph-helper");
@@ -10528,14 +10529,14 @@
     Node.EventType = EventType;
     cc.Node = module.exports = Node;
   }), {
-    "./event-manager": 110,
-    "./event/event": 113,
-    "./utils/base-node": 221,
-    "./utils/misc": 226,
-    "./utils/prefab-helper": 228,
-    "./utils/scene-graph-helper": 229
+    "./event-manager": 111,
+    "./event/event": 114,
+    "./utils/base-node": 222,
+    "./utils/misc": 227,
+    "./utils/prefab-helper": 229,
+    "./utils/scene-graph-helper": 230
   } ],
-  41: [ (function(require, module, exports) {
+  42: [ (function(require, module, exports) {
     var NIL = function() {};
     cc.Scene = cc.Class({
       name: "cc.Scene",
@@ -10577,9 +10578,9 @@
     });
     module.exports = cc.Scene;
   }), {
-    "./CCNode": 40
+    "./CCNode": 41
   } ],
-  42: [ (function(require, module, exports) {
+  43: [ (function(require, module, exports) {
     var MAX_POOL_SIZE = 20;
     var ListEntry = function(prev, next, callback, target, priority, paused, markedForDeletion) {
       this.prev = prev;
@@ -11095,7 +11096,7 @@
     cc.Scheduler.PRIORITY_SYSTEM = 1 << 31;
     cc.Scheduler.PRIORITY_NON_SYSTEM = cc.Scheduler.PRIORITY_SYSTEM + 1;
   }), {} ],
-  43: [ (function(require, module, exports) {
+  44: [ (function(require, module, exports) {
     var RawAsset = require("./CCRawAsset");
     cc.Asset = cc.Class({
       name: "cc.Asset",
@@ -11145,9 +11146,9 @@
     });
     module.exports = cc.Asset;
   }), {
-    "./CCRawAsset": 49
+    "./CCRawAsset": 50
   } ],
-  44: [ (function(require, module, exports) {
+  45: [ (function(require, module, exports) {
     var AudioClip = cc.Class({
       name: "cc.AudioClip",
       extends: cc.RawAsset
@@ -11155,7 +11156,7 @@
     cc.AudioClip = AudioClip;
     module.exports = AudioClip;
   }), {} ],
-  45: [ (function(require, module, exports) {
+  46: [ (function(require, module, exports) {
     var BitmapFont = cc.Class({
       name: "cc.BitmapFont",
       extends: cc.Font,
@@ -11176,7 +11177,7 @@
     cc.BitmapFont = BitmapFont;
     module.exports = BitmapFont;
   }), {} ],
-  46: [ (function(require, module, exports) {
+  47: [ (function(require, module, exports) {
     var Font = cc.Class({
       name: "cc.Font",
       extends: cc.Asset
@@ -11184,7 +11185,7 @@
     cc.Font = Font;
     module.exports = Font;
   }), {} ],
-  47: [ (function(require, module, exports) {
+  48: [ (function(require, module, exports) {
     var LabelAtlas = cc.Class({
       name: "cc.LabelAtlas",
       extends: cc.BitmapFont
@@ -11192,7 +11193,7 @@
     cc.LabelAtlas = LabelAtlas;
     module.exports = LabelAtlas;
   }), {} ],
-  48: [ (function(require, module, exports) {
+  49: [ (function(require, module, exports) {
     var Prefab = cc.Class({
       name: "cc.Prefab",
       extends: cc.Asset,
@@ -11226,9 +11227,9 @@
     cc.Prefab = module.exports = Prefab;
     cc.js.obsolete(cc, "cc._Prefab", "Prefab");
   }), {
-    "../platform/instantiate-jit": 195
+    "../platform/instantiate-jit": 196
   } ],
-  49: [ (function(require, module, exports) {
+  50: [ (function(require, module, exports) {
     var CCObject = require("../platform/CCObject");
     cc.RawAsset = cc.Class({
       name: "cc.RawAsset",
@@ -11250,9 +11251,9 @@
     });
     module.exports = cc.RawAsset;
   }), {
-    "../platform/CCObject": 182
+    "../platform/CCObject": 183
   } ],
-  50: [ (function(require, module, exports) {
+  51: [ (function(require, module, exports) {
     var Scene = cc.Class({
       name: "cc.SceneAsset",
       extends: cc.Asset,
@@ -11264,7 +11265,7 @@
     cc.SceneAsset = Scene;
     module.exports = Scene;
   }), {} ],
-  51: [ (function(require, module, exports) {
+  52: [ (function(require, module, exports) {
     var Script = cc.Class({
       name: "cc.Script",
       extends: cc.Asset
@@ -11286,7 +11287,7 @@
     });
     cc._TypeScript = TypeScript;
   }), {} ],
-  52: [ (function(require, module, exports) {
+  53: [ (function(require, module, exports) {
     var SpriteAtlas = cc.Class({
       name: "cc.SpriteAtlas",
       extends: cc.Asset,
@@ -11316,7 +11317,7 @@
     cc.SpriteAtlas = SpriteAtlas;
     module.exports = SpriteAtlas;
   }), {} ],
-  53: [ (function(require, module, exports) {
+  54: [ (function(require, module, exports) {
     var TTFFont = cc.Class({
       name: "cc.TTFFont",
       extends: cc.Font
@@ -11324,7 +11325,7 @@
     cc.TTFFont = TTFFont;
     module.exports = TTFFont;
   }), {} ],
-  54: [ (function(require, module, exports) {
+  55: [ (function(require, module, exports) {
     require("./CCRawAsset");
     require("./CCAsset");
     require("./CCFont");
@@ -11339,21 +11340,21 @@
     require("./CCBitmapFont");
     require("./CCLabelAtlas");
   }), {
-    "../sprites/CCSpriteFrame": 215,
-    "../textures/CCTexture2D": 216,
-    "./CCAsset": 43,
-    "./CCAudioClip": 44,
-    "./CCBitmapFont": 45,
-    "./CCFont": 46,
-    "./CCLabelAtlas": 47,
-    "./CCPrefab": 48,
-    "./CCRawAsset": 49,
-    "./CCSceneAsset": 50,
-    "./CCScripts": 51,
-    "./CCSpriteAtlas": 52,
-    "./CCTTFFont": 53
+    "../sprites/CCSpriteFrame": 216,
+    "../textures/CCTexture2D": 217,
+    "./CCAsset": 44,
+    "./CCAudioClip": 45,
+    "./CCBitmapFont": 46,
+    "./CCFont": 47,
+    "./CCLabelAtlas": 48,
+    "./CCPrefab": 49,
+    "./CCRawAsset": 50,
+    "./CCSceneAsset": 51,
+    "./CCScripts": 52,
+    "./CCSpriteAtlas": 53,
+    "./CCTTFFont": 54
   } ],
-  55: [ (function(require, module, exports) {
+  56: [ (function(require, module, exports) {
     var Misc = require("../utils/misc");
     var eventManager = require("../event-manager");
     var ActionManagerExist = !!cc.ActionManager;
@@ -12223,10 +12224,10 @@
     };
     Misc.propertyDefine(_ccsg.Node, SameNameGetSets, DiffNameGetSets);
   }), {
-    "../event-manager": 110,
-    "../utils/misc": 226
+    "../event-manager": 111,
+    "../utils/misc": 227
   } ],
-  56: [ (function(require, module, exports) {
+  57: [ (function(require, module, exports) {
     cc.CustomRenderCmd = function(target, func) {
       this._needDraw = true;
       this._target = target;
@@ -12631,7 +12632,7 @@
     _ccsg.Node.RenderCmd.prototype.originUpdateStatus = _ccsg.Node.RenderCmd.prototype.updateStatus;
     _ccsg.Node.RenderCmd.prototype._originSyncStatus = _ccsg.Node.RenderCmd.prototype._syncStatus;
   }), {} ],
-  57: [ (function(require, module, exports) {
+  58: [ (function(require, module, exports) {
     _ccsg.Node.CanvasRenderCmd = function(renderable) {
       this._ctor(renderable);
       this._currentRegion = new cc.Region();
@@ -12679,7 +12680,7 @@
       return blendFunc ? blendFunc.src === cc.macro.SRC_ALPHA && blendFunc.dst === cc.macro.ONE || blendFunc.src === cc.macro.ONE && blendFunc.dst === cc.macro.ONE ? "lighter" : blendFunc.src === cc.macro.ZERO && blendFunc.dst === cc.macro.SRC_ALPHA ? "destination-in" : blendFunc.src === cc.macro.ZERO && blendFunc.dst === cc.macro.ONE_MINUS_SRC_ALPHA ? "destination-out" : "source-over" : "source-over";
     };
   }), {} ],
-  58: [ (function(require, module, exports) {
+  59: [ (function(require, module, exports) {
     _ccsg.Node.WebGLRenderCmd = function(renderable) {
       this._ctor(renderable);
       this._shaderProgram = null;
@@ -12695,7 +12696,7 @@
       return this._shaderProgram;
     };
   }), {} ],
-  59: [ (function(require, module, exports) {
+  60: [ (function(require, module, exports) {
     var TOP = 1;
     var MID = 2;
     var BOT = 4;
@@ -12913,7 +12914,7 @@
     };
     false;
   }), {} ],
-  60: [ (function(require, module, exports) {
+  61: [ (function(require, module, exports) {
     var cullingDirtyFlag;
     true;
     cullingDirtyFlag = _ccsg.Node._dirtyFlags.cullingDirty;
@@ -13118,9 +13119,9 @@
     });
     module.exports = cc.Camera = Camera;
   }), {
-    "./CCSGCameraNode": 61
+    "./CCSGCameraNode": 62
   } ],
-  61: [ (function(require, module, exports) {
+  62: [ (function(require, module, exports) {
     var tempMat = new cc.math.Matrix4();
     var CameraNode = _ccsg.Node.extend({
       ctor: function() {
@@ -13170,7 +13171,7 @@
     });
     module.exports = _ccsg.CameraNode = CameraNode;
   }), {} ],
-  62: [ (function(require, module, exports) {
+  63: [ (function(require, module, exports) {
     cc.Collider.Box = cc.Class({
       properties: {
         _offset: cc.v2(0, 0),
@@ -13207,7 +13208,7 @@
     });
     cc.BoxCollider = module.exports = BoxCollider;
   }), {} ],
-  63: [ (function(require, module, exports) {
+  64: [ (function(require, module, exports) {
     cc.Collider.Circle = cc.Class({
       properties: {
         _offset: cc.v2(0, 0),
@@ -13241,7 +13242,7 @@
     });
     cc.CircleCollider = module.exports = CircleCollider;
   }), {} ],
-  64: [ (function(require, module, exports) {
+  65: [ (function(require, module, exports) {
     var Collider = cc.Class({
       name: "cc.Collider",
       extends: cc.Component,
@@ -13267,7 +13268,7 @@
     });
     cc.Collider = module.exports = Collider;
   }), {} ],
-  65: [ (function(require, module, exports) {
+  66: [ (function(require, module, exports) {
     var Contact = require("./CCContact");
     var CollisionType = Contact.CollisionType;
     var tempRect = cc.rect();
@@ -13529,9 +13530,9 @@
     }));
     cc.CollisionManager = module.exports = CollisionManager;
   }), {
-    "./CCContact": 66
+    "./CCContact": 67
   } ],
-  66: [ (function(require, module, exports) {
+  67: [ (function(require, module, exports) {
     var Intersection = require("./CCIntersection");
     var CollisionType = cc.Enum({
       None: 0,
@@ -13577,9 +13578,9 @@
     Contact.CollisionType = CollisionType;
     module.exports = Contact;
   }), {
-    "./CCIntersection": 67
+    "./CCIntersection": 68
   } ],
-  67: [ (function(require, module, exports) {
+  68: [ (function(require, module, exports) {
     var Intersection = {};
     function lineLine(a1, a2, b1, b2) {
       var ua_t = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x);
@@ -13699,7 +13700,7 @@
     Intersection.pointLineDistance = pointLineDistance;
     cc.Intersection = module.exports = Intersection;
   }), {} ],
-  68: [ (function(require, module, exports) {
+  69: [ (function(require, module, exports) {
     cc.Collider.Polygon = cc.Class({
       properties: {
         threshold: {
@@ -13735,20 +13736,20 @@
     });
     cc.PolygonCollider = module.exports = PolygonCollider;
   }), {} ],
-  69: [ (function(require, module, exports) {
+  70: [ (function(require, module, exports) {
     require("./CCCollisionManager");
     require("./CCCollider");
     require("./CCBoxCollider");
     require("./CCCircleCollider");
     require("./CCPolygonCollider");
   }), {
-    "./CCBoxCollider": 62,
-    "./CCCircleCollider": 63,
-    "./CCCollider": 64,
-    "./CCCollisionManager": 65,
-    "./CCPolygonCollider": 68
+    "./CCBoxCollider": 63,
+    "./CCCircleCollider": 64,
+    "./CCCollider": 65,
+    "./CCCollisionManager": 66,
+    "./CCPolygonCollider": 69
   } ],
-  70: [ (function(require, module, exports) {
+  71: [ (function(require, module, exports) {
     require("./platform/CCClass");
     var Flags = require("./platform/CCObject").Flags;
     var JsArray = require("./platform/js").array;
@@ -13981,12 +13982,12 @@
     });
     module.exports = ComponentScheduler;
   }), {
-    "./platform/CCClass": 176,
-    "./platform/CCObject": 182,
-    "./platform/js": 197,
-    "./utils/misc": 226
+    "./platform/CCClass": 177,
+    "./platform/CCObject": 183,
+    "./platform/js": 198,
+    "./utils/misc": 227
   } ],
-  71: [ (function(require, module, exports) {
+  72: [ (function(require, module, exports) {
     var AnimationAnimator = require("../../animation/animation-animator");
     var AnimationClip = require("../../animation/animation-clip");
     function equalClips(clip1, clip2) {
@@ -14221,11 +14222,11 @@
     });
     cc.Animation = module.exports = Animation;
   }), {
-    "../../animation/animation-animator": 11,
-    "../../animation/animation-clip": 12,
-    "./CCComponent": 76
+    "../../animation/animation-animator": 12,
+    "../../animation/animation-clip": 13,
+    "./CCComponent": 77
   } ],
-  72: [ (function(require, module, exports) {
+  73: [ (function(require, module, exports) {
     var AudioSource = cc.Class({
       name: "cc.AudioSource",
       extends: require("./CCComponent"),
@@ -14405,9 +14406,9 @@
     });
     cc.AudioSource = module.exports = AudioSource;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  73: [ (function(require, module, exports) {
+  74: [ (function(require, module, exports) {
     var BlockEvents = [ "touchstart", "touchmove", "touchend", "mousedown", "mousemove", "mouseup", "mouseenter", "mouseleave", "mousewheel" ];
     function stopPropagation(event) {
       event.stopPropagation();
@@ -14429,9 +14430,9 @@
     });
     cc.BlockInputEvents = module.exports = BlockInputEvents;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  74: [ (function(require, module, exports) {
+  75: [ (function(require, module, exports) {
     var Transition = cc.Enum({
       NONE: 0,
       COLOR: 1,
@@ -14736,9 +14737,9 @@
     });
     cc.Button = module.exports = Button;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  75: [ (function(require, module, exports) {
+  76: [ (function(require, module, exports) {
     var eventManager = require("../event-manager");
     var designResolutionWrapper = {
       getContentSize: function() {
@@ -14856,10 +14857,10 @@
     });
     cc.Canvas = module.exports = Canvas;
   }), {
-    "../event-manager": 110,
-    "./CCComponent": 76
+    "../event-manager": 111,
+    "./CCComponent": 77
   } ],
-  76: [ (function(require, module, exports) {
+  77: [ (function(require, module, exports) {
     var CCObject = require("../platform/CCObject");
     var JS = require("../platform/js");
     var idGenerater = new (require("../platform/id-generater"))("Comp");
@@ -15026,11 +15027,11 @@
     Component.prototype.__scriptUuid = "";
     cc.Component = module.exports = Component;
   }), {
-    "../platform/CCObject": 182,
-    "../platform/id-generater": 193,
-    "../platform/js": 197
+    "../platform/CCObject": 183,
+    "../platform/id-generater": 194,
+    "../platform/js": 198
   } ],
-  77: [ (function(require, module, exports) {
+  78: [ (function(require, module, exports) {
     cc.Component.EventHandler = cc.Class({
       name: "cc.ClickEvent",
       properties: {
@@ -15078,7 +15079,7 @@
       }
     });
   }), {} ],
-  78: [ (function(require, module, exports) {
+  79: [ (function(require, module, exports) {
     require("../editbox/CCSGEditBox");
     var KeyboardReturnType = _ccsg.EditBox.KeyboardReturnType;
     var InputMode = _ccsg.EditBox.InputMode;
@@ -15323,9 +15324,9 @@
     false;
     cc.EditBox = module.exports = EditBox;
   }), {
-    "../editbox/CCSGEditBox": 105
+    "../editbox/CCSGEditBox": 106
   } ],
-  79: [ (function(require, module, exports) {
+  80: [ (function(require, module, exports) {
     require("../label/CCSGLabel");
     require("../label/CCSGLabelCanvasRenderCmd");
     require("../label/CCSGLabelWebGLRenderCmd");
@@ -15589,11 +15590,11 @@
     });
     cc.Label = module.exports = Label;
   }), {
-    "../label/CCSGLabel": 126,
-    "../label/CCSGLabelCanvasRenderCmd": 127,
-    "../label/CCSGLabelWebGLRenderCmd": 128
+    "../label/CCSGLabel": 127,
+    "../label/CCSGLabelCanvasRenderCmd": 128,
+    "../label/CCSGLabelWebGLRenderCmd": 129
   } ],
-  80: [ (function(require, module, exports) {
+  81: [ (function(require, module, exports) {
     var LabelOutline = cc.Class({
       name: "cc.LabelOutline",
       extends: require("./CCComponent"),
@@ -15646,9 +15647,9 @@
     });
     cc.LabelOutline = module.exports = LabelOutline;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  81: [ (function(require, module, exports) {
+  82: [ (function(require, module, exports) {
     var Type = cc.Enum({
       NONE: 0,
       HORIZONTAL: 1,
@@ -16167,9 +16168,9 @@
     });
     cc.Layout = module.exports = Layout;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  82: [ (function(require, module, exports) {
+  83: [ (function(require, module, exports) {
     require("../../clipping-nodes/CCClippingNode");
     require("../../clipping-nodes/CCClippingNodeCanvasRenderCmd");
     require("../../clipping-nodes/CCClippingNodeWebGLRenderCmd");
@@ -16349,12 +16350,12 @@
     false;
     cc.Mask = module.exports = Mask;
   }), {
-    "../../clipping-nodes/CCClippingNode": 25,
-    "../../clipping-nodes/CCClippingNodeCanvasRenderCmd": 26,
-    "../../clipping-nodes/CCClippingNodeWebGLRenderCmd": 27,
-    "../../shape-nodes/CCDrawNode": 275
+    "../../clipping-nodes/CCClippingNode": 26,
+    "../../clipping-nodes/CCClippingNodeCanvasRenderCmd": 27,
+    "../../clipping-nodes/CCClippingNodeWebGLRenderCmd": 28,
+    "../../shape-nodes/CCDrawNode": 276
   } ],
-  83: [ (function(require, module, exports) {
+  84: [ (function(require, module, exports) {
     var SizeMode = cc.Enum({
       Unified: 0,
       Free: 1
@@ -16657,7 +16658,7 @@
     });
     cc.PageView = module.exports = PageView;
   }), {} ],
-  84: [ (function(require, module, exports) {
+  85: [ (function(require, module, exports) {
     var Direction = cc.Enum({
       HORIZONTAL: 0,
       VERTICAL: 1
@@ -16751,9 +16752,9 @@
     });
     cc.PageViewIndicator = module.exports = PageViewIndicator;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  85: [ (function(require, module, exports) {
+  86: [ (function(require, module, exports) {
     var Mode = cc.Enum({
       HORIZONTAL: 0,
       VERTICAL: 1,
@@ -16884,9 +16885,9 @@
     });
     cc.ProgressBar = module.exports = ProgressBar;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  86: [ (function(require, module, exports) {
+  87: [ (function(require, module, exports) {
     var RendererInSG = cc.Class({
       extends: require("./CCSGComponent"),
       name: "cc._RendererInSG",
@@ -16943,9 +16944,9 @@
     });
     cc._RendererInSG = module.exports = RendererInSG;
   }), {
-    "./CCSGComponent": 89
+    "./CCSGComponent": 90
   } ],
-  87: [ (function(require, module, exports) {
+  88: [ (function(require, module, exports) {
     var RendererUnderSG = cc.Class({
       extends: require("./CCSGComponent"),
       name: "cc._RendererUnderSG",
@@ -16985,9 +16986,9 @@
     });
     cc._RendererUnderSG = module.exports = RendererUnderSG;
   }), {
-    "./CCSGComponent": 89
+    "./CCSGComponent": 90
   } ],
-  88: [ (function(require, module, exports) {
+  89: [ (function(require, module, exports) {
     require("../label/CCHtmlTextParser");
     require("../label/CCTextUtils");
     var HorizontalAlign = cc.TextAlignment;
@@ -17465,10 +17466,10 @@
     });
     cc.RichText = module.exports = RichText;
   }), {
-    "../label/CCHtmlTextParser": 125,
-    "../label/CCTextUtils": 129
+    "../label/CCHtmlTextParser": 126,
+    "../label/CCTextUtils": 130
   } ],
-  89: [ (function(require, module, exports) {
+  90: [ (function(require, module, exports) {
     var SceneGraphHelper = require("../utils/scene-graph-helper");
     var SGComponent = cc.Class({
       extends: require("./CCComponent"),
@@ -17492,10 +17493,10 @@
     });
     cc._SGComponent = module.exports = SGComponent;
   }), {
-    "../utils/scene-graph-helper": 229,
-    "./CCComponent": 76
+    "../utils/scene-graph-helper": 230,
+    "./CCComponent": 77
   } ],
-  90: [ (function(require, module, exports) {
+  91: [ (function(require, module, exports) {
     var GETTINGSHORTERFACTOR = 20;
     var Direction = cc.Enum({
       HORIZONTAL: 0,
@@ -17685,9 +17686,9 @@
     });
     cc.Scrollbar = module.exports = Scrollbar;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  91: [ (function(require, module, exports) {
+  92: [ (function(require, module, exports) {
     var NUMBER_OF_GATHERED_TOUCHES_FOR_MOVE_SPEED = 5;
     var OUT_OF_BOUNDARY_BREAKING_FACTOR = .05;
     var EPSILON = 1e-4;
@@ -18473,9 +18474,9 @@
     });
     cc.ScrollView = module.exports = ScrollView;
   }), {
-    "./CCViewGroup": 100
+    "./CCViewGroup": 101
   } ],
-  92: [ (function(require, module, exports) {
+  93: [ (function(require, module, exports) {
     var Direction = cc.Enum({
       Horizontal: 0,
       Vertical: 1
@@ -18598,9 +18599,9 @@
     });
     cc.Slider = module.exports = Slider;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  93: [ (function(require, module, exports) {
+  94: [ (function(require, module, exports) {
     var Base = require("./CCRendererUnderSG");
     var SpriteType = cc.Scale9Sprite.RenderingType;
     var FillType = cc.Scale9Sprite.FillType;
@@ -18862,10 +18863,10 @@
     misc.propertyDefine(Sprite, SameNameGetSets, DiffNameGetSets);
     cc.Sprite = module.exports = Sprite;
   }), {
-    "../utils/misc": 226,
-    "./CCRendererUnderSG": 87
+    "../utils/misc": 227,
+    "./CCRendererUnderSG": 88
   } ],
-  94: [ (function(require, module, exports) {
+  95: [ (function(require, module, exports) {
     var SpriteDistortion = cc.Class({
       name: "cc.SpriteDistortion",
       extends: require("./CCComponent"),
@@ -18913,9 +18914,9 @@
     });
     cc.SpriteDistortion = module.exports = SpriteDistortion;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  95: [ (function(require, module, exports) {
+  96: [ (function(require, module, exports) {
     var ComponentType = cc.Enum({
       NONE: 0,
       CHECKBOX: 1,
@@ -18975,9 +18976,9 @@
     });
     cc.StudioComponent = module.exports = StudioComponent;
   }), {
-    "../utils/prefab-helper": 228
+    "../utils/prefab-helper": 229
   } ],
-  96: [ (function(require, module, exports) {
+  97: [ (function(require, module, exports) {
     var Toggle = cc.Class({
       name: "cc.Toggle",
       extends: require("./CCButton"),
@@ -19071,11 +19072,11 @@
       return null;
     }));
   }), {
-    "../platform/js": 197,
-    "./CCButton": 74,
-    "./CCToggleGroup": 98
+    "../platform/js": 198,
+    "./CCButton": 75,
+    "./CCToggleGroup": 99
   } ],
-  97: [ (function(require, module, exports) {
+  98: [ (function(require, module, exports) {
     var ToggleContainer = cc.Class({
       name: "cc.ToggleContainer",
       extends: cc.Component,
@@ -19123,9 +19124,9 @@
     }));
     cc.ToggleContainer = module.exports = ToggleContainer;
   }), {
-    "../platform/js": 197
+    "../platform/js": 198
   } ],
-  98: [ (function(require, module, exports) {
+  99: [ (function(require, module, exports) {
     var ToggleGroup = cc.Class({
       name: "cc.ToggleGroup",
       extends: cc.Component,
@@ -19187,9 +19188,9 @@
     }));
     cc.ToggleGroup = module.exports = ToggleGroup;
   }), {
-    "../platform/js": 197
+    "../platform/js": 198
   } ],
-  99: [ (function(require, module, exports) {
+  100: [ (function(require, module, exports) {
     require("../videoplayer/CCSGVideoPlayer");
     var EventType = _ccsg.VideoPlayer.EventType;
     var ResourceType = cc.Enum({
@@ -19360,18 +19361,18 @@
     });
     cc.VideoPlayer = module.exports = VideoPlayer;
   }), {
-    "../videoplayer/CCSGVideoPlayer": 240
+    "../videoplayer/CCSGVideoPlayer": 241
   } ],
-  100: [ (function(require, module, exports) {
+  101: [ (function(require, module, exports) {
     var ViewGroup = cc.Class({
       name: "cc.ViewGroup",
       extends: require("./CCComponent")
     });
     cc.ViewGroup = module.exports = ViewGroup;
   }), {
-    "./CCComponent": 76
+    "./CCComponent": 77
   } ],
-  101: [ (function(require, module, exports) {
+  102: [ (function(require, module, exports) {
     require("../webview/CCSGWebView");
     var EventType = _ccsg.WebView.EventType;
     function emptyCallback() {}
@@ -19457,9 +19458,9 @@
     });
     cc.WebView = module.exports = WebView;
   }), {
-    "../webview/CCSGWebView": 241
+    "../webview/CCSGWebView": 242
   } ],
-  102: [ (function(require, module, exports) {
+  103: [ (function(require, module, exports) {
     var WidgetManager = require("../base-ui/CCWidgetManager");
     var AlignFlags = WidgetManager._AlignFlags;
     var TOP = AlignFlags.TOP;
@@ -19733,10 +19734,10 @@
     });
     cc.Widget = module.exports = Widget;
   }), {
-    "../base-ui/CCWidgetManager": 59,
-    "./CCComponent": 76
+    "../base-ui/CCWidgetManager": 60,
+    "./CCComponent": 77
   } ],
-  103: [ (function(require, module, exports) {
+  104: [ (function(require, module, exports) {
     require("./CCComponent");
     require("./CCRendererInSG");
     require("./CCRendererUnderSG");
@@ -19744,38 +19745,38 @@
     require("./missing-script");
     module.exports = [ require("./CCSprite"), require("./CCWidget"), require("./CCCanvas"), require("./CCAudioSource"), require("./CCAnimation"), require("./CCButton"), require("./CCLabel"), require("./CCProgressBar"), require("./CCMask"), require("./CCScrollBar"), require("./CCScrollView"), require("./CCPageViewIndicator"), require("./CCPageView"), require("./CCSlider"), require("./CCLayout"), require("./CCEditBox"), require("./CCVideoPlayer"), require("./CCWebView"), require("./CCSpriteDistortion"), require("./CCLabelOutline"), require("./CCRichText"), require("./CCToggleContainer"), require("./CCToggleGroup"), require("./CCToggle"), require("./CCBlockInputEvents") ];
   }), {
-    "./CCAnimation": 71,
-    "./CCAudioSource": 72,
-    "./CCBlockInputEvents": 73,
-    "./CCButton": 74,
-    "./CCCanvas": 75,
-    "./CCComponent": 76,
-    "./CCComponentEventHandler": 77,
-    "./CCEditBox": 78,
-    "./CCLabel": 79,
-    "./CCLabelOutline": 80,
-    "./CCLayout": 81,
-    "./CCMask": 82,
-    "./CCPageView": 83,
-    "./CCPageViewIndicator": 84,
-    "./CCProgressBar": 85,
-    "./CCRendererInSG": 86,
-    "./CCRendererUnderSG": 87,
-    "./CCRichText": 88,
-    "./CCScrollBar": 90,
-    "./CCScrollView": 91,
-    "./CCSlider": 92,
-    "./CCSprite": 93,
-    "./CCSpriteDistortion": 94,
-    "./CCToggle": 96,
-    "./CCToggleContainer": 97,
-    "./CCToggleGroup": 98,
-    "./CCVideoPlayer": 99,
-    "./CCWebView": 101,
-    "./CCWidget": 102,
-    "./missing-script": 104
+    "./CCAnimation": 72,
+    "./CCAudioSource": 73,
+    "./CCBlockInputEvents": 74,
+    "./CCButton": 75,
+    "./CCCanvas": 76,
+    "./CCComponent": 77,
+    "./CCComponentEventHandler": 78,
+    "./CCEditBox": 79,
+    "./CCLabel": 80,
+    "./CCLabelOutline": 81,
+    "./CCLayout": 82,
+    "./CCMask": 83,
+    "./CCPageView": 84,
+    "./CCPageViewIndicator": 85,
+    "./CCProgressBar": 86,
+    "./CCRendererInSG": 87,
+    "./CCRendererUnderSG": 88,
+    "./CCRichText": 89,
+    "./CCScrollBar": 91,
+    "./CCScrollView": 92,
+    "./CCSlider": 93,
+    "./CCSprite": 94,
+    "./CCSpriteDistortion": 95,
+    "./CCToggle": 97,
+    "./CCToggleContainer": 98,
+    "./CCToggleGroup": 99,
+    "./CCVideoPlayer": 100,
+    "./CCWebView": 102,
+    "./CCWidget": 103,
+    "./missing-script": 105
   } ],
-  104: [ (function(require, module, exports) {
+  105: [ (function(require, module, exports) {
     var JS = cc.js;
     var BUILTIN_CLASSID_RE = require("../utils/misc").BUILTIN_CLASSID_RE;
     var MissingClass = cc.Class({
@@ -19826,9 +19827,9 @@
     });
     cc._MissingScript = module.exports = MissingScript;
   }), {
-    "../utils/misc": 226
+    "../utils/misc": 227
   } ],
-  105: [ (function(require, module, exports) {
+  106: [ (function(require, module, exports) {
     var SCROLLY = 40;
     var LEFT_PADDING = 2;
     var DELAY_TIME = 400;
@@ -20657,10 +20658,10 @@
       };
     })(_ccsg.EditBox._polyfill);
   }), {
-    "../platform/CCSys": 185,
-    "../platform/utils": 201
+    "../platform/CCSys": 186,
+    "../platform/utils": 202
   } ],
-  106: [ (function(require, module, exports) {
+  107: [ (function(require, module, exports) {
     var JS = cc.js;
     require("../event/event");
     var EventMouse = function(eventType, bubbles) {
@@ -20825,9 +20826,9 @@
     cc.Event.EventKeyboard = EventKeyboard;
     module.exports = cc.Event;
   }), {
-    "../event/event": 113
+    "../event/event": 114
   } ],
-  107: [ (function(require, module, exports) {
+  108: [ (function(require, module, exports) {
     cc.EventListener = cc._Class.extend({
       ctor: function(type, listenerID, callback) {
         this._onEvent = callback;
@@ -21068,7 +21069,7 @@
     });
     cc._EventListenerKeyboard.LISTENER_ID = "__cc_keyboard";
   }), {} ],
-  108: [ (function(require, module, exports) {
+  109: [ (function(require, module, exports) {
     var js = require("../platform/js");
     var _EventListenerVector = cc._Class.extend({
       ctor: function() {
@@ -21694,9 +21695,9 @@
     }));
     module.exports = eventManager;
   }), {
-    "../platform/js": 197
+    "../platform/js": 198
   } ],
-  109: [ (function(require, module, exports) {
+  110: [ (function(require, module, exports) {
     cc.Touch = cc._Class.extend({
       ctor: function(x, y, id) {
         this._lastModified = 0;
@@ -21774,7 +21775,7 @@
       }
     });
   }), {} ],
-  110: [ (function(require, module, exports) {
+  111: [ (function(require, module, exports) {
     require("./CCEvent");
     var eventManager;
     false;
@@ -21783,12 +21784,12 @@
     eventManager = require("./CCEventManager");
     module.exports = eventManager;
   }), {
-    "./CCEvent": 106,
-    "./CCEventListener": 107,
-    "./CCEventManager": 108,
-    "./CCTouch": 109
+    "./CCEvent": 107,
+    "./CCEventListener": 108,
+    "./CCEventManager": 109,
+    "./CCTouch": 110
   } ],
-  111: [ (function(require, module, exports) {
+  112: [ (function(require, module, exports) {
     var JS = cc.js;
     var CallbacksHandler = require("../platform/callbacks-invoker").CallbacksHandler;
     function EventListeners() {
@@ -21820,9 +21821,9 @@
     module.exports = EventListeners;
     false;
   }), {
-    "../platform/callbacks-invoker": 190
+    "../platform/callbacks-invoker": 191
   } ],
-  112: [ (function(require, module, exports) {
+  113: [ (function(require, module, exports) {
     var EventListeners = require("./event-listeners");
     require("./event");
     var JS = cc.js;
@@ -22000,10 +22001,10 @@
     EventTarget.prototype._EventTargetTargetOff = EventTarget.prototype.targetOff;
     cc.EventTarget = module.exports = EventTarget;
   }), {
-    "./event": 113,
-    "./event-listeners": 111
+    "./event": 114,
+    "./event-listeners": 112
   } ],
-  113: [ (function(require, module, exports) {
+  114: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     cc.Event = function(type, bubbles) {
       this.type = type;
@@ -22079,20 +22080,20 @@
     cc.Event.EventCustom = EventCustom;
     module.exports = cc.Event;
   }), {
-    "../platform/js": 197
+    "../platform/js": 198
   } ],
-  114: [ (function(require, module, exports) {
+  115: [ (function(require, module, exports) {
     require("./event");
     require("./event-listeners");
     require("./event-target");
     require("./system-event");
   }), {
-    "./event": 113,
-    "./event-listeners": 111,
-    "./event-target": 112,
-    "./system-event": 115
+    "./event": 114,
+    "./event-listeners": 112,
+    "./event-target": 113,
+    "./system-event": 116
   } ],
-  115: [ (function(require, module, exports) {
+  116: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     var eventManager = require("../event-manager");
     var inputManger;
@@ -22168,11 +22169,11 @@
     true;
     cc.systemEvent = new cc.SystemEvent();
   }), {
-    "../event-manager": 110,
-    "../event/event-target": 112,
-    "../platform/CCInputManager": 180
+    "../event-manager": 111,
+    "../event/event-target": 113,
+    "../platform/CCInputManager": 181
   } ],
-  116: [ (function(require, module, exports) {
+  117: [ (function(require, module, exports) {
     "use strict";
     module.exports = earcut;
     function earcut(data, holeIndices, dim) {
@@ -22564,7 +22565,7 @@
       return result;
     };
   }), {} ],
-  117: [ (function(require, module, exports) {
+  118: [ (function(require, module, exports) {
     var Js = cc.js;
     var LineCap = require("./types").LineCap;
     var LineJoin = require("./types").LineJoin;
@@ -22696,10 +22697,10 @@
     };
     module.exports = CanvasRenderCmd;
   }), {
-    "./helper": 121,
-    "./types": 123
+    "./helper": 122,
+    "./types": 124
   } ],
-  118: [ (function(require, module, exports) {
+  119: [ (function(require, module, exports) {
     var CanvasRenderCmd = require("./graphics-canvas-cmd");
     var WebGLRenderCmd = require("./graphics-webgl-cmd");
     var LineCap = require("./types").LineCap;
@@ -22811,11 +22812,11 @@
     };
     module.exports = GraphicsNode;
   }), {
-    "./graphics-canvas-cmd": 117,
-    "./graphics-webgl-cmd": 119,
-    "./types": 123
+    "./graphics-canvas-cmd": 118,
+    "./graphics-webgl-cmd": 120,
+    "./types": 124
   } ],
-  119: [ (function(require, module, exports) {
+  120: [ (function(require, module, exports) {
     var LineCap = require("./types").LineCap;
     var LineJoin = require("./types").LineJoin;
     var Earcut = require("./earcut");
@@ -23520,11 +23521,11 @@
     };
     module.exports = WebGLRenderCmd;
   }), {
-    "./earcut": 116,
-    "./helper": 121,
-    "./types": 123
+    "./earcut": 117,
+    "./helper": 122,
+    "./types": 124
   } ],
-  120: [ (function(require, module, exports) {
+  121: [ (function(require, module, exports) {
     var LineCap = require("./types").LineCap;
     var LineJoin = require("./types").LineJoin;
     var Graphics = cc.Class({
@@ -23655,9 +23656,9 @@
     });
     cc.Graphics = module.exports = Graphics;
   }), {
-    "./types": 123
+    "./types": 124
   } ],
-  121: [ (function(require, module, exports) {
+  122: [ (function(require, module, exports) {
     var PI = Math.PI;
     var min = Math.min;
     var max = Math.max;
@@ -23724,7 +23725,7 @@
       roundRect: roundRect
     };
   }), {} ],
-  122: [ (function(require, module, exports) {
+  123: [ (function(require, module, exports) {
     "use strict";
     var GraphicsNode;
     true;
@@ -23735,11 +23736,11 @@
     }
     require("./graphics");
   }), {
-    "../utils/misc": 226,
-    "./graphics": 120,
-    "./graphics-node": 118
+    "../utils/misc": 227,
+    "./graphics": 121,
+    "./graphics-node": 119
   } ],
-  123: [ (function(require, module, exports) {
+  124: [ (function(require, module, exports) {
     "use strict";
     var LineCap = cc.Enum({
       BUTT: 0,
@@ -23756,7 +23757,7 @@
       LineJoin: LineJoin
     };
   }), {} ],
-  124: [ (function(require, module, exports) {
+  125: [ (function(require, module, exports) {
     require("./platform");
     require("./assets");
     true;
@@ -23770,19 +23771,19 @@
     require("./camera/CCCamera");
     require("./base-ui/CCWidgetManager");
   }), {
-    "./CCNode": 40,
-    "./CCScene": 41,
-    "./assets": 54,
-    "./base-ui/CCWidgetManager": 59,
-    "./camera/CCCamera": 60,
-    "./collider": 69,
-    "./collider/CCIntersection": 67,
-    "./components": 103,
-    "./graphics": 122,
-    "./physics": 158,
-    "./platform": 194
+    "./CCNode": 41,
+    "./CCScene": 42,
+    "./assets": 55,
+    "./base-ui/CCWidgetManager": 60,
+    "./camera/CCCamera": 61,
+    "./collider": 70,
+    "./collider/CCIntersection": 68,
+    "./components": 104,
+    "./graphics": 123,
+    "./physics": 159,
+    "./platform": 195
   } ],
-  125: [ (function(require, module, exports) {
+  126: [ (function(require, module, exports) {
     var eventRegx = /^(click)(\s)*=/;
     var imageAttrReg = /(\s)*src(\s)*=|(\s)*height(\s)*=|(\s)*width(\s)*=|(\s)*click(\s)*=/;
     cc.HtmlTextParser = function() {
@@ -24012,7 +24013,7 @@
     };
     cc.htmlTextParser = new cc.HtmlTextParser();
   }), {} ],
-  126: [ (function(require, module, exports) {
+  127: [ (function(require, module, exports) {
     require("./CCTextUtils");
     var EventTarget = require("../event/event-target");
     var JS = require("../platform/js");
@@ -24916,11 +24917,11 @@
       set: _ccsg.Node.prototype._setHeight
     });
   }), {
-    "../event/event-target": 112,
-    "../platform/js": 197,
-    "./CCTextUtils": 129
+    "../event/event-target": 113,
+    "../platform/js": 198,
+    "./CCTextUtils": 130
   } ],
-  127: [ (function(require, module, exports) {
+  128: [ (function(require, module, exports) {
     (function() {
       _ccsg.Label.TTFLabelBaker = function() {};
       var proto = _ccsg.Label.TTFLabelBaker.prototype = Object.create(Object.prototype);
@@ -25268,7 +25269,7 @@
       };
     })();
   }), {} ],
-  128: [ (function(require, module, exports) {
+  129: [ (function(require, module, exports) {
     _ccsg.Label.WebGLRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
       this._needDraw = true;
@@ -25354,7 +25355,7 @@
       return len;
     };
   }), {} ],
-  129: [ (function(require, module, exports) {
+  130: [ (function(require, module, exports) {
     var CustomFontDescriptor = function() {
       this._status = "unloaded";
       this._observers = [];
@@ -25556,7 +25557,7 @@
     cc.TextUtils = module.exports = TextUtils;
     cc.CustomFontLoader = module.exports = CustomFontLoader;
   }), {} ],
-  130: [ (function(require, module, exports) {
+  131: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var Pipeline = require("./pipeline");
     var LoadingItems = require("./loading-items");
@@ -25906,18 +25907,18 @@
     false;
     module.exports = cc.loader;
   }), {
-    "../platform/js": 197,
-    "../platform/utils": 201,
-    "./asset-loader": 131,
-    "./asset-table": 132,
-    "./auto-release-utils": 134,
-    "./downloader": 135,
-    "./loader": 138,
-    "./loading-items": 139,
-    "./pipeline": 142,
-    "./released-asset-checker": 143
+    "../platform/js": 198,
+    "../platform/utils": 202,
+    "./asset-loader": 132,
+    "./asset-table": 133,
+    "./auto-release-utils": 135,
+    "./downloader": 136,
+    "./loader": 139,
+    "./loading-items": 140,
+    "./pipeline": 143,
+    "./released-asset-checker": 144
   } ],
-  131: [ (function(require, module, exports) {
+  132: [ (function(require, module, exports) {
     var Path = require("../utils/CCPath");
     var Pipeline = require("./pipeline");
     var LoadingItems = require("./loading-items");
@@ -25967,11 +25968,11 @@
     };
     Pipeline.AssetLoader = module.exports = AssetLoader;
   }), {
-    "../utils/CCPath": 219,
-    "./loading-items": 139,
-    "./pipeline": 142
+    "../utils/CCPath": 220,
+    "./loading-items": 140,
+    "./pipeline": 143
   } ],
-  132: [ (function(require, module, exports) {
+  133: [ (function(require, module, exports) {
     var pushToMap = require("../utils/misc").pushToMap;
     function Entry(uuid, type) {
       this.uuid = uuid;
@@ -26052,9 +26053,9 @@
     };
     module.exports = AssetTable;
   }), {
-    "../utils/misc": 226
+    "../utils/misc": 227
   } ],
-  133: [ (function(require, module, exports) {
+  134: [ (function(require, module, exports) {
     var Path = require("../utils/CCPath");
     var sys = require("../platform/CCSys");
     var Pipeline = require("./pipeline");
@@ -26119,12 +26120,12 @@
     }
     module.exports = downloadAudio;
   }), {
-    "../../audio/CCAudioEngine": 23,
-    "../platform/CCSys": 185,
-    "../utils/CCPath": 219,
-    "./pipeline": 142
+    "../../audio/CCAudioEngine": 24,
+    "../platform/CCSys": 186,
+    "../utils/CCPath": 220,
+    "./pipeline": 143
   } ],
-  134: [ (function(require, module, exports) {
+  135: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     function parseDepends(key, parsed) {
       var item = cc.loader.getItem(key);
@@ -26189,9 +26190,9 @@
       }
     };
   }), {
-    "../platform/js": 197
+    "../platform/js": 198
   } ],
-  135: [ (function(require, module, exports) {
+  136: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var sys = require("../platform/CCSys");
     var Path = require("../utils/CCPath");
@@ -26391,17 +26392,17 @@
     };
     Pipeline.Downloader = module.exports = Downloader;
   }), {
-    "../platform/CCSys": 185,
-    "../platform/js": 197,
-    "../utils/CCPath": 219,
-    "../utils/misc": 226,
-    "./audio-downloader": 133,
-    "./pack-downloader": 141,
-    "./pipeline": 142,
-    "./text-downloader": 144,
-    "./utils": 145
+    "../platform/CCSys": 186,
+    "../platform/js": 198,
+    "../utils/CCPath": 220,
+    "../utils/misc": 227,
+    "./audio-downloader": 134,
+    "./pack-downloader": 142,
+    "./pipeline": 143,
+    "./text-downloader": 145,
+    "./utils": 146
   } ],
-  136: [ (function(require, module, exports) {
+  137: [ (function(require, module, exports) {
     require("./downloader");
     require("./loader");
     require("./json-unpacker");
@@ -26409,14 +26410,14 @@
     require("./pipeline");
     require("./CCLoader");
   }), {
-    "./CCLoader": 130,
-    "./downloader": 135,
-    "./json-unpacker": 137,
-    "./loader": 138,
-    "./loading-items": 139,
-    "./pipeline": 142
+    "./CCLoader": 131,
+    "./downloader": 136,
+    "./json-unpacker": 138,
+    "./loader": 139,
+    "./loading-items": 140,
+    "./pipeline": 143
   } ],
-  137: [ (function(require, module, exports) {
+  138: [ (function(require, module, exports) {
     function JsonUnpacker() {
       this.jsons = {};
       this.state = -1;
@@ -26436,7 +26437,7 @@
     false;
     module.exports = JsonUnpacker;
   }), {} ],
-  138: [ (function(require, module, exports) {
+  139: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var sys = require("../platform/CCSys");
     var Pipeline = require("./pipeline");
@@ -26506,14 +26507,14 @@
     };
     Pipeline.Loader = module.exports = Loader;
   }), {
-    "../platform/CCSys": 185,
-    "../platform/js": 197,
-    "../textures/CCTexture2D": 216,
-    "../utils/misc": 226,
-    "./pipeline": 142,
-    "./uuid-loader": 146
+    "../platform/CCSys": 186,
+    "../platform/js": 198,
+    "../textures/CCTexture2D": 217,
+    "../utils/misc": 227,
+    "./pipeline": 143,
+    "./uuid-loader": 147
   } ],
-  139: [ (function(require, module, exports) {
+  140: [ (function(require, module, exports) {
     var CallbacksInvoker = require("../platform/callbacks-invoker");
     var Path = require("../utils/CCPath");
     var JS = require("../platform/js");
@@ -26797,11 +26798,11 @@
     };
     cc.LoadingItems = module.exports = LoadingItems;
   }), {
-    "../platform/callbacks-invoker": 190,
-    "../platform/js": 197,
-    "../utils/CCPath": 219
+    "../platform/callbacks-invoker": 191,
+    "../platform/js": 198,
+    "../utils/CCPath": 220
   } ],
-  140: [ (function(require, module, exports) {
+  141: [ (function(require, module, exports) {
     var Pipeline = require("./pipeline");
     var ID = "MD5Pipe";
     var ExtnameRegex = /(\.[^.\n\\/]*)$/;
@@ -26839,9 +26840,9 @@
     };
     Pipeline.MD5Pipe = module.exports = MD5Pipe;
   }), {
-    "./pipeline": 142
+    "./pipeline": 143
   } ],
-  141: [ (function(require, module, exports) {
+  142: [ (function(require, module, exports) {
     var JsonUnpacker = require("./json-unpacker");
     var pushToMap = require("../utils/misc").pushToMap;
     var uuidToPack = {};
@@ -26930,10 +26931,10 @@
     };
     false;
   }), {
-    "../utils/misc": 226,
-    "./json-unpacker": 137
+    "../utils/misc": 227,
+    "./json-unpacker": 138
   } ],
-  142: [ (function(require, module, exports) {
+  143: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var LoadingItems = require("./loading-items");
     var ItemState = LoadingItems.ItemState;
@@ -27070,10 +27071,10 @@
     };
     cc.Pipeline = module.exports = Pipeline;
   }), {
-    "../platform/js": 197,
-    "./loading-items": 139
+    "../platform/js": 198,
+    "./loading-items": 140
   } ],
-  143: [ (function(require, module, exports) {
+  144: [ (function(require, module, exports) {
     true;
     var JS;
     var tmpInfo;
@@ -27127,9 +27128,9 @@
       module.exports = ReleasedAssetChecker;
     })();
   }), {
-    "../platform/js": 197
+    "../platform/js": 198
   } ],
-  144: [ (function(require, module, exports) {
+  145: [ (function(require, module, exports) {
     var sys = require("../platform/CCSys");
     false;
     var urlAppendTimestamp = require("./utils").urlAppendTimestamp;
@@ -27164,10 +27165,10 @@
       xhr.send(null);
     };
   }), {
-    "../platform/CCSys": 185,
-    "./utils": 145
+    "../platform/CCSys": 186,
+    "./utils": 146
   } ],
-  145: [ (function(require, module, exports) {
+  146: [ (function(require, module, exports) {
     var _noCacheRex = /\?/;
     module.exports = {
       urlAppendTimestamp: function(url) {
@@ -27176,7 +27177,7 @@
       }
     };
   }), {} ],
-  146: [ (function(require, module, exports) {
+  147: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     require("../platform/deserialize");
     var LoadingItems = require("./loading-items");
@@ -27331,11 +27332,11 @@
     module.exports = loadUuid;
     loadUuid.isSceneObj = isSceneObj;
   }), {
-    "../platform/deserialize": 192,
-    "../platform/js": 197,
-    "./loading-items": 139
+    "../platform/deserialize": 193,
+    "../platform/js": 198,
+    "./loading-items": 140
   } ],
-  147: [ (function(require, module, exports) {
+  148: [ (function(require, module, exports) {
     var CompScheduler = require("./component-scheduler");
     var Flags = require("./platform/CCObject").Flags;
     var JS = require("./platform/js");
@@ -27504,12 +27505,12 @@
     });
     module.exports = NodeActivator;
   }), {
-    "./component-scheduler": 70,
-    "./platform/CCObject": 182,
-    "./platform/js": 197,
-    "./utils/misc": 226
+    "./component-scheduler": 71,
+    "./platform/CCObject": 183,
+    "./platform/js": 198,
+    "./utils/misc": 227
   } ],
-  148: [ (function(require, module, exports) {
+  149: [ (function(require, module, exports) {
     var PTM_RATIO = require("./CCPhysicsTypes").PTM_RATIO;
     var ContactType = require("./CCPhysicsTypes").ContactType;
     var pools = [];
@@ -27728,9 +27729,9 @@
     PhysicsContact.ContactType = ContactType;
     cc.PhysicsContact = module.exports = PhysicsContact;
   }), {
-    "./CCPhysicsTypes": 150
+    "./CCPhysicsTypes": 151
   } ],
-  149: [ (function(require, module, exports) {
+  150: [ (function(require, module, exports) {
     var ContactType = require("./CCPhysicsTypes").ContactType;
     var BodyType = require("./CCPhysicsTypes").BodyType;
     var RayCastType = require("./CCPhysicsTypes").RayCastType;
@@ -28015,9 +28016,9 @@
     }));
     cc.PhysicsManager = module.exports = PhysicsManager;
   }), {
-    "./CCPhysicsTypes": 150
+    "./CCPhysicsTypes": 151
   } ],
-  150: [ (function(require, module, exports) {
+  151: [ (function(require, module, exports) {
     var ContactType = {
       BEGIN_CONTACT: "begin-contact",
       END_CONTACT: "end-contact",
@@ -28047,7 +28048,7 @@
       PHYSICS_ANGLE_TO_ANGLE: -180 / Math.PI
     };
   }), {} ],
-  151: [ (function(require, module, exports) {
+  152: [ (function(require, module, exports) {
     function At(i, vertices) {
       var s = vertices.length;
       return vertices[i < 0 ? s - -i % s : i % s];
@@ -28231,7 +28232,7 @@
       IsCounterClockWise: IsCounterClockWise
     };
   }), {} ],
-  152: [ (function(require, module, exports) {
+  153: [ (function(require, module, exports) {
     var PTM_RATIO = require("./CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("./CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var PHYSICS_ANGLE_TO_ANGLE = require("./CCPhysicsTypes").PHYSICS_ANGLE_TO_ANGLE;
@@ -28625,10 +28626,10 @@
     });
     cc.RigidBody = module.exports = RigidBody;
   }), {
-    "./CCPhysicsTypes": 150,
-    "./utils": 173
+    "./CCPhysicsTypes": 151,
+    "./utils": 174
   } ],
-  153: [ (function(require, module, exports) {
+  154: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PhysicsBoxCollider = cc.Class({
       name: "cc.PhysicsBoxCollider",
@@ -28652,9 +28653,9 @@
     });
     cc.PhysicsBoxCollider = module.exports = PhysicsBoxCollider;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  154: [ (function(require, module, exports) {
+  155: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PhysicsChainCollider = cc.Class({
       name: "cc.PhysicsChainCollider",
@@ -28694,9 +28695,9 @@
     });
     cc.PhysicsChainCollider = module.exports = PhysicsChainCollider;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  155: [ (function(require, module, exports) {
+  156: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PhysicsCircleCollider = cc.Class({
       name: "cc.PhysicsCircleCollider",
@@ -28719,9 +28720,9 @@
     });
     cc.PhysicsCircleCollider = module.exports = PhysicsCircleCollider;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  156: [ (function(require, module, exports) {
+  157: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var getWorldScale = require("../utils").getWorldScale;
     var PhysicsCollider = cc.Class({
@@ -28891,10 +28892,10 @@
     });
     cc.PhysicsCollider = module.exports = PhysicsCollider;
   }), {
-    "../CCPhysicsTypes": 150,
-    "../utils": 173
+    "../CCPhysicsTypes": 151,
+    "../utils": 174
   } ],
-  157: [ (function(require, module, exports) {
+  158: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PolygonSeparator = require("../CCPolygonSeparator");
     var PhysicsPolygonCollider = cc.Class({
@@ -28941,10 +28942,10 @@
     });
     cc.PhysicsPolygonCollider = module.exports = PhysicsPolygonCollider;
   }), {
-    "../CCPhysicsTypes": 150,
-    "../CCPolygonSeparator": 151
+    "../CCPhysicsTypes": 151,
+    "../CCPolygonSeparator": 152
   } ],
-  158: [ (function(require, module, exports) {
+  159: [ (function(require, module, exports) {
     true;
     window.b2 = require("../../../external/box2d/box2d");
     false;
@@ -28972,31 +28973,31 @@
     require("./platform/CCPhysicsAABBQueryCallback");
     require("./platform/CCPhysicsRayCastCallback");
   }), {
-    "../../../external/box2d/box2d": 310,
-    "./CCPhysicsContact": 148,
-    "./CCPhysicsManager": 149,
-    "./CCRigidBody": 152,
-    "./collider/CCPhysicsBoxCollider": 153,
-    "./collider/CCPhysicsChainCollider": 154,
-    "./collider/CCPhysicsCircleCollider": 155,
-    "./collider/CCPhysicsCollider": 156,
-    "./collider/CCPhysicsPolygonCollider": 157,
-    "./joint/CCDistanceJoint": 159,
-    "./joint/CCJoint": 160,
-    "./joint/CCMotorJoint": 161,
-    "./joint/CCMouseJoint": 162,
-    "./joint/CCPrismaticJoint": 163,
-    "./joint/CCRevoluteJoint": 164,
-    "./joint/CCRopeJoint": 165,
-    "./joint/CCWeldJoint": 166,
-    "./joint/CCWheelJoint": 167,
-    "./platform/CCPhysicsAABBQueryCallback": 168,
-    "./platform/CCPhysicsContactListner": 169,
-    "./platform/CCPhysicsDebugDraw": 170,
-    "./platform/CCPhysicsRayCastCallback": 171,
-    "./platform/CCPhysicsUtils": 172
+    "../../../external/box2d/box2d": 302,
+    "./CCPhysicsContact": 149,
+    "./CCPhysicsManager": 150,
+    "./CCRigidBody": 153,
+    "./collider/CCPhysicsBoxCollider": 154,
+    "./collider/CCPhysicsChainCollider": 155,
+    "./collider/CCPhysicsCircleCollider": 156,
+    "./collider/CCPhysicsCollider": 157,
+    "./collider/CCPhysicsPolygonCollider": 158,
+    "./joint/CCDistanceJoint": 160,
+    "./joint/CCJoint": 161,
+    "./joint/CCMotorJoint": 162,
+    "./joint/CCMouseJoint": 163,
+    "./joint/CCPrismaticJoint": 164,
+    "./joint/CCRevoluteJoint": 165,
+    "./joint/CCRopeJoint": 166,
+    "./joint/CCWeldJoint": 167,
+    "./joint/CCWheelJoint": 168,
+    "./platform/CCPhysicsAABBQueryCallback": 169,
+    "./platform/CCPhysicsContactListner": 170,
+    "./platform/CCPhysicsDebugDraw": 171,
+    "./platform/CCPhysicsRayCastCallback": 172,
+    "./platform/CCPhysicsUtils": 173
   } ],
-  159: [ (function(require, module, exports) {
+  160: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var DistanceJoint = cc.Class({
       name: "cc.DistanceJoint",
@@ -29049,9 +29050,9 @@
     });
     cc.DistanceJoint = module.exports = DistanceJoint;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  160: [ (function(require, module, exports) {
+  161: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var Joint = cc.Class({
       name: "cc.Joint",
@@ -29150,9 +29151,9 @@
     });
     cc.Joint = module.exports = Joint;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  161: [ (function(require, module, exports) {
+  162: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var MotorJoint = cc.Class({
@@ -29240,9 +29241,9 @@
     });
     cc.MotorJoint = module.exports = MotorJoint;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  162: [ (function(require, module, exports) {
+  163: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var tempB2Vec2 = new b2.Vec2();
     var MouseJoint = cc.Class({
@@ -29373,9 +29374,9 @@
     });
     cc.MouseJoint = module.exports = MouseJoint;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  163: [ (function(require, module, exports) {
+  164: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var PrismaticJoint = cc.Class({
@@ -29447,9 +29448,9 @@
     });
     cc.PrismaticJoint = module.exports = PrismaticJoint;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  164: [ (function(require, module, exports) {
+  165: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var PHYSICS_ANGLE_TO_ANGLE = require("../CCPhysicsTypes").PHYSICS_ANGLE_TO_ANGLE;
@@ -29535,9 +29536,9 @@
     });
     cc.RevoluteJoint = module.exports = RevoluteJoint;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  165: [ (function(require, module, exports) {
+  166: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var RopeJoint = cc.Class({
       name: "cc.RopeJoint",
@@ -29566,9 +29567,9 @@
     });
     cc.RopeJoint = module.exports = RopeJoint;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  166: [ (function(require, module, exports) {
+  167: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var WeldJoint = cc.Class({
@@ -29615,9 +29616,9 @@
     });
     cc.WeldJoint = module.exports = WeldJoint;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  167: [ (function(require, module, exports) {
+  168: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var WheelJoint = cc.Class({
@@ -29700,9 +29701,9 @@
     });
     cc.WheelJoint = module.exports = WheelJoint;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  168: [ (function(require, module, exports) {
+  169: [ (function(require, module, exports) {
     function PhysicsAABBQueryCallback() {
       this._point = new b2.Vec2();
       this._isPoint = false;
@@ -29734,7 +29735,7 @@
     };
     cc.PhysicsAABBQueryCallback = module.exports = PhysicsAABBQueryCallback;
   }), {} ],
-  169: [ (function(require, module, exports) {
+  170: [ (function(require, module, exports) {
     function PhysicsContactListener() {
       this._contactFixtures = [];
     }
@@ -29781,7 +29782,7 @@
     };
     cc.PhysicsContactListener = module.exports = PhysicsContactListener;
   }), {} ],
-  170: [ (function(require, module, exports) {
+  171: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PhysicsDebugDraw = cc.Class({
       name: "cc.PhysicsDebugDraw",
@@ -29852,9 +29853,9 @@
     });
     cc.PhysicsDebugDraw = module.exports = PhysicsDebugDraw;
   }), {
-    "../CCPhysicsTypes": 150
+    "../CCPhysicsTypes": 151
   } ],
-  171: [ (function(require, module, exports) {
+  172: [ (function(require, module, exports) {
     function PhysicsRayCastCallback() {
       this._type = 0;
       this._fixtures = [];
@@ -29899,7 +29900,7 @@
     };
     cc.PhysicsRayCastCallback = module.exports = PhysicsRayCastCallback;
   }), {} ],
-  172: [ (function(require, module, exports) {
+  173: [ (function(require, module, exports) {
     var PHYSICS_ANGLE_TO_ANGLE = require("../CCPhysicsTypes").PHYSICS_ANGLE_TO_ANGLE;
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var convertToNodeRotation = require("../utils").convertToNodeRotation;
@@ -29932,10 +29933,10 @@
     };
     cc.PhysicsUtils = module.exports = PhysicsUtils;
   }), {
-    "../CCPhysicsTypes": 150,
-    "../utils": 173
+    "../CCPhysicsTypes": 151,
+    "../utils": 174
   } ],
-  173: [ (function(require, module, exports) {
+  174: [ (function(require, module, exports) {
     function getWorldRotation(node) {
       var rot = node.rotationX;
       var parent = node.parent;
@@ -29971,7 +29972,7 @@
       convertToNodeRotation: convertToNodeRotation
     };
   }), {} ],
-  174: [ (function(require, module, exports) {
+  175: [ (function(require, module, exports) {
     var js;
     var macro;
     var sys;
@@ -29980,12 +29981,12 @@
     var bkInputManager;
     false;
   }), {
-    "../event-manager": 110,
-    "../platform/js": 197,
-    "./CCMacro": 181,
-    "./CCSys": 185
+    "../event-manager": 111,
+    "../platform/js": 198,
+    "./CCMacro": 182,
+    "./CCSys": 186
   } ],
-  175: [ (function(require, module, exports) {
+  176: [ (function(require, module, exports) {
     var Asset = require("../assets/CCAsset");
     var callInNextTick = require("./utils").callInNextTick;
     var Loader = require("../load-pipeline/CCLoader");
@@ -30146,15 +30147,15 @@
     AssetLibrary._uuidToAsset = {};
     module.exports = cc.AssetLibrary = AssetLibrary;
   }), {
-    "../assets/CCAsset": 43,
-    "../load-pipeline/CCLoader": 130,
-    "../load-pipeline/auto-release-utils": 134,
-    "../load-pipeline/md5-pipe": 140,
-    "../load-pipeline/pack-downloader": 141,
-    "../utils/decode-uuid": 223,
-    "./utils": 201
+    "../assets/CCAsset": 44,
+    "../load-pipeline/CCLoader": 131,
+    "../load-pipeline/auto-release-utils": 135,
+    "../load-pipeline/md5-pipe": 141,
+    "../load-pipeline/pack-downloader": 142,
+    "../utils/decode-uuid": 224,
+    "./utils": 202
   } ],
-  176: [ (function(require, module, exports) {
+  177: [ (function(require, module, exports) {
     var JS = require("./js");
     var Enum = require("./CCEnum");
     var Utils = require("./utils");
@@ -30679,14 +30680,14 @@
     };
     false;
   }), {
-    "./CCEnum": 178,
-    "./attribute": 189,
-    "./js": 197,
-    "./preprocess-class": 198,
-    "./requiring-frame": 199,
-    "./utils": 201
+    "./CCEnum": 179,
+    "./attribute": 190,
+    "./js": 198,
+    "./preprocess-class": 199,
+    "./requiring-frame": 200,
+    "./utils": 202
   } ],
-  177: [ (function(require, module, exports) {
+  178: [ (function(require, module, exports) {
     require("./CCClass");
     var Preprocess = require("./preprocess-class");
     var JS = require("./js");
@@ -30859,12 +30860,12 @@
       mixins: mixins
     };
   }), {
-    "./CCClass": 176,
-    "./js": 197,
-    "./preprocess-class": 198,
-    "./utils": 201
+    "./CCClass": 177,
+    "./js": 198,
+    "./preprocess-class": 199,
+    "./utils": 202
   } ],
-  178: [ (function(require, module, exports) {
+  179: [ (function(require, module, exports) {
     var JS = require("./js");
     function Enum(obj) {
       if ("__enums__" in obj) return obj;
@@ -30911,9 +30912,9 @@
     false;
     module.exports = cc.Enum = Enum;
   }), {
-    "./js": 197
+    "./js": 198
   } ],
-  179: [ (function(require, module, exports) {
+  180: [ (function(require, module, exports) {
     cc.ClassManager || require("./_CCClass");
     var eventManager = require("../event-manager");
     var inputManager = require("./CCInputManager");
@@ -30992,11 +30993,11 @@
       }
     };
   }), {
-    "../event-manager": 110,
-    "./CCInputManager": 180,
-    "./_CCClass": 188
+    "../event-manager": 111,
+    "./CCInputManager": 181,
+    "./_CCClass": 189
   } ],
-  180: [ (function(require, module, exports) {
+  181: [ (function(require, module, exports) {
     var js = require("../platform/js");
     var macro = require("./CCMacro");
     var sys = require("./CCSys");
@@ -31379,12 +31380,12 @@
     }));
     module.exports = inputManager;
   }), {
-    "../event-manager": 110,
-    "../platform/js": 197,
-    "./CCMacro": 181,
-    "./CCSys": 185
+    "../event-manager": 111,
+    "../platform/js": 198,
+    "./CCMacro": 182,
+    "./CCSys": 186
   } ],
-  181: [ (function(require, module, exports) {
+  182: [ (function(require, module, exports) {
     require("./_CCClass");
     cc.KEY = {
       none: 0,
@@ -31672,9 +31673,9 @@
     };
     module.exports = cc.macro;
   }), {
-    "./_CCClass": 188
+    "./_CCClass": 189
   } ],
-  182: [ (function(require, module, exports) {
+  183: [ (function(require, module, exports) {
     var JS = require("./js");
     var CCClass = require("./CCClass");
     var Destroyed = 1;
@@ -31835,10 +31836,10 @@
     false, false;
     cc.Object = module.exports = CCObject;
   }), {
-    "./CCClass": 176,
-    "./js": 197
+    "./CCClass": 177,
+    "./js": 198
   } ],
-  183: [ (function(require, module, exports) {
+  184: [ (function(require, module, exports) {
     cc.SAXParser = cc._Class.extend({
       ctor: function() {
         if (window.DOMParser) {
@@ -31909,7 +31910,7 @@
     cc.saxParser = new cc.SAXParser();
     cc.plistParser = new cc.PlistParser();
   }), {} ],
-  184: [ (function(require, module, exports) {
+  185: [ (function(require, module, exports) {
     cc.screen = {
       _supportsFullScreen: false,
       _preOnFullScreenChange: null,
@@ -31960,7 +31961,7 @@
     };
     cc.screen.init();
   }), {} ],
-  185: [ (function(require, module, exports) {
+  186: [ (function(require, module, exports) {
     if (cc.sys) return;
     cc.sys = {};
     var sys = cc.sys;
@@ -32282,7 +32283,7 @@
     };
     module.exports = sys;
   }), {} ],
-  186: [ (function(require, module, exports) {
+  187: [ (function(require, module, exports) {
     var eventManager = require("../event-manager");
     var __BrowserGetter = {
       init: function() {
@@ -32969,9 +32970,9 @@
     cc.ResolutionPolicy.UNKNOWN = 5;
     module.exports = View;
   }), {
-    "../event-manager": 110
+    "../event-manager": 111
   } ],
-  187: [ (function(require, module, exports) {
+  188: [ (function(require, module, exports) {
     cc.visibleRect = {
       topLeft: cc.p(0, 0),
       topRight: cc.p(0, 0),
@@ -33009,7 +33010,7 @@
       }
     };
   }), {} ],
-  188: [ (function(require, module, exports) {
+  189: [ (function(require, module, exports) {
     var ClassManager = cc.ClassManager = {
       instanceId: 0 | 998 * Math.random(),
       getNewInstanceId: function() {
@@ -33114,7 +33115,7 @@
     };
     cc._Class = module.exports = Class;
   }), {} ],
-  189: [ (function(require, module, exports) {
+  190: [ (function(require, module, exports) {
     var JS = require("./js");
     var isPlainEmptyObj = require("./utils").isPlainEmptyObj_DEV;
     var DELIMETER = "$_$";
@@ -33202,11 +33203,11 @@
       ScriptUuid: {}
     };
   }), {
-    "./CCClass": 176,
-    "./js": 197,
-    "./utils": 201
+    "./CCClass": 177,
+    "./js": 198,
+    "./utils": 202
   } ],
-  190: [ (function(require, module, exports) {
+  191: [ (function(require, module, exports) {
     var JS = require("./js");
     var fastRemoveAt = JS.array.fastRemoveAt;
     function CallbackList() {
@@ -33330,9 +33331,9 @@
     CallbacksInvoker.CallbacksHandler = CallbacksHandler;
     module.exports = CallbacksInvoker;
   }), {
-    "./js": 197
+    "./js": 198
   } ],
-  191: [ (function(require, module, exports) {
+  192: [ (function(require, module, exports) {
     function deepFlatten(strList, array) {
       for (var i = 0; i < array.length; i++) {
         var item = array[i];
@@ -33349,7 +33350,7 @@
       flattenCodeArray: flattenCodeArray
     };
   }), {} ],
-  192: [ (function(require, module, exports) {
+  193: [ (function(require, module, exports) {
     var JS = require("./js");
     var CCObject = require("./CCObject");
     var Attr = require("./attribute");
@@ -33680,13 +33681,13 @@
       cc.warnID(5302, id);
     };
   }), {
-    "../utils/misc": 226,
-    "./CCClass": 176,
-    "./CCObject": 182,
-    "./attribute": 189,
-    "./js": 197
+    "../utils/misc": 227,
+    "./CCClass": 177,
+    "./CCObject": 183,
+    "./attribute": 190,
+    "./js": 198
   } ],
-  193: [ (function(require, module, exports) {
+  194: [ (function(require, module, exports) {
     var NonUuidMark = ".";
     function IdGenerater(category) {
       this.id = 0 | 998 * Math.random();
@@ -33698,7 +33699,7 @@
     IdGenerater.global = new IdGenerater("global");
     module.exports = IdGenerater;
   }), {} ],
-  194: [ (function(require, module, exports) {
+  195: [ (function(require, module, exports) {
     require("./js");
     require("./CCClass");
     require("./CCClassDecorator");
@@ -33717,23 +33718,23 @@
     true;
     require("./CCVisibleRect");
   }), {
-    "./CCAssetLibrary": 175,
-    "./CCClass": 176,
-    "./CCClassDecorator": 177,
-    "./CCEnum": 178,
-    "./CCMacro": 181,
-    "./CCObject": 182,
-    "./CCSys": 185,
-    "./CCVisibleRect": 187,
-    "./callbacks-invoker": 190,
-    "./deserialize": 192,
-    "./instantiate": 196,
-    "./instantiate-jit": 195,
-    "./js": 197,
-    "./requiring-frame": 199,
-    "./url": 200
+    "./CCAssetLibrary": 176,
+    "./CCClass": 177,
+    "./CCClassDecorator": 178,
+    "./CCEnum": 179,
+    "./CCMacro": 182,
+    "./CCObject": 183,
+    "./CCSys": 186,
+    "./CCVisibleRect": 188,
+    "./callbacks-invoker": 191,
+    "./deserialize": 193,
+    "./instantiate": 197,
+    "./instantiate-jit": 196,
+    "./js": 198,
+    "./requiring-frame": 200,
+    "./url": 201
   } ],
-  195: [ (function(require, module, exports) {
+  196: [ (function(require, module, exports) {
     var CCObject = require("./CCObject");
     var Destroyed = CCObject.Flags.Destroyed;
     var PersistentMask = CCObject.Flags.PersistentMask;
@@ -34007,13 +34008,13 @@
     };
     false;
   }), {
-    "./CCClass": 176,
-    "./CCObject": 182,
-    "./attribute": 189,
-    "./compiler": 191,
-    "./js": 197
+    "./CCClass": 177,
+    "./CCObject": 183,
+    "./attribute": 190,
+    "./compiler": 192,
+    "./js": 198
   } ],
-  196: [ (function(require, module, exports) {
+  197: [ (function(require, module, exports) {
     var CCObject = require("./CCObject");
     var Destroyed = CCObject.Flags.Destroyed;
     var PersistentMask = CCObject.Flags.PersistentMask;
@@ -34135,11 +34136,11 @@
     cc.instantiate = instantiate;
     module.exports = instantiate;
   }), {
-    "./CCObject": 182,
-    "./attribute": 189,
-    "./utils": 201
+    "./CCObject": 183,
+    "./attribute": 190,
+    "./utils": 202
   } ],
-  197: [ (function(require, module, exports) {
+  198: [ (function(require, module, exports) {
     var tempCIDGenerater = new (require("./id-generater"))("TmpCId.");
     function _getPropertyDescriptor(obj, name) {
       while (obj) {
@@ -34495,10 +34496,10 @@
     cc.js = js;
     module.exports = js;
   }), {
-    "../utils/mutable-forward-iterator": 227,
-    "./id-generater": 193
+    "../utils/mutable-forward-iterator": 228,
+    "./id-generater": 194
   } ],
-  198: [ (function(require, module, exports) {
+  199: [ (function(require, module, exports) {
     var SerializableAttrs = {
       url: {
         canUsedInGet: true
@@ -34625,9 +34626,9 @@
       return true;
     };
   }), {
-    "./CCClass": 176
+    "./CCClass": 177
   } ],
-  199: [ (function(require, module, exports) {
+  200: [ (function(require, module, exports) {
     var requiringFrames = [];
     cc._RF = {
       push: function(module, uuid, script) {
@@ -34658,7 +34659,7 @@
     };
     false;
   }), {} ],
-  200: [ (function(require, module, exports) {
+  201: [ (function(require, module, exports) {
     var _mounts = {};
     cc.url = {
       _rawAssets: "",
@@ -34689,7 +34690,7 @@
     };
     module.exports = cc.url;
   }), {} ],
-  201: [ (function(require, module, exports) {
+  202: [ (function(require, module, exports) {
     module.exports = {
       contains: function(refNode, otherNode) {
         if ("function" == typeof refNode.contains) return refNode.contains(otherNode);
@@ -34715,7 +34716,7 @@
     false;
     false;
   }), {} ],
-  202: [ (function(require, module, exports) {
+  203: [ (function(require, module, exports) {
     require("./platform/js");
     require("./value-types");
     require("./utils");
@@ -34737,27 +34738,27 @@
     require("./event-manager");
     require("./renderer");
   }), {
-    "./CCDirector": 33,
-    "./CCDirectorCanvas": 34,
-    "./CCDirectorWebGL": 35,
-    "./CCScheduler": 42,
-    "./event": 114,
-    "./event-manager": 110,
-    "./load-pipeline": 136,
-    "./platform/CCInputExtension": 179,
-    "./platform/CCInputManager": 180,
-    "./platform/CCMacro": 181,
-    "./platform/CCSAXParser": 183,
-    "./platform/CCScreen": 184,
-    "./platform/CCSys": 185,
-    "./platform/CCView": 186,
-    "./platform/js": 197,
-    "./renderer": 206,
-    "./textures": 218,
-    "./utils": 225,
-    "./value-types": 239
+    "./CCDirector": 34,
+    "./CCDirectorCanvas": 35,
+    "./CCDirectorWebGL": 36,
+    "./CCScheduler": 43,
+    "./event": 115,
+    "./event-manager": 111,
+    "./load-pipeline": 137,
+    "./platform/CCInputExtension": 180,
+    "./platform/CCInputManager": 181,
+    "./platform/CCMacro": 182,
+    "./platform/CCSAXParser": 184,
+    "./platform/CCScreen": 185,
+    "./platform/CCSys": 186,
+    "./platform/CCView": 187,
+    "./platform/js": 198,
+    "./renderer": 207,
+    "./textures": 219,
+    "./utils": 226,
+    "./value-types": 240
   } ],
-  203: [ (function(require, module, exports) {
+  204: [ (function(require, module, exports) {
     var Region = function() {
       this._minX = 0;
       this._minY = 0;
@@ -34985,7 +34986,7 @@
     cc.Region = Region;
     cc.DirtyRegion = DirtyRegion;
   }), {} ],
-  204: [ (function(require, module, exports) {
+  205: [ (function(require, module, exports) {
     cc.rendererCanvas = {
       childrenOrderDirty: true,
       assignedZ: 0,
@@ -35286,7 +35287,7 @@
       };
     })();
   }), {} ],
-  205: [ (function(require, module, exports) {
+  206: [ (function(require, module, exports) {
     var _batchedInfo = {
       texture: null,
       blendSrc: null,
@@ -35611,16 +35612,16 @@
       }
     };
   }), {} ],
-  206: [ (function(require, module, exports) {
+  207: [ (function(require, module, exports) {
     require("./RendererCanvas");
     require("./RendererWebGL");
     require("./DirtyRegion");
   }), {
-    "./DirtyRegion": 203,
-    "./RendererCanvas": 204,
-    "./RendererWebGL": 205
+    "./DirtyRegion": 204,
+    "./RendererCanvas": 205,
+    "./RendererWebGL": 206
   } ],
-  207: [ (function(require, module, exports) {
+  208: [ (function(require, module, exports) {
     _ccsg.Scene = _ccsg.Node.extend({
       _className: "Scene",
       ctor: function() {
@@ -35631,7 +35632,7 @@
       }
     });
   }), {} ],
-  208: [ (function(require, module, exports) {
+  209: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     var Misc = require("../utils/misc");
     _ccsg.Sprite = _ccsg.Node.extend({
@@ -35947,10 +35948,10 @@
     };
     Misc.propertyDefine(_ccsg.Sprite, SameNameGetSets, DiffNameGetSets);
   }), {
-    "../event/event-target": 112,
-    "../utils/misc": 226
+    "../event/event-target": 113,
+    "../utils/misc": 227
   } ],
-  209: [ (function(require, module, exports) {
+  210: [ (function(require, module, exports) {
     _ccsg.Sprite.CanvasRenderCmd = function(renderable) {
       this._rootCtor(renderable);
       this._needDraw = true;
@@ -36128,7 +36129,7 @@
       return nCanvas;
     };
   }), {} ],
-  210: [ (function(require, module, exports) {
+  211: [ (function(require, module, exports) {
     var macro = cc.macro;
     _ccsg.Sprite.WebGLRenderCmd = function(renderable) {
       this._rootCtor(renderable);
@@ -36351,7 +36352,7 @@
       return len;
     };
   }), {} ],
-  211: [ (function(require, module, exports) {
+  212: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     function sortIndex(a, b) {
       return a - b;
@@ -37406,9 +37407,9 @@
       RADIAL: 2
     });
   }), {
-    "../event/event-target": 112
+    "../event/event-target": 113
   } ],
-  212: [ (function(require, module, exports) {
+  213: [ (function(require, module, exports) {
     cc.Scale9Sprite.CanvasRenderCmd = function(renderable) {
       this._rootCtor(renderable);
       this._node.loaded() ? this._needDraw = true : this._needDraw = false;
@@ -37529,7 +37530,7 @@
       }
     };
   }), {} ],
-  213: [ (function(require, module, exports) {
+  214: [ (function(require, module, exports) {
     var ccgl = cc.gl;
     cc.Scale9Sprite.WebGLRenderCmd = function(renderable) {
       this._rootCtor(renderable);
@@ -37683,7 +37684,7 @@
       fShader: "precision lowp float;\nvarying vec4 v_fragmentColor;\nvarying vec2 v_texCoord;\nuniform vec2 u_offset;\nuniform vec2 u_offset_tiling;\nconst float PI = 3.14159265359;\nvoid main()\n{\nfloat halfPI = 0.5 * PI;\nfloat maxFactor = sin(halfPI);\nvec2 uv = v_texCoord;\nvec2 xy = 2.0 * uv.xy - 1.0;\nfloat d = length(xy);\nif (d < (2.0-maxFactor)) {\nd = length(xy * maxFactor);\nfloat z = sqrt(1.0 - d * d);\nfloat r = atan(d, z) / PI;\nfloat phi = atan(xy.y, xy.x);\nuv.x = r * cos(phi) + 0.5;\nuv.y = r * sin(phi) + 0.5;\n} else {\ndiscard;\n}\nuv = uv * u_offset_tiling + u_offset;\nuv = fract(uv);\ngl_FragColor = v_fragmentColor * texture2D(CC_Texture0, uv);\n}"
     };
   }), {} ],
-  214: [ (function(require, module, exports) {
+  215: [ (function(require, module, exports) {
     cc.SpriteBatchNode = _ccsg.Node.extend({
       _blendFunc: null,
       _texture: null,
@@ -37774,7 +37775,7 @@
     cc.defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
     cc.defineGetterSetter(_p, "shaderProgram", _p.getShaderProgram, _p.setShaderProgram);
   }), {} ],
-  215: [ (function(require, module, exports) {
+  216: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     cc.SpriteFrame = cc.Class({
       name: "cc.SpriteFrame",
@@ -37947,10 +37948,10 @@
     proto.copy = proto.clone;
     proto.initWithTexture = proto.setTexture;
   }), {
-    "../assets/CCAsset": 43,
-    "../event/event-target": 112
+    "../assets/CCAsset": 44,
+    "../event/event-target": 113
   } ],
-  216: [ (function(require, module, exports) {
+  217: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     var sys = require("../platform/CCSys");
     var JS = require("../platform/js");
@@ -38415,16 +38416,16 @@
     }));
     cc.Texture2D = module.exports = Texture2D;
   }), {
-    "../CCGame": 39,
-    "../assets/CCRawAsset": 49,
-    "../event/event-target": 112,
-    "../platform/CCClass": 176,
-    "../platform/CCSys": 185,
-    "../platform/_CCClass": 188,
-    "../platform/js": 197,
-    "../utils/misc": 226
+    "../CCGame": 40,
+    "../assets/CCRawAsset": 50,
+    "../event/event-target": 113,
+    "../platform/CCClass": 177,
+    "../platform/CCSys": 186,
+    "../platform/_CCClass": 189,
+    "../platform/js": 198,
+    "../utils/misc": 227
   } ],
-  217: [ (function(require, module, exports) {
+  218: [ (function(require, module, exports) {
     var game = require("../CCGame");
     var Texture2D = require("./CCTexture2D");
     var textureCache = {
@@ -38601,17 +38602,17 @@
     }));
     cc.textureCache = module.exports = textureCache;
   }), {
-    "../CCGame": 39,
-    "./CCTexture2D": 216
+    "../CCGame": 40,
+    "./CCTexture2D": 217
   } ],
-  218: [ (function(require, module, exports) {
+  219: [ (function(require, module, exports) {
     require("./CCTexture2D");
     require("./CCTextureCache");
   }), {
-    "./CCTexture2D": 216,
-    "./CCTextureCache": 217
+    "./CCTexture2D": 217,
+    "./CCTextureCache": 218
   } ],
-  219: [ (function(require, module, exports) {
+  220: [ (function(require, module, exports) {
     require("../platform/CCSys");
     var EXTNAME_RE = /(\.[^\.\/\?\\]*)(\?.*)?$/;
     var DIRNAME_RE = /((.*)(\/|\\|\\\\))?(.*?\..*$)?/;
@@ -38688,9 +38689,9 @@
     };
     module.exports = cc.path;
   }), {
-    "../platform/CCSys": 185
+    "../platform/CCSys": 186
   } ],
-  220: [ (function(require, module, exports) {
+  221: [ (function(require, module, exports) {
     var PStats = require("../../../external/pstats/pstats");
     var macro = require("../platform/CCMacro");
     var _fps = document.createElement("div");
@@ -38774,10 +38775,10 @@
       }
     };
   }), {
-    "../../../external/pstats/pstats": 312,
-    "../platform/CCMacro": 181
+    "../../../external/pstats/pstats": 304,
+    "../platform/CCMacro": 182
   } ],
-  221: [ (function(require, module, exports) {
+  222: [ (function(require, module, exports) {
     var Flags = require("../platform/CCObject").Flags;
     var Misc = require("./misc");
     var IdGenerater = require("../platform/id-generater");
@@ -39217,12 +39218,12 @@
     false;
     cc._BaseNode = module.exports = BaseNode;
   }), {
-    "../event-manager": 110,
-    "../platform/CCObject": 182,
-    "../platform/id-generater": 193,
-    "./misc": 226
+    "../event-manager": 111,
+    "../platform/CCObject": 183,
+    "../platform/id-generater": 194,
+    "./misc": 227
   } ],
-  222: [ (function(require, module, exports) {
+  223: [ (function(require, module, exports) {
     var EPSILON = 1e-6;
     function binarySearchEpsilon(array, value) {
       for (var l = 0, h = array.length - 1, m = h >>> 1; l <= h; m = l + h >>> 1) {
@@ -39238,7 +39239,7 @@
       binarySearchEpsilon: binarySearchEpsilon
     };
   }), {} ],
-  223: [ (function(require, module, exports) {
+  224: [ (function(require, module, exports) {
     var Base64Values = require("./misc").BASE64_VALUES;
     var HexChars = "0123456789abcdef".split("");
     var _t = [ "", "", "", "" ];
@@ -39261,9 +39262,9 @@
     };
     false;
   }), {
-    "./misc": 226
+    "./misc": 227
   } ],
-  224: [ (function(require, module, exports) {
+  225: [ (function(require, module, exports) {
     cc.find = module.exports = function(path, referenceNode) {
       if (null == path) {
         cc.errorID(5600);
@@ -39297,18 +39298,18 @@
       return match;
     };
   }), {} ],
-  225: [ (function(require, module, exports) {
+  226: [ (function(require, module, exports) {
     require("./CCPath");
     (true, true) && true && require("./CCProfiler");
     require("./find");
     require("./mutable-forward-iterator");
   }), {
-    "./CCPath": 219,
-    "./CCProfiler": 220,
-    "./find": 224,
-    "./mutable-forward-iterator": 227
+    "./CCPath": 220,
+    "./CCProfiler": 221,
+    "./find": 225,
+    "./mutable-forward-iterator": 228
   } ],
-  226: [ (function(require, module, exports) {
+  227: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var sys = require("../platform/CCSys");
     var misc = exports;
@@ -39372,10 +39373,10 @@
       } else exists.push(value); else map[key] = pushFront ? [ value, exists ] : [ exists, value ]; else map[key] = value;
     };
   }), {
-    "../platform/CCSys": 185,
-    "../platform/js": 197
+    "../platform/CCSys": 186,
+    "../platform/js": 198
   } ],
-  227: [ (function(require, module, exports) {
+  228: [ (function(require, module, exports) {
     function MutableForwardIterator(array) {
       this.i = 0;
       this.array = array;
@@ -39404,7 +39405,7 @@
     };
     module.exports = MutableForwardIterator;
   }), {} ],
-  228: [ (function(require, module, exports) {
+  229: [ (function(require, module, exports) {
     cc._PrefabInfo = cc.Class({
       name: "cc.PrefabInfo",
       properties: {
@@ -39459,7 +39460,7 @@
       }
     };
   }), {} ],
-  229: [ (function(require, module, exports) {
+  230: [ (function(require, module, exports) {
     var SceneGraphUtils = {
       removeSgNode: function() {
         var sgNode = this._sgNode;
@@ -39476,7 +39477,7 @@
     false;
     module.exports = SceneGraphUtils;
   }), {} ],
-  230: [ (function(require, module, exports) {
+  231: [ (function(require, module, exports) {
     cc.AffineTransform = function(a, b, c, d, tx, ty) {
       this.a = a;
       this.b = b;
@@ -39715,7 +39716,7 @@
       out.ty = determinant * (b * t.tx - a * t.ty);
     };
   }), {} ],
-  231: [ (function(require, module, exports) {
+  232: [ (function(require, module, exports) {
     var ValueType = require("./CCValueType");
     var JS = require("../platform/js");
     var Color = (function() {
@@ -39958,11 +39959,11 @@
     };
     module.exports = cc.Color;
   }), {
-    "../platform/CCClass": 176,
-    "../platform/js": 197,
-    "./CCValueType": 237
+    "../platform/CCClass": 177,
+    "../platform/js": 198,
+    "./CCValueType": 238
   } ],
-  232: [ (function(require, module, exports) {
+  233: [ (function(require, module, exports) {
     var POINT_EPSILON = parseFloat("1.192092896e-07F");
     cc.pNeg = function(point) {
       return cc.p(-point.x, -point.y);
@@ -40128,7 +40129,7 @@
       cc.pMultIn(v, 1 / Math.sqrt(v.x * v.x + v.y * v.y));
     };
   }), {} ],
-  233: [ (function(require, module, exports) {
+  234: [ (function(require, module, exports) {
     var ValueType = require("./CCValueType");
     var JS = require("../platform/js");
     function Rect(x, y, w, h) {
@@ -40291,11 +40292,11 @@
     };
     module.exports = cc.Rect;
   }), {
-    "../platform/CCClass": 176,
-    "../platform/js": 197,
-    "./CCValueType": 237
+    "../platform/CCClass": 177,
+    "../platform/js": 198,
+    "./CCValueType": 238
   } ],
-  234: [ (function(require, module, exports) {
+  235: [ (function(require, module, exports) {
     var ValueType = require("./CCValueType");
     var JS = require("../platform/js");
     function Size(width, height) {
@@ -40340,11 +40341,11 @@
     };
     cc.Size = module.exports = Size;
   }), {
-    "../platform/CCClass": 176,
-    "../platform/js": 197,
-    "./CCValueType": 237
+    "../platform/CCClass": 177,
+    "../platform/js": 198,
+    "./CCValueType": 238
   } ],
-  235: [ (function(require, module, exports) {
+  236: [ (function(require, module, exports) {
     cc.Acceleration = function(x, y, z, timestamp) {
       this.x = x || 0;
       this.y = y || 0;
@@ -40400,7 +40401,7 @@
       BOTTOM: 2
     });
   }), {} ],
-  236: [ (function(require, module, exports) {
+  237: [ (function(require, module, exports) {
     cc.WebGLColor = function(r, g, b, a, arrayBuffer, offset) {
       this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.WebGLColor.BYTES_PER_ELEMENT);
       this._offset = offset || 0;
@@ -40849,7 +40850,7 @@
     cc.js.getset(_p, "b", _p._getB, _p._setB);
     cc.js.getset(_p, "c", _p._getC, _p._setC);
   }), {} ],
-  237: [ (function(require, module, exports) {
+  238: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     function ValueType() {}
     JS.setClassName("cc.ValueType", ValueType);
@@ -40861,9 +40862,9 @@
     cc.ValueType = ValueType;
     module.exports = ValueType;
   }), {
-    "../platform/js": 197
+    "../platform/js": 198
   } ],
-  238: [ (function(require, module, exports) {
+  239: [ (function(require, module, exports) {
     var ValueType = require("./CCValueType");
     var JS = require("../platform/js");
     var CCClass = require("../platform/CCClass");
@@ -41051,11 +41052,11 @@
     };
     module.exports = cc.Vec2;
   }), {
-    "../platform/CCClass": 176,
-    "../platform/js": 197,
-    "./CCValueType": 237
+    "../platform/CCClass": 177,
+    "../platform/js": 198,
+    "./CCValueType": 238
   } ],
-  239: [ (function(require, module, exports) {
+  240: [ (function(require, module, exports) {
     require("./CCValueType");
     require("./CCVec2");
     require("./CCPointExtension");
@@ -41066,17 +41067,17 @@
     require("./CCAffineTransform");
     require("./CCTypesWebGL");
   }), {
-    "./CCAffineTransform": 230,
-    "./CCColor": 231,
-    "./CCPointExtension": 232,
-    "./CCRect": 233,
-    "./CCSize": 234,
-    "./CCTypes": 235,
-    "./CCTypesWebGL": 236,
-    "./CCValueType": 237,
-    "./CCVec2": 238
+    "./CCAffineTransform": 231,
+    "./CCColor": 232,
+    "./CCPointExtension": 233,
+    "./CCRect": 234,
+    "./CCSize": 235,
+    "./CCTypes": 236,
+    "./CCTypesWebGL": 237,
+    "./CCValueType": 238,
+    "./CCVec2": 239
   } ],
-  240: [ (function(require, module, exports) {
+  241: [ (function(require, module, exports) {
     var Utils = require("../platform/utils");
     var sys = require("../platform/CCSys");
     var eventManager = require("../event-manager");
@@ -41433,11 +41434,11 @@
       };
     })(_ccsg.VideoPlayer._polyfill);
   }), {
-    "../event-manager": 110,
-    "../platform/CCSys": 185,
-    "../platform/utils": 201
+    "../event-manager": 111,
+    "../platform/CCSys": 186,
+    "../platform/utils": 202
   } ],
-  241: [ (function(require, module, exports) {
+  242: [ (function(require, module, exports) {
     var Utils = require("../platform/utils");
     var eventManager = require("../event-manager");
     _ccsg.WebView = _ccsg.Node.extend({
@@ -41685,10 +41686,10 @@
       };
     })(_ccsg.WebView._polyfill);
   }), {
-    "../event-manager": 110,
-    "../platform/utils": 201
+    "../event-manager": 111,
+    "../platform/utils": 202
   } ],
-  242: [ (function(require, module, exports) {
+  243: [ (function(require, module, exports) {
     var js = cc.js;
     var deprecateEnum;
     var markAsRemoved;
@@ -41697,7 +41698,7 @@
     var ERR;
     false;
   }), {} ],
-  243: [ (function(require, module, exports) {
+  244: [ (function(require, module, exports) {
     require("./core/CCGame");
     require("./actions");
     require("./core/base-nodes/CCSGNode");
@@ -41717,26 +41718,26 @@
     require("./render-texture/CCRenderTextureCanvasRenderCmd");
     require("./render-texture/CCRenderTextureWebGLRenderCmd");
   }), {
-    "./actions": 10,
-    "./core/CCConfiguration": 32,
-    "./core/CCGame": 39,
-    "./core/base-nodes/CCSGNode": 55,
-    "./core/base-nodes/CCSGNodeBaseRenderCmd": 56,
-    "./core/base-nodes/CCSGNodeCanvasRenderCmd": 57,
-    "./core/base-nodes/CCSGNodeWebGLRenderCmd": 58,
-    "./core/scenes/CCSGScene": 207,
-    "./core/sprites/CCSGSprite": 208,
-    "./core/sprites/CCSGSpriteCanvasRenderCmd": 209,
-    "./core/sprites/CCSGSpriteWebGLRenderCmd": 210,
-    "./core/sprites/CCScale9Sprite": 211,
-    "./core/sprites/CCScale9SpriteCanvasRenderCmd": 212,
-    "./core/sprites/CCScale9SpriteWebGLRenderCmd": 213,
-    "./core/sprites/CCSpriteBatchNode": 214,
-    "./render-texture/CCRenderTexture": 267,
-    "./render-texture/CCRenderTextureCanvasRenderCmd": 268,
-    "./render-texture/CCRenderTextureWebGLRenderCmd": 269
+    "./actions": 11,
+    "./core/CCConfiguration": 33,
+    "./core/CCGame": 40,
+    "./core/base-nodes/CCSGNode": 56,
+    "./core/base-nodes/CCSGNodeBaseRenderCmd": 57,
+    "./core/base-nodes/CCSGNodeCanvasRenderCmd": 58,
+    "./core/base-nodes/CCSGNodeWebGLRenderCmd": 59,
+    "./core/scenes/CCSGScene": 208,
+    "./core/sprites/CCSGSprite": 209,
+    "./core/sprites/CCSGSpriteCanvasRenderCmd": 210,
+    "./core/sprites/CCSGSpriteWebGLRenderCmd": 211,
+    "./core/sprites/CCScale9Sprite": 212,
+    "./core/sprites/CCScale9SpriteCanvasRenderCmd": 213,
+    "./core/sprites/CCScale9SpriteWebGLRenderCmd": 214,
+    "./core/sprites/CCSpriteBatchNode": 215,
+    "./render-texture/CCRenderTexture": 268,
+    "./render-texture/CCRenderTextureCanvasRenderCmd": 269,
+    "./render-texture/CCRenderTextureWebGLRenderCmd": 270
   } ],
-  244: [ (function(require, module, exports) {
+  245: [ (function(require, module, exports) {
     cc.math.AABB = function(min, max) {
       this.min = min || new cc.math.Vec3();
       this.max = max || new cc.math.Vec3();
@@ -41757,7 +41758,7 @@
       return pOut;
     };
   }), {} ],
-  245: [ (function(require, module, exports) {
+  246: [ (function(require, module, exports) {
     cc.math.Matrix4Stack = function(top, stack) {
       this.top = top;
       this.stack = stack || [];
@@ -41797,7 +41798,7 @@
       this._matrixPool.push(matrix);
     };
   }), {} ],
-  246: [ (function(require, module, exports) {
+  247: [ (function(require, module, exports) {
     var math = cc.math;
     math.KM_GL_MODELVIEW = 5888;
     math.KM_GL_PROJECTION = 5889;
@@ -41913,7 +41914,7 @@
       }
     };
   }), {} ],
-  247: [ (function(require, module, exports) {
+  248: [ (function(require, module, exports) {
     require("./utility");
     require("./vec2");
     require("./vec3");
@@ -41927,20 +41928,20 @@
     require("./gl/mat4stack");
     require("./gl/matrix");
   }), {
-    "./aabb": 244,
-    "./gl/mat4stack": 245,
-    "./gl/matrix": 246,
-    "./mat3": 248,
-    "./mat4": 249,
-    "./plane": 250,
-    "./quaternion": 251,
-    "./ray2": 252,
-    "./utility": 253,
-    "./vec2": 254,
-    "./vec3": 255,
-    "./vec4": 256
+    "./aabb": 245,
+    "./gl/mat4stack": 246,
+    "./gl/matrix": 247,
+    "./mat3": 249,
+    "./mat4": 250,
+    "./plane": 251,
+    "./quaternion": 252,
+    "./ray2": 253,
+    "./utility": 254,
+    "./vec2": 255,
+    "./vec3": 256,
+    "./vec4": 257
   } ],
-  248: [ (function(require, module, exports) {
+  249: [ (function(require, module, exports) {
     true;
     window.Uint16Array = window.Uint16Array || window.Array;
     window.Float32Array = window.Float32Array || window.Array;
@@ -42160,7 +42161,7 @@
       return cc.math.Quaternion.rotationMatrix(this).toAxisAndAngle();
     };
   }), {} ],
-  249: [ (function(require, module, exports) {
+  250: [ (function(require, module, exports) {
     cc.math.Matrix4 = function(mat4) {
       mat4 && mat4.mat ? this.mat = new Float32Array(mat4.mat) : this.mat = new Float32Array(16);
     };
@@ -42768,7 +42769,7 @@
       return temp.toAxisAndAngle();
     };
   }), {} ],
-  250: [ (function(require, module, exports) {
+  251: [ (function(require, module, exports) {
     cc.math.Plane = function(a, b, c, d) {
       if (a && void 0 === b) {
         this.a = a.a;
@@ -42832,7 +42833,7 @@
       return cc.math.Plane.POINT_ON_PLANE;
     };
   }), {} ],
-  251: [ (function(require, module, exports) {
+  252: [ (function(require, module, exports) {
     cc.math.Quaternion = function(x, y, z, w) {
       if (x && void 0 === y) {
         this.x = x.x;
@@ -43070,7 +43071,7 @@
       return retVec;
     };
   }), {} ],
-  252: [ (function(require, module, exports) {
+  253: [ (function(require, module, exports) {
     cc.math.Ray2 = function(start, dir) {
       this.start = start || new cc.math.Vec2();
       this.dir = dir || new cc.math.Vec2();
@@ -43150,7 +43151,7 @@
       return intersected;
     };
   }), {} ],
-  253: [ (function(require, module, exports) {
+  254: [ (function(require, module, exports) {
     cc.math = cc.math || {};
     cc.math.EPSILON = 1 / 64;
     cc.math.square = function(s) {
@@ -43160,7 +43161,7 @@
       return lhs + cc.math.EPSILON > rhs && lhs - cc.math.EPSILON < rhs;
     };
   }), {} ],
-  254: [ (function(require, module, exports) {
+  255: [ (function(require, module, exports) {
     cc.math.Vec2 = function(x, y) {
       if (void 0 === y) {
         this.x = x.x;
@@ -43230,7 +43231,7 @@
       return this.x < vec.x + cc.math.EPSILON && this.x > vec.x - cc.math.EPSILON && this.y < vec.y + cc.math.EPSILON && this.y > vec.y - cc.math.EPSILON;
     };
   }), {} ],
-  255: [ (function(require, module, exports) {
+  256: [ (function(require, module, exports) {
     cc.math.Vec3 = cc.math.Vec3 = function(x, y, z) {
       if (x && void 0 === y) {
         this.x = x.x;
@@ -43359,7 +43360,7 @@
       return tyArr;
     };
   }), {} ],
-  256: [ (function(require, module, exports) {
+  257: [ (function(require, module, exports) {
     cc.math.Vec4 = function(x, y, z, w) {
       if (x && void 0 === y) {
         this.x = x.x;
@@ -43466,7 +43467,7 @@
       return tyArr;
     };
   }), {} ],
-  257: [ (function(require, module, exports) {
+  258: [ (function(require, module, exports) {
     require("./CCSGMotionStreak");
     require("./CCSGMotionStreakWebGLRenderCmd");
     var MotionStreak = cc.Class({
@@ -43602,10 +43603,10 @@
     });
     cc.MotionStreak = module.exports = MotionStreak;
   }), {
-    "./CCSGMotionStreak": 258,
-    "./CCSGMotionStreakWebGLRenderCmd": 259
+    "./CCSGMotionStreak": 259,
+    "./CCSGMotionStreakWebGLRenderCmd": 260
   } ],
-  258: [ (function(require, module, exports) {
+  259: [ (function(require, module, exports) {
     function vertexLineToPolygon(points, stroke, vertices, offset, nuPoints) {
       nuPoints += offset;
       if (nuPoints <= 1) return;
@@ -43949,7 +43950,7 @@
       set: motionStreakPro.setPositionY
     });
   }), {} ],
-  259: [ (function(require, module, exports) {
+  260: [ (function(require, module, exports) {
     _ccsg.MotionStreak.WebGLRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
       this._needDraw = true;
@@ -43993,7 +43994,7 @@
       }
     };
   }), {} ],
-  260: [ (function(require, module, exports) {
+  261: [ (function(require, module, exports) {
     var Zlib = require("../compression/zlib.min");
     var PNGReader = cc._Class.extend({
       ctor: function(data) {
@@ -44277,16 +44278,16 @@
     });
     module.exports = PNGReader;
   }), {
-    "../compression/zlib.min": 31
+    "../compression/zlib.min": 32
   } ],
-  261: [ (function(require, module, exports) {
+  262: [ (function(require, module, exports) {
     var ParticleAsset = cc.Class({
       name: "cc.ParticleAsset",
       extends: cc.RawAsset
     });
     cc.ParticleAsset = module.exports = ParticleAsset;
   }), {} ],
-  262: [ (function(require, module, exports) {
+  263: [ (function(require, module, exports) {
     require("./CCParticleAsset");
     require("./CCSGParticleSystem");
     require("./CCSGParticleSystemCanvasRenderCmd");
@@ -44622,12 +44623,12 @@
     });
     cc.ParticleSystem = module.exports = ParticleSystem;
   }), {
-    "./CCParticleAsset": 261,
-    "./CCSGParticleSystem": 263,
-    "./CCSGParticleSystemCanvasRenderCmd": 264,
-    "./CCSGParticleSystemWebGLRenderCmd": 265
+    "./CCParticleAsset": 262,
+    "./CCSGParticleSystem": 264,
+    "./CCSGParticleSystemCanvasRenderCmd": 265,
+    "./CCSGParticleSystemWebGLRenderCmd": 266
   } ],
-  263: [ (function(require, module, exports) {
+  264: [ (function(require, module, exports) {
     var PNGReader = require("./CCPNGReader");
     var tiffReader = require("./CCTIFFReader");
     require("../compression/ZipUtils");
@@ -45557,11 +45558,11 @@
       GROUPED: 2
     });
   }), {
-    "../compression/ZipUtils": 28,
-    "./CCPNGReader": 260,
-    "./CCTIFFReader": 266
+    "../compression/ZipUtils": 29,
+    "./CCPNGReader": 261,
+    "./CCTIFFReader": 267
   } ],
-  264: [ (function(require, module, exports) {
+  265: [ (function(require, module, exports) {
     _ccsg.ParticleSystem.CanvasRenderCmd = function(renderable) {
       this._rootCtor(renderable);
       this._needDraw = true;
@@ -45684,7 +45685,7 @@
       }
     };
   }), {} ],
-  265: [ (function(require, module, exports) {
+  266: [ (function(require, module, exports) {
     _ccsg.ParticleSystem.WebGLRenderCmd = function(renderable) {
       this._rootCtor(renderable);
       this._needDraw = true;
@@ -45916,7 +45917,7 @@
       selParticle.isChangeColor = true;
     };
   }), {} ],
-  266: [ (function(require, module, exports) {
+  267: [ (function(require, module, exports) {
     var tiffReader = {
       _littleEndian: false,
       _tiffData: null,
@@ -46325,7 +46326,7 @@
     };
     module.exports = tiffReader;
   }), {} ],
-  267: [ (function(require, module, exports) {
+  268: [ (function(require, module, exports) {
     cc.RenderTexture = _ccsg.Node.extend({
       sprite: null,
       clearFlags: 0,
@@ -46462,7 +46463,7 @@
       return new cc.RenderTexture(width, height, format, depthStencilFormat);
     };
   }), {} ],
-  268: [ (function(require, module, exports) {
+  269: [ (function(require, module, exports) {
     cc.RenderTexture.CanvasRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
       this._needDraw = false;
@@ -46521,7 +46522,7 @@
       cc.log("clearDepth isn't supported on Cocos2d-Html5");
     };
   }), {} ],
-  269: [ (function(require, module, exports) {
+  270: [ (function(require, module, exports) {
     var misc = require("../core/utils/misc");
     cc.RenderTexture.WebGLRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
@@ -46727,9 +46728,9 @@
       node.end();
     };
   }), {
-    "../core/utils/misc": 226
+    "../core/utils/misc": 227
   } ],
-  270: [ (function(require, module, exports) {
+  271: [ (function(require, module, exports) {
     var macro = cc.macro;
     var math = cc.math;
     cc.GLProgram = cc._Class.extend({
@@ -47117,7 +47118,7 @@
       return cc.GLProgram._highpSupported;
     };
   }), {} ],
-  271: [ (function(require, module, exports) {
+  272: [ (function(require, module, exports) {
     var _currentProjectionMatrix = -1;
     var macro = cc.macro;
     var ENABLE_GL_STATE_CACHE = macro.ENABLE_GL_STATE_CACHE;
@@ -47212,7 +47213,7 @@
       ENABLE_GL_STATE_CACHE;
     };
   }), {} ],
-  272: [ (function(require, module, exports) {
+  273: [ (function(require, module, exports) {
     var shaders = cc.PresetShaders;
     var macro = cc.macro;
     cc.shaderCache = {
@@ -47346,7 +47347,7 @@
       }
     };
   }), {} ],
-  273: [ (function(require, module, exports) {
+  274: [ (function(require, module, exports) {
     cc.PresetShaders = {
       POSITION_UCOLOR_FRAG: "precision lowp float;\nvarying vec4 v_fragmentColor;\nvoid main()\n{\ngl_FragColor = v_fragmentColor;\n}",
       POSITION_UCOLOR_VERT: "attribute vec4 a_position;\nuniform vec4 u_color;\nuniform float u_pointSize;\nvarying lowp vec4 v_fragmentColor;\nvoid main(void)\n{\ngl_Position = (CC_PMatrix * CC_MVMatrix) * a_position;\ngl_PointSize = u_pointSize;\nv_fragmentColor = u_color;\n}",
@@ -47368,18 +47369,18 @@
       EX_SWITCHMASK_FRAG: "precision lowp float;\nvarying vec4 v_fragmentColor;\nvarying vec2 v_texCoord;\nuniform sampler2D u_texture;\nuniform sampler2D u_mask;\nvoid main()\n{\nvec4 texColorc=texture2D(u_texture, v_texCoord);\nvec4 maskColor=texture2D(u_mask, v_texCoord);\nvec4 finalColor=vec4(texColor.r, texColor.g, texColor.b, maskColor.a*texColor.a);\ngl_FragColor=v_fragmentColor*finalColor;\n}"
     };
   }), {} ],
-  274: [ (function(require, module, exports) {
+  275: [ (function(require, module, exports) {
     require("./CCShaders");
     require("./CCShaderCache");
     require("./CCGLProgram");
     require("./CCGLStateCache");
   }), {
-    "./CCGLProgram": 270,
-    "./CCGLStateCache": 271,
-    "./CCShaderCache": 272,
-    "./CCShaders": 273
+    "./CCGLProgram": 271,
+    "./CCGLStateCache": 272,
+    "./CCShaderCache": 273,
+    "./CCShaders": 274
   } ],
-  275: [ (function(require, module, exports) {
+  276: [ (function(require, module, exports) {
     var __t = function(v) {
       return {
         u: v.x,
@@ -48097,10 +48098,10 @@
       }
     }));
   }), {
-    "./CCDrawNodeCanvasRenderCmd": 276,
-    "./CCDrawNodeWebGLRenderCmd": 277
+    "./CCDrawNodeCanvasRenderCmd": 277,
+    "./CCDrawNodeWebGLRenderCmd": 278
   } ],
-  276: [ (function(require, module, exports) {
+  277: [ (function(require, module, exports) {
     cc.DrawNode.CanvasRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
       this._needDraw = true;
@@ -48176,7 +48177,7 @@
       locIsStroke && ctx.stroke();
     };
   }), {} ],
-  277: [ (function(require, module, exports) {
+  278: [ (function(require, module, exports) {
     cc.DrawNode.WebGLRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
       this._needDraw = true;
@@ -48202,7 +48203,7 @@
       }
     };
   }), {} ],
-  278: [ (function(require, module, exports) {
+  279: [ (function(require, module, exports) {
     _ccsg.TMXLayer = _ccsg.Node.extend({
       tiles: null,
       tileset: null,
@@ -48690,7 +48691,7 @@
       }
     });
   }), {} ],
-  279: [ (function(require, module, exports) {
+  280: [ (function(require, module, exports) {
     require("../shape-nodes/CCDrawNode");
     _ccsg.TMXObject = cc.Class({
       properties: {
@@ -48977,9 +48978,9 @@
       }
     });
   }), {
-    "../shape-nodes/CCDrawNode": 275
+    "../shape-nodes/CCDrawNode": 276
   } ],
-  280: [ (function(require, module, exports) {
+  281: [ (function(require, module, exports) {
     _ccsg.TMXObjectGroup = _ccsg.Node.extend({
       properties: null,
       groupName: "",
@@ -49062,7 +49063,7 @@
       }
     });
   }), {} ],
-  281: [ (function(require, module, exports) {
+  282: [ (function(require, module, exports) {
     require("./CCSGTMXObject");
     require("./CCTMXXMLParser");
     _ccsg.TMXTiledMap = _ccsg.Node.extend({
@@ -49254,10 +49255,10 @@
     _p.tileHeight;
     cc.defineGetterSetter(_p, "tileHeight", _p._getTileHeight, _p._setTileHeight);
   }), {
-    "./CCSGTMXObject": 279,
-    "./CCTMXXMLParser": 284
+    "./CCSGTMXObject": 280,
+    "./CCTMXXMLParser": 285
   } ],
-  282: [ (function(require, module, exports) {
+  283: [ (function(require, module, exports) {
     var Orientation = null;
     var TileFlag = null;
     var FLIPPED_MASK = null;
@@ -49388,7 +49389,7 @@
       }
     };
   }), {} ],
-  283: [ (function(require, module, exports) {
+  284: [ (function(require, module, exports) {
     var Orientation = null;
     var TileFlag = null;
     var FLIPPED_MASK = null;
@@ -49591,7 +49592,7 @@
       return (offset - vertexDataOffset) / 6;
     };
   }), {} ],
-  284: [ (function(require, module, exports) {
+  285: [ (function(require, module, exports) {
     require("../compression/ZipUtils");
     var Zlib = require("../compression/zlib.min");
     function uint8ArrayToUint32Array(uint8Arr) {
@@ -50115,10 +50116,10 @@
     cc.TMXLayerInfo.ATTRIB_GZIP = 4;
     cc.TMXLayerInfo.ATTRIB_ZLIB = 8;
   }), {
-    "../compression/ZipUtils": 28,
-    "../compression/zlib.min": 31
+    "../compression/ZipUtils": 29,
+    "../compression/zlib.min": 32
   } ],
-  285: [ (function(require, module, exports) {
+  286: [ (function(require, module, exports) {
     require("./CCSGTMXLayer");
     require("./CCTMXLayerCanvasRenderCmd");
     require("./CCTMXLayerWebGLRenderCmd");
@@ -50272,11 +50273,11 @@
     });
     cc.TiledLayer = module.exports = TiledLayer;
   }), {
-    "./CCSGTMXLayer": 278,
-    "./CCTMXLayerCanvasRenderCmd": 282,
-    "./CCTMXLayerWebGLRenderCmd": 283
+    "./CCSGTMXLayer": 279,
+    "./CCTMXLayerCanvasRenderCmd": 283,
+    "./CCTMXLayerWebGLRenderCmd": 284
   } ],
-  286: [ (function(require, module, exports) {
+  287: [ (function(require, module, exports) {
     require("./CCTiledMapAsset");
     require("./CCTiledLayer");
     require("./CCTiledObjectGroup");
@@ -50682,12 +50683,12 @@
       return [];
     }), false);
   }), {
-    "./CCSGTMXTiledMap": 281,
-    "./CCTiledLayer": 285,
-    "./CCTiledMapAsset": 287,
-    "./CCTiledObjectGroup": 288
+    "./CCSGTMXTiledMap": 282,
+    "./CCTiledLayer": 286,
+    "./CCTiledMapAsset": 288,
+    "./CCTiledObjectGroup": 289
   } ],
-  287: [ (function(require, module, exports) {
+  288: [ (function(require, module, exports) {
     var TiledMapAsset = cc.Class({
       name: "cc.TiledMapAsset",
       extends: cc.Asset,
@@ -50715,7 +50716,7 @@
     cc.TiledMapAsset = TiledMapAsset;
     module.exports = TiledMapAsset;
   }), {} ],
-  288: [ (function(require, module, exports) {
+  289: [ (function(require, module, exports) {
     require("./CCSGTMXObjectGroup");
     var TiledObjectGroup = cc.Class({
       name: "cc.TiledObjectGroup",
@@ -50785,9 +50786,9 @@
     });
     cc.TiledObjectGroup = module.exports = TiledObjectGroup;
   }), {
-    "./CCSGTMXObjectGroup": 280
+    "./CCSGTMXObjectGroup": 281
   } ],
-  289: [ (function(require, module, exports) {
+  290: [ (function(require, module, exports) {
     require("./cocos2d/core");
     require("./cocos2d/animation");
     false;
@@ -50805,23 +50806,23 @@
     true;
     require("./cocos2d/deprecated");
   }), {
-    "./cocos2d/actions": 10,
-    "./cocos2d/animation": 18,
-    "./cocos2d/core": 124,
-    "./cocos2d/core/components/CCStudioComponent": 95,
-    "./cocos2d/deprecated": 242,
-    "./cocos2d/motion-streak/CCMotionStreak": 257,
-    "./cocos2d/particle/CCParticleAsset": 261,
-    "./cocos2d/particle/CCParticleSystem": 262,
-    "./cocos2d/tilemap/CCTiledMap": 286,
-    "./cocos2d/tilemap/CCTiledMapAsset": 287,
-    "./extensions/ccpool/CCNodePool": 290,
-    "./extensions/ccpool/CCPool": 291,
-    "./extensions/dragonbones": 299,
-    "./extensions/spine": 308,
-    "./external/chipmunk/chipmunk": 311
+    "./cocos2d/actions": 11,
+    "./cocos2d/animation": 19,
+    "./cocos2d/core": 125,
+    "./cocos2d/core/components/CCStudioComponent": 96,
+    "./cocos2d/deprecated": 243,
+    "./cocos2d/motion-streak/CCMotionStreak": 258,
+    "./cocos2d/particle/CCParticleAsset": 262,
+    "./cocos2d/particle/CCParticleSystem": 263,
+    "./cocos2d/tilemap/CCTiledMap": 287,
+    "./cocos2d/tilemap/CCTiledMapAsset": 288,
+    "./extensions/ccpool/CCNodePool": 291,
+    "./extensions/ccpool/CCPool": 292,
+    "./extensions/dragonbones": 1,
+    "./extensions/spine": 300,
+    "./external/chipmunk/chipmunk": 303
   } ],
-  290: [ (function(require, module, exports) {
+  291: [ (function(require, module, exports) {
     cc.NodePool = function(poolHandlerComp) {
       this.poolHandlerComp = poolHandlerComp;
       this._pool = [];
@@ -50856,7 +50857,7 @@
     };
     module.exports = cc.NodePool;
   }), {} ],
-  291: [ (function(require, module, exports) {
+  292: [ (function(require, module, exports) {
     var _args = [];
     cc.pool = {
       _pool: {},
@@ -50913,6493 +50914,7 @@
       }
     };
   }), {} ],
-  292: [ (function(require, module, exports) {
-    var DefaultArmaturesEnum = cc.Enum({
-      default: -1
-    });
-    var DefaultAnimsEnum = cc.Enum({
-      "<None>": 0
-    });
-    function setEnumAttr(obj, propName, enumDef) {
-      cc.Class.attr(obj, propName, {
-        type: "Enum",
-        enumList: cc.Enum.getList(enumDef)
-      });
-    }
-    dragonBones.ArmatureDisplay = cc.Class({
-      name: "dragonBones.ArmatureDisplay",
-      extends: cc._RendererUnderSG,
-      editor: false,
-      properties: {
-        _factory: {
-          default: null,
-          type: dragonBones.CCFactory,
-          serializable: false
-        },
-        _dragonBonesData: {
-          default: null,
-          type: dragonBones.DragonBonesData,
-          serializable: false
-        },
-        dragonAsset: {
-          default: null,
-          type: dragonBones.DragonBonesAsset,
-          notify: function() {
-            this._parseDragonAsset();
-            this._refresh();
-            false;
-          },
-          tooltip: false
-        },
-        dragonAtlasAsset: {
-          default: null,
-          type: dragonBones.DragonBonesAtlasAsset,
-          notify: function() {
-            this._parseDragonAtlasAsset();
-            this._refreshSgNode();
-          },
-          tooltip: false
-        },
-        _armatureName: "",
-        armatureName: {
-          get: function() {
-            return this._armatureName;
-          },
-          set: function(value) {
-            this._armatureName = value;
-            var animNames = this.getAnimationNames(this._armatureName);
-            if (!this.animationName || animNames.indexOf(this.animationName) < 0) {
-              false;
-              this.animationName = "";
-            }
-            this._refresh();
-          },
-          visible: false
-        },
-        _animationName: "",
-        animationName: {
-          get: function() {
-            return this._animationName;
-          },
-          set: function(value) {
-            this._animationName = value;
-          },
-          visible: false
-        },
-        _defaultArmatureIndex: {
-          default: 0,
-          notify: function() {
-            var armatureName = "";
-            if (this.dragonAsset) {
-              var armaturesEnum;
-              this.dragonAsset && (armaturesEnum = this.dragonAsset.getArmatureEnum());
-              if (!armaturesEnum) return cc.errorID(7400, this.name);
-              armatureName = armaturesEnum[this._defaultArmatureIndex];
-            }
-            void 0 !== armatureName ? this.armatureName = armatureName : cc.errorID(7401, this.name);
-          },
-          type: DefaultArmaturesEnum,
-          visible: true,
-          editorOnly: true,
-          displayName: "Armature",
-          tooltip: false
-        },
-        _animationIndex: {
-          default: 0,
-          notify: function() {
-            if (0 === this._animationIndex) {
-              this.animationName = "";
-              return;
-            }
-            var animsEnum;
-            this.dragonAsset && (animsEnum = this.dragonAsset.getAnimsEnum(this.armatureName));
-            if (!animsEnum) return;
-            var animName = animsEnum[this._animationIndex];
-            void 0 !== animName ? this.animationName = animName : cc.errorID(7402, this.name);
-          },
-          type: DefaultAnimsEnum,
-          visible: true,
-          editorOnly: true,
-          displayName: "Animation",
-          tooltip: false
-        },
-        timeScale: {
-          default: 1,
-          notify: function() {
-            this._sgNode && (this._sgNode.animation().timeScale = this.timeScale);
-          },
-          tooltip: false
-        },
-        playTimes: {
-          default: -1,
-          tooltip: false
-        },
-        debugBones: {
-          default: false,
-          notify: function() {
-            this._sgNode && this._sgNode.setDebugBones(this.debugBones);
-          },
-          editorOnly: true,
-          tooltip: false
-        }
-      },
-      ctor: function() {
-        false;
-        this._factory = dragonBones.CCFactory.getInstance();
-      },
-      __preload: function() {
-        this._parseDragonAsset();
-        this._parseDragonAtlasAsset();
-        this._refresh();
-      },
-      _createSgNode: function() {
-        if (this.dragonAsset && this.dragonAtlasAsset && this.armatureName) return this._factory.buildArmatureDisplay(this.armatureName, this._dragonBonesData.name);
-        return null;
-      },
-      _initSgNode: function() {
-        var sgNode = this._sgNode;
-        sgNode.animation().timeScale = this.timeScale;
-        this.animationName && this.playAnimation(this.animationName, this.playTimes);
-        false;
-      },
-      _removeSgNode: function() {
-        var sgNode = this._sgNode;
-        this._super();
-        sgNode && sgNode.armature().dispose();
-      },
-      _parseDragonAsset: function() {
-        if (this.dragonAsset) {
-          false;
-          var jsonObj = JSON.parse(this.dragonAsset.dragonBonesJson);
-          var data = this._factory.getDragonBonesData(jsonObj.name);
-          if (data) {
-            var armature, dragonBonesData;
-            for (var i = 0, len = jsonObj.armature.length; i < len; i++) {
-              armature = jsonObj.armature[i];
-              if (!data.armatures[armature.name]) {
-                dragonBonesData || (dragonBonesData = this._factory._dataParser.parseDragonBonesData(jsonObj));
-                data.addArmature(dragonBonesData.armatures[armature.name]);
-              }
-            }
-            this._dragonBonesData = data;
-            return;
-          }
-          this._dragonBonesData = this._factory.parseDragonBonesData(jsonObj);
-        }
-      },
-      _parseDragonAtlasAsset: function() {
-        if (this.dragonAtlasAsset) {
-          false;
-          var atlasJsonObj = JSON.parse(this.dragonAtlasAsset.atlasJson);
-          var atlasName = atlasJsonObj.name;
-          var existedAtlasData = null;
-          var atlasDataList = this._factory.getTextureAtlasData(atlasName);
-          var texturePath = this.dragonAtlasAsset.texture;
-          if (atlasDataList && atlasDataList.length > 0) for (var idx in atlasDataList) {
-            var data = atlasDataList[idx];
-            if (data && data.texture && data.texture.url === texturePath) {
-              existedAtlasData = data;
-              break;
-            }
-          }
-          var texture = cc.textureCache.getTextureForKey(texturePath);
-          existedAtlasData ? existedAtlasData.texture = texture : this._factory.parseTextureAtlasData(atlasJsonObj, texture);
-        }
-      },
-      _refreshSgNode: function() {
-        var self = this;
-        var listenersBefore = null, listenersCacheBefore = null;
-        if (self._sgNode) {
-          listenersBefore = self._sgNode._bubblingListeners;
-          listenersCacheBefore = self._sgNode._hasListenerCache;
-          self.node._sizeProvider === self._sgNode && (self.node._sizeProvider = null);
-          self._removeSgNode();
-          self._sgNode = null;
-        }
-        var sgNode = self._sgNode = self._createSgNode();
-        if (sgNode) {
-          false;
-          self.enabledInHierarchy || sgNode.setVisible(false);
-          if (listenersBefore) {
-            sgNode._bubblingListeners = listenersBefore;
-            sgNode._hasListenerCache = listenersCacheBefore;
-            false;
-          }
-          self._initSgNode();
-          self._appendSgNode(sgNode);
-          self._registSizeProvider();
-        }
-      },
-      _refresh: function() {
-        this._refreshSgNode();
-        false;
-      },
-      _updateAnimEnum: false,
-      _updateArmatureEnum: false,
-      playAnimation: function(animName, playTimes) {
-        if (this._sgNode) {
-          this.playTimes = void 0 === playTimes ? -1 : playTimes;
-          this.animationName = animName;
-          return this._sgNode.animation().play(animName, this.playTimes);
-        }
-        return null;
-      },
-      getArmatureNames: function() {
-        if (this._dragonBonesData) return this._dragonBonesData.armatureNames;
-        return [];
-      },
-      getAnimationNames: function(armatureName) {
-        var ret = [];
-        if (this._dragonBonesData) {
-          var armatureData = this._dragonBonesData.getArmature(armatureName);
-          if (armatureData) for (var animName in armatureData.animations) armatureData.animations.hasOwnProperty(animName) && ret.push(animName);
-        }
-        return ret;
-      },
-      addEventListener: function(eventType, listener, target) {
-        this._sgNode && this._sgNode.addEvent(eventType, listener, target);
-      },
-      removeEventListener: function(eventType, listener, target) {
-        this._sgNode && this._sgNode.removeEvent(eventType, listener, target);
-      },
-      buildArmature: function(armatureName) {
-        if (this._factory) return this._factory.buildArmature(armatureName);
-        return null;
-      },
-      armature: function() {
-        if (this._sgNode) return this._sgNode.armature();
-        return null;
-      }
-    });
-  }), {} ],
   293: [ (function(require, module, exports) {
-    var EventTarget = require("../../cocos2d/core/event/event-target");
-    require("../../cocos2d/shape-nodes/CCDrawNode");
-    dragonBones.CCArmatureDisplay = cc.Class({
-      name: "dragonBones.CCArmatureDisplay",
-      extends: _ccsg.Node,
-      mixins: [ EventTarget ],
-      _armature: null,
-      _debugDrawer: null,
-      _onClear: function() {
-        this._armature = null;
-      },
-      _dispatchEvent: function(eventObject) {
-        this.emit(eventObject.type, eventObject);
-      },
-      _debugDraw: function() {
-        if (!this._armature) return;
-        if (!this._debugDrawer) {
-          this._debugDrawer = new cc.DrawNode();
-          this.addChild(this._debugDrawer);
-          this._debugDrawer.setDrawColor(cc.color(255, 0, 0, 255));
-          this._debugDrawer.setLineWidth(1);
-        }
-        this._debugDrawer.clear();
-        var bones = this._armature.getBones();
-        for (var i = 0, l = bones.length; i < l; ++i) {
-          var bone = bones[i];
-          var boneLength = Math.max(bone.length, 5);
-          var startX = bone.globalTransformMatrix.tx;
-          var startY = -bone.globalTransformMatrix.ty;
-          var endX = startX + bone.globalTransformMatrix.a * boneLength;
-          var endY = startY - bone.globalTransformMatrix.b * boneLength;
-          this._debugDrawer.drawSegment(cc.p(startX, startY), cc.p(endX, endY));
-        }
-      },
-      update: function(passedTime) {
-        this._armature && this._armature.advanceTime(passedTime);
-      },
-      advanceTimeBySelf: function(on) {
-        on ? this.scheduleUpdate() : this.unscheduleUpdate();
-      },
-      hasEvent: function(type) {
-        return this.hasEventListener(type, false);
-      },
-      addEvent: function(type, listener, target) {
-        this.on(type, listener, target);
-      },
-      removeEvent: function(type, listener, target) {
-        this.off(type, listener, target);
-      },
-      dispose: function() {
-        if (this._armature) {
-          this.advanceTimeBySelf(false);
-          this._armature.dispose();
-          this._armature = null;
-        }
-      },
-      armature: function() {
-        return this._armature;
-      },
-      animation: function() {
-        return this._armature.animation;
-      },
-      setDebugBones: function(debug) {
-        dragonBones.DragonBones.debugDraw = debug;
-        debug ? this.armature().advanceTime(0) : this._debugDrawer && this._debugDrawer.clear();
-      }
-    });
-  }), {
-    "../../cocos2d/core/event/event-target": 112,
-    "../../cocos2d/shape-nodes/CCDrawNode": 275
-  } ],
-  294: [ (function(require, module, exports) {
-    var BaseObject = dragonBones.BaseObject;
-    dragonBones.CCFactory = cc.Class({
-      name: "dragonBones.CCFactory",
-      extends: dragonBones.BaseFactory,
-      buildArmatureDisplay: function(armatureName, dragonBonesName, skinName) {
-        var armature = this.buildArmature(armatureName, dragonBonesName, skinName);
-        var armatureDisplay = armature ? armature._display : null;
-        armatureDisplay && armatureDisplay.advanceTimeBySelf(true);
-        return armatureDisplay;
-      },
-      _generateTextureAtlasData: function(textureAtlasData, texture) {
-        textureAtlasData || (textureAtlasData = BaseObject.borrowObject(dragonBones.CCTextureAtlasData));
-        textureAtlasData.texture = texture;
-        return textureAtlasData;
-      },
-      _generateArmature: function(dataPackage) {
-        var armature = BaseObject.borrowObject(dragonBones.Armature);
-        var armatureDisplayContainer = new dragonBones.CCArmatureDisplay();
-        armature._armatureData = dataPackage.armature;
-        armature._skinData = dataPackage.skin;
-        armature._animation = BaseObject.borrowObject(dragonBones.Animation);
-        armature._display = armatureDisplayContainer;
-        armatureDisplayContainer.setCascadeOpacityEnabled(true);
-        armatureDisplayContainer.setCascadeColorEnabled(true);
-        armatureDisplayContainer._armature = armature;
-        armature._animation._armature = armature;
-        armature.animation.animations = dataPackage.armature.animations;
-        return armature;
-      },
-      _generateSlot: function(dataPackage, slotDisplayDataSet) {
-        var slot = BaseObject.borrowObject(dragonBones.CCSlot);
-        var slotData = slotDisplayDataSet.slot;
-        var displayList = [];
-        slot.name = slotData.name;
-        slot._rawDisplay = new cc.Scale9Sprite();
-        slot._rawDisplay.setRenderingType(cc.Scale9Sprite.RenderingType.SIMPLE);
-        slot._rawDisplay.setAnchorPoint(cc.p(0, 0));
-        slot._meshDisplay = slot._rawDisplay;
-        for (var i = 0, l = slotDisplayDataSet.displays.length; i < l; ++i) {
-          var displayData = slotDisplayDataSet.displays[i];
-          switch (displayData.type) {
-           case dragonBones.DisplayType.Image:
-            displayData.texture || (displayData.texture = this._getTextureData(dataPackage.dataName, displayData.name));
-            displayList.push(slot._rawDisplay);
-            break;
-
-           case dragonBones.DisplayType.Mesh:
-            displayData.texture || (displayData.texture = this._getTextureData(dataPackage.dataName, displayData.name));
-            if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-              slot._meshDisplay.setRenderingType(cc.Scale9Sprite.RenderingType.MESH);
-              displayList.push(slot._meshDisplay);
-            } else cc.warnID(6200);
-            break;
-
-           case dragonBones.DisplayType.Armature:
-            var childArmature = this.buildArmature(displayData.name, dataPackage.dataName);
-            if (childArmature) {
-              if (!slot.inheritAnimation) {
-                var actions = slotData.actions.length > 0 ? slotData.actions : childArmature.armatureData.actions;
-                if (actions.length > 0) for (var j = 0, n = actions.length; j < n; ++j) childArmature._bufferAction(actions[j]); else childArmature.animation.play();
-              }
-              displayData.armature = childArmature.armatureData;
-            }
-            displayList.push(childArmature);
-            break;
-
-           default:
-            displayList.push(null);
-          }
-        }
-        slot._setDisplayList(displayList);
-        slot._rawDisplay.setLocalZOrder(slotData.zOrder);
-        return slot;
-      },
-      getTextureDisplay: function(textureName, textureAtlasName) {
-        var textureData = this._getTextureData(textureAtlasName, textureName);
-        if (textureData) {
-          if (!textureData.texture) {
-            var textureAtlasTexture = textureData.parent.texture;
-            var rect = cc.rect(textureData.region.x, textureData.region.y, textureData.region.width, textureData.region.height);
-            var offset = cc.p(0, 0);
-            var originSize = cc.size(textureData.region.width, textureData.region.height);
-            textureData.texture = new cc.SpriteFrame();
-            textureData.texture.setTexture(textureAtlasTexture, rect, textureData.rotated, offset, originSize);
-          }
-          var ret = new cc.Scale9Sprite();
-          ret.initWithSpriteFrame(textureData.texture);
-          return ret;
-        }
-        return null;
-      }
-    });
-    dragonBones.CCFactory._factory = null;
-    dragonBones.CCFactory.getInstance = function() {
-      dragonBones.CCFactory._factory || (dragonBones.CCFactory._factory = new dragonBones.CCFactory());
-      return dragonBones.CCFactory._factory;
-    };
-  }), {} ],
-  295: [ (function(require, module, exports) {
-    dragonBones.CCSlot = cc.Class({
-      name: "dragonBones.CCSlot",
-      extends: dragonBones.Slot,
-      _renderDisplay: null,
-      statics: {
-        toString: function() {
-          return "[class dragonBones.CCSlot]";
-        }
-      },
-      _onClear: function() {
-        dragonBones.Slot.prototype._onClear.call(this);
-        this._renderDisplay = null;
-      },
-      _onUpdateDisplay: function() {
-        this._rawDisplay || (this._rawDisplay = new cc.Scale9Sprite());
-        this._renderDisplay = this._display || this._rawDisplay;
-      },
-      _initDisplay: function(value) {},
-      _addDisplay: function() {
-        var container = this._armature._display;
-        container.addChild(this._renderDisplay);
-      },
-      _replaceDisplay: function(value) {
-        var container = this._armature._display;
-        var prevDisplay = value;
-        container.addChild(this._renderDisplay, prevDisplay.getLocalZOrder());
-        container.removeChild(prevDisplay);
-      },
-      _removeDisplay: function() {
-        this._renderDisplay.removeFromParent();
-      },
-      _disposeDisplay: function(object) {},
-      _updateVisible: function() {
-        this._renderDisplay.setVisible(this._parent.visible);
-      },
-      _updateZOrder: function() {
-        if (this._renderDisplay._parent) this._renderDisplay.setLocalZOrder(this._zOrder); else {
-          var container = this._armature._display;
-          container.addChild(this._renderDisplay, this._zOrder);
-        }
-      },
-      _updateBlendMode: function() {
-        if (this._renderDisplay instanceof cc.Scale9Sprite) switch (this._blendMode) {
-         case 0:
-          break;
-
-         case 1:
-          var texture = this._renderDisplay._spriteFrame.getTexture();
-          texture && texture.hasPremultipliedAlpha() ? this._renderDisplay.setBlendFunc(cc.BlendFunc.BlendFactor.ONE, cc.BlendFunc.BlendFactor.ONE) : this._renderDisplay.setBlendFunc(cc.BlendFunc.BlendFactor.SRC_ALPHA, cc.BlendFunc.BlendFactor.ONE);
-        } else if (this._childArmature) {
-          var childSlots = this._childArmature.getSlots();
-          for (var i = 0, l = childSlots.length; i < l; i++) {
-            var slot = childSlots[i];
-            slot._blendMode = this._blendMode;
-            slot._updateBlendMode();
-          }
-        }
-      },
-      _updateColor: function() {
-        this._renderDisplay.setOpacity(255 * this._colorTransform.alphaMultiplier);
-        var r = 255 * this._colorTransform.redMultiplier;
-        var g = 255 * this._colorTransform.greenMultiplier;
-        var b = 255 * this._colorTransform.blueMultiplier;
-        this._renderDisplay.setColor(cc.color(r, g, b));
-      },
-      _updateFilters: function() {},
-      _updateFrame: function() {
-        if (this._display && this._displayIndex >= 0) {
-          var rawDisplayData = this._displayIndex < this._displayDataSet.displays.length ? this._displayDataSet.displays[this._displayIndex] : null;
-          var replacedDisplayData = this._displayIndex < this._replacedDisplayDataSet.length ? this._replacedDisplayDataSet[this._displayIndex] : null;
-          var currentDisplayData = replacedDisplayData || rawDisplayData;
-          var currentTextureData = currentDisplayData.texture;
-          if (currentTextureData) {
-            var textureAtlasTexture = currentTextureData.parent.texture;
-            if (textureAtlasTexture && (!currentTextureData.texture || currentTextureData.texture.getTexture() !== textureAtlasTexture)) {
-              var rect = cc.rect(currentTextureData.region.x, currentTextureData.region.y, currentTextureData.region.width, currentTextureData.region.height);
-              var offset = cc.p(0, 0);
-              var size = cc.size(currentTextureData.region.width, currentTextureData.region.height);
-              currentTextureData.texture = new cc.SpriteFrame();
-              currentTextureData.texture.setTexture(textureAtlasTexture, rect, false, offset, size);
-            }
-            var texture = this._armature._replacedTexture || (currentTextureData.texture ? currentTextureData.texture.getTexture() : null);
-            if (this._meshData && this._display === this._meshDisplay) {
-              var region = currentTextureData.region;
-              var textureAtlasSize = currentTextureData.texture.getTexture().getContentSize();
-              var displayVertices = [], vertexIndices = [];
-              var boundsRect = cc.rect(999999, 999999, -999999, -999999);
-              if (this._meshData !== rawDisplayData.mesh && rawDisplayData && rawDisplayData !== currentDisplayData) {
-                this._pivotX = rawDisplayData.transform.x - currentDisplayData.transform.x;
-                this._pivotY = rawDisplayData.transform.y - currentDisplayData.transform.y;
-              } else {
-                this._pivotX = 0;
-                this._pivotY = 0;
-              }
-              var i, n;
-              for (i = 0, n = this._meshData.uvs.length; i < n; i += 2) {
-                var x = this._meshData.vertices[i];
-                var y = this._meshData.vertices[i + 1];
-                var u = (region.x + this._meshData.uvs[i] * region.width) / textureAtlasSize.width;
-                var v = (region.y + this._meshData.uvs[i + 1] * region.height) / textureAtlasSize.height;
-                displayVertices.push({
-                  x: x,
-                  y: -y,
-                  u: u,
-                  v: v
-                });
-                boundsRect.x > x && (boundsRect.x = x);
-                boundsRect.width < x && (boundsRect.width = x);
-                boundsRect.y > -y && (boundsRect.y = -y);
-                boundsRect.height < -y && (boundsRect.height = -y);
-              }
-              boundsRect.width -= boundsRect.x;
-              boundsRect.height -= boundsRect.y;
-              for (i = 0, n = this._meshData.vertexIndices.length; i < n; ++i) vertexIndices.push(this._meshData.vertexIndices[i]);
-              var polygonInfo = {
-                triangles: {
-                  verts: displayVertices,
-                  indices: vertexIndices
-                },
-                rect: boundsRect
-              };
-              this._meshDisplay.setSpriteFrame(currentTextureData.texture);
-              texture != currentTextureData.texture.getTexture() && this._meshDisplay.setTexture(texture);
-              this._meshDisplay.setMeshPolygonInfo(polygonInfo);
-              this._meshDisplay.setContentSize(cc.size(boundsRect.width, boundsRect.height));
-              if (this._meshData.skinned) {
-                this._meshDisplay.setScale(1, 1);
-                this._meshDisplay.setRotationX(0);
-                this._meshDisplay.setRotationY(0);
-                this._meshDisplay.setPosition(0, 0);
-              }
-              this._meshDisplay.setAnchorPoint(cc.p(0, 0));
-            } else {
-              var scale = this._armature.armatureData.scale;
-              this._pivotX = currentDisplayData.pivot.x;
-              this._pivotY = currentDisplayData.pivot.y;
-              if (currentDisplayData.isRelativePivot) {
-                var rectData = currentTextureData.frame || currentTextureData.region;
-                var width = rectData.width * scale;
-                var height = rectData.height * scale;
-                if (!currentTextureData.frame && currentTextureData.rotated) {
-                  width = rectData.height;
-                  height = rectData.width;
-                }
-                this._pivotX *= width;
-                this._pivotY *= height;
-              }
-              if (currentTextureData.frame) {
-                this._pivotX += currentTextureData.frame.x * scale;
-                this._pivotY += currentTextureData.frame.y * scale;
-              }
-              if (rawDisplayData && rawDisplayData !== currentDisplayData) {
-                this._pivotX += rawDisplayData.transform.x - currentDisplayData.transform.x;
-                this._pivotY += rawDisplayData.transform.y - currentDisplayData.transform.y;
-              }
-              this._pivotY -= currentTextureData.region.height * scale;
-              this._rawDisplay.setSpriteFrame(currentTextureData.texture);
-              this._rawDisplay.setContentSize(currentTextureData.texture.getOriginalSize());
-              texture !== currentTextureData.texture.getTexture() && this._rawDisplay.setTexture(texture);
-              this._blendModeDirty = true;
-            }
-            this._updateVisible();
-            return;
-          }
-        }
-        this._pivotX = 0;
-        this._pivotY = 0;
-        this._rawDisplay.setTexture(null);
-        this._rawDisplay.setVisible(false);
-        this._rawDisplay.setPosition(this.origin.x, this.origin.y);
-      },
-      _updateMesh: function() {
-        var meshDisplay = this._meshDisplay;
-        var polygonInfo = meshDisplay.getMeshPolygonInfo();
-        if (!meshDisplay || !polygonInfo) return;
-        var hasFFD = this._ffdVertices.length > 0;
-        var displayVertices = polygonInfo.triangles.verts;
-        var boundsRect = cc.rect(999999, 999999, -999999, -999999);
-        var iH = 0, xG = 0, yG = 0, i, l;
-        if (this._meshData.skinned) {
-          var iF = 0;
-          for (i = 0, l = this._meshData.vertices.length; i < l; i += 2) {
-            iH = Math.floor(i / 2);
-            var boneIndices = this._meshData.boneIndices[iH];
-            var boneVertices = this._meshData.boneVertices[iH];
-            var weights = this._meshData.weights[iH];
-            xG = 0;
-            yG = 0;
-            for (var iB = 0, lB = boneIndices.length; iB < lB; ++iB) {
-              var bone = this._meshBones[boneIndices[iB]];
-              var matrix = bone.globalTransformMatrix;
-              var weight = weights[iB];
-              var xL = 0, yL = 0;
-              if (hasFFD) {
-                xL = boneVertices[2 * iB] + this._ffdVertices[iF];
-                yL = boneVertices[2 * iB + 1] + this._ffdVertices[iF + 1];
-              } else {
-                xL = boneVertices[2 * iB];
-                yL = boneVertices[2 * iB + 1];
-              }
-              xG += (matrix.a * xL + matrix.c * yL + matrix.tx) * weight;
-              yG += (matrix.b * xL + matrix.d * yL + matrix.ty) * weight;
-              iF += 2;
-            }
-            displayVertices[iH].x = xG;
-            displayVertices[iH].y = -yG;
-            boundsRect.x > xG && (boundsRect.x = xG);
-            boundsRect.width < xG && (boundsRect.width = xG);
-            boundsRect.y > -yG && (boundsRect.y = -yG);
-            boundsRect.height < -yG && (boundsRect.height = -yG);
-          }
-        } else if (hasFFD) {
-          var vertices = this._meshData.vertices;
-          for (i = 0, l = this._meshData.vertices.length; i < l; i += 2) {
-            iH = Math.floor(i / 2);
-            xG = vertices[i] + this._ffdVertices[i];
-            yG = vertices[i + 1] + this._ffdVertices[i + 1];
-            displayVertices[iH].x = xG;
-            displayVertices[iH].y = -yG;
-            boundsRect.x > xG && (boundsRect.x = xG);
-            boundsRect.width < xG && (boundsRect.width = xG);
-            boundsRect.y > -yG && (boundsRect.y = -yG);
-            boundsRect.height < -yG && (boundsRect.height = -yG);
-          }
-        }
-        boundsRect.width -= boundsRect.x;
-        boundsRect.height -= boundsRect.y;
-        polygonInfo.rect = boundsRect;
-        var transform = meshDisplay.getNodeToParentTransform();
-        meshDisplay.setContentSize(cc.size(boundsRect.width, boundsRect.height));
-        meshDisplay.setMeshPolygonInfo(polygonInfo);
-        this._renderDisplay._renderCmd.setNodeToParentTransform(transform);
-      },
-      _updateTransform: function() {
-        var transform = {
-          a: this.globalTransformMatrix.a,
-          b: -this.globalTransformMatrix.b,
-          c: -this.globalTransformMatrix.c,
-          d: this.globalTransformMatrix.d,
-          tx: this.globalTransformMatrix.tx - (this.globalTransformMatrix.a * this._pivotX + this.globalTransformMatrix.c * this._pivotY),
-          ty: -(this.globalTransformMatrix.ty - (this.globalTransformMatrix.b * this._pivotX + this.globalTransformMatrix.d * this._pivotY))
-        };
-        this._renderDisplay._renderCmd.setNodeToParentTransform(transform);
-      }
-    });
-  }), {} ],
-  296: [ (function(require, module, exports) {
-    dragonBones.CCTextureAtlasData = cc.Class({
-      name: "dragonBones.CCTextureAtlasData",
-      extends: dragonBones.TextureAtlasData,
-      texture: null,
-      statics: {
-        toString: function() {
-          return "[class dragonBones.CCTextureAtlasData]";
-        }
-      },
-      _onClear: function() {
-        dragonBones.TextureAtlasData.prototype._onClear.call(this);
-        this.texture = null;
-      },
-      generateTextureData: function() {
-        return dragonBones.BaseObject.borrowObject(dragonBones.CCTextureData);
-      }
-    });
-    dragonBones.CCTextureData = cc.Class({
-      name: "dragonBones.CCTextureData",
-      extends: dragonBones.TextureData,
-      texture: null,
-      statics: {
-        toString: function() {
-          return "[class dragonBones.CCTextureData]";
-        }
-      },
-      _onClear: function() {
-        dragonBones.TextureData.prototype._onClear.call(this);
-        if (this.texture) {
-          this.texture.dispose();
-          this.texture = null;
-        }
-      }
-    });
-  }), {} ],
-  297: [ (function(require, module, exports) {
-    var DragonBonesAsset = cc.Class({
-      name: "dragonBones.DragonBonesAsset",
-      extends: cc.Asset,
-      properties: {
-        _dragonBonesJson: "",
-        dragonBonesJson: {
-          get: function() {
-            return this._dragonBonesJson;
-          },
-          set: function(value) {
-            this._dragonBonesJson = value;
-            this.reset();
-          }
-        }
-      },
-      statics: {
-        preventDeferredLoadDependents: true
-      },
-      createNode: false,
-      reset: function() {
-        false;
-      },
-      getRuntimeData: false,
-      getArmatureEnum: false,
-      getAnimsEnum: false
-    });
-    dragonBones.DragonBonesAsset = module.exports = DragonBonesAsset;
-  }), {} ],
-  298: [ (function(require, module, exports) {
-    var DragonBonesAtlasAsset = cc.Class({
-      name: "dragonBones.DragonBonesAtlasAsset",
-      extends: cc.Asset,
-      properties: {
-        _atlasJson: "",
-        atlasJson: {
-          get: function() {
-            return this._atlasJson;
-          },
-          set: function(value) {
-            this._atlasJson = value;
-          }
-        },
-        texture: {
-          default: "",
-          url: cc.Texture2D
-        }
-      },
-      statics: {
-        preventDeferredLoadDependents: true
-      },
-      createNode: false
-    });
-    dragonBones.DragonBonesAtlasAsset = module.exports = DragonBonesAtlasAsset;
-  }), {} ],
-  299: [ (function(require, module, exports) {
-    dragonBones = require("./lib/dragonBones");
-    dragonBones.DisplayType = {
-      Image: 0,
-      Armature: 1,
-      Mesh: 2
-    };
-    dragonBones.ArmatureType = {
-      Armature: 0,
-      MovieClip: 1,
-      Stage: 2
-    };
-    dragonBones.ExtensionType = {
-      FFD: 0,
-      AdjustColor: 10,
-      BevelFilter: 11,
-      BlurFilter: 12,
-      DropShadowFilter: 13,
-      GlowFilter: 14,
-      GradientBevelFilter: 15,
-      GradientGlowFilter: 16
-    };
-    dragonBones.EventType = {
-      Frame: 0,
-      Sound: 1
-    };
-    dragonBones.ActionType = {
-      Play: 0,
-      Stop: 1,
-      GotoAndPlay: 2,
-      GotoAndStop: 3,
-      FadeIn: 4,
-      FadeOut: 5
-    };
-    dragonBones.AnimationFadeOutMode = {
-      None: 0,
-      SameLayer: 1,
-      SameGroup: 2,
-      SameLayerAndGroup: 3,
-      All: 4
-    };
-    true;
-    true;
-    require("./CCFactory");
-    require("./CCSlot");
-    require("./CCTextureData");
-    require("./CCArmatureDisplay");
-    require("./DragonBonesAsset");
-    require("./DragonBonesAtlasAsset");
-    require("./ArmatureDisplay");
-  }), {
-    "./ArmatureDisplay": 292,
-    "./CCArmatureDisplay": 293,
-    "./CCFactory": 294,
-    "./CCSlot": 295,
-    "./CCTextureData": 296,
-    "./DragonBonesAsset": 297,
-    "./DragonBonesAtlasAsset": 298,
-    "./lib/dragonBones": 300
-  } ],
-  300: [ (function(require, module, exports) {
-    var __extends = this && this.__extends || function(d, b) {
-      for (var p in b) b.hasOwnProperty(p) && (d[p] = b[p]);
-      function __() {
-        this.constructor = d;
-      }
-      d.prototype = null === b ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-    var dragonBones;
-    (function(dragonBones) {
-      var DragonBones = (function() {
-        function DragonBones() {}
-        DragonBones.hasArmature = function(value) {
-          return DragonBones._armatures.indexOf(value) >= 0;
-        };
-        DragonBones.addArmature = function(value) {
-          value && DragonBones._armatures.indexOf(value) < 0 && DragonBones._armatures.push(value);
-        };
-        DragonBones.removeArmature = function(value) {
-          if (value) {
-            var index = DragonBones._armatures.indexOf(value);
-            index >= 0 && DragonBones._armatures.splice(index, 1);
-          }
-        };
-        DragonBones.PI_D = 2 * Math.PI;
-        DragonBones.PI_H = Math.PI / 2;
-        DragonBones.PI_Q = Math.PI / 4;
-        DragonBones.ANGLE_TO_RADIAN = Math.PI / 180;
-        DragonBones.RADIAN_TO_ANGLE = 180 / Math.PI;
-        DragonBones.SECOND_TO_MILLISECOND = 1e3;
-        DragonBones.NO_TWEEN = 100;
-        DragonBones.VERSION = "4.7.2";
-        DragonBones.debug = false;
-        DragonBones.debugDraw = false;
-        DragonBones._armatures = [];
-        return DragonBones;
-      })();
-      dragonBones.DragonBones = DragonBones;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var BaseObject = (function() {
-        function BaseObject() {
-          this.hashCode = BaseObject._hashCode++;
-        }
-        BaseObject._returnObject = function(object) {
-          var classType = String(object.constructor);
-          var maxCount = null == BaseObject._maxCountMap[classType] ? BaseObject._defaultMaxCount : BaseObject._maxCountMap[classType];
-          var pool = BaseObject._poolsMap[classType] = BaseObject._poolsMap[classType] || [];
-          if (pool.length < maxCount) {
-            if (!(pool.indexOf(object) < 0)) throw new Error();
-            pool.push(object);
-          }
-        };
-        BaseObject.setMaxCount = function(objectConstructor, maxCount) {
-          (maxCount < 0 || maxCount != maxCount) && (maxCount = 0);
-          if (objectConstructor) {
-            var classType = String(objectConstructor);
-            BaseObject._maxCountMap[classType] = maxCount;
-            var pool = BaseObject._poolsMap[classType];
-            pool && pool.length > maxCount && (pool.length = maxCount);
-          } else {
-            BaseObject._defaultMaxCount = maxCount;
-            for (var classType in BaseObject._poolsMap) {
-              if (null == BaseObject._maxCountMap[classType]) continue;
-              BaseObject._maxCountMap[classType] = maxCount;
-              var pool = BaseObject._poolsMap[classType];
-              pool.length > maxCount && (pool.length = maxCount);
-            }
-          }
-        };
-        BaseObject.clearPool = function(objectConstructor) {
-          void 0 === objectConstructor && (objectConstructor = null);
-          if (objectConstructor) {
-            var pool = BaseObject._poolsMap[String(objectConstructor)];
-            pool && pool.length && (pool.length = 0);
-          } else for (var iP in BaseObject._poolsMap) {
-            var pool = BaseObject._poolsMap[iP];
-            pool.length = 0;
-          }
-        };
-        BaseObject.borrowObject = function(objectConstructor) {
-          var pool = BaseObject._poolsMap[String(objectConstructor)];
-          if (pool && pool.length) return pool.pop();
-          var object = new objectConstructor();
-          object._onClear();
-          return object;
-        };
-        BaseObject.prototype.returnToPool = function() {
-          this._onClear();
-          BaseObject._returnObject(this);
-        };
-        BaseObject._hashCode = 0;
-        BaseObject._defaultMaxCount = 5e3;
-        BaseObject._maxCountMap = {};
-        BaseObject._poolsMap = {};
-        return BaseObject;
-      })();
-      dragonBones.BaseObject = BaseObject;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var ColorTransform = (function() {
-        function ColorTransform(alphaMultiplier, redMultiplier, greenMultiplier, blueMultiplier, alphaOffset, redOffset, greenOffset, blueOffset) {
-          void 0 === alphaMultiplier && (alphaMultiplier = 1);
-          void 0 === redMultiplier && (redMultiplier = 1);
-          void 0 === greenMultiplier && (greenMultiplier = 1);
-          void 0 === blueMultiplier && (blueMultiplier = 1);
-          void 0 === alphaOffset && (alphaOffset = 0);
-          void 0 === redOffset && (redOffset = 0);
-          void 0 === greenOffset && (greenOffset = 0);
-          void 0 === blueOffset && (blueOffset = 0);
-          this.alphaMultiplier = alphaMultiplier;
-          this.redMultiplier = redMultiplier;
-          this.greenMultiplier = greenMultiplier;
-          this.blueMultiplier = blueMultiplier;
-          this.alphaOffset = alphaOffset;
-          this.redOffset = redOffset;
-          this.greenOffset = greenOffset;
-          this.blueOffset = blueOffset;
-        }
-        ColorTransform.prototype.copyFrom = function(value) {
-          this.alphaMultiplier = value.alphaMultiplier;
-          this.redMultiplier = value.redMultiplier;
-          this.greenMultiplier = value.greenMultiplier;
-          this.blueMultiplier = value.blueMultiplier;
-          this.alphaOffset = value.alphaOffset;
-          this.redOffset = value.redOffset;
-          this.redOffset = value.redOffset;
-          this.greenOffset = value.blueOffset;
-        };
-        ColorTransform.prototype.identity = function() {
-          this.alphaMultiplier = this.redMultiplier = this.greenMultiplier = this.blueMultiplier = 1;
-          this.alphaOffset = this.redOffset = this.greenOffset = this.blueOffset = 0;
-        };
-        return ColorTransform;
-      })();
-      dragonBones.ColorTransform = ColorTransform;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var Point = (function() {
-        function Point(x, y) {
-          void 0 === x && (x = 0);
-          void 0 === y && (y = 0);
-          this.x = x;
-          this.y = y;
-        }
-        Point.prototype.copyFrom = function(value) {
-          this.x = value.x;
-          this.y = value.y;
-        };
-        Point.prototype.clear = function() {
-          this.x = this.y = 0;
-        };
-        return Point;
-      })();
-      dragonBones.Point = Point;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var Matrix = (function() {
-        function Matrix(a, b, c, d, tx, ty) {
-          void 0 === a && (a = 1);
-          void 0 === b && (b = 0);
-          void 0 === c && (c = 0);
-          void 0 === d && (d = 1);
-          void 0 === tx && (tx = 0);
-          void 0 === ty && (ty = 0);
-          this.a = a;
-          this.b = b;
-          this.c = c;
-          this.d = d;
-          this.tx = tx;
-          this.ty = ty;
-        }
-        Matrix.prototype.toString = function() {
-          return "[object dragonBones.Matrix] a:" + this.a + " b:" + this.b + " c:" + this.c + " d:" + this.d + " tx:" + this.tx + " ty:" + this.ty;
-        };
-        Matrix.prototype.copyFrom = function(value) {
-          this.a = value.a;
-          this.b = value.b;
-          this.c = value.c;
-          this.d = value.d;
-          this.tx = value.tx;
-          this.ty = value.ty;
-        };
-        Matrix.prototype.identity = function() {
-          this.a = this.d = 1;
-          this.b = this.c = 0;
-          this.tx = this.ty = 0;
-        };
-        Matrix.prototype.concat = function(value) {
-          var aA = this.a;
-          var bA = this.b;
-          var cA = this.c;
-          var dA = this.d;
-          var txA = this.tx;
-          var tyA = this.ty;
-          var aB = value.a;
-          var bB = value.b;
-          var cB = value.c;
-          var dB = value.d;
-          var txB = value.tx;
-          var tyB = value.ty;
-          this.a = aA * aB + bA * cB;
-          this.b = aA * bB + bA * dB;
-          this.c = cA * aB + dA * cB;
-          this.d = cA * bB + dA * dB;
-          this.tx = aB * txA + cB * tyA + txB;
-          this.ty = dB * tyA + bB * txA + tyB;
-        };
-        Matrix.prototype.invert = function() {
-          var aA = this.a;
-          var bA = this.b;
-          var cA = this.c;
-          var dA = this.d;
-          var txA = this.tx;
-          var tyA = this.ty;
-          var n = aA * dA - bA * cA;
-          this.a = dA / n;
-          this.b = -bA / n;
-          this.c = -cA / n;
-          this.d = aA / n;
-          this.tx = (cA * tyA - dA * txA) / n;
-          this.ty = -(aA * tyA - bA * txA) / n;
-        };
-        Matrix.prototype.transformPoint = function(x, y, result, delta) {
-          void 0 === delta && (delta = false);
-          result.x = this.a * x + this.c * y;
-          result.y = this.b * x + this.d * y;
-          if (!delta) {
-            result.x += this.tx;
-            result.y += this.ty;
-          }
-        };
-        return Matrix;
-      })();
-      dragonBones.Matrix = Matrix;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var Rectangle = (function() {
-        function Rectangle(x, y, width, height) {
-          void 0 === x && (x = 0);
-          void 0 === y && (y = 0);
-          void 0 === width && (width = 0);
-          void 0 === height && (height = 0);
-          this.x = x;
-          this.y = y;
-          this.width = width;
-          this.height = height;
-        }
-        Rectangle.prototype.copyFrom = function(value) {
-          this.x = value.x;
-          this.y = value.y;
-          this.width = value.width;
-          this.height = value.height;
-        };
-        Rectangle.prototype.clear = function() {
-          this.x = this.y = 0;
-          this.width = this.height = 0;
-        };
-        return Rectangle;
-      })();
-      dragonBones.Rectangle = Rectangle;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var Transform = (function() {
-        function Transform(x, y, skewX, skewY, scaleX, scaleY) {
-          void 0 === x && (x = 0);
-          void 0 === y && (y = 0);
-          void 0 === skewX && (skewX = 0);
-          void 0 === skewY && (skewY = 0);
-          void 0 === scaleX && (scaleX = 1);
-          void 0 === scaleY && (scaleY = 1);
-          this.x = x;
-          this.y = y;
-          this.skewX = skewX;
-          this.skewY = skewY;
-          this.scaleX = scaleX;
-          this.scaleY = scaleY;
-        }
-        Transform.normalizeRadian = function(value) {
-          value = (value + Math.PI) % (2 * Math.PI);
-          value += value > 0 ? -Math.PI : Math.PI;
-          return value;
-        };
-        Transform.prototype.toString = function() {
-          return "[object dragonBones.Transform] x:" + this.x + " y:" + this.y + " skewX:" + 180 * this.skewX / Math.PI + " skewY:" + 180 * this.skewY / Math.PI + " scaleX:" + this.scaleX + " scaleY:" + this.scaleY;
-        };
-        Transform.prototype.copyFrom = function(value) {
-          this.x = value.x;
-          this.y = value.y;
-          this.skewX = value.skewX;
-          this.skewY = value.skewY;
-          this.scaleX = value.scaleX;
-          this.scaleY = value.scaleY;
-          return this;
-        };
-        Transform.prototype.identity = function() {
-          this.x = this.y = this.skewX = this.skewY = 0;
-          this.scaleX = this.scaleY = 1;
-          return this;
-        };
-        Transform.prototype.add = function(value) {
-          this.x += value.x;
-          this.y += value.y;
-          this.skewX += value.skewX;
-          this.skewY += value.skewY;
-          this.scaleX *= value.scaleX;
-          this.scaleY *= value.scaleY;
-          return this;
-        };
-        Transform.prototype.minus = function(value) {
-          this.x -= value.x;
-          this.y -= value.y;
-          this.skewX = Transform.normalizeRadian(this.skewX - value.skewX);
-          this.skewY = Transform.normalizeRadian(this.skewY - value.skewY);
-          this.scaleX /= value.scaleX;
-          this.scaleY /= value.scaleY;
-          return this;
-        };
-        Transform.prototype.fromMatrix = function(matrix) {
-          var PI_Q = .25 * Math.PI;
-          var backupScaleX = this.scaleX, backupScaleY = this.scaleY;
-          this.x = matrix.tx;
-          this.y = matrix.ty;
-          this.skewX = Math.atan(-matrix.c / matrix.d);
-          this.skewY = Math.atan(matrix.b / matrix.a);
-          this.skewX != this.skewX && (this.skewX = 0);
-          this.skewY != this.skewY && (this.skewY = 0);
-          this.scaleY = this.skewX > -PI_Q && this.skewX < PI_Q ? matrix.d / Math.cos(this.skewX) : -matrix.c / Math.sin(this.skewX);
-          this.scaleX = this.skewY > -PI_Q && this.skewY < PI_Q ? matrix.a / Math.cos(this.skewY) : matrix.b / Math.sin(this.skewY);
-          if (backupScaleX >= 0 && this.scaleX < 0) {
-            this.scaleX = -this.scaleX;
-            this.skewY = this.skewY - Math.PI;
-          }
-          if (backupScaleY >= 0 && this.scaleY < 0) {
-            this.scaleY = -this.scaleY;
-            this.skewX = this.skewX - Math.PI;
-          }
-          return this;
-        };
-        Transform.prototype.toMatrix = function(matrix) {
-          matrix.a = this.scaleX * Math.cos(this.skewY);
-          matrix.b = this.scaleX * Math.sin(this.skewY);
-          matrix.c = -this.scaleY * Math.sin(this.skewX);
-          matrix.d = this.scaleY * Math.cos(this.skewX);
-          matrix.tx = this.x;
-          matrix.ty = this.y;
-          return this;
-        };
-        Object.defineProperty(Transform.prototype, "rotation", {
-          get: function() {
-            return this.skewY;
-          },
-          set: function(value) {
-            var dValue = value - this.skewY;
-            this.skewX += dValue;
-            this.skewY += dValue;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        return Transform;
-      })();
-      dragonBones.Transform = Transform;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var TimelineState = (function(_super) {
-        __extends(TimelineState, _super);
-        function TimelineState() {
-          _super.call(this);
-        }
-        TimelineState.prototype._onClear = function() {
-          this._isCompleted = false;
-          this._currentPlayTimes = 0;
-          this._currentTime = -1;
-          this._timeline = null;
-          this._isReverse = false;
-          this._hasAsynchronyTimeline = false;
-          this._frameRate = 0;
-          this._keyFrameCount = 0;
-          this._frameCount = 0;
-          this._position = 0;
-          this._duration = 0;
-          this._animationDutation = 0;
-          this._timeScale = 1;
-          this._timeOffset = 0;
-          this._currentFrame = null;
-          this._armature = null;
-          this._animationState = null;
-        };
-        TimelineState.prototype._onUpdateFrame = function(isUpdate) {};
-        TimelineState.prototype._onArriveAtFrame = function(isUpdate) {};
-        TimelineState.prototype._setCurrentTime = function(value) {
-          var self = this;
-          var currentPlayTimes = 0;
-          if (1 == self._keyFrameCount && this != self._animationState._timeline) {
-            self._isCompleted = self._animationState._fadeState >= 0;
-            currentPlayTimes = 1;
-          } else if (self._hasAsynchronyTimeline) {
-            var playTimes = self._animationState.playTimes;
-            var totalTime = playTimes * self._duration;
-            value *= self._timeScale;
-            0 != self._timeOffset && (value += self._timeOffset * self._animationDutation);
-            if (playTimes > 0 && (value >= totalTime || value <= -totalTime)) {
-              self._isCompleted = true;
-              currentPlayTimes = playTimes;
-              value = value < 0 ? 0 : self._duration;
-            } else {
-              self._isCompleted = false;
-              if (value < 0) {
-                currentPlayTimes = Math.floor(-value / self._duration);
-                value = self._duration - -value % self._duration;
-              } else {
-                currentPlayTimes = Math.floor(value / self._duration);
-                value %= self._duration;
-              }
-              playTimes > 0 && currentPlayTimes > playTimes && (currentPlayTimes = playTimes);
-            }
-            value += self._position;
-          } else {
-            self._isCompleted = self._animationState._timeline._isCompleted;
-            currentPlayTimes = self._animationState._timeline._currentPlayTimes;
-          }
-          if (self._currentTime == value) return false;
-          self._isReverse = self._currentTime > value && self._currentPlayTimes == currentPlayTimes;
-          self._currentTime = value;
-          self._currentPlayTimes = currentPlayTimes;
-          self._animationState._onFadeInComplete && (self._currentFrame = null);
-          return true;
-        };
-        TimelineState.prototype.fadeIn = function(armature, animationState, timelineData, time) {
-          this._armature = armature;
-          this._animationState = animationState;
-          this._timeline = timelineData;
-          var isMainTimeline = this == this._animationState._timeline;
-          this._hasAsynchronyTimeline = isMainTimeline || this._animationState.animationData.hasAsynchronyTimeline;
-          this._frameRate = this._armature.armatureData.frameRate;
-          this._keyFrameCount = this._timeline.frames.length;
-          this._frameCount = this._animationState.animationData.frameCount;
-          this._position = this._animationState._position;
-          this._duration = this._animationState._duration;
-          this._animationDutation = this._animationState.animationData.duration;
-          this._timeScale = isMainTimeline ? 1 : 1 / this._timeline.scale;
-          this._timeOffset = isMainTimeline ? 0 : this._timeline.offset;
-        };
-        TimelineState.prototype.fadeOut = function() {};
-        TimelineState.prototype.update = function(time) {
-          var self = this;
-          if (!self._isCompleted && self._setCurrentTime(time)) {
-            var currentFrameIndex = self._keyFrameCount > 1 ? Math.floor(self._currentTime * self._frameRate) : 0;
-            var currentFrame = self._timeline.frames[currentFrameIndex];
-            if (self._currentFrame != currentFrame) {
-              self._currentFrame = currentFrame;
-              self._onArriveAtFrame(true);
-            }
-            self._onUpdateFrame(true);
-          }
-        };
-        return TimelineState;
-      })(dragonBones.BaseObject);
-      dragonBones.TimelineState = TimelineState;
-      var TweenTimelineState = (function(_super) {
-        __extends(TweenTimelineState, _super);
-        function TweenTimelineState() {
-          _super.call(this);
-        }
-        TweenTimelineState._getEasingValue = function(progress, easing) {
-          if (progress <= 0) return 0;
-          if (progress >= 1) return 1;
-          var value = 1;
-          if (easing > 2) return progress;
-          if (easing > 1) {
-            value = .5 * (1 - Math.cos(progress * Math.PI));
-            easing -= 1;
-          } else if (easing > 0) value = 1 - Math.pow(1 - progress, 2); else if (easing >= -1) {
-            easing *= -1;
-            value = Math.pow(progress, 2);
-          } else {
-            if (!(easing >= -2)) return progress;
-            easing *= -1;
-            value = Math.acos(1 - 2 * progress) / Math.PI;
-            easing -= 1;
-          }
-          return (value - progress) * easing + progress;
-        };
-        TweenTimelineState._getEasingCurveValue = function(progress, samples) {
-          if (progress <= 0) return 0;
-          if (progress >= 1) return 1;
-          var segmentCount = samples.length + 1;
-          var valueIndex = Math.floor(progress * segmentCount);
-          var fromValue = 0 == valueIndex ? 0 : samples[valueIndex - 1];
-          var toValue = valueIndex == segmentCount - 1 ? 1 : samples[valueIndex];
-          return fromValue + (toValue - fromValue) * (progress - valueIndex / segmentCount);
-        };
-        TweenTimelineState.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this._tweenProgress = 0;
-          this._tweenEasing = dragonBones.DragonBones.NO_TWEEN;
-          this._curve = null;
-        };
-        TweenTimelineState.prototype._onArriveAtFrame = function(isUpdate) {
-          var self = this;
-          self._tweenEasing = self._currentFrame.tweenEasing;
-          self._curve = self._currentFrame.curve;
-          if (self._keyFrameCount <= 1 || self._currentFrame.next == self._timeline.frames[0] && (self._tweenEasing != dragonBones.DragonBones.NO_TWEEN || self._curve) && self._animationState.playTimes > 0 && self._animationState.currentPlayTimes == self._animationState.playTimes - 1) {
-            self._tweenEasing = dragonBones.DragonBones.NO_TWEEN;
-            self._curve = null;
-          }
-        };
-        TweenTimelineState.prototype._onUpdateFrame = function(isUpdate) {
-          var self = this;
-          if (self._tweenEasing != dragonBones.DragonBones.NO_TWEEN) {
-            self._tweenProgress = (self._currentTime - self._currentFrame.position + self._position) / self._currentFrame.duration;
-            0 != self._tweenEasing && (self._tweenProgress = TweenTimelineState._getEasingValue(self._tweenProgress, self._tweenEasing));
-          } else if (self._curve) {
-            self._tweenProgress = (self._currentTime - self._currentFrame.position + self._position) / self._currentFrame.duration;
-            self._tweenProgress = TweenTimelineState._getEasingCurveValue(self._tweenProgress, self._curve);
-          } else self._tweenProgress = 0;
-        };
-        TweenTimelineState.prototype._updateExtensionKeyFrame = function(current, next, result) {
-          var tweenType = 0;
-          if (current.type == next.type) for (var i = 0, l = current.tweens.length; i < l; ++i) {
-            var tweenDuration = next.tweens[i] - current.tweens[i];
-            result.tweens[i] = tweenDuration;
-            tweenDuration > 0 && (tweenType = 2);
-          }
-          if (0 == tweenType) {
-            if (result.type != current.type) {
-              tweenType = 1;
-              result.type = current.type;
-            }
-            if (result.tweens.length != current.tweens.length) {
-              tweenType = 1;
-              result.tweens.length = current.tweens.length;
-            }
-            if (result.keys.length != current.keys.length) {
-              tweenType = 1;
-              result.keys.length = current.keys.length;
-            }
-            for (var i = 0, l = current.keys.length; i < l; ++i) {
-              var key = current.keys[i];
-              if (result.keys[i] != key) {
-                tweenType = 1;
-                result.keys[i] = key;
-              }
-            }
-          }
-          return tweenType;
-        };
-        return TweenTimelineState;
-      })(TimelineState);
-      dragonBones.TweenTimelineState = TweenTimelineState;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var Animation = (function(_super) {
-        __extends(Animation, _super);
-        function Animation() {
-          _super.call(this);
-          this._animations = {};
-          this._animationNames = [];
-          this._animationStates = [];
-        }
-        Animation._sortAnimationState = function(a, b) {
-          return a.layer > b.layer ? -1 : 1;
-        };
-        Animation.toString = function() {
-          return "[class dragonBones.Animation]";
-        };
-        Animation.prototype._onClear = function() {
-          for (var i in this._animations) delete this._animations[i];
-          for (var i = 0, l = this._animationStates.length; i < l; ++i) this._animationStates[i].returnToPool();
-          this.timeScale = 1;
-          this._animationStateDirty = false;
-          this._armature = null;
-          this._isPlaying = false;
-          this._time = 0;
-          this._duration = 0;
-          this._lastAnimationState = null;
-          this._animationNames.length = 0;
-          this._animationStates.length = 0;
-        };
-        Animation.prototype._fadeOut = function(fadeOutTime, layer, group, fadeOutMode, pauseFadeOut) {
-          var i = 0, l = this._animationStates.length;
-          var animationState = null;
-          switch (fadeOutMode) {
-           case 1:
-            for (;i < l; ++i) {
-              animationState = this._animationStates[i];
-              animationState.layer == layer && animationState.fadeOut(fadeOutTime, pauseFadeOut);
-            }
-            break;
-
-           case 2:
-            for (;i < l; ++i) {
-              animationState = this._animationStates[i];
-              animationState.group == group && animationState.fadeOut(fadeOutTime, pauseFadeOut);
-            }
-            break;
-
-           case 4:
-            for (;i < l; ++i) {
-              animationState = this._animationStates[i];
-              0 == fadeOutTime ? animationState.returnToPool() : animationState.fadeOut(fadeOutTime, pauseFadeOut);
-            }
-            0 == fadeOutTime && (this._animationStates.length = 0);
-            break;
-
-           case 3:
-            for (;i < l; ++i) {
-              animationState = this._animationStates[i];
-              animationState.layer == layer && animationState.group == group && animationState.fadeOut(fadeOutTime, pauseFadeOut);
-            }
-          }
-        };
-        Animation.prototype._updateFFDTimelineStates = function() {
-          for (var i = 0, l = this._animationStates.length; i < l; ++i) this._animationStates[i]._updateFFDTimelineStates();
-        };
-        Animation.prototype._advanceTime = function(passedTime) {
-          var self = this;
-          if (!self._isPlaying) return;
-          passedTime < 0 && (passedTime = -passedTime);
-          var animationStateCount = self._animationStates.length;
-          if (1 == animationStateCount) {
-            var animationState = self._animationStates[0];
-            if (animationState._fadeState > 0 && animationState._fadeProgress <= 0) {
-              animationState.returnToPool();
-              self._animationStates.length = 0;
-              self._animationStateDirty = true;
-              self._lastAnimationState = null;
-            } else animationState._advanceTime(passedTime, 1, 0);
-          } else if (animationStateCount > 1) {
-            var prevLayer = self._animationStates[0]._layer;
-            var weightLeft = 1;
-            var layerTotalWeight = 0;
-            var animationIndex = 1;
-            for (var i = 0, r = 0; i < animationStateCount; ++i) {
-              var animationState = self._animationStates[i];
-              if (animationState._fadeState > 0 && animationState._fadeProgress <= 0) {
-                r++;
-                animationState.returnToPool();
-                self._animationStateDirty = true;
-                self._lastAnimationState == animationState && (self._lastAnimationState = i - r >= 0 ? self._animationStates[i - r] : null);
-              } else {
-                r > 0 && (self._animationStates[i - r] = animationState);
-                if (prevLayer != animationState._layer) {
-                  prevLayer = animationState._layer;
-                  layerTotalWeight >= weightLeft ? weightLeft = 0 : weightLeft -= layerTotalWeight;
-                  layerTotalWeight = 0;
-                }
-                animationState._advanceTime(passedTime, weightLeft, animationIndex);
-                if (animationState._weightResult > 0) {
-                  layerTotalWeight += animationState._weightResult;
-                  animationIndex++;
-                }
-              }
-              i == animationStateCount - 1 && r > 0 && (self._animationStates.length -= r);
-            }
-          }
-        };
-        Animation.prototype.reset = function() {
-          for (var i = 0, l = this._animationStates.length; i < l; ++i) this._animationStates[i].returnToPool();
-          this._isPlaying = false;
-          this._lastAnimationState = null;
-          this._animationStates.length = 0;
-        };
-        Animation.prototype.stop = function(animationName) {
-          void 0 === animationName && (animationName = null);
-          if (animationName) {
-            var animationState = this.getState(animationName);
-            animationState && animationState.stop();
-          } else this._isPlaying = false;
-        };
-        Animation.prototype.play = function(animationName, playTimes) {
-          void 0 === animationName && (animationName = null);
-          void 0 === playTimes && (playTimes = -1);
-          var animationState = null;
-          if (animationName) animationState = this.fadeIn(animationName, 0, playTimes, 0, null, 4); else if (this._lastAnimationState) if (this._isPlaying && (this._lastAnimationState.isPlaying || this._lastAnimationState.isCompleted)) animationState = this.fadeIn(this._lastAnimationState.name, 0, playTimes, 0, null, 4); else {
-            this._isPlaying = true;
-            this._lastAnimationState.play();
-          } else {
-            var defaultAnimation = this._armature.armatureData.defaultAnimation;
-            defaultAnimation && (animationState = this.fadeIn(defaultAnimation.name, 0, playTimes, 0, null, 4));
-          }
-          return animationState;
-        };
-        Animation.prototype.fadeIn = function(animationName, fadeInTime, playTimes, layer, group, fadeOutMode, additiveBlending, displayControl, pauseFadeOut, pauseFadeIn) {
-          void 0 === fadeInTime && (fadeInTime = -1);
-          void 0 === playTimes && (playTimes = -1);
-          void 0 === layer && (layer = 0);
-          void 0 === group && (group = null);
-          void 0 === fadeOutMode && (fadeOutMode = 3);
-          void 0 === additiveBlending && (additiveBlending = false);
-          void 0 === displayControl && (displayControl = true);
-          void 0 === pauseFadeOut && (pauseFadeOut = true);
-          void 0 === pauseFadeIn && (pauseFadeIn = true);
-          var animationData = this._animations[animationName];
-          if (!animationData) {
-            this._time = 0;
-            this._duration = 0;
-            console.warn("Non-existent animation.", "DragonBones: " + this._armature.armatureData.parent.name, "Armature: " + this._armature.name, "Animation: " + animationName);
-            return null;
-          }
-          this._isPlaying = true;
-          this._time != this._time && (this._time = 0);
-          this._duration != this._duration && (this._duration = 0);
-          (fadeInTime != fadeInTime || fadeInTime < 0) && (fadeInTime = this._lastAnimationState ? animationData.fadeInTime : 0);
-          playTimes < 0 && (playTimes = animationData.playTimes);
-          this._fadeOut(fadeInTime, layer, group, fadeOutMode, pauseFadeOut);
-          var time = this._duration > 0 ? 0 : this._time;
-          var position = this._duration > 0 ? this._time : animationData.position;
-          var duration = this._duration > 0 ? this._duration : animationData.duration;
-          this._lastAnimationState = dragonBones.BaseObject.borrowObject(dragonBones.AnimationState);
-          this._lastAnimationState._layer = layer;
-          this._lastAnimationState._group = group;
-          this._lastAnimationState.additiveBlending = additiveBlending;
-          this._lastAnimationState.displayControl = displayControl;
-          this._lastAnimationState._fadeIn(this._armature, animationData.animation || animationData, animationName, playTimes, position, duration, time, 1 / animationData.scale, fadeInTime, pauseFadeIn);
-          this._animationStates.push(this._lastAnimationState);
-          this._animationStateDirty = true;
-          this._time = 0;
-          this._duration = 0;
-          this._armature._cacheFrameIndex = -1;
-          this._animationStates.length > 1 && this._animationStates.sort(Animation._sortAnimationState);
-          var slots = this._armature.getSlots();
-          for (var i = 0, l = slots.length; i < l; ++i) {
-            var slot = slots[i];
-            if (slot.inheritAnimation) {
-              var childArmature = slot.childArmature;
-              childArmature && childArmature.animation.hasAnimation(animationName) && !childArmature.animation.getState(animationName) && childArmature.animation.fadeIn(animationName);
-            }
-          }
-          fadeInTime <= 0 && this._armature.advanceTime(0);
-          return this._lastAnimationState;
-        };
-        Animation.prototype.gotoAndPlayByTime = function(animationName, time, playTimes, toTime) {
-          void 0 === time && (time = 0);
-          void 0 === playTimes && (playTimes = -1);
-          void 0 === toTime && (toTime = 0);
-          var animationData = this._animations[animationName];
-          if (animationData) {
-            this._time = time;
-            this._duration = toTime - time;
-            this._duration < 0 ? this._duration = 0 : this._duration > animationData.duration - this._time && (this._duration = animationData.duration - this._time);
-          }
-          return this.fadeIn(animationName, 0, playTimes, 0, null, 4);
-        };
-        Animation.prototype.gotoAndPlayByFrame = function(animationName, frame, playTimes, toFrame) {
-          void 0 === frame && (frame = 0);
-          void 0 === playTimes && (playTimes = -1);
-          void 0 === toFrame && (toFrame = 0);
-          var animationData = this._animations[animationName];
-          if (animationData) {
-            this._time = animationData.duration * frame / animationData.frameCount;
-            this._duration < 0 ? this._duration = 0 : this._duration > animationData.duration - this._time && (this._duration = animationData.duration - this._time);
-          }
-          return this.fadeIn(animationName, 0, playTimes, 0, null, 4);
-        };
-        Animation.prototype.gotoAndPlayByProgress = function(animationName, progress, playTimes, toProgress) {
-          void 0 === progress && (progress = 0);
-          void 0 === playTimes && (playTimes = -1);
-          void 0 === toProgress && (toProgress = 0);
-          var animationData = this._animations[animationName];
-          if (animationData) {
-            this._time = animationData.duration * (progress > 0 ? progress : 0);
-            this._duration < 0 ? this._duration = 0 : this._duration > animationData.duration - this._time && (this._duration = animationData.duration - this._time);
-          }
-          return this.fadeIn(animationName, 0, playTimes, 0, null, 4);
-        };
-        Animation.prototype.gotoAndStopByTime = function(animationName, time) {
-          void 0 === time && (time = 0);
-          var animationState = this.gotoAndPlayByTime(animationName, time, 1);
-          animationState && animationState.stop();
-          return animationState;
-        };
-        Animation.prototype.gotoAndStopByFrame = function(animationName, frame) {
-          void 0 === frame && (frame = 0);
-          var animationState = this.gotoAndPlayByFrame(animationName, frame, 1);
-          animationState && animationState.stop();
-          return animationState;
-        };
-        Animation.prototype.gotoAndStopByProgress = function(animationName, progress) {
-          void 0 === progress && (progress = 0);
-          var animationState = this.gotoAndPlayByProgress(animationName, progress, 1);
-          animationState && animationState.stop();
-          return animationState;
-        };
-        Animation.prototype.getState = function(animationName) {
-          for (var i = 0, l = this._animationStates.length; i < l; ++i) {
-            var animationState = this._animationStates[i];
-            if (animationState.name == animationName) return animationState;
-          }
-          return null;
-        };
-        Animation.prototype.hasAnimation = function(animationName) {
-          return null != this._animations[animationName];
-        };
-        Object.defineProperty(Animation.prototype, "isPlaying", {
-          get: function() {
-            if (this._animationStates.length > 1) return this._isPlaying && !this.isCompleted;
-            if (this._lastAnimationState) return this._isPlaying && this._lastAnimationState.isPlaying;
-            return this._isPlaying;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Animation.prototype, "isCompleted", {
-          get: function() {
-            if (this._lastAnimationState) {
-              if (!this._lastAnimationState.isCompleted) return false;
-              for (var i = 0, l = this._animationStates.length; i < l; ++i) if (!this._animationStates[i].isCompleted) return false;
-              return true;
-            }
-            return false;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Animation.prototype, "lastAnimationName", {
-          get: function() {
-            return this._lastAnimationState ? this._lastAnimationState.name : null;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Animation.prototype, "lastAnimationState", {
-          get: function() {
-            return this._lastAnimationState;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Animation.prototype, "animationNames", {
-          get: function() {
-            return this._animationNames;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Animation.prototype, "animations", {
-          get: function() {
-            return this._animations;
-          },
-          set: function(value) {
-            if (this._animations == value) return;
-            for (var i in this._animations) delete this._animations[i];
-            this._animationNames.length = 0;
-            if (value) for (var i in value) {
-              this._animations[i] = value[i];
-              this._animationNames.push(i);
-            }
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Animation.prototype.gotoAndPlay = function(animationName, fadeInTime, duration, playTimes, layer, group, fadeOutMode, pauseFadeOut, pauseFadeIn) {
-          void 0 === fadeInTime && (fadeInTime = -1);
-          void 0 === duration && (duration = -1);
-          void 0 === playTimes && (playTimes = -1);
-          void 0 === layer && (layer = 0);
-          void 0 === group && (group = null);
-          void 0 === fadeOutMode && (fadeOutMode = 3);
-          void 0 === pauseFadeOut && (pauseFadeOut = true);
-          void 0 === pauseFadeIn && (pauseFadeIn = true);
-          var animationState = this.fadeIn(animationName, fadeInTime, playTimes, layer, group, fadeOutMode, false, true, pauseFadeOut, pauseFadeIn);
-          animationState && duration && duration > 0 && (animationState.timeScale = animationState.totalTime / duration);
-          return animationState;
-        };
-        Animation.prototype.gotoAndStop = function(animationName, time) {
-          void 0 === time && (time = 0);
-          return this.gotoAndStopByTime(animationName, time);
-        };
-        Object.defineProperty(Animation.prototype, "animationList", {
-          get: function() {
-            return this._animationNames;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Animation.prototype, "animationDataList", {
-          get: function() {
-            var list = [];
-            for (var i = 0, l = this._animationNames.length; i < l; ++i) list.push(this._animations[this._animationNames[i]]);
-            return list;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        return Animation;
-      })(dragonBones.BaseObject);
-      dragonBones.Animation = Animation;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var AnimationState = (function(_super) {
-        __extends(AnimationState, _super);
-        function AnimationState() {
-          _super.call(this);
-          this._boneMask = [];
-          this._boneTimelines = [];
-          this._slotTimelines = [];
-          this._ffdTimelines = [];
-          this.autoTween = false;
-        }
-        AnimationState.toString = function() {
-          return "[class dragonBones.AnimationState]";
-        };
-        AnimationState.prototype._onClear = function() {
-          for (var i = 0, l = this._boneTimelines.length; i < l; ++i) this._boneTimelines[i].returnToPool();
-          for (var i = 0, l = this._slotTimelines.length; i < l; ++i) this._slotTimelines[i].returnToPool();
-          for (var i = 0, l = this._ffdTimelines.length; i < l; ++i) this._ffdTimelines[i].returnToPool();
-          this._timeline && this._timeline.returnToPool();
-          this._zOrderTimeline && this._zOrderTimeline.returnToPool();
-          this.displayControl = true;
-          this.additiveBlending = false;
-          this.actionEnabled = false;
-          this.playTimes = 1;
-          this.timeScale = 1;
-          this.weight = 1;
-          this.autoFadeOutTime = -1;
-          this.fadeTotalTime = 0;
-          this._onFadeInComplete = false;
-          this._fadeState = 0;
-          this._layer = 0;
-          this._position = 0;
-          this._duration = 0;
-          this._weightResult = 0;
-          this._fadeProgress = 0;
-          this._group = null;
-          this._timeline = null;
-          this._isPlaying = true;
-          this._isPausePlayhead = false;
-          this._fadeTime = 0;
-          this._time = 0;
-          this._name = null;
-          this._armature = null;
-          this._animationData = null;
-          this._zOrderTimeline = null;
-          this._boneMask.length = 0;
-          this._boneTimelines.length = 0;
-          this._slotTimelines.length = 0;
-          this._ffdTimelines.length = 0;
-        };
-        AnimationState.prototype._updateTimelineStates = function() {
-          var time = this._time;
-          this._animationData.hasAsynchronyTimeline || (time = this._timeline._currentTime);
-          var boneTimelineStates = {};
-          var slotTimelineStates = {};
-          for (var i = 0, l = this._boneTimelines.length; i < l; ++i) {
-            var boneTimelineState = this._boneTimelines[i];
-            boneTimelineStates[boneTimelineState.bone.name] = boneTimelineState;
-          }
-          var bones = this._armature.getBones();
-          for (var i = 0, l = bones.length; i < l; ++i) {
-            var bone = bones[i];
-            var boneTimelineName = bone.name;
-            var boneTimelineData = this._animationData.getBoneTimeline(boneTimelineName);
-            if (boneTimelineData && this.containsBoneMask(boneTimelineName)) {
-              var boneTimelineState = boneTimelineStates[boneTimelineName];
-              if (boneTimelineState) delete boneTimelineStates[boneTimelineName]; else {
-                boneTimelineState = dragonBones.BaseObject.borrowObject(dragonBones.BoneTimelineState);
-                boneTimelineState.bone = bone;
-                boneTimelineState.fadeIn(this._armature, this, boneTimelineData, time);
-                this._boneTimelines.push(boneTimelineState);
-              }
-            }
-          }
-          for (var i in boneTimelineStates) {
-            var boneTimelineState = boneTimelineStates[i];
-            boneTimelineState.bone.invalidUpdate();
-            this._boneTimelines.splice(this._boneTimelines.indexOf(boneTimelineState), 1);
-            boneTimelineState.returnToPool();
-          }
-          for (var i = 0, l = this._slotTimelines.length; i < l; ++i) {
-            var slotTimelineState = this._slotTimelines[i];
-            slotTimelineStates[slotTimelineState.slot.name] = slotTimelineState;
-          }
-          var slots = this._armature.getSlots();
-          for (var i = 0, l = slots.length; i < l; ++i) {
-            var slot = slots[i];
-            var slotTimelineName = slot.name;
-            var parentTimelineName = slot.parent.name;
-            var slotTimelineData = this._animationData.getSlotTimeline(slotTimelineName);
-            if (slotTimelineData && this.containsBoneMask(parentTimelineName) && this._fadeState <= 0) {
-              var slotTimelineState = slotTimelineStates[slotTimelineName];
-              if (slotTimelineState) delete slotTimelineStates[slotTimelineName]; else {
-                slotTimelineState = dragonBones.BaseObject.borrowObject(dragonBones.SlotTimelineState);
-                slotTimelineState.slot = slot;
-                slotTimelineState.fadeIn(this._armature, this, slotTimelineData, time);
-                this._slotTimelines.push(slotTimelineState);
-              }
-            }
-          }
-          for (var i in slotTimelineStates) {
-            var slotTimelineState = slotTimelineStates[i];
-            this._slotTimelines.splice(this._slotTimelines.indexOf(slotTimelineState), 1);
-            slotTimelineState.returnToPool();
-          }
-          this._updateFFDTimelineStates();
-        };
-        AnimationState.prototype._advanceFadeTime = function(passedTime) {
-          var self = this;
-          passedTime < 0 && (passedTime = -passedTime);
-          self._fadeTime += passedTime;
-          var fadeProgress = 0;
-          fadeProgress = self._fadeTime >= self.fadeTotalTime ? self._fadeState > 0 ? 0 : 1 : self._fadeTime > 0 ? self._fadeState > 0 ? 1 - self._fadeTime / self.fadeTotalTime : self._fadeTime / self.fadeTotalTime : self._fadeState > 0 ? 1 : 0;
-          if (self._fadeProgress != fadeProgress) {
-            self._fadeProgress = fadeProgress;
-            var eventDispatcher = self._armature._display;
-            if (self._fadeTime <= passedTime) if (self._fadeState > 0) {
-              if (eventDispatcher.hasEvent(dragonBones.EventObject.FADE_OUT)) {
-                var event_1 = dragonBones.BaseObject.borrowObject(dragonBones.EventObject);
-                event_1.animationState = this;
-                self._armature._bufferEvent(event_1, dragonBones.EventObject.FADE_OUT);
-              }
-            } else if (eventDispatcher.hasEvent(dragonBones.EventObject.FADE_IN)) {
-              var event_2 = dragonBones.BaseObject.borrowObject(dragonBones.EventObject);
-              event_2.animationState = this;
-              self._armature._bufferEvent(event_2, dragonBones.EventObject.FADE_IN);
-            }
-            if (self._fadeTime >= self.fadeTotalTime) if (self._fadeState > 0) {
-              if (eventDispatcher.hasEvent(dragonBones.EventObject.FADE_OUT_COMPLETE)) {
-                var event_3 = dragonBones.BaseObject.borrowObject(dragonBones.EventObject);
-                event_3.animationState = this;
-                self._armature._bufferEvent(event_3, dragonBones.EventObject.FADE_OUT_COMPLETE);
-              }
-            } else {
-              self._onFadeInComplete = true;
-              self._isPausePlayhead = false;
-              self._fadeState = 0;
-              if (eventDispatcher.hasEvent(dragonBones.EventObject.FADE_IN_COMPLETE)) {
-                var event_4 = dragonBones.BaseObject.borrowObject(dragonBones.EventObject);
-                event_4.animationState = this;
-                self._armature._bufferEvent(event_4, dragonBones.EventObject.FADE_IN_COMPLETE);
-              }
-            }
-          }
-        };
-        AnimationState.prototype._isDisabled = function(slot) {
-          if (this.displayControl && (!slot.displayController || slot.displayController == this._name || slot.displayController == this._group)) return false;
-          return true;
-        };
-        AnimationState.prototype._fadeIn = function(armature, clip, animationName, playTimes, position, duration, time, timeScale, fadeInTime, pausePlayhead) {
-          this._armature = armature;
-          this._animationData = clip;
-          this._name = animationName;
-          this.actionEnabled = AnimationState.stateActionEnabled;
-          this.playTimes = playTimes;
-          this.timeScale = timeScale;
-          this.fadeTotalTime = fadeInTime;
-          this._fadeState = -1;
-          this._position = position;
-          this._duration = duration;
-          this._time = time;
-          this._isPausePlayhead = pausePlayhead;
-          this.fadeTotalTime <= 0 && (this._fadeProgress = .999999);
-          this._timeline = dragonBones.BaseObject.borrowObject(dragonBones.AnimationTimelineState);
-          this._timeline.fadeIn(this._armature, this, this._animationData, this._time);
-          if (this._animationData.zOrderTimeline) {
-            this._zOrderTimeline = dragonBones.BaseObject.borrowObject(dragonBones.ZOrderTimelineState);
-            this._zOrderTimeline.fadeIn(this._armature, this, this._animationData.zOrderTimeline, this._time);
-          }
-          this._updateTimelineStates();
-        };
-        AnimationState.prototype._updateFFDTimelineStates = function() {
-          var time = this._time;
-          this._animationData.hasAsynchronyTimeline || (time = this._timeline._currentTime);
-          var ffdTimelineStates = {};
-          for (var i = 0, l = this._ffdTimelines.length; i < l; ++i) {
-            var ffdTimelineState = this._ffdTimelines[i];
-            ffdTimelineStates[ffdTimelineState.slot.name] = ffdTimelineState;
-          }
-          var slots = this._armature.getSlots();
-          for (var i = 0, l = slots.length; i < l; ++i) {
-            var slot = slots[i];
-            var slotTimelineName = slot.name;
-            var parentTimelineName = slot.parent.name;
-            var displayData = slot.displayData;
-            if (!displayData) continue;
-            if (slot._meshData && slot._meshData == displayData.mesh) {
-              var ffdTimelineData = this._animationData.getFFDTimeline(this._armature._skinData.name, slotTimelineName, displayData.share && displayData.inheritAnimation ? displayData.share.name : displayData.name);
-              if (ffdTimelineData && this.containsBoneMask(parentTimelineName)) {
-                var ffdTimelineState = ffdTimelineStates[slotTimelineName];
-                if (ffdTimelineState && ffdTimelineState._timeline == ffdTimelineData) delete ffdTimelineStates[slotTimelineName]; else {
-                  ffdTimelineState = dragonBones.BaseObject.borrowObject(dragonBones.FFDTimelineState);
-                  ffdTimelineState.slot = slot;
-                  ffdTimelineState.fadeIn(this._armature, this, ffdTimelineData, time);
-                  this._ffdTimelines.push(ffdTimelineState);
-                }
-              } else {
-                for (var iF = 0, lF = slot._ffdVertices.length; iF < lF; ++iF) slot._ffdVertices[iF] = 0;
-                slot._ffdDirty = true;
-              }
-            }
-          }
-          for (var i in ffdTimelineStates) {
-            var ffdTimelineState = ffdTimelineStates[i];
-            this._ffdTimelines.splice(this._ffdTimelines.indexOf(ffdTimelineState), 1);
-            ffdTimelineState.returnToPool();
-          }
-        };
-        AnimationState.prototype._advanceTime = function(passedTime, weightLeft, index) {
-          var self = this;
-          self._onFadeInComplete = false;
-          0 != self._fadeState && self._advanceFadeTime(passedTime);
-          passedTime *= self.timeScale;
-          0 != passedTime && self._isPlaying && !self._isPausePlayhead && (self._time += passedTime);
-          self._weightResult = self.weight * self._fadeProgress * weightLeft;
-          if (0 != self._weightResult) {
-            var cacheFrameRate = self._animationData.cacheFrameRate;
-            var isCacheEnabled = self._fadeProgress >= 1 && 0 == index && cacheFrameRate > 0;
-            var isUpdatesTimeline = true;
-            var isUpdatesBoneTimeline = true;
-            var time = 2 * cacheFrameRate;
-            time = isCacheEnabled ? Math.floor(self._time * time) / time : self._time;
-            self._timeline.update(time);
-            self._animationData.hasAsynchronyTimeline || (time = self._timeline._currentTime);
-            self._zOrderTimeline && self._zOrderTimeline.update(time);
-            if (isCacheEnabled) {
-              var cacheFrameIndex = Math.floor(self._timeline._currentTime * cacheFrameRate);
-              if (self._armature._cacheFrameIndex == cacheFrameIndex) {
-                isUpdatesTimeline = false;
-                isUpdatesBoneTimeline = false;
-              } else {
-                self._armature._cacheFrameIndex = cacheFrameIndex;
-                if (self._armature._animation._animationStateDirty) {
-                  self._armature._animation._animationStateDirty = false;
-                  for (var i = 0, l = self._boneTimelines.length; i < l; ++i) {
-                    var boneTimeline = self._boneTimelines[i];
-                    boneTimeline.bone._cacheFrames = boneTimeline._timeline.cachedFrames;
-                  }
-                  for (var i = 0, l = self._slotTimelines.length; i < l; ++i) {
-                    var slotTimeline = self._slotTimelines[i];
-                    slotTimeline.slot._cacheFrames = slotTimeline._timeline.cachedFrames;
-                  }
-                }
-                self._animationData.cachedFrames[cacheFrameIndex] ? isUpdatesBoneTimeline = false : self._animationData.cachedFrames[cacheFrameIndex] = true;
-              }
-            } else self._armature._cacheFrameIndex = -1;
-            if (isUpdatesTimeline) {
-              if (isUpdatesBoneTimeline) for (var i = 0, l = self._boneTimelines.length; i < l; ++i) self._boneTimelines[i].update(time);
-              for (var i = 0, l = self._slotTimelines.length; i < l; ++i) self._slotTimelines[i].update(time);
-              for (var i = 0, l = self._ffdTimelines.length; i < l; ++i) self._ffdTimelines[i].update(time);
-            }
-          }
-          self.autoFadeOutTime >= 0 && self._fadeProgress >= 1 && self._timeline._isCompleted && self.fadeOut(self.autoFadeOutTime);
-        };
-        AnimationState.prototype.play = function() {
-          this._isPlaying = true;
-        };
-        AnimationState.prototype.stop = function() {
-          this._isPlaying = false;
-        };
-        AnimationState.prototype.fadeOut = function(fadeOutTime, pausePlayhead) {
-          void 0 === pausePlayhead && (pausePlayhead = true);
-          (fadeOutTime < 0 || fadeOutTime != fadeOutTime) && (fadeOutTime = 0);
-          this._isPausePlayhead = pausePlayhead;
-          if (this._fadeState > 0) {
-            if (fadeOutTime > fadeOutTime - this._fadeTime) return;
-          } else {
-            this._fadeState = 1;
-            (fadeOutTime <= 0 || this._fadeProgress <= 0) && (this._fadeProgress = 1e-6);
-            for (var i = 0, l = this._boneTimelines.length; i < l; ++i) this._boneTimelines[i].fadeOut();
-            for (var i = 0, l = this._slotTimelines.length; i < l; ++i) this._slotTimelines[i].fadeOut();
-          }
-          this.displayControl = false;
-          this.fadeTotalTime = this._fadeProgress > 1e-6 ? fadeOutTime / this._fadeProgress : 0;
-          this._fadeTime = this.fadeTotalTime * (1 - this._fadeProgress);
-        };
-        AnimationState.prototype.containsBoneMask = function(name) {
-          return !this._boneMask.length || this._boneMask.indexOf(name) >= 0;
-        };
-        AnimationState.prototype.addBoneMask = function(name, recursive) {
-          void 0 === recursive && (recursive = true);
-          var currentBone = this._armature.getBone(name);
-          if (!currentBone) return;
-          this._boneMask.indexOf(name) < 0 && this._animationData.getBoneTimeline(name) && this._boneMask.push(name);
-          if (recursive) {
-            var bones = this._armature.getBones();
-            for (var i = 0, l = bones.length; i < l; ++i) {
-              var bone = bones[i];
-              var boneName = bone.name;
-              this._boneMask.indexOf(boneName) < 0 && this._animationData.getBoneTimeline(boneName) && currentBone.contains(bone) && this._boneMask.push(boneName);
-            }
-          }
-          this._updateTimelineStates();
-        };
-        AnimationState.prototype.removeBoneMask = function(name, recursive) {
-          void 0 === recursive && (recursive = true);
-          var index = this._boneMask.indexOf(name);
-          index >= 0 && this._boneMask.splice(index, 1);
-          if (recursive) {
-            var currentBone = this._armature.getBone(name);
-            if (currentBone) {
-              var bones = this._armature.getBones();
-              for (var i = 0, l = bones.length; i < l; ++i) {
-                var bone = bones[i];
-                var boneName = bone.name;
-                var index_1 = this._boneMask.indexOf(boneName);
-                index_1 >= 0 && currentBone.contains(bone) && this._boneMask.splice(index_1, 1);
-              }
-            }
-          }
-          this._updateTimelineStates();
-        };
-        AnimationState.prototype.removeAllBoneMask = function() {
-          this._boneMask.length = 0;
-          this._updateTimelineStates();
-        };
-        Object.defineProperty(AnimationState.prototype, "layer", {
-          get: function() {
-            return this._layer;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(AnimationState.prototype, "group", {
-          get: function() {
-            return this._group;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(AnimationState.prototype, "name", {
-          get: function() {
-            return this._name;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(AnimationState.prototype, "animationData", {
-          get: function() {
-            return this._animationData;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(AnimationState.prototype, "isCompleted", {
-          get: function() {
-            return this._timeline._isCompleted;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(AnimationState.prototype, "isPlaying", {
-          get: function() {
-            return this._isPlaying && !this._timeline._isCompleted;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(AnimationState.prototype, "currentPlayTimes", {
-          get: function() {
-            return this._timeline._currentPlayTimes;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(AnimationState.prototype, "totalTime", {
-          get: function() {
-            return this._duration;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(AnimationState.prototype, "currentTime", {
-          get: function() {
-            return this._timeline._currentTime;
-          },
-          set: function(value) {
-            (value < 0 || value != value) && (value = 0);
-            var currentPlayTimes = this._timeline._currentPlayTimes - (this._timeline._isCompleted ? 1 : 0);
-            value = value % this._duration + currentPlayTimes * this._duration;
-            if (this._time == value) return;
-            this._time = value;
-            this._timeline.setCurrentTime(this._time);
-            this._zOrderTimeline && (this._zOrderTimeline._isCompleted = false);
-            for (var i = 0, l = this._boneTimelines.length; i < l; ++i) this._boneTimelines[i]._isCompleted = false;
-            for (var i = 0, l = this._slotTimelines.length; i < l; ++i) this._slotTimelines[i]._isCompleted = false;
-            for (var i = 0, l = this._ffdTimelines.length; i < l; ++i) this._ffdTimelines[i]._isCompleted = false;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(AnimationState.prototype, "clip", {
-          get: function() {
-            return this._animationData;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        AnimationState.stateActionEnabled = true;
-        return AnimationState;
-      })(dragonBones.BaseObject);
-      dragonBones.AnimationState = AnimationState;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var AnimationTimelineState = (function(_super) {
-        __extends(AnimationTimelineState, _super);
-        function AnimationTimelineState() {
-          _super.call(this);
-        }
-        AnimationTimelineState.toString = function() {
-          return "[class dragonBones.AnimationTimelineState]";
-        };
-        AnimationTimelineState.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this._isStarted = false;
-        };
-        AnimationTimelineState.prototype._onCrossFrame = function(frame) {
-          var self = this;
-          if (self._animationState._fadeState < 0) return;
-          if (self._animationState.actionEnabled) {
-            var actions = frame.actions;
-            for (var i = 0, l = actions.length; i < l; ++i) self._armature._bufferAction(actions[i]);
-          }
-          var eventDispatcher = self._armature._display;
-          var events = frame.events;
-          for (var i = 0, l = events.length; i < l; ++i) {
-            var eventData = events[i];
-            var eventType = "";
-            switch (eventData.type) {
-             case 10:
-              eventType = dragonBones.EventObject.FRAME_EVENT;
-              break;
-
-             case 11:
-              eventType = dragonBones.EventObject.SOUND_EVENT;
-            }
-            if ((11 == eventData.type ? self._armature._eventManager : eventDispatcher).hasEvent(eventType)) {
-              var eventObject = dragonBones.BaseObject.borrowObject(dragonBones.EventObject);
-              eventObject.name = eventData.name;
-              eventObject.animationState = self._animationState;
-              eventObject.frame = frame;
-              eventObject.data = eventData;
-              eventData.bone && (eventObject.bone = self._armature.getBone(eventData.bone.name));
-              eventData.slot && (eventObject.slot = self._armature.getSlot(eventData.slot.name));
-              self._armature._bufferEvent(eventObject, eventType);
-            }
-          }
-        };
-        AnimationTimelineState.prototype.fadeIn = function(armature, animationState, timelineData, time) {
-          _super.prototype.fadeIn.call(this, armature, animationState, timelineData, time);
-          this._currentTime = time;
-        };
-        AnimationTimelineState.prototype.update = function(time) {
-          var self = this;
-          var prevTime = self._currentTime;
-          var prevPlayTimes = self._currentPlayTimes;
-          if (!self._isCompleted && self._setCurrentTime(time)) {
-            var eventDispatcher = self._armature._display;
-            if (!self._isStarted) {
-              self._isStarted = true;
-              if (eventDispatcher.hasEvent(dragonBones.EventObject.START)) {
-                var eventObject = dragonBones.BaseObject.borrowObject(dragonBones.EventObject);
-                eventObject.animationState = self._animationState;
-                self._armature._bufferEvent(eventObject, dragonBones.EventObject.START);
-              }
-            }
-            if (self._keyFrameCount > 0) {
-              var currentFrameIndex = self._keyFrameCount > 1 ? Math.floor(self._currentTime * self._frameRate) : 0;
-              var currentFrame = self._timeline.frames[currentFrameIndex];
-              if (self._currentFrame != currentFrame) if (self._keyFrameCount > 1) {
-                var crossedFrame = self._currentFrame;
-                self._currentFrame = currentFrame;
-                if (!crossedFrame) {
-                  var prevFrameIndex = Math.floor(prevTime * self._frameRate);
-                  crossedFrame = self._timeline.frames[prevFrameIndex];
-                  self._isReverse || (prevTime <= crossedFrame.position || prevPlayTimes != self._currentPlayTimes) && (crossedFrame = crossedFrame.prev);
-                }
-                if (self._isReverse) while (crossedFrame != currentFrame) {
-                  self._onCrossFrame(crossedFrame);
-                  crossedFrame = crossedFrame.prev;
-                } else while (crossedFrame != currentFrame) {
-                  crossedFrame = crossedFrame.next;
-                  self._onCrossFrame(crossedFrame);
-                }
-              } else {
-                self._currentFrame = currentFrame;
-                self._onCrossFrame(self._currentFrame);
-              }
-            }
-            if (prevPlayTimes != self._currentPlayTimes) {
-              if (eventDispatcher.hasEvent(dragonBones.EventObject.LOOP_COMPLETE)) {
-                var eventObject = dragonBones.BaseObject.borrowObject(dragonBones.EventObject);
-                eventObject.animationState = self._animationState;
-                self._armature._bufferEvent(eventObject, dragonBones.EventObject.LOOP_COMPLETE);
-              }
-              if (self._isCompleted && eventDispatcher.hasEvent(dragonBones.EventObject.COMPLETE)) {
-                var eventObject = dragonBones.BaseObject.borrowObject(dragonBones.EventObject);
-                eventObject.animationState = self._animationState;
-                self._armature._bufferEvent(eventObject, dragonBones.EventObject.COMPLETE);
-              }
-              self._currentFrame = null;
-            }
-          }
-        };
-        AnimationTimelineState.prototype.setCurrentTime = function(value) {
-          this._setCurrentTime(value);
-          this._currentFrame = null;
-        };
-        return AnimationTimelineState;
-      })(dragonBones.TimelineState);
-      dragonBones.AnimationTimelineState = AnimationTimelineState;
-      var ZOrderTimelineState = (function(_super) {
-        __extends(ZOrderTimelineState, _super);
-        function ZOrderTimelineState() {
-          _super.call(this);
-        }
-        ZOrderTimelineState.toString = function() {
-          return "[class dragonBones.ZOrderTimelineState]";
-        };
-        ZOrderTimelineState.prototype._onArriveAtFrame = function(isUpdate) {
-          var self = this;
-          _super.prototype._onArriveAtFrame.call(this, isUpdate);
-          self._armature._sortZOrder(self._currentFrame.zOrder);
-        };
-        return ZOrderTimelineState;
-      })(dragonBones.TimelineState);
-      dragonBones.ZOrderTimelineState = ZOrderTimelineState;
-      var BoneTimelineState = (function(_super) {
-        __extends(BoneTimelineState, _super);
-        function BoneTimelineState() {
-          _super.call(this);
-          this._transform = new dragonBones.Transform();
-          this._currentTransform = new dragonBones.Transform();
-          this._durationTransform = new dragonBones.Transform();
-        }
-        BoneTimelineState.toString = function() {
-          return "[class dragonBones.BoneTimelineState]";
-        };
-        BoneTimelineState.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.bone = null;
-          this._tweenTransform = 0;
-          this._tweenRotate = 0;
-          this._tweenScale = 0;
-          this._boneTransform = null;
-          this._originalTransform = null;
-          this._transform.identity();
-          this._currentTransform.identity();
-          this._durationTransform.identity();
-        };
-        BoneTimelineState.prototype._onArriveAtFrame = function(isUpdate) {
-          var self = this;
-          _super.prototype._onArriveAtFrame.call(this, isUpdate);
-          self._currentTransform.copyFrom(self._currentFrame.transform);
-          self._tweenTransform = 1;
-          self._tweenRotate = 1;
-          self._tweenScale = 1;
-          if (self._keyFrameCount > 1 && (self._tweenEasing != dragonBones.DragonBones.NO_TWEEN || self._curve)) {
-            var nextFrame = self._currentFrame.next;
-            var nextTransform = nextFrame.transform;
-            self._durationTransform.x = nextTransform.x - self._currentTransform.x;
-            self._durationTransform.y = nextTransform.y - self._currentTransform.y;
-            0 == self._durationTransform.x && 0 == self._durationTransform.y || (self._tweenTransform = 2);
-            var tweenRotate = self._currentFrame.tweenRotate;
-            if (tweenRotate == tweenRotate) {
-              if (tweenRotate) if (tweenRotate > 0 ? nextTransform.skewY >= self._currentTransform.skewY : nextTransform.skewY <= self._currentTransform.skewY) {
-                var rotate = tweenRotate > 0 ? tweenRotate - 1 : tweenRotate + 1;
-                self._durationTransform.skewX = nextTransform.skewX - self._currentTransform.skewX + dragonBones.DragonBones.PI_D * rotate;
-                self._durationTransform.skewY = nextTransform.skewY - self._currentTransform.skewY + dragonBones.DragonBones.PI_D * rotate;
-              } else {
-                self._durationTransform.skewX = nextTransform.skewX - self._currentTransform.skewX + dragonBones.DragonBones.PI_D * tweenRotate;
-                self._durationTransform.skewY = nextTransform.skewY - self._currentTransform.skewY + dragonBones.DragonBones.PI_D * tweenRotate;
-              } else {
-                self._durationTransform.skewX = dragonBones.Transform.normalizeRadian(nextTransform.skewX - self._currentTransform.skewX);
-                self._durationTransform.skewY = dragonBones.Transform.normalizeRadian(nextTransform.skewY - self._currentTransform.skewY);
-              }
-              0 == self._durationTransform.skewX && 0 == self._durationTransform.skewY || (self._tweenRotate = 2);
-            } else {
-              self._durationTransform.skewX = 0;
-              self._durationTransform.skewY = 0;
-            }
-            if (self._currentFrame.tweenScale) {
-              self._durationTransform.scaleX = nextTransform.scaleX - self._currentTransform.scaleX;
-              self._durationTransform.scaleY = nextTransform.scaleY - self._currentTransform.scaleY;
-              0 == self._durationTransform.scaleX && 0 == self._durationTransform.scaleY || (self._tweenScale = 2);
-            } else {
-              self._durationTransform.scaleX = 0;
-              self._durationTransform.scaleY = 0;
-            }
-          } else {
-            self._durationTransform.x = 0;
-            self._durationTransform.y = 0;
-            self._durationTransform.skewX = 0;
-            self._durationTransform.skewY = 0;
-            self._durationTransform.scaleX = 0;
-            self._durationTransform.scaleY = 0;
-          }
-        };
-        BoneTimelineState.prototype._onUpdateFrame = function(isUpdate) {
-          var self = this;
-          if (self._tweenTransform || self._tweenRotate || self._tweenScale) {
-            _super.prototype._onUpdateFrame.call(this, isUpdate);
-            var tweenProgress = 0;
-            if (self._tweenTransform) {
-              if (1 == self._tweenTransform) {
-                self._tweenTransform = 0;
-                tweenProgress = 0;
-              } else tweenProgress = self._tweenProgress;
-              if (self._animationState.additiveBlending) {
-                self._transform.x = self._currentTransform.x + self._durationTransform.x * tweenProgress;
-                self._transform.y = self._currentTransform.y + self._durationTransform.y * tweenProgress;
-              } else {
-                self._transform.x = self._originalTransform.x + self._currentTransform.x + self._durationTransform.x * tweenProgress;
-                self._transform.y = self._originalTransform.y + self._currentTransform.y + self._durationTransform.y * tweenProgress;
-              }
-            }
-            if (self._tweenRotate) {
-              if (1 == self._tweenRotate) {
-                self._tweenRotate = 0;
-                tweenProgress = 0;
-              } else tweenProgress = self._tweenProgress;
-              if (self._animationState.additiveBlending) {
-                self._transform.skewX = self._currentTransform.skewX + self._durationTransform.skewX * tweenProgress;
-                self._transform.skewY = self._currentTransform.skewY + self._durationTransform.skewY * tweenProgress;
-              } else {
-                self._transform.skewX = self._originalTransform.skewX + self._currentTransform.skewX + self._durationTransform.skewX * tweenProgress;
-                self._transform.skewY = self._originalTransform.skewY + self._currentTransform.skewY + self._durationTransform.skewY * tweenProgress;
-              }
-            }
-            if (self._tweenScale) {
-              if (1 == self._tweenScale) {
-                self._tweenScale = 0;
-                tweenProgress = 0;
-              } else tweenProgress = self._tweenProgress;
-              if (self._animationState.additiveBlending) {
-                self._transform.scaleX = self._currentTransform.scaleX + self._durationTransform.scaleX * tweenProgress;
-                self._transform.scaleY = self._currentTransform.scaleY + self._durationTransform.scaleY * tweenProgress;
-              } else {
-                self._transform.scaleX = self._originalTransform.scaleX * (self._currentTransform.scaleX + self._durationTransform.scaleX * tweenProgress);
-                self._transform.scaleY = self._originalTransform.scaleY * (self._currentTransform.scaleY + self._durationTransform.scaleY * tweenProgress);
-              }
-            }
-            self.bone.invalidUpdate();
-          }
-        };
-        BoneTimelineState.prototype.fadeIn = function(armature, animationState, timelineData, time) {
-          _super.prototype.fadeIn.call(this, armature, animationState, timelineData, time);
-          this._originalTransform = this._timeline.originalTransform;
-          this._boneTransform = this.bone._animationPose;
-        };
-        BoneTimelineState.prototype.fadeOut = function() {
-          this._transform.skewX = dragonBones.Transform.normalizeRadian(this._transform.skewX);
-          this._transform.skewY = dragonBones.Transform.normalizeRadian(this._transform.skewY);
-        };
-        BoneTimelineState.prototype.update = function(time) {
-          var self = this;
-          _super.prototype.update.call(this, time);
-          var weight = self._animationState._weightResult;
-          if (weight > 0) {
-            if (0 == self.bone._blendIndex) {
-              self._boneTransform.x = self._transform.x * weight;
-              self._boneTransform.y = self._transform.y * weight;
-              self._boneTransform.skewX = self._transform.skewX * weight;
-              self._boneTransform.skewY = self._transform.skewY * weight;
-              self._boneTransform.scaleX = (self._transform.scaleX - 1) * weight + 1;
-              self._boneTransform.scaleY = (self._transform.scaleY - 1) * weight + 1;
-            } else {
-              self._boneTransform.x += self._transform.x * weight;
-              self._boneTransform.y += self._transform.y * weight;
-              self._boneTransform.skewX += self._transform.skewX * weight;
-              self._boneTransform.skewY += self._transform.skewY * weight;
-              self._boneTransform.scaleX += (self._transform.scaleX - 1) * weight;
-              self._boneTransform.scaleY += (self._transform.scaleY - 1) * weight;
-            }
-            self.bone._blendIndex++;
-            0 != self._animationState._fadeState && self.bone.invalidUpdate();
-          }
-        };
-        return BoneTimelineState;
-      })(dragonBones.TweenTimelineState);
-      dragonBones.BoneTimelineState = BoneTimelineState;
-      var SlotTimelineState = (function(_super) {
-        __extends(SlotTimelineState, _super);
-        function SlotTimelineState() {
-          _super.call(this);
-          this._color = new dragonBones.ColorTransform();
-          this._durationColor = new dragonBones.ColorTransform();
-        }
-        SlotTimelineState.toString = function() {
-          return "[class dragonBones.SlotTimelineState]";
-        };
-        SlotTimelineState.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.slot = null;
-          this._colorDirty = false;
-          this._tweenColor = 0;
-          this._slotColor = null;
-          this._color.identity();
-          this._durationColor.identity();
-        };
-        SlotTimelineState.prototype._onArriveAtFrame = function(isUpdate) {
-          var self = this;
-          _super.prototype._onArriveAtFrame.call(this, isUpdate);
-          if (self._animationState._isDisabled(self.slot)) {
-            self._tweenEasing = dragonBones.DragonBones.NO_TWEEN;
-            self._curve = null;
-            self._tweenColor = 0;
-            return;
-          }
-          if (self._animationState._fadeState >= 0) {
-            self.slot._setDisplayIndex(self._currentFrame.displayIndex);
-            self.slot._updateMeshData(true);
-          }
-          self._tweenColor = 0;
-          var currentColor = self._currentFrame.color;
-          if (self._keyFrameCount > 1 && (self._tweenEasing != dragonBones.DragonBones.NO_TWEEN || self._curve)) {
-            var nextFrame = self._currentFrame.next;
-            var nextColor = nextFrame.color;
-            if (currentColor != nextColor && nextFrame.displayIndex >= 0) {
-              self._durationColor.alphaMultiplier = nextColor.alphaMultiplier - currentColor.alphaMultiplier;
-              self._durationColor.redMultiplier = nextColor.redMultiplier - currentColor.redMultiplier;
-              self._durationColor.greenMultiplier = nextColor.greenMultiplier - currentColor.greenMultiplier;
-              self._durationColor.blueMultiplier = nextColor.blueMultiplier - currentColor.blueMultiplier;
-              self._durationColor.alphaOffset = nextColor.alphaOffset - currentColor.alphaOffset;
-              self._durationColor.redOffset = nextColor.redOffset - currentColor.redOffset;
-              self._durationColor.greenOffset = nextColor.greenOffset - currentColor.greenOffset;
-              self._durationColor.blueOffset = nextColor.blueOffset - currentColor.blueOffset;
-              0 == self._durationColor.alphaMultiplier && 0 == self._durationColor.redMultiplier && 0 == self._durationColor.greenMultiplier && 0 == self._durationColor.blueMultiplier && 0 == self._durationColor.alphaOffset && 0 == self._durationColor.redOffset && 0 == self._durationColor.greenOffset && 0 == self._durationColor.blueOffset || (self._tweenColor = 2);
-            }
-          }
-          0 == self._tweenColor && (self._slotColor.alphaMultiplier == currentColor.alphaMultiplier && self._slotColor.redMultiplier == currentColor.redMultiplier && self._slotColor.greenMultiplier == currentColor.greenMultiplier && self._slotColor.blueMultiplier == currentColor.blueMultiplier && self._slotColor.alphaOffset == currentColor.alphaOffset && self._slotColor.redOffset == currentColor.redOffset && self._slotColor.greenOffset == currentColor.greenOffset && self._slotColor.blueOffset == currentColor.blueOffset || (self._tweenColor = 1));
-        };
-        SlotTimelineState.prototype._onUpdateFrame = function(isUpdate) {
-          var self = this;
-          _super.prototype._onUpdateFrame.call(this, isUpdate);
-          var tweenProgress = 0;
-          if (self._tweenColor) {
-            if (1 == self._tweenColor) {
-              self._tweenColor = 0;
-              tweenProgress = 0;
-            } else tweenProgress = self._tweenProgress;
-            var currentColor = self._currentFrame.color;
-            self._color.alphaMultiplier = currentColor.alphaMultiplier + self._durationColor.alphaMultiplier * tweenProgress;
-            self._color.redMultiplier = currentColor.redMultiplier + self._durationColor.redMultiplier * tweenProgress;
-            self._color.greenMultiplier = currentColor.greenMultiplier + self._durationColor.greenMultiplier * tweenProgress;
-            self._color.blueMultiplier = currentColor.blueMultiplier + self._durationColor.blueMultiplier * tweenProgress;
-            self._color.alphaOffset = currentColor.alphaOffset + self._durationColor.alphaOffset * tweenProgress;
-            self._color.redOffset = currentColor.redOffset + self._durationColor.redOffset * tweenProgress;
-            self._color.greenOffset = currentColor.greenOffset + self._durationColor.greenOffset * tweenProgress;
-            self._color.blueOffset = currentColor.blueOffset + self._durationColor.blueOffset * tweenProgress;
-            self._colorDirty = true;
-          }
-        };
-        SlotTimelineState.prototype.fadeIn = function(armature, animationState, timelineData, time) {
-          _super.prototype.fadeIn.call(this, armature, animationState, timelineData, time);
-          this._slotColor = this.slot._colorTransform;
-        };
-        SlotTimelineState.prototype.fadeOut = function() {
-          this._tweenColor = 0;
-        };
-        SlotTimelineState.prototype.update = function(time) {
-          var self = this;
-          _super.prototype.update.call(this, time);
-          if (0 != self._tweenColor || self._colorDirty) {
-            var weight = self._animationState._weightResult;
-            if (weight > 0) if (0 != self._animationState._fadeState) {
-              var fadeProgress = Math.pow(self._animationState._fadeProgress, 4);
-              self._slotColor.alphaMultiplier += (self._color.alphaMultiplier - self._slotColor.alphaMultiplier) * fadeProgress;
-              self._slotColor.redMultiplier += (self._color.redMultiplier - self._slotColor.redMultiplier) * fadeProgress;
-              self._slotColor.greenMultiplier += (self._color.greenMultiplier - self._slotColor.greenMultiplier) * fadeProgress;
-              self._slotColor.blueMultiplier += (self._color.blueMultiplier - self._slotColor.blueMultiplier) * fadeProgress;
-              self._slotColor.alphaOffset += (self._color.alphaOffset - self._slotColor.alphaOffset) * fadeProgress;
-              self._slotColor.redOffset += (self._color.redOffset - self._slotColor.redOffset) * fadeProgress;
-              self._slotColor.greenOffset += (self._color.greenOffset - self._slotColor.greenOffset) * fadeProgress;
-              self._slotColor.blueOffset += (self._color.blueOffset - self._slotColor.blueOffset) * fadeProgress;
-              self.slot._colorDirty = true;
-            } else if (self._colorDirty) {
-              self._colorDirty = false;
-              self._slotColor.alphaMultiplier = self._color.alphaMultiplier;
-              self._slotColor.redMultiplier = self._color.redMultiplier;
-              self._slotColor.greenMultiplier = self._color.greenMultiplier;
-              self._slotColor.blueMultiplier = self._color.blueMultiplier;
-              self._slotColor.alphaOffset = self._color.alphaOffset;
-              self._slotColor.redOffset = self._color.redOffset;
-              self._slotColor.greenOffset = self._color.greenOffset;
-              self._slotColor.blueOffset = self._color.blueOffset;
-              self.slot._colorDirty = true;
-            }
-          }
-        };
-        return SlotTimelineState;
-      })(dragonBones.TweenTimelineState);
-      dragonBones.SlotTimelineState = SlotTimelineState;
-      var FFDTimelineState = (function(_super) {
-        __extends(FFDTimelineState, _super);
-        function FFDTimelineState() {
-          _super.call(this);
-          this._ffdVertices = [];
-        }
-        FFDTimelineState.toString = function() {
-          return "[class dragonBones.FFDTimelineState]";
-        };
-        FFDTimelineState.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.slot = null;
-          this._tweenFFD = 0;
-          this._slotFFDVertices = null;
-          if (this._durationFFDFrame) {
-            this._durationFFDFrame.returnToPool();
-            this._durationFFDFrame = null;
-          }
-          this._ffdVertices.length = 0;
-        };
-        FFDTimelineState.prototype._onArriveAtFrame = function(isUpdate) {
-          var self = this;
-          _super.prototype._onArriveAtFrame.call(this, isUpdate);
-          self._tweenFFD = 0;
-          (self._tweenEasing != dragonBones.DragonBones.NO_TWEEN || self._curve) && (self._tweenFFD = self._updateExtensionKeyFrame(self._currentFrame, self._currentFrame.next, self._durationFFDFrame));
-          if (0 == self._tweenFFD) {
-            var currentFFDVertices = self._currentFrame.tweens;
-            for (var i = 0, l = currentFFDVertices.length; i < l; ++i) if (self._slotFFDVertices[i] != currentFFDVertices[i]) {
-              self._tweenFFD = 1;
-              break;
-            }
-          }
-        };
-        FFDTimelineState.prototype._onUpdateFrame = function(isUpdate) {
-          var self = this;
-          _super.prototype._onUpdateFrame.call(this, isUpdate);
-          var tweenProgress = 0;
-          if (0 != self._tweenFFD) {
-            if (1 == self._tweenFFD) {
-              self._tweenFFD = 0;
-              tweenProgress = 0;
-            } else tweenProgress = self._tweenProgress;
-            var currentFFDVertices = self._currentFrame.tweens;
-            var nextFFDVertices = self._durationFFDFrame.tweens;
-            for (var i = 0, l = currentFFDVertices.length; i < l; ++i) self._ffdVertices[i] = currentFFDVertices[i] + nextFFDVertices[i] * tweenProgress;
-            self.slot._ffdDirty = true;
-          }
-        };
-        FFDTimelineState.prototype.fadeIn = function(armature, animationState, timelineData, time) {
-          _super.prototype.fadeIn.call(this, armature, animationState, timelineData, time);
-          this._slotFFDVertices = this.slot._ffdVertices;
-          this._durationFFDFrame = dragonBones.BaseObject.borrowObject(dragonBones.ExtensionFrameData);
-          this._durationFFDFrame.tweens.length = this._slotFFDVertices.length;
-          this._ffdVertices.length = this._slotFFDVertices.length;
-          for (var i = 0, l = this._durationFFDFrame.tweens.length; i < l; ++i) this._durationFFDFrame.tweens[i] = 0;
-          for (var i = 0, l = this._ffdVertices.length; i < l; ++i) this._ffdVertices[i] = 0;
-        };
-        FFDTimelineState.prototype.update = function(time) {
-          var self = this;
-          _super.prototype.update.call(this, time);
-          var weight = self._animationState._weightResult;
-          if (weight > 0) {
-            if (0 == self.slot._blendIndex) for (var i = 0, l = self._ffdVertices.length; i < l; ++i) self._slotFFDVertices[i] = self._ffdVertices[i] * weight; else for (var i = 0, l = self._ffdVertices.length; i < l; ++i) self._slotFFDVertices[i] += self._ffdVertices[i] * weight;
-            self.slot._blendIndex++;
-            0 != self._animationState._fadeState && (self.slot._ffdDirty = true);
-          }
-        };
-        return FFDTimelineState;
-      })(dragonBones.TweenTimelineState);
-      dragonBones.FFDTimelineState = FFDTimelineState;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var WorldClock = (function() {
-        function WorldClock() {
-          this.time = new Date().getTime() / dragonBones.DragonBones.SECOND_TO_MILLISECOND;
-          this.timeScale = 1;
-          this._animatebles = [];
-        }
-        Object.defineProperty(WorldClock, "clock", {
-          get: function() {
-            WorldClock._clock || (WorldClock._clock = new WorldClock());
-            return WorldClock._clock;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        WorldClock.prototype.advanceTime = function(passedTime) {
-          passedTime != passedTime && (passedTime = 0);
-          passedTime < 0 && (passedTime = new Date().getTime() / dragonBones.DragonBones.SECOND_TO_MILLISECOND - this.time);
-          passedTime *= this.timeScale;
-          passedTime < 0 ? this.time -= passedTime : this.time += passedTime;
-          if (passedTime) {
-            var i = 0, r = 0, l = this._animatebles.length;
-            for (;i < l; ++i) {
-              var animateble = this._animatebles[i];
-              if (animateble) {
-                if (r > 0) {
-                  this._animatebles[i - r] = animateble;
-                  this._animatebles[i] = null;
-                }
-                animateble.advanceTime(passedTime);
-              } else r++;
-            }
-            if (r > 0) {
-              l = this._animatebles.length;
-              for (;i < l; ++i) {
-                var animateble = this._animatebles[i];
-                animateble ? this._animatebles[i - r] = animateble : r++;
-              }
-              this._animatebles.length -= r;
-            }
-          }
-        };
-        WorldClock.prototype.contains = function(value) {
-          return this._animatebles.indexOf(value) >= 0;
-        };
-        WorldClock.prototype.add = function(value) {
-          if (value && this._animatebles.indexOf(value) < 0) {
-            this._animatebles.push(value);
-            dragonBones.DragonBones.debug && value instanceof dragonBones.Armature && dragonBones.DragonBones.addArmature(value);
-          }
-        };
-        WorldClock.prototype.remove = function(value) {
-          var index = this._animatebles.indexOf(value);
-          if (index >= 0) {
-            this._animatebles[index] = null;
-            dragonBones.DragonBones.debug && value instanceof dragonBones.Armature && dragonBones.DragonBones.removeArmature(value);
-          }
-        };
-        WorldClock.prototype.clear = function() {
-          for (var i = 0, l = this._animatebles.length; i < l; ++i) this._animatebles[i] = null;
-        };
-        WorldClock._clock = null;
-        return WorldClock;
-      })();
-      dragonBones.WorldClock = WorldClock;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var TransformObject = (function(_super) {
-        __extends(TransformObject, _super);
-        function TransformObject() {
-          _super.call(this);
-          this.global = new dragonBones.Transform();
-          this.origin = new dragonBones.Transform();
-          this.offset = new dragonBones.Transform();
-          this._globalTransformMatrix = new dragonBones.Matrix();
-        }
-        TransformObject.prototype._onClear = function() {
-          this.userData = null;
-          this.name = null;
-          this.globalTransformMatrix = this._globalTransformMatrix;
-          this.global.identity();
-          this.origin.identity();
-          this.offset.identity();
-          this._armature = null;
-          this._parent = null;
-          this._globalTransformMatrix.identity();
-        };
-        TransformObject.prototype._setArmature = function(value) {
-          this._armature = value;
-        };
-        TransformObject.prototype._setParent = function(value) {
-          this._parent = value;
-        };
-        Object.defineProperty(TransformObject.prototype, "armature", {
-          get: function() {
-            return this._armature;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(TransformObject.prototype, "parent", {
-          get: function() {
-            return this._parent;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        return TransformObject;
-      })(dragonBones.BaseObject);
-      dragonBones.TransformObject = TransformObject;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var Armature = (function(_super) {
-        __extends(Armature, _super);
-        function Armature() {
-          _super.call(this);
-          this._bones = [];
-          this._slots = [];
-          this._actions = [];
-          this._events = [];
-          this.enableCache = false;
-        }
-        Armature.toString = function() {
-          return "[class dragonBones.Armature]";
-        };
-        Armature._onSortSlots = function(a, b) {
-          return a._zOrder > b._zOrder ? 1 : -1;
-        };
-        Armature.prototype._onClear = function() {
-          for (var i = 0, l = this._bones.length; i < l; ++i) this._bones[i].returnToPool();
-          for (var i = 0, l = this._slots.length; i < l; ++i) this._slots[i].returnToPool();
-          for (var i = 0, l = this._events.length; i < l; ++i) this._events[i].returnToPool();
-          this._animation && this._animation.returnToPool();
-          this._display && this._display._onClear();
-          this.userData = null;
-          this._cacheFrameIndex = -1;
-          this._armatureData = null;
-          this._skinData = null;
-          this._animation = null;
-          this._display = null;
-          this._parent = null;
-          this._eventManager = null;
-          this._delayDispose = false;
-          this._lockDispose = false;
-          this._debugDraw = false;
-          this._bonesDirty = false;
-          this._slotsDirty = false;
-          this._replacedTexture = null;
-          this._bones.length = 0;
-          this._slots.length = 0;
-          this._actions.length = 0;
-          this._events.length = 0;
-        };
-        Armature.prototype._sortBones = function() {
-          var total = this._bones.length;
-          if (total <= 0) return;
-          var sortHelper = this._bones.concat();
-          var index = 0;
-          var count = 0;
-          this._bones.length = 0;
-          while (count < total) {
-            var bone = sortHelper[index++];
-            index >= total && (index = 0);
-            if (this._bones.indexOf(bone) >= 0) continue;
-            if (bone.parent && this._bones.indexOf(bone.parent) < 0) continue;
-            if (bone.ik && this._bones.indexOf(bone.ik) < 0) continue;
-            bone.ik && bone.ikChain > 0 && bone.ikChainIndex == bone.ikChain ? this._bones.splice(this._bones.indexOf(bone.parent) + 1, 0, bone) : this._bones.push(bone);
-            count++;
-          }
-        };
-        Armature.prototype._sortSlots = function() {
-          this._slots.sort(Armature._onSortSlots);
-        };
-        Armature.prototype._doAction = function(value) {
-          switch (value.type) {
-           case 0:
-            this._animation.play(value.data[0], value.data[1]);
-            break;
-
-           case 1:
-            this._animation.stop(value.data[0]);
-            break;
-
-           case 2:
-            this._animation.gotoAndPlayByTime(value.data[0], value.data[1], value.data[2]);
-            break;
-
-           case 3:
-            this._animation.gotoAndStopByTime(value.data[0], value.data[1]);
-            break;
-
-           case 4:
-            this._animation.fadeIn(value.data[0], value.data[1], value.data[2]);
-          }
-        };
-        Armature.prototype._addBoneToBoneList = function(value) {
-          if (this._bones.indexOf(value) < 0) {
-            this._bonesDirty = true;
-            this._bones.push(value);
-          }
-        };
-        Armature.prototype._removeBoneFromBoneList = function(value) {
-          var index = this._bones.indexOf(value);
-          index >= 0 && this._bones.splice(index, 1);
-        };
-        Armature.prototype._addSlotToSlotList = function(value) {
-          if (this._slots.indexOf(value) < 0) {
-            this._slotsDirty = true;
-            this._slots.push(value);
-          }
-        };
-        Armature.prototype._removeSlotFromSlotList = function(value) {
-          var index = this._slots.indexOf(value);
-          index >= 0 && this._slots.splice(index, 1);
-        };
-        Armature.prototype._sortZOrder = function(slotIndices) {
-          var sortedSlots = this._armatureData.sortedSlots;
-          var isOriginal = slotIndices.length < 1;
-          for (var i = 0, l = sortedSlots.length; i < l; ++i) {
-            var slotIndex = isOriginal ? i : slotIndices[i];
-            var slotData = sortedSlots[slotIndex];
-            var slot = this.getSlot(slotData.name);
-            slot && slot._setZorder(i);
-          }
-          this._slotsDirty = true;
-        };
-        Armature.prototype._bufferAction = function(value) {
-          this._actions.push(value);
-        };
-        Armature.prototype._bufferEvent = function(value, type) {
-          value.type = type;
-          value.armature = this;
-          this._events.push(value);
-        };
-        Armature.prototype.dispose = function() {
-          this._delayDispose = true;
-          !this._lockDispose && this._animation && this.returnToPool();
-        };
-        Armature.prototype.advanceTime = function(passedTime) {
-          var self = this;
-          if (!self._animation) throw new Error("The armature has been disposed.");
-          var scaledPassedTime = passedTime * self._animation.timeScale;
-          self._animation._advanceTime(scaledPassedTime);
-          if (self._bonesDirty) {
-            self._bonesDirty = false;
-            self._sortBones();
-          }
-          if (self._slotsDirty) {
-            self._slotsDirty = false;
-            self._sortSlots();
-          }
-          for (var i = 0, l = self._bones.length; i < l; ++i) self._bones[i]._update(self._cacheFrameIndex);
-          for (var i = 0, l = self._slots.length; i < l; ++i) {
-            var slot = self._slots[i];
-            slot._update(self._cacheFrameIndex);
-            var childArmature = slot._childArmature;
-            childArmature && (slot.inheritAnimation ? childArmature.advanceTime(scaledPassedTime) : childArmature.advanceTime(passedTime));
-          }
-          if (dragonBones.DragonBones.debugDraw || self._debugDraw) {
-            self._debugDraw = dragonBones.DragonBones.debugDraw;
-            self._display._debugDraw(self._debugDraw);
-          }
-          if (!self._lockDispose) {
-            self._lockDispose = true;
-            if (self._events.length > 0) {
-              for (var i = 0, l = self._events.length; i < l; ++i) {
-                var event_5 = self._events[i];
-                event_5.type == dragonBones.EventObject.SOUND_EVENT ? this._eventManager._dispatchEvent(event_5) : self._display._dispatchEvent(event_5);
-                event_5.returnToPool();
-              }
-              self._events.length = 0;
-            }
-            if (self._actions.length > 0) {
-              for (var i = 0, l = self._actions.length; i < l; ++i) {
-                var action = self._actions[i];
-                if (action.slot) {
-                  var slot = self.getSlot(action.slot.name);
-                  if (slot) {
-                    var childArmature = slot._childArmature;
-                    childArmature && childArmature._doAction(action);
-                  }
-                } else if (action.bone) for (var i_1 = 0, l_1 = self._slots.length; i_1 < l_1; ++i_1) {
-                  var childArmature = self._slots[i_1]._childArmature;
-                  childArmature && childArmature._doAction(action);
-                } else this._doAction(action);
-              }
-              self._actions.length = 0;
-            }
-            self._lockDispose = false;
-          }
-          self._delayDispose && self.returnToPool();
-        };
-        Armature.prototype.containsPoint = function(x, y, color) {
-          void 0 === color && (color = 0);
-          for (var i = 0, l = this._slots.length; i < l; ++i) {
-            var slot = this._slots[i];
-            if (slot.containsPoint(x, y, color)) return slot;
-          }
-          return null;
-        };
-        Armature.prototype.intersectsSegment = function(xA, yA, xB, yB, color, intersectionPointA, intersectionPointB, normalRadians) {
-          void 0 === color && (color = 0);
-          void 0 === intersectionPointA && (intersectionPointA = null);
-          void 0 === intersectionPointB && (intersectionPointB = null);
-          void 0 === normalRadians && (normalRadians = null);
-          var isV = xA == xB;
-          var dMin = 0;
-          var dMax = 0;
-          var intXA = 0;
-          var intYA = 0;
-          var intXB = 0;
-          var intYB = 0;
-          var intAN = 0;
-          var intBN = 0;
-          var intSlotA = null;
-          var intSlotB = null;
-          for (var i = 0, l = this._slots.length; i < l; ++i) {
-            var slot = this._slots[i];
-            var intersectionCount = slot.intersectsSegment(xA, yA, xB, yB, color, intersectionPointA, intersectionPointB, normalRadians);
-            if (intersectionCount > 0) {
-              if (!intersectionPointA && !intersectionPointB) {
-                intSlotA = slot;
-                break;
-              }
-              if (intersectionPointA) {
-                var d = isV ? intersectionPointA.y - yA : intersectionPointA.x - xA;
-                d < 0 && (d = -d);
-                if (!intSlotA || d < dMin) {
-                  dMin = d;
-                  intXA = intersectionPointA.x;
-                  intYA = intersectionPointA.y;
-                  intSlotA = slot;
-                  normalRadians && (intAN = normalRadians.x);
-                }
-              }
-              if (intersectionPointB) {
-                var d = intersectionPointB.x - xA;
-                d < 0 && (d = -d);
-                if (!intSlotB || d > dMax) {
-                  dMax = d;
-                  intXB = intersectionPointB.x;
-                  intYB = intersectionPointB.y;
-                  intSlotB = slot;
-                  normalRadians && (intBN = normalRadians.y);
-                }
-              }
-            }
-          }
-          if (intSlotA && intersectionPointA) {
-            intersectionPointA.x = intXA;
-            intersectionPointA.y = intYA;
-            normalRadians && (normalRadians.x = intAN);
-          }
-          if (intSlotB && intersectionPointB) {
-            intersectionPointB.x = intXB;
-            intersectionPointB.y = intYB;
-            normalRadians && (normalRadians.y = intBN);
-          }
-          return intSlotA;
-        };
-        Armature.prototype.invalidUpdate = function(boneName, updateSlotDisplay) {
-          void 0 === boneName && (boneName = null);
-          void 0 === updateSlotDisplay && (updateSlotDisplay = false);
-          if (boneName) {
-            var bone = this.getBone(boneName);
-            if (bone) {
-              bone.invalidUpdate();
-              if (updateSlotDisplay) for (var i = 0, l = this._slots.length; i < l; ++i) {
-                var slot = this._slots[i];
-                slot.parent == bone && slot.invalidUpdate();
-              }
-            }
-          } else {
-            for (var i = 0, l = this._bones.length; i < l; ++i) this._bones[i].invalidUpdate();
-            if (updateSlotDisplay) for (var i = 0, l = this._slots.length; i < l; ++i) this._slots[i].invalidUpdate();
-          }
-        };
-        Armature.prototype.getBone = function(name) {
-          for (var i = 0, l = this._bones.length; i < l; ++i) {
-            var bone = this._bones[i];
-            if (bone.name == name) return bone;
-          }
-          return null;
-        };
-        Armature.prototype.getBoneByDisplay = function(display) {
-          var slot = this.getSlotByDisplay(display);
-          return slot ? slot.parent : null;
-        };
-        Armature.prototype.getSlot = function(name) {
-          for (var i = 0, l = this._slots.length; i < l; ++i) {
-            var slot = this._slots[i];
-            if (slot.name == name) return slot;
-          }
-          return null;
-        };
-        Armature.prototype.getSlotByDisplay = function(display) {
-          if (display) for (var i = 0, l = this._slots.length; i < l; ++i) {
-            var slot = this._slots[i];
-            if (slot.display == display) return slot;
-          }
-          return null;
-        };
-        Armature.prototype.replaceTexture = function(texture) {
-          this.replacedTexture = texture;
-        };
-        Armature.prototype.getBones = function() {
-          return this._bones;
-        };
-        Armature.prototype.getSlots = function() {
-          return this._slots;
-        };
-        Object.defineProperty(Armature.prototype, "name", {
-          get: function() {
-            return this._armatureData ? this._armatureData.name : null;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Armature.prototype, "armatureData", {
-          get: function() {
-            return this._armatureData;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Armature.prototype, "animation", {
-          get: function() {
-            return this._animation;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Armature.prototype, "display", {
-          get: function() {
-            return this._display;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Armature.prototype, "parent", {
-          get: function() {
-            return this._parent;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Armature.prototype, "cacheFrameRate", {
-          get: function() {
-            return this._armatureData.cacheFrameRate;
-          },
-          set: function(value) {
-            if (this._armatureData.cacheFrameRate != value) {
-              this._armatureData.cacheFrames(value);
-              for (var i = 0, l = this._slots.length; i < l; ++i) {
-                var slot = this._slots[i];
-                var childArmature = slot.childArmature;
-                childArmature && 0 == childArmature.cacheFrameRate && (childArmature.cacheFrameRate = value);
-              }
-            }
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Armature.prototype, "replacedTexture", {
-          get: function() {
-            return this._replacedTexture;
-          },
-          set: function(value) {
-            this._display._onReplaceTexture(value);
-            this._replacedTexture = value;
-            for (var i = 0, l = this._slots.length; i < l; ++i) this._slots[i].invalidUpdate();
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Armature.prototype.enableAnimationCache = function(frameRate) {
-          this.cacheFrameRate = frameRate;
-        };
-        Armature.prototype.hasEventListener = function(type) {
-          return this._display.hasEvent(type);
-        };
-        Armature.prototype.addEventListener = function(type, listener, target) {
-          this._display.addEvent(type, listener, target);
-        };
-        Armature.prototype.removeEventListener = function(type, listener, target) {
-          this._display.removeEvent(type, listener, target);
-        };
-        Armature.prototype.addBone = function(value, parentName) {
-          void 0 === parentName && (parentName = null);
-          if (!value) throw new Error();
-          value._setArmature(this);
-          value._setParent(parentName ? this.getBone(parentName) : null);
-        };
-        Armature.prototype.addSlot = function(value, parentName) {
-          var bone = this.getBone(parentName);
-          if (!bone) throw new Error();
-          value._setArmature(this);
-          value._setParent(bone);
-        };
-        Armature.prototype.removeBone = function(value) {
-          if (!value || value.armature != this) throw new Error();
-          value._setParent(null);
-          value._setArmature(null);
-        };
-        Armature.prototype.removeSlot = function(value) {
-          if (!value || value.armature != this) throw new Error();
-          value._setParent(null);
-          value._setArmature(null);
-        };
-        Armature.prototype.getDisplay = function() {
-          return this._display;
-        };
-        return Armature;
-      })(dragonBones.BaseObject);
-      dragonBones.Armature = Armature;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var Bone = (function(_super) {
-        __extends(Bone, _super);
-        function Bone() {
-          _super.call(this);
-          this._animationPose = new dragonBones.Transform();
-          this._bones = [];
-          this._slots = [];
-        }
-        Bone.toString = function() {
-          return "[class dragonBones.Bone]";
-        };
-        Bone.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.inheritTranslation = false;
-          this.inheritRotation = false;
-          this.inheritScale = false;
-          this.ikBendPositive = false;
-          this.ikWeight = 0;
-          this.length = 0;
-          this._transformDirty = 2;
-          this._blendIndex = 0;
-          this._cacheFrames = null;
-          this._animationPose.identity();
-          this._visible = true;
-          this._ikChain = 0;
-          this._ikChainIndex = 0;
-          this._ik = null;
-          this._bones.length = 0;
-          this._slots.length = 0;
-        };
-        Bone.prototype._updateGlobalTransformMatrix = function() {
-          if (this._parent) {
-            var parentRotation = this._parent.global.skewY;
-            var parentMatrix = this._parent.globalTransformMatrix;
-            if (this.inheritScale) {
-              if (!this.inheritRotation) {
-                this.global.skewX -= parentRotation;
-                this.global.skewY -= parentRotation;
-              }
-              this.global.toMatrix(this.globalTransformMatrix);
-              this.globalTransformMatrix.concat(parentMatrix);
-              if (!this.inheritTranslation) {
-                this.globalTransformMatrix.tx = this.global.x;
-                this.globalTransformMatrix.ty = this.global.y;
-              }
-              this.global.fromMatrix(this.globalTransformMatrix);
-            } else {
-              if (this.inheritTranslation) {
-                var x = this.global.x;
-                var y = this.global.y;
-                this.global.x = parentMatrix.a * x + parentMatrix.c * y + parentMatrix.tx;
-                this.global.y = parentMatrix.d * y + parentMatrix.b * x + parentMatrix.ty;
-              }
-              if (this.inheritRotation) {
-                this.global.skewX += parentRotation;
-                this.global.skewY += parentRotation;
-              }
-              this.global.toMatrix(this.globalTransformMatrix);
-            }
-          } else this.global.toMatrix(this.globalTransformMatrix);
-        };
-        Bone.prototype._computeIKA = function() {
-          var ikGlobal = this._ik.global;
-          var x = this.globalTransformMatrix.a * this.length;
-          var y = this.globalTransformMatrix.b * this.length;
-          var ikRadian = (Math.atan2(ikGlobal.y - this.global.y, ikGlobal.x - this.global.x) + this.offset.skewY - 2 * this.global.skewY + Math.atan2(y, x)) * this.ikWeight;
-          this.global.skewX += ikRadian;
-          this.global.skewY += ikRadian;
-          this.global.toMatrix(this.globalTransformMatrix);
-        };
-        Bone.prototype._computeIKB = function() {
-          var parentGlobal = this._parent.global;
-          var ikGlobal = this._ik.global;
-          var x = this.globalTransformMatrix.a * this.length;
-          var y = this.globalTransformMatrix.b * this.length;
-          var lLL = x * x + y * y;
-          var lL = Math.sqrt(lLL);
-          var dX = this.global.x - parentGlobal.x;
-          var dY = this.global.y - parentGlobal.y;
-          var lPP = dX * dX + dY * dY;
-          var lP = Math.sqrt(lPP);
-          dX = ikGlobal.x - parentGlobal.x;
-          dY = ikGlobal.y - parentGlobal.y;
-          var lTT = dX * dX + dY * dY;
-          var lT = Math.sqrt(lTT);
-          var ikRadianA = 0;
-          if (lL + lP <= lT || lT + lL <= lP || lT + lP <= lL) {
-            ikRadianA = Math.atan2(ikGlobal.y - parentGlobal.y, ikGlobal.x - parentGlobal.x) + this._parent.offset.skewY;
-            lL + lP <= lT || lP < lL && (ikRadianA += Math.PI);
-          } else {
-            var h = (lPP - lLL + lTT) / (2 * lTT);
-            var r = Math.sqrt(lPP - h * h * lTT) / lT;
-            var hX = parentGlobal.x + dX * h;
-            var hY = parentGlobal.y + dY * h;
-            var rX = -dY * r;
-            var rY = dX * r;
-            if (this.ikBendPositive) {
-              this.global.x = hX - rX;
-              this.global.y = hY - rY;
-            } else {
-              this.global.x = hX + rX;
-              this.global.y = hY + rY;
-            }
-            ikRadianA = Math.atan2(this.global.y - parentGlobal.y, this.global.x - parentGlobal.x) + this._parent.offset.skewY;
-          }
-          ikRadianA = (ikRadianA - parentGlobal.skewY) * this.ikWeight;
-          parentGlobal.skewX += ikRadianA;
-          parentGlobal.skewY += ikRadianA;
-          parentGlobal.toMatrix(this._parent.globalTransformMatrix);
-          this._parent._transformDirty = 1;
-          this.global.x = parentGlobal.x + Math.cos(parentGlobal.skewY) * lP;
-          this.global.y = parentGlobal.y + Math.sin(parentGlobal.skewY) * lP;
-          var ikRadianB = (Math.atan2(ikGlobal.y - this.global.y, ikGlobal.x - this.global.x) + this.offset.skewY - 2 * this.global.skewY + Math.atan2(y, x)) * this.ikWeight;
-          this.global.skewX += ikRadianB;
-          this.global.skewY += ikRadianB;
-          this.global.toMatrix(this.globalTransformMatrix);
-        };
-        Bone.prototype._setArmature = function(value) {
-          if (this._armature == value) return;
-          this._ik = null;
-          var oldSlots = null;
-          var oldBones = null;
-          if (this._armature) {
-            oldSlots = this.getSlots();
-            oldBones = this.getBones();
-            this._armature._removeBoneFromBoneList(this);
-          }
-          this._armature = value;
-          this._armature && this._armature._addBoneToBoneList(this);
-          if (oldSlots) for (var i = 0, l = oldSlots.length; i < l; ++i) {
-            var slot = oldSlots[i];
-            slot.parent == this && slot._setArmature(this._armature);
-          }
-          if (oldBones) for (var i = 0, l = oldBones.length; i < l; ++i) {
-            var bone = oldBones[i];
-            bone.parent == this && bone._setArmature(this._armature);
-          }
-        };
-        Bone.prototype._setIK = function(value, chain, chainIndex) {
-          if (value) {
-            if (chain == chainIndex) {
-              var chainEnd = this._parent;
-              if (chain && chainEnd) chain = 1; else {
-                chain = 0;
-                chainIndex = 0;
-                chainEnd = this;
-              }
-              if (chainEnd == value || chainEnd.contains(value)) {
-                value = null;
-                chain = 0;
-                chainIndex = 0;
-              } else {
-                var ancestor = value;
-                while (ancestor.ik && ancestor.ikChain) {
-                  if (chainEnd.contains(ancestor.ik)) {
-                    value = null;
-                    chain = 0;
-                    chainIndex = 0;
-                    break;
-                  }
-                  ancestor = ancestor.parent;
-                }
-              }
-            }
-          } else {
-            chain = 0;
-            chainIndex = 0;
-          }
-          this._ik = value;
-          this._ikChain = chain;
-          this._ikChainIndex = chainIndex;
-          this._armature && (this._armature._bonesDirty = true);
-        };
-        Bone.prototype._update = function(cacheFrameIndex) {
-          var self = this;
-          self._blendIndex = 0;
-          if (cacheFrameIndex >= 0) {
-            var cacheFrame = self._cacheFrames[cacheFrameIndex];
-            if (self.globalTransformMatrix == cacheFrame) self._transformDirty = 0; else if (cacheFrame) {
-              self._transformDirty = 2;
-              self.globalTransformMatrix = cacheFrame;
-            } else if (2 == self._transformDirty || self._parent && 0 != self._parent._transformDirty || self._ik && self.ikWeight > 0 && 0 != self._ik._transformDirty) {
-              self._transformDirty = 2;
-              self.globalTransformMatrix = self._globalTransformMatrix;
-            } else if (self.globalTransformMatrix != self._globalTransformMatrix) {
-              self._transformDirty = 0;
-              self._cacheFrames[cacheFrameIndex] = self.globalTransformMatrix;
-            } else {
-              self._transformDirty = 2;
-              self.globalTransformMatrix = self._globalTransformMatrix;
-            }
-          } else if (2 == self._transformDirty || self._parent && 0 != self._parent._transformDirty || self._ik && self.ikWeight > 0 && 0 != self._ik._transformDirty) {
-            self._transformDirty = 2;
-            self.globalTransformMatrix = self._globalTransformMatrix;
-          }
-          if (0 != self._transformDirty) if (2 == self._transformDirty) {
-            self._transformDirty = 1;
-            if (self.globalTransformMatrix == self._globalTransformMatrix) {
-              self.global.x = self.origin.x + self.offset.x + self._animationPose.x;
-              self.global.y = self.origin.y + self.offset.y + self._animationPose.y;
-              self.global.skewX = self.origin.skewX + self.offset.skewX + self._animationPose.skewX;
-              self.global.skewY = self.origin.skewY + self.offset.skewY + self._animationPose.skewY;
-              self.global.scaleX = self.origin.scaleX * self.offset.scaleX * self._animationPose.scaleX;
-              self.global.scaleY = self.origin.scaleY * self.offset.scaleY * self._animationPose.scaleY;
-              self._updateGlobalTransformMatrix();
-              self._ik && self._ikChainIndex == self._ikChain && self.ikWeight > 0 && (self.inheritTranslation && self._ikChain > 0 && self._parent ? self._computeIKB() : self._computeIKA());
-              cacheFrameIndex >= 0 && !self._cacheFrames[cacheFrameIndex] && (self.globalTransformMatrix = dragonBones.BoneTimelineData.cacheFrame(self._cacheFrames, cacheFrameIndex, self._globalTransformMatrix));
-            }
-          } else self._transformDirty = 0;
-        };
-        Bone.prototype.invalidUpdate = function() {
-          this._transformDirty = 2;
-        };
-        Bone.prototype.contains = function(child) {
-          if (child) {
-            if (child == this) return false;
-            var ancestor = child;
-            while (ancestor != this && ancestor) ancestor = ancestor.parent;
-            return ancestor == this;
-          }
-          return false;
-        };
-        Bone.prototype.getBones = function() {
-          this._bones.length = 0;
-          var bones = this._armature.getBones();
-          for (var i = 0, l = bones.length; i < l; ++i) {
-            var bone = bones[i];
-            bone.parent == this && this._bones.push(bone);
-          }
-          return this._bones;
-        };
-        Bone.prototype.getSlots = function() {
-          this._slots.length = 0;
-          var slots = this._armature.getSlots();
-          for (var i = 0, l = slots.length; i < l; ++i) {
-            var slot = slots[i];
-            slot.parent == this && this._slots.push(slot);
-          }
-          return this._slots;
-        };
-        Object.defineProperty(Bone.prototype, "ikChain", {
-          get: function() {
-            return this._ikChain;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Bone.prototype, "ikChainIndex", {
-          get: function() {
-            return this._ikChainIndex;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Bone.prototype, "ik", {
-          get: function() {
-            return this._ik;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Bone.prototype, "visible", {
-          get: function() {
-            return this._visible;
-          },
-          set: function(value) {
-            if (this._visible == value) return;
-            this._visible = value;
-            var slots = this._armature.getSlots();
-            for (var i = 0, l = slots.length; i < l; ++i) {
-              var slot = slots[i];
-              slot._parent == this && slot._updateVisible();
-            }
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Bone.prototype, "slot", {
-          get: function() {
-            var slots = this._armature.getSlots();
-            for (var i = 0, l = slots.length; i < l; ++i) {
-              var slot = slots[i];
-              if (slot.parent == this) return slot;
-            }
-            return null;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        return Bone;
-      })(dragonBones.TransformObject);
-      dragonBones.Bone = Bone;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var Slot = (function(_super) {
-        __extends(Slot, _super);
-        function Slot() {
-          _super.call(this);
-          this._colorTransform = new dragonBones.ColorTransform();
-          this._ffdVertices = [];
-          this._replacedDisplayDataSet = [];
-          this._localMatrix = new dragonBones.Matrix();
-          this._displayList = [];
-          this._meshBones = [];
-        }
-        Slot.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          var disposeDisplayList = [];
-          for (var i = 0, l = this._displayList.length; i < l; ++i) {
-            var eachDisplay = this._displayList[i];
-            eachDisplay != this._rawDisplay && eachDisplay != this._meshDisplay && disposeDisplayList.indexOf(eachDisplay) < 0 && disposeDisplayList.push(eachDisplay);
-          }
-          for (var i = 0, l = disposeDisplayList.length; i < l; ++i) {
-            var eachDisplay = disposeDisplayList[i];
-            eachDisplay instanceof dragonBones.Armature ? eachDisplay.dispose() : this._disposeDisplay(eachDisplay);
-          }
-          this._meshDisplay && this._meshDisplay != this._rawDisplay && this._disposeDisplay(this._meshDisplay);
-          this._rawDisplay && this._disposeDisplay(this._rawDisplay);
-          this.inheritAnimation = true;
-          this.displayController = null;
-          this._blendIndex = 0;
-          this._displayDataSet = null;
-          this._meshData = null;
-          this._childArmature = null;
-          this._rawDisplay = null;
-          this._meshDisplay = null;
-          this._cacheFrames = null;
-          this._colorTransform.identity();
-          this._ffdVertices.length = 0;
-          this._replacedDisplayDataSet.length = 0;
-          this._zOrderDirty = false;
-          this._displayDirty = false;
-          this._colorDirty = false;
-          this._blendModeDirty = false;
-          this._originDirty = false;
-          this._transformDirty = false;
-          this._ffdDirty = false;
-          this._zOrder = 0;
-          this._displayIndex = -2;
-          this._pivotX = 0;
-          this._pivotY = 0;
-          this._blendMode = 0;
-          this._display = null;
-          this._localMatrix.identity();
-          this._displayList.length = 0;
-          this._meshBones.length = 0;
-        };
-        Slot.prototype._isMeshBonesUpdate = function() {
-          for (var i = 0, l = this._meshBones.length; i < l; ++i) if (0 != this._meshBones[i]._transformDirty) return true;
-          return false;
-        };
-        Slot.prototype._updatePivot = function(rawDisplayData, currentDisplayData, currentTextureData) {
-          var isReplaceDisplay = rawDisplayData && rawDisplayData != currentDisplayData && (!this._meshData || this._meshData != rawDisplayData.mesh);
-          if (this._meshData && this._display == this._meshDisplay) {
-            this._pivotX = 0;
-            this._pivotY = 0;
-          } else {
-            var scale = this._armature.armatureData.scale;
-            this._pivotX = currentDisplayData.pivot.x;
-            this._pivotY = currentDisplayData.pivot.y;
-            if (currentDisplayData.isRelativePivot) {
-              var rect = currentTextureData.frame || currentTextureData.region;
-              var width = rect.width * scale;
-              var height = rect.height * scale;
-              if (currentTextureData.rotated) {
-                width = rect.height;
-                height = rect.width;
-              }
-              this._pivotX *= width;
-              this._pivotY *= height;
-            }
-            if (currentTextureData.frame) {
-              this._pivotX += currentTextureData.frame.x * scale;
-              this._pivotY += currentTextureData.frame.y * scale;
-            }
-          }
-          if (isReplaceDisplay) {
-            rawDisplayData.transform.toMatrix(Slot._helpMatrix);
-            Slot._helpMatrix.invert();
-            Slot._helpMatrix.transformPoint(0, 0, Slot._helpPoint);
-            this._pivotX -= Slot._helpPoint.x;
-            this._pivotY -= Slot._helpPoint.y;
-            currentDisplayData.transform.toMatrix(Slot._helpMatrix);
-            Slot._helpMatrix.invert();
-            Slot._helpMatrix.transformPoint(0, 0, Slot._helpPoint);
-            this._pivotX += Slot._helpPoint.x;
-            this._pivotY += Slot._helpPoint.y;
-          }
-        };
-        Slot.prototype._updateDisplay = function() {
-          var prevDisplay = this._display || this._rawDisplay;
-          var prevChildArmature = this._childArmature;
-          if (this._displayIndex >= 0 && this._displayIndex < this._displayList.length) {
-            this._display = this._displayList[this._displayIndex];
-            if (this._display instanceof dragonBones.Armature) {
-              this._childArmature = this._display;
-              this._display = this._childArmature._display;
-            } else this._childArmature = null;
-          } else {
-            this._display = null;
-            this._childArmature = null;
-          }
-          var currentDisplay = this._display || this._rawDisplay;
-          if (currentDisplay != prevDisplay) {
-            this._onUpdateDisplay();
-            prevDisplay ? this._replaceDisplay(prevDisplay) : this._addDisplay();
-            this._blendModeDirty = true;
-            this._colorDirty = true;
-          }
-          if (this._displayDataSet && this._displayIndex >= 0 && this._displayIndex < this._displayDataSet.displays.length) {
-            this.origin.copyFrom(this._displayDataSet.displays[this._displayIndex].transform);
-            this._originDirty = true;
-          }
-          this._updateMeshData(false);
-          currentDisplay != this._rawDisplay && currentDisplay != this._meshDisplay || this._updateFrame();
-          if (this._childArmature != prevChildArmature) {
-            if (prevChildArmature) {
-              prevChildArmature._parent = null;
-              this.inheritAnimation && prevChildArmature.animation.reset();
-            }
-            if (this._childArmature) {
-              this._childArmature._parent = this;
-              if (this.inheritAnimation) {
-                if (0 == this._childArmature.cacheFrameRate) {
-                  var cacheFrameRate = this._armature.cacheFrameRate;
-                  0 != cacheFrameRate && (this._childArmature.cacheFrameRate = cacheFrameRate);
-                }
-                var slotData = this._armature.armatureData.getSlot(this.name);
-                var actions = slotData.actions.length > 0 ? slotData.actions : this._childArmature.armatureData.actions;
-                if (actions.length > 0) for (var i = 0, l = actions.length; i < l; ++i) this._childArmature._bufferAction(actions[i]); else this._childArmature.animation.play();
-              }
-            }
-          }
-        };
-        Slot.prototype._updateLocalTransformMatrix = function() {
-          this.global.copyFrom(this.origin).add(this.offset).toMatrix(this._localMatrix);
-        };
-        Slot.prototype._updateGlobalTransformMatrix = function() {
-          this.globalTransformMatrix.copyFrom(this._localMatrix);
-          this.globalTransformMatrix.concat(this._parent.globalTransformMatrix);
-          this.global.fromMatrix(this.globalTransformMatrix);
-        };
-        Slot.prototype._setArmature = function(value) {
-          if (this._armature == value) return;
-          this._armature && this._armature._removeSlotFromSlotList(this);
-          this._armature = value;
-          this._onUpdateDisplay();
-          if (this._armature) {
-            this._armature._addSlotToSlotList(this);
-            this._addDisplay();
-          } else this._removeDisplay();
-        };
-        Slot.prototype._updateMeshData = function(isTimelineUpdate) {
-          var prevMeshData = this._meshData;
-          var rawMeshData = null;
-          if (this._display && this._display == this._meshDisplay && this._displayIndex >= 0) {
-            rawMeshData = this._displayDataSet && this._displayIndex < this._displayDataSet.displays.length ? this._displayDataSet.displays[this._displayIndex].mesh : null;
-            var replaceDisplayData = this._displayIndex < this._replacedDisplayDataSet.length ? this._replacedDisplayDataSet[this._displayIndex] : null;
-            var replaceMeshData = replaceDisplayData ? replaceDisplayData.mesh : null;
-            this._meshData = replaceMeshData || rawMeshData;
-          } else this._meshData = null;
-          if (this._meshData != prevMeshData) {
-            if (this._meshData && this._meshData == rawMeshData) {
-              if (this._meshData.skinned) {
-                this._meshBones.length = this._meshData.bones.length;
-                for (var i = 0, l = this._meshBones.length; i < l; ++i) this._meshBones[i] = this._armature.getBone(this._meshData.bones[i].name);
-                var ffdVerticesCount = 0;
-                for (var i = 0, l = this._meshData.boneIndices.length; i < l; ++i) ffdVerticesCount += this._meshData.boneIndices[i].length;
-                this._ffdVertices.length = 2 * ffdVerticesCount;
-              } else {
-                this._meshBones.length = 0;
-                this._ffdVertices.length = this._meshData.vertices.length;
-              }
-              for (var i = 0, l = this._ffdVertices.length; i < l; ++i) this._ffdVertices[i] = 0;
-              this._ffdDirty = true;
-            } else {
-              this._meshBones.length = 0;
-              this._ffdVertices.length = 0;
-            }
-            isTimelineUpdate && this._armature.animation._updateFFDTimelineStates();
-          }
-        };
-        Slot.prototype._update = function(cacheFrameIndex) {
-          var self = this;
-          self._blendIndex = 0;
-          if (self._zOrderDirty) {
-            self._zOrderDirty = false;
-            self._updateZOrder();
-          }
-          if (self._displayDirty) {
-            self._displayDirty = false;
-            self._updateDisplay();
-          }
-          if (!self._display) return;
-          if (self._blendModeDirty) {
-            self._blendModeDirty = false;
-            self._updateBlendMode();
-          }
-          if (self._colorDirty) {
-            self._colorDirty = false;
-            self._updateColor();
-          }
-          if (self._meshData) {
-            if (self._ffdDirty || self._meshData.skinned && self._isMeshBonesUpdate()) {
-              self._ffdDirty = false;
-              self._updateMesh();
-            }
-            if (self._meshData.skinned) return;
-          }
-          if (self._originDirty) {
-            self._originDirty = false;
-            self._transformDirty = true;
-            self._updateLocalTransformMatrix();
-          }
-          if (cacheFrameIndex >= 0 && self._cacheFrames) {
-            var cacheFrame = self._cacheFrames[cacheFrameIndex];
-            if (self.globalTransformMatrix == cacheFrame) self._transformDirty = false; else if (cacheFrame) {
-              self._transformDirty = true;
-              self.globalTransformMatrix = cacheFrame;
-            } else if (self._transformDirty || 0 != self._parent._transformDirty) {
-              self._transformDirty = true;
-              self.globalTransformMatrix = self._globalTransformMatrix;
-            } else if (self.globalTransformMatrix != self._globalTransformMatrix) {
-              self._transformDirty = false;
-              self._cacheFrames[cacheFrameIndex] = self.globalTransformMatrix;
-            } else {
-              self._transformDirty = true;
-              self.globalTransformMatrix = self._globalTransformMatrix;
-            }
-          } else if (self._transformDirty || 0 != self._parent._transformDirty) {
-            self._transformDirty = true;
-            self.globalTransformMatrix = self._globalTransformMatrix;
-          }
-          if (self._transformDirty) {
-            self._transformDirty = false;
-            if (self.globalTransformMatrix == self._globalTransformMatrix) {
-              self._updateGlobalTransformMatrix();
-              cacheFrameIndex >= 0 && self._cacheFrames && !self._cacheFrames[cacheFrameIndex] && (self.globalTransformMatrix = dragonBones.SlotTimelineData.cacheFrame(self._cacheFrames, cacheFrameIndex, self._globalTransformMatrix));
-            }
-            self._updateTransform();
-          }
-        };
-        Slot.prototype._setDisplayList = function(value) {
-          if (value && value.length > 0) {
-            this._displayList.length != value.length && (this._displayList.length = value.length);
-            for (var i = 0, l = value.length; i < l; ++i) {
-              var eachDisplay = value[i];
-              eachDisplay && eachDisplay != this._rawDisplay && eachDisplay != this._meshDisplay && !(eachDisplay instanceof dragonBones.Armature) && this._displayList.indexOf(eachDisplay) < 0 && this._initDisplay(eachDisplay);
-              this._displayList[i] = eachDisplay;
-            }
-          } else this._displayList.length > 0 && (this._displayList.length = 0);
-          this._displayIndex >= 0 && this._displayIndex < this._displayList.length ? this._displayDirty = this._display != this._displayList[this._displayIndex] : this._displayDirty = null != this._display;
-          return this._displayDirty;
-        };
-        Slot.prototype._setZorder = function(value) {
-          this._zOrder == value;
-          this._zOrder = value;
-          this._zOrderDirty = true;
-          return this._zOrderDirty;
-        };
-        Slot.prototype._setDisplayIndex = function(value) {
-          if (this._displayIndex == value) return false;
-          this._displayIndex = value;
-          this._displayDirty = true;
-          return this._displayDirty;
-        };
-        Slot.prototype._setBlendMode = function(value) {
-          if (this._blendMode == value) return false;
-          this._blendMode = value;
-          this._blendModeDirty = true;
-          return true;
-        };
-        Slot.prototype._setColor = function(value) {
-          this._colorTransform.copyFrom(value);
-          this._colorDirty = true;
-          return true;
-        };
-        Slot.prototype.containsPoint = function(x, y, color) {
-          void 0 === color && (color = 0);
-          var displayData = this.displayData;
-          if (!displayData || !displayData.boundingBox || color && displayData.color != color) return false;
-          if (0 == this._blendIndex) {
-            this._blendIndex = 1;
-            this._updateLocalTransformMatrix();
-            this._updateGlobalTransformMatrix();
-          }
-          Slot._helpMatrix.copyFrom(this.globalTransformMatrix);
-          Slot._helpMatrix.invert();
-          Slot._helpMatrix.transformPoint(x, y, Slot._helpPoint);
-          return displayData.boundingBox.containsPoint(Slot._helpPoint.x, Slot._helpPoint.y);
-        };
-        Slot.prototype.intersectsSegment = function(xA, yA, xB, yB, color, intersectionPointA, intersectionPointB, normalRadians) {
-          void 0 === color && (color = 0);
-          void 0 === intersectionPointA && (intersectionPointA = null);
-          void 0 === intersectionPointB && (intersectionPointB = null);
-          void 0 === normalRadians && (normalRadians = null);
-          var displayData = this.displayData;
-          if (!displayData || !displayData.boundingBox || color && displayData.color != color) return 0;
-          if (0 == this._blendIndex) {
-            this._blendIndex = 1;
-            this._updateLocalTransformMatrix();
-            this._updateGlobalTransformMatrix();
-          }
-          Slot._helpMatrix.copyFrom(this.globalTransformMatrix);
-          Slot._helpMatrix.invert();
-          Slot._helpMatrix.transformPoint(xA, yA, Slot._helpPoint);
-          xA = Slot._helpPoint.x;
-          yA = Slot._helpPoint.y;
-          Slot._helpMatrix.transformPoint(xB, yB, Slot._helpPoint);
-          xB = Slot._helpPoint.x;
-          yB = Slot._helpPoint.y;
-          var intersectionCount = displayData.boundingBox.intersectsSegment(xA, yA, xB, yB, intersectionPointA, intersectionPointB, normalRadians);
-          if (intersectionCount > 0) {
-            if (1 == intersectionCount || 2 == intersectionCount) if (intersectionPointA) {
-              this.globalTransformMatrix.transformPoint(intersectionPointA.x, intersectionPointA.y, intersectionPointA);
-              if (intersectionPointB) {
-                intersectionPointB.x = intersectionPointA.x;
-                intersectionPointB.y = intersectionPointA.y;
-              }
-            } else intersectionPointB && this.globalTransformMatrix.transformPoint(intersectionPointB.x, intersectionPointB.y, intersectionPointB); else {
-              intersectionPointA && this.globalTransformMatrix.transformPoint(intersectionPointA.x, intersectionPointA.y, intersectionPointA);
-              intersectionPointB && this.globalTransformMatrix.transformPoint(intersectionPointB.x, intersectionPointB.y, intersectionPointB);
-            }
-            if (normalRadians) {
-              this.globalTransformMatrix.transformPoint(Math.cos(normalRadians.x), Math.sin(normalRadians.x), Slot._helpPoint, true);
-              normalRadians.x = Math.atan2(Slot._helpPoint.y, Slot._helpPoint.x);
-              this.globalTransformMatrix.transformPoint(Math.cos(normalRadians.y), Math.sin(normalRadians.y), Slot._helpPoint, true);
-              normalRadians.y = Math.atan2(Slot._helpPoint.y, Slot._helpPoint.x);
-            }
-          }
-          return intersectionCount;
-        };
-        Slot.prototype.invalidUpdate = function() {
-          this._displayDirty = true;
-        };
-        Object.defineProperty(Slot.prototype, "displayData", {
-          get: function() {
-            if (this._displayIndex < 0 || this._displayIndex >= this._displayDataSet.displays.length) return null;
-            return this._displayDataSet.displays[this._displayIndex];
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Slot.prototype, "rawDisplay", {
-          get: function() {
-            return this._rawDisplay;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Slot.prototype, "meshDisplay", {
-          get: function() {
-            return this._meshDisplay;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Slot.prototype, "displayIndex", {
-          get: function() {
-            return this._displayIndex;
-          },
-          set: function(value) {
-            this._setDisplayIndex(value) && this._update(-1);
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Slot.prototype, "displayList", {
-          get: function() {
-            return this._displayList.concat();
-          },
-          set: function(value) {
-            var backupDisplayList = this._displayList.concat();
-            var disposeDisplayList = [];
-            this._setDisplayList(value) && this._update(-1);
-            for (var i = 0, l = backupDisplayList.length; i < l; ++i) {
-              var eachDisplay = backupDisplayList[i];
-              eachDisplay && eachDisplay != this._rawDisplay && eachDisplay != this._meshDisplay && this._displayList.indexOf(eachDisplay) < 0 && disposeDisplayList.indexOf(eachDisplay) < 0 && disposeDisplayList.push(eachDisplay);
-            }
-            for (var i = 0, l = disposeDisplayList.length; i < l; ++i) {
-              var eachDisplay = disposeDisplayList[i];
-              eachDisplay instanceof dragonBones.Armature ? eachDisplay.dispose() : this._disposeDisplay(eachDisplay);
-            }
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Slot.prototype, "display", {
-          get: function() {
-            return this._display;
-          },
-          set: function(value) {
-            if (this._display == value) return;
-            var displayListLength = this._displayList.length;
-            this._displayIndex < 0 && 0 == displayListLength && (this._displayIndex = 0);
-            if (this._displayIndex < 0) return;
-            var replaceDisplayList = this.displayList;
-            displayListLength <= this._displayIndex && (replaceDisplayList.length = this._displayIndex + 1);
-            replaceDisplayList[this._displayIndex] = value;
-            this.displayList = replaceDisplayList;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(Slot.prototype, "childArmature", {
-          get: function() {
-            return this._childArmature;
-          },
-          set: function(value) {
-            if (this._childArmature == value) return;
-            value && value.display.advanceTimeBySelf(false);
-            this.display = value;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Slot.prototype.getDisplay = function() {
-          return this._display;
-        };
-        Slot.prototype.setDisplay = function(value) {
-          this.display = value;
-        };
-        Slot._helpPoint = new dragonBones.Point();
-        Slot._helpMatrix = new dragonBones.Matrix();
-        return Slot;
-      })(dragonBones.TransformObject);
-      dragonBones.Slot = Slot;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var EventObject = (function(_super) {
-        __extends(EventObject, _super);
-        function EventObject() {
-          _super.call(this);
-        }
-        EventObject.toString = function() {
-          return "[class dragonBones.EventObject]";
-        };
-        EventObject.prototype._onClear = function() {
-          this.type = null;
-          this.name = null;
-          this.armature = null;
-          this.bone = null;
-          this.slot = null;
-          this.animationState = null;
-          this.frame = null;
-          this.data = null;
-          this.userData = null;
-        };
-        EventObject.prototype.getInt = function(index) {
-          return this.data ? this.data.ints[index] : 0;
-        };
-        EventObject.prototype.getFloat = function(index) {
-          return this.data ? this.data.floats[index] : 0;
-        };
-        EventObject.prototype.getString = function(index) {
-          return this.data ? this.data.strings[index] : null;
-        };
-        EventObject.START = "start";
-        EventObject.LOOP_COMPLETE = "loopComplete";
-        EventObject.COMPLETE = "complete";
-        EventObject.FADE_IN = "fadeIn";
-        EventObject.FADE_IN_COMPLETE = "fadeInComplete";
-        EventObject.FADE_OUT = "fadeOut";
-        EventObject.FADE_OUT_COMPLETE = "fadeOutComplete";
-        EventObject.FRAME_EVENT = "frameEvent";
-        EventObject.SOUND_EVENT = "soundEvent";
-        return EventObject;
-      })(dragonBones.BaseObject);
-      dragonBones.EventObject = EventObject;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var TimelineData = (function(_super) {
-        __extends(TimelineData, _super);
-        function TimelineData() {
-          _super.call(this);
-          this.frames = [];
-        }
-        TimelineData.toString = function() {
-          return "[class dragonBones.TimelineData]";
-        };
-        TimelineData.prototype._onClear = function() {
-          var prevFrame = null;
-          for (var i = 0, l = this.frames.length; i < l; ++i) {
-            var frame = this.frames[i];
-            prevFrame && frame != prevFrame && prevFrame.returnToPool();
-            prevFrame = frame;
-          }
-          this.scale = 1;
-          this.offset = 0;
-          this.frames.length = 0;
-        };
-        return TimelineData;
-      })(dragonBones.BaseObject);
-      dragonBones.TimelineData = TimelineData;
-      var ZOrderTimelineData = (function(_super) {
-        __extends(ZOrderTimelineData, _super);
-        function ZOrderTimelineData() {
-          _super.apply(this, arguments);
-        }
-        ZOrderTimelineData.toString = function() {
-          return "[class dragonBones.ZOrderTimelineData]";
-        };
-        return ZOrderTimelineData;
-      })(TimelineData);
-      dragonBones.ZOrderTimelineData = ZOrderTimelineData;
-      var BoneTimelineData = (function(_super) {
-        __extends(BoneTimelineData, _super);
-        function BoneTimelineData() {
-          _super.call(this);
-          this.originalTransform = new dragonBones.Transform();
-          this.cachedFrames = [];
-        }
-        BoneTimelineData.cacheFrame = function(cacheFrames, cacheFrameIndex, globalTransformMatrix) {
-          var cacheMatrix = cacheFrames[cacheFrameIndex] = new dragonBones.Matrix();
-          cacheMatrix.copyFrom(globalTransformMatrix);
-          return cacheMatrix;
-        };
-        BoneTimelineData.toString = function() {
-          return "[class dragonBones.BoneTimelineData]";
-        };
-        BoneTimelineData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.bone = null;
-          this.originalTransform.identity();
-          this.cachedFrames.length = 0;
-        };
-        BoneTimelineData.prototype.cacheFrames = function(cacheFrameCount) {
-          this.cachedFrames.length = 0;
-          this.cachedFrames.length = cacheFrameCount;
-        };
-        return BoneTimelineData;
-      })(TimelineData);
-      dragonBones.BoneTimelineData = BoneTimelineData;
-      var SlotTimelineData = (function(_super) {
-        __extends(SlotTimelineData, _super);
-        function SlotTimelineData() {
-          _super.call(this);
-          this.cachedFrames = [];
-        }
-        SlotTimelineData.cacheFrame = function(cacheFrames, cacheFrameIndex, globalTransformMatrix) {
-          var cacheMatrix = cacheFrames[cacheFrameIndex] = new dragonBones.Matrix();
-          cacheMatrix.copyFrom(globalTransformMatrix);
-          return cacheMatrix;
-        };
-        SlotTimelineData.toString = function() {
-          return "[class dragonBones.SlotTimelineData]";
-        };
-        SlotTimelineData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.slot = null;
-          this.cachedFrames.length = 0;
-        };
-        SlotTimelineData.prototype.cacheFrames = function(cacheFrameCount) {
-          this.cachedFrames.length = 0;
-          this.cachedFrames.length = cacheFrameCount;
-        };
-        return SlotTimelineData;
-      })(TimelineData);
-      dragonBones.SlotTimelineData = SlotTimelineData;
-      var FFDTimelineData = (function(_super) {
-        __extends(FFDTimelineData, _super);
-        function FFDTimelineData() {
-          _super.call(this);
-        }
-        FFDTimelineData.toString = function() {
-          return "[class dragonBones.FFDTimelineData]";
-        };
-        FFDTimelineData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.skin = null;
-          this.slot = null;
-          this.display = null;
-        };
-        return FFDTimelineData;
-      })(TimelineData);
-      dragonBones.FFDTimelineData = FFDTimelineData;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var AnimationData = (function(_super) {
-        __extends(AnimationData, _super);
-        function AnimationData() {
-          _super.call(this);
-          this.boneTimelines = {};
-          this.slotTimelines = {};
-          this.ffdTimelines = {};
-          this.cachedFrames = [];
-        }
-        AnimationData.toString = function() {
-          return "[class dragonBones.AnimationData]";
-        };
-        AnimationData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.zOrderTimeline && this.zOrderTimeline.returnToPool();
-          for (var i in this.boneTimelines) {
-            this.boneTimelines[i].returnToPool();
-            delete this.boneTimelines[i];
-          }
-          for (var i in this.slotTimelines) {
-            this.slotTimelines[i].returnToPool();
-            delete this.slotTimelines[i];
-          }
-          for (var i in this.ffdTimelines) {
-            for (var j in this.ffdTimelines[i]) for (var k in this.ffdTimelines[i][j]) this.ffdTimelines[i][j][k].returnToPool();
-            delete this.ffdTimelines[i];
-          }
-          this.hasAsynchronyTimeline = false;
-          this.frameCount = 0;
-          this.playTimes = 0;
-          this.position = 0;
-          this.duration = 0;
-          this.fadeInTime = 0;
-          this.cacheFrameRate = 0;
-          this.name = null;
-          this.animation = null;
-          this.zOrderTimeline = null;
-          this.cachedFrames.length = 0;
-        };
-        AnimationData.prototype.cacheFrames = function(cacheFrameRate) {
-          if (this.animation) return;
-          this.cacheFrameRate = Math.max(Math.ceil(cacheFrameRate * this.scale), 1);
-          var cacheFrameCount = Math.ceil(this.cacheFrameRate * this.duration) + 1;
-          this.cachedFrames.length = 0;
-          this.cachedFrames.length = cacheFrameCount;
-          for (var i in this.boneTimelines) this.boneTimelines[i].cacheFrames(cacheFrameCount);
-          for (var i in this.slotTimelines) this.slotTimelines[i].cacheFrames(cacheFrameCount);
-        };
-        AnimationData.prototype.addBoneTimeline = function(value) {
-          if (!value || !value.bone || this.boneTimelines[value.bone.name]) throw new Error();
-          this.boneTimelines[value.bone.name] = value;
-        };
-        AnimationData.prototype.addSlotTimeline = function(value) {
-          if (!value || !value.slot || this.slotTimelines[value.slot.name]) throw new Error();
-          this.slotTimelines[value.slot.name] = value;
-        };
-        AnimationData.prototype.addFFDTimeline = function(value) {
-          if (!(value && value.skin && value.slot && value.display)) throw new Error();
-          var skin = this.ffdTimelines[value.skin.name] = this.ffdTimelines[value.skin.name] || {};
-          var slot = skin[value.slot.slot.name] = skin[value.slot.slot.name] || {};
-          if (slot[value.display.name]) throw new Error();
-          slot[value.display.name] = value;
-        };
-        AnimationData.prototype.getBoneTimeline = function(name) {
-          return this.boneTimelines[name];
-        };
-        AnimationData.prototype.getSlotTimeline = function(name) {
-          return this.slotTimelines[name];
-        };
-        AnimationData.prototype.getFFDTimeline = function(skinName, slotName, displayName) {
-          var skin = this.ffdTimelines[skinName];
-          if (skin) {
-            var slot = skin[slotName];
-            if (slot) return slot[displayName];
-          }
-          return null;
-        };
-        return AnimationData;
-      })(dragonBones.TimelineData);
-      dragonBones.AnimationData = AnimationData;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var ArmatureData = (function(_super) {
-        __extends(ArmatureData, _super);
-        function ArmatureData() {
-          _super.call(this);
-          this.aabb = new dragonBones.Rectangle();
-          this.bones = {};
-          this.slots = {};
-          this.skins = {};
-          this.animations = {};
-          this.actions = [];
-          this._sortedBones = [];
-          this._sortedSlots = [];
-          this._bonesChildren = {};
-        }
-        ArmatureData._onSortSlots = function(a, b) {
-          return a.zOrder > b.zOrder ? 1 : -1;
-        };
-        ArmatureData.toString = function() {
-          return "[class dragonBones.ArmatureData]";
-        };
-        ArmatureData.prototype._onClear = function() {
-          for (var i in this.bones) {
-            this.bones[i].returnToPool();
-            delete this.bones[i];
-          }
-          for (var i in this.slots) {
-            this.slots[i].returnToPool();
-            delete this.slots[i];
-          }
-          for (var i in this.skins) {
-            this.skins[i].returnToPool();
-            delete this.skins[i];
-          }
-          for (var i in this.animations) {
-            this.animations[i].returnToPool();
-            delete this.animations[i];
-          }
-          for (var i = 0, l = this.actions.length; i < l; ++i) this.actions[i].returnToPool();
-          this.frameRate = 0;
-          this.type = -1;
-          this.name = null;
-          this.parent = null;
-          this.userData = null;
-          this.aabb.clear();
-          this.actions.length = 0;
-          this.cacheFrameRate = 0;
-          this.scale = 1;
-          for (var i in this._bonesChildren) delete this._bonesChildren[i];
-          this._boneDirty = false;
-          this._slotDirty = false;
-          this._defaultSkin = null;
-          this._defaultAnimation = null;
-          this._sortedBones.length = 0;
-          this._sortedSlots.length = 0;
-        };
-        ArmatureData.prototype._sortBones = function() {
-          var total = this._sortedBones.length;
-          if (total < 1) return;
-          var sortHelper = this._sortedBones.concat();
-          var index = 0;
-          var count = 0;
-          this._sortedBones.length = 0;
-          while (count < total) {
-            var bone = sortHelper[index++];
-            index >= total && (index = 0);
-            if (this._sortedBones.indexOf(bone) >= 0) continue;
-            if (bone.parent && this._sortedBones.indexOf(bone.parent) < 0) continue;
-            if (bone.ik && this._sortedBones.indexOf(bone.ik) < 0) continue;
-            bone.ik && bone.chain > 0 && bone.chainIndex == bone.chain ? this._sortedBones.splice(this._sortedBones.indexOf(bone.parent) + 1, 0, bone) : this._sortedBones.push(bone);
-            count++;
-          }
-        };
-        ArmatureData.prototype._sortSlots = function() {
-          this._sortedSlots.sort(ArmatureData._onSortSlots);
-        };
-        ArmatureData.prototype.cacheFrames = function(value) {
-          if (this.cacheFrameRate == value) return;
-          this.cacheFrameRate = value;
-          for (var i in this.animations) this.animations[i].cacheFrames(this.cacheFrameRate);
-        };
-        ArmatureData.prototype.addBone = function(value, parentName) {
-          if (!value || !value.name || this.bones[value.name]) throw new Error();
-          if (parentName) {
-            var parent_1 = this.getBone(parentName);
-            parent_1 ? value.parent = parent_1 : (this._bonesChildren[parentName] = this._bonesChildren[parentName] || []).push(value);
-          }
-          var children = this._bonesChildren[value.name];
-          if (children) {
-            for (var i = 0, l = children.length; i < l; ++i) children[i].parent = value;
-            delete this._bonesChildren[value.name];
-          }
-          this.bones[value.name] = value;
-          this._sortedBones.push(value);
-          this._boneDirty = true;
-        };
-        ArmatureData.prototype.addSlot = function(value) {
-          if (!value || !value.name || this.slots[value.name]) throw new Error();
-          this.slots[value.name] = value;
-          this._sortedSlots.push(value);
-          this._slotDirty = true;
-        };
-        ArmatureData.prototype.addSkin = function(value) {
-          if (!value || !value.name || this.skins[value.name]) throw new Error();
-          this.skins[value.name] = value;
-          this._defaultSkin || (this._defaultSkin = value);
-        };
-        ArmatureData.prototype.addAnimation = function(value) {
-          if (!value || !value.name || this.animations[value.name]) throw new Error();
-          this.animations[value.name] = value;
-          this._defaultAnimation || (this._defaultAnimation = value);
-        };
-        ArmatureData.prototype.getBone = function(name) {
-          return this.bones[name];
-        };
-        ArmatureData.prototype.getSlot = function(name) {
-          return this.slots[name];
-        };
-        ArmatureData.prototype.getSkin = function(name) {
-          return name ? this.skins[name] : this._defaultSkin;
-        };
-        ArmatureData.prototype.getAnimation = function(name) {
-          return name ? this.animations[name] : this._defaultAnimation;
-        };
-        Object.defineProperty(ArmatureData.prototype, "sortedBones", {
-          get: function() {
-            if (this._boneDirty) {
-              this._boneDirty = false;
-              this._sortBones();
-            }
-            return this._sortedBones;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(ArmatureData.prototype, "sortedSlots", {
-          get: function() {
-            if (this._slotDirty) {
-              this._slotDirty = false;
-              this._sortSlots();
-            }
-            return this._sortedSlots;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(ArmatureData.prototype, "defaultSkin", {
-          get: function() {
-            return this._defaultSkin;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        Object.defineProperty(ArmatureData.prototype, "defaultAnimation", {
-          get: function() {
-            return this._defaultAnimation;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        return ArmatureData;
-      })(dragonBones.BaseObject);
-      dragonBones.ArmatureData = ArmatureData;
-      var BoneData = (function(_super) {
-        __extends(BoneData, _super);
-        function BoneData() {
-          _super.call(this);
-          this.transform = new dragonBones.Transform();
-        }
-        BoneData.toString = function() {
-          return "[class dragonBones.BoneData]";
-        };
-        BoneData.prototype._onClear = function() {
-          this.inheritTranslation = false;
-          this.inheritRotation = false;
-          this.inheritScale = false;
-          this.bendPositive = false;
-          this.chain = 0;
-          this.chainIndex = 0;
-          this.weight = 0;
-          this.length = 0;
-          this.name = null;
-          this.parent = null;
-          this.ik = null;
-          this.transform.identity();
-        };
-        return BoneData;
-      })(dragonBones.BaseObject);
-      dragonBones.BoneData = BoneData;
-      var SlotData = (function(_super) {
-        __extends(SlotData, _super);
-        function SlotData() {
-          _super.call(this);
-          this.actions = [];
-        }
-        SlotData.generateColor = function() {
-          return new dragonBones.ColorTransform();
-        };
-        SlotData.toString = function() {
-          return "[class dragonBones.SlotData]";
-        };
-        SlotData.prototype._onClear = function() {
-          for (var i = 0, l = this.actions.length; i < l; ++i) this.actions[i].returnToPool();
-          this.displayIndex = 0;
-          this.zOrder = 0;
-          this.blendMode = 0;
-          this.name = null;
-          this.parent = null;
-          this.color = null;
-          this.actions.length = 0;
-        };
-        SlotData.DEFAULT_COLOR = new dragonBones.ColorTransform();
-        return SlotData;
-      })(dragonBones.BaseObject);
-      dragonBones.SlotData = SlotData;
-      var SkinData = (function(_super) {
-        __extends(SkinData, _super);
-        function SkinData() {
-          _super.call(this);
-          this.slots = {};
-        }
-        SkinData.toString = function() {
-          return "[class dragonBones.SkinData]";
-        };
-        SkinData.prototype._onClear = function() {
-          for (var i in this.slots) {
-            this.slots[i].returnToPool();
-            delete this.slots[i];
-          }
-          this.name = null;
-        };
-        SkinData.prototype.addSlot = function(value) {
-          if (!value || !value.slot || this.slots[value.slot.name]) throw new Error();
-          this.slots[value.slot.name] = value;
-        };
-        SkinData.prototype.getSlot = function(name) {
-          return this.slots[name];
-        };
-        return SkinData;
-      })(dragonBones.BaseObject);
-      dragonBones.SkinData = SkinData;
-      var SlotDisplayDataSet = (function(_super) {
-        __extends(SlotDisplayDataSet, _super);
-        function SlotDisplayDataSet() {
-          _super.call(this);
-          this.displays = [];
-        }
-        SlotDisplayDataSet.toString = function() {
-          return "[class dragonBones.SlotDisplayDataSet]";
-        };
-        SlotDisplayDataSet.prototype._onClear = function() {
-          for (var i = 0, l = this.displays.length; i < l; ++i) this.displays[i].returnToPool();
-          this.slot = null;
-          this.displays.length = 0;
-        };
-        return SlotDisplayDataSet;
-      })(dragonBones.BaseObject);
-      dragonBones.SlotDisplayDataSet = SlotDisplayDataSet;
-      var DisplayData = (function(_super) {
-        __extends(DisplayData, _super);
-        function DisplayData() {
-          _super.call(this);
-          this.pivot = new dragonBones.Point();
-          this.transform = new dragonBones.Transform();
-        }
-        DisplayData.toString = function() {
-          return "[class dragonBones.DisplayData]";
-        };
-        DisplayData.prototype._onClear = function() {
-          this.mesh && !this.share && this.mesh.returnToPool();
-          this.boundingBox && this.boundingBox.returnToPool();
-          this.isRelativePivot = false;
-          this.type = -1;
-          this.inheritAnimation = true;
-          this.color = 0;
-          this.name = null;
-          this.path = null;
-          this.texture = null;
-          this.armature = null;
-          this.mesh = null;
-          this.share = null;
-          this.boundingBox = null;
-          this.pivot.clear();
-          this.transform.identity();
-        };
-        return DisplayData;
-      })(dragonBones.BaseObject);
-      dragonBones.DisplayData = DisplayData;
-      var MeshData = (function(_super) {
-        __extends(MeshData, _super);
-        function MeshData() {
-          _super.call(this);
-          this.slotPose = new dragonBones.Matrix();
-          this.uvs = [];
-          this.vertices = [];
-          this.vertexIndices = [];
-          this.boneIndices = [];
-          this.weights = [];
-          this.boneVertices = [];
-          this.bones = [];
-          this.inverseBindPose = [];
-        }
-        MeshData.toString = function() {
-          return "[class dragonBones.MeshData]";
-        };
-        MeshData.prototype._onClear = function() {
-          this.skinned = false;
-          this.slotPose.identity();
-          this.uvs.length = 0;
-          this.vertices.length = 0;
-          this.vertexIndices.length = 0;
-          this.boneIndices.length = 0;
-          this.weights.length = 0;
-          this.boneVertices.length = 0;
-          this.bones.length = 0;
-          this.inverseBindPose.length = 0;
-        };
-        return MeshData;
-      })(dragonBones.BaseObject);
-      dragonBones.MeshData = MeshData;
-      var BoundingBoxData = (function(_super) {
-        __extends(BoundingBoxData, _super);
-        function BoundingBoxData() {
-          _super.call(this);
-          this.x = 0;
-          this.y = 0;
-          this.width = 0;
-          this.height = 0;
-          this.vertices = [];
-        }
-        BoundingBoxData.toString = function() {
-          return "[class dragonBones.BoundingBoxData]";
-        };
-        BoundingBoxData._computeOutCode = function(x, y, xMin, yMin, xMax, yMax) {
-          var code = 0;
-          x < xMin ? code |= 1 : x > xMax && (code |= 2);
-          y < yMin ? code |= 4 : y > yMax && (code |= 8);
-          return code;
-        };
-        BoundingBoxData.segmentIntersectsRectangle = function(xA, yA, xB, yB, xMin, yMin, xMax, yMax, intersectionPointA, intersectionPointB, normalRadians) {
-          void 0 === intersectionPointA && (intersectionPointA = null);
-          void 0 === intersectionPointB && (intersectionPointB = null);
-          void 0 === normalRadians && (normalRadians = null);
-          var inSideA = xA > xMin && xA < xMax && yA > yMin && yA < yMax;
-          var inSideB = xB > xMin && xB < xMax && yB > yMin && yB < yMax;
-          if (inSideA && inSideB) return -1;
-          var intersectionCount = 0;
-          var outcode0 = BoundingBoxData._computeOutCode(xA, yA, xMin, yMin, xMax, yMax);
-          var outcode1 = BoundingBoxData._computeOutCode(xB, yB, xMin, yMin, xMax, yMax);
-          while (true) {
-            if (!(outcode0 | outcode1)) {
-              intersectionCount = 2;
-              break;
-            }
-            if (outcode0 & outcode1) break;
-            var x = 0;
-            var y = 0;
-            var normalRadian = 0;
-            var outcodeOut = outcode0 || outcode1;
-            if (4 & outcodeOut) {
-              x = xA + (xB - xA) * (yMin - yA) / (yB - yA);
-              y = yMin;
-              normalRadians && (normalRadian = .5 * -Math.PI);
-            } else if (8 & outcodeOut) {
-              x = xA + (xB - xA) * (yMax - yA) / (yB - yA);
-              y = yMax;
-              normalRadians && (normalRadian = .5 * Math.PI);
-            } else if (2 & outcodeOut) {
-              y = yA + (yB - yA) * (xMax - xA) / (xB - xA);
-              x = xMax;
-              normalRadians && (normalRadian = 0);
-            } else if (1 & outcodeOut) {
-              y = yA + (yB - yA) * (xMin - xA) / (xB - xA);
-              x = xMin;
-              normalRadians && (normalRadian = Math.PI);
-            }
-            if (outcodeOut == outcode0) {
-              xA = x;
-              yA = y;
-              outcode0 = BoundingBoxData._computeOutCode(xA, yA, xMin, yMin, xMax, yMax);
-              normalRadians && (normalRadians.x = normalRadian);
-            } else {
-              xB = x;
-              yB = y;
-              outcode1 = BoundingBoxData._computeOutCode(xB, yB, xMin, yMin, xMax, yMax);
-              normalRadians && (normalRadians.y = normalRadian);
-            }
-          }
-          if (intersectionCount) if (inSideA) {
-            intersectionCount = 2;
-            if (intersectionPointA) {
-              intersectionPointA.x = xB;
-              intersectionPointA.y = yB;
-            }
-            if (intersectionPointB) {
-              intersectionPointB.x = xB;
-              intersectionPointB.y = xB;
-            }
-            normalRadians && (normalRadians.x = normalRadians.y + Math.PI);
-          } else if (inSideB) {
-            intersectionCount = 1;
-            if (intersectionPointA) {
-              intersectionPointA.x = xA;
-              intersectionPointA.y = yA;
-            }
-            if (intersectionPointB) {
-              intersectionPointB.x = xA;
-              intersectionPointB.y = yA;
-            }
-            normalRadians && (normalRadians.y = normalRadians.x + Math.PI);
-          } else {
-            intersectionCount = 3;
-            if (intersectionPointA) {
-              intersectionPointA.x = xA;
-              intersectionPointA.y = yA;
-            }
-            if (intersectionPointB) {
-              intersectionPointB.x = xB;
-              intersectionPointB.y = yB;
-            }
-          }
-          return intersectionCount;
-        };
-        BoundingBoxData.segmentIntersectsEllipse = function(xA, yA, xB, yB, xC, yC, widthH, heightH, intersectionPointA, intersectionPointB, normalRadians) {
-          void 0 === intersectionPointA && (intersectionPointA = null);
-          void 0 === intersectionPointB && (intersectionPointB = null);
-          void 0 === normalRadians && (normalRadians = null);
-          var d = widthH / heightH;
-          var dd = d * d;
-          yA *= d;
-          yB *= d;
-          var dX = xB - xA;
-          var dY = yB - yA;
-          var lAB = Math.sqrt(dX * dX + dY * dY);
-          var xD = dX / lAB;
-          var yD = dY / lAB;
-          var a = (xC - xA) * xD + (yC - yA) * yD;
-          var aa = a * a;
-          var ee = xA * xA + yA * yA;
-          var rr = widthH * widthH;
-          var dR = rr - ee + aa;
-          var intersectionCount = 0;
-          if (dR >= 0) {
-            var dT = Math.sqrt(dR);
-            var sA = a - dT;
-            var sB = a + dT;
-            var inSideA = sA < 0 ? -1 : sA <= lAB ? 0 : 1;
-            var inSideB = sB < 0 ? -1 : sB <= lAB ? 0 : 1;
-            var sideAB = inSideA * inSideB;
-            if (sideAB < 0) return -1;
-            if (0 == sideAB) if (-1 == inSideA) {
-              intersectionCount = 2;
-              xB = xA + sB * xD;
-              yB = (yA + sB * yD) / d;
-              if (intersectionPointA) {
-                intersectionPointA.x = xB;
-                intersectionPointA.y = yB;
-              }
-              if (intersectionPointB) {
-                intersectionPointB.x = xB;
-                intersectionPointB.y = yB;
-              }
-              if (normalRadians) {
-                normalRadians.x = Math.atan2(yB / rr * dd, xB / rr);
-                normalRadians.y = normalRadians.x + Math.PI;
-              }
-            } else if (1 == inSideB) {
-              intersectionCount = 1;
-              xA += sA * xD;
-              yA = (yA + sA * yD) / d;
-              if (intersectionPointA) {
-                intersectionPointA.x = xA;
-                intersectionPointA.y = yA;
-              }
-              if (intersectionPointB) {
-                intersectionPointB.x = xA;
-                intersectionPointB.y = yA;
-              }
-              if (normalRadians) {
-                normalRadians.x = Math.atan2(yA / rr * dd, xA / rr);
-                normalRadians.y = normalRadians.x + Math.PI;
-              }
-            } else {
-              intersectionCount = 3;
-              if (intersectionPointA) {
-                intersectionPointA.x = xA + sA * xD;
-                intersectionPointA.y = (yA + sA * yD) / d;
-                normalRadians && (normalRadians.x = Math.atan2(intersectionPointA.y / rr * dd, intersectionPointA.x / rr));
-              }
-              if (intersectionPointB) {
-                intersectionPointB.x = xA + sB * xD;
-                intersectionPointB.y = (yA + sB * yD) / d;
-                normalRadians && (normalRadians.y = Math.atan2(intersectionPointB.y / rr * dd, intersectionPointB.x / rr));
-              }
-            }
-          }
-          return intersectionCount;
-        };
-        BoundingBoxData.segmentIntersectsPolygon = function(xA, yA, xB, yB, vertices, intersectionPointA, intersectionPointB, normalRadians) {
-          void 0 === intersectionPointA && (intersectionPointA = null);
-          void 0 === intersectionPointB && (intersectionPointB = null);
-          void 0 === normalRadians && (normalRadians = null);
-          xA == xB && (xA = xB + .01);
-          yA == yB && (yA = yB + .01);
-          var l = vertices.length;
-          var dXAB = xA - xB;
-          var dYAB = yA - yB;
-          var llAB = xA * yB - yA * xB;
-          var intersectionCount = 0;
-          var xC = vertices[l - 2];
-          var yC = vertices[l - 1];
-          var dMin = 0;
-          var dMax = 0;
-          var xMin = 0;
-          var yMin = 0;
-          var xMax = 0;
-          var yMax = 0;
-          for (var i = 0; i < l; i += 2) {
-            var xD = vertices[i];
-            var yD = vertices[i + 1];
-            xC == xD && (xC = xD + .01);
-            yC == yD && (yC = yD + .01);
-            var dXCD = xC - xD;
-            var dYCD = yC - yD;
-            var llCD = xC * yD - yC * xD;
-            var ll = dXAB * dYCD - dYAB * dXCD;
-            var x = (llAB * dXCD - dXAB * llCD) / ll;
-            if ((x >= xC && x <= xD || x >= xD && x <= xC) && (0 == dXAB || x >= xA && x <= xB || x >= xB && x <= xA)) {
-              var y = (llAB * dYCD - dYAB * llCD) / ll;
-              if ((y >= yC && y <= yD || y >= yD && y <= yC) && (0 == dYAB || y >= yA && y <= yB || y >= yB && y <= yA)) {
-                if (!intersectionPointB) {
-                  xMin = x;
-                  yMin = y;
-                  xMax = x;
-                  yMax = y;
-                  intersectionCount++;
-                  if (normalRadians) {
-                    normalRadians.x = Math.atan2(yD - yC, xD - xC) - .5 * Math.PI;
-                    normalRadians.y = normalRadians.x;
-                  }
-                  break;
-                }
-                var d = x - xA;
-                d < 0 && (d = -d);
-                if (0 == intersectionCount) {
-                  dMin = d;
-                  dMax = d;
-                  xMin = x;
-                  yMin = y;
-                  xMax = x;
-                  yMax = y;
-                  if (normalRadians) {
-                    normalRadians.x = Math.atan2(yD - yC, xD - xC) - .5 * Math.PI;
-                    normalRadians.y = normalRadians.x;
-                  }
-                } else {
-                  if (d < dMin) {
-                    dMin = d;
-                    xMin = x;
-                    yMin = y;
-                    normalRadians && (normalRadians.x = Math.atan2(yD - yC, xD - xC) - .5 * Math.PI);
-                  }
-                  if (d > dMax) {
-                    dMax = d;
-                    xMax = x;
-                    yMax = y;
-                    normalRadians && (normalRadians.y = Math.atan2(yD - yC, xD - xC) - .5 * Math.PI);
-                  }
-                }
-                intersectionCount++;
-              }
-            }
-            xC = xD;
-            yC = yD;
-          }
-          if (1 == intersectionCount) {
-            if (intersectionPointA) {
-              intersectionPointA.x = xMin;
-              intersectionPointA.y = yMin;
-            }
-            if (intersectionPointB) {
-              intersectionPointB.x = xMin;
-              intersectionPointB.y = yMin;
-            }
-            normalRadians && (normalRadians.y = normalRadians.x + Math.PI);
-          } else if (intersectionCount > 1) {
-            intersectionCount++;
-            if (intersectionPointA) {
-              intersectionPointA.x = xMin;
-              intersectionPointA.y = yMin;
-            }
-            if (intersectionPointB) {
-              intersectionPointB.x = xMax;
-              intersectionPointB.y = yMax;
-            }
-          }
-          return intersectionCount;
-        };
-        BoundingBoxData.prototype._onClear = function() {
-          this.type = -1;
-          this.x = 0;
-          this.y = 0;
-          this.width = 0;
-          this.height = 0;
-          this.vertices.length = 0;
-        };
-        BoundingBoxData.prototype.containsPoint = function(x, y) {
-          var isInSide = false;
-          if (2 == this.type) {
-            if (x >= this.x && x <= this.width && y >= this.y && y <= this.height) for (var i = 0, l = this.vertices.length, prevIndex = l - 2; i < l; i += 2) {
-              var yA = this.vertices[prevIndex + 1];
-              var yB = this.vertices[i + 1];
-              if (yB < y && yA >= y || yA < y && yB >= y) {
-                var xA = this.vertices[prevIndex];
-                var xB = this.vertices[i];
-                (y - yB) * (xA - xB) / (yA - yB) + xB < x && (isInSide = !isInSide);
-              }
-              prevIndex = i;
-            }
-          } else {
-            var widthH = .5 * this.width;
-            if (x >= -widthH && x <= widthH) {
-              var heightH = .5 * this.height;
-              if (y >= -heightH && y <= heightH) if (1 == this.type) {
-                y *= widthH / heightH;
-                isInSide = Math.sqrt(x * x + y * y) <= widthH;
-              } else isInSide = true;
-            }
-          }
-          return isInSide;
-        };
-        BoundingBoxData.prototype.intersectsSegment = function(xA, yA, xB, yB, intersectionPointA, intersectionPointB, normalRadians) {
-          void 0 === intersectionPointA && (intersectionPointA = null);
-          void 0 === intersectionPointB && (intersectionPointB = null);
-          void 0 === normalRadians && (normalRadians = null);
-          var intersectionCount = 0;
-          switch (this.type) {
-           case 0:
-            var widthH = .5 * this.width;
-            var heightH = .5 * this.height;
-            intersectionCount = BoundingBoxData.segmentIntersectsRectangle(xA, yA, xB, yB, -widthH, -heightH, widthH, heightH, intersectionPointA, intersectionPointB, normalRadians);
-            break;
-
-           case 1:
-            intersectionCount = BoundingBoxData.segmentIntersectsEllipse(xA, yA, xB, yB, 0, 0, .5 * this.width, .5 * this.height, intersectionPointA, intersectionPointB, normalRadians);
-            break;
-
-           case 2:
-            0 != BoundingBoxData.segmentIntersectsRectangle(xA, yA, xB, yB, this.x, this.y, this.width, this.height, null, null) && (intersectionCount = BoundingBoxData.segmentIntersectsPolygon(xA, yA, xB, yB, this.vertices, intersectionPointA, intersectionPointB, normalRadians));
-          }
-          return intersectionCount;
-        };
-        return BoundingBoxData;
-      })(dragonBones.BaseObject);
-      dragonBones.BoundingBoxData = BoundingBoxData;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var DragonBonesData = (function(_super) {
-        __extends(DragonBonesData, _super);
-        function DragonBonesData() {
-          _super.call(this);
-          this.armatures = {};
-          this._armatureNames = [];
-        }
-        DragonBonesData.toString = function() {
-          return "[class dragonBones.DragonBonesData]";
-        };
-        DragonBonesData.prototype._onClear = function() {
-          for (var i in this.armatures) {
-            this.armatures[i].returnToPool();
-            delete this.armatures[i];
-          }
-          this.autoSearch = false;
-          this.frameRate = 0;
-          this.name = null;
-          this._armatureNames.length = 0;
-        };
-        DragonBonesData.prototype.getArmature = function(name) {
-          return this.armatures[name];
-        };
-        DragonBonesData.prototype.addArmature = function(value) {
-          if (!value || !value.name || this.armatures[value.name]) throw new Error();
-          this.armatures[value.name] = value;
-          this._armatureNames.push(value.name);
-          value.parent = this;
-        };
-        Object.defineProperty(DragonBonesData.prototype, "armatureNames", {
-          get: function() {
-            return this._armatureNames;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        DragonBonesData.prototype.dispose = function() {
-          this.returnToPool();
-        };
-        return DragonBonesData;
-      })(dragonBones.BaseObject);
-      dragonBones.DragonBonesData = DragonBonesData;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var ActionData = (function(_super) {
-        __extends(ActionData, _super);
-        function ActionData() {
-          _super.call(this);
-          this.data = [];
-        }
-        ActionData.toString = function() {
-          return "[class dragonBones.ActionData]";
-        };
-        ActionData.prototype._onClear = function() {
-          this.type = -1;
-          this.bone = null;
-          this.slot = null;
-          this.data.length = 0;
-        };
-        return ActionData;
-      })(dragonBones.BaseObject);
-      dragonBones.ActionData = ActionData;
-      var EventData = (function(_super) {
-        __extends(EventData, _super);
-        function EventData() {
-          _super.call(this);
-          this.ints = [];
-          this.floats = [];
-          this.strings = [];
-        }
-        EventData.toString = function() {
-          return "[class dragonBones.EventData]";
-        };
-        EventData.prototype._onClear = function() {
-          this.type = -1;
-          this.name = null;
-          this.ints.length = 0;
-          this.floats.length = 0;
-          this.strings.length = 0;
-          this.bone = null;
-          this.slot = null;
-        };
-        return EventData;
-      })(dragonBones.BaseObject);
-      dragonBones.EventData = EventData;
-      var FrameData = (function(_super) {
-        __extends(FrameData, _super);
-        function FrameData() {
-          _super.call(this);
-        }
-        FrameData.prototype._onClear = function() {
-          this.position = 0;
-          this.duration = 0;
-          this.prev = null;
-          this.next = null;
-        };
-        return FrameData;
-      })(dragonBones.BaseObject);
-      dragonBones.FrameData = FrameData;
-      var TweenFrameData = (function(_super) {
-        __extends(TweenFrameData, _super);
-        function TweenFrameData() {
-          _super.call(this);
-        }
-        TweenFrameData._getCurvePoint = function(x1, y1, x2, y2, x3, y3, x4, y4, t, result) {
-          var l_t = 1 - t;
-          var powA = l_t * l_t;
-          var powB = t * t;
-          var kA = l_t * powA;
-          var kB = 3 * t * powA;
-          var kC = 3 * l_t * powB;
-          var kD = t * powB;
-          result.x = kA * x1 + kB * x2 + kC * x3 + kD * x4;
-          result.y = kA * y1 + kB * y2 + kC * y3 + kD * y4;
-        };
-        TweenFrameData.samplingEasingCurve = function(curve, samples) {
-          var curveCount = curve.length;
-          var result = new dragonBones.Point();
-          var stepIndex = -2;
-          for (var i = 0, l = samples.length; i < l; ++i) {
-            var t = (i + 1) / (l + 1);
-            while ((stepIndex + 6 < curveCount ? curve[stepIndex + 6] : 1) < t) stepIndex += 6;
-            var isInCurve = stepIndex >= 0 && stepIndex + 6 < curveCount;
-            var x1 = isInCurve ? curve[stepIndex] : 0;
-            var y1 = isInCurve ? curve[stepIndex + 1] : 0;
-            var x2 = curve[stepIndex + 2];
-            var y2 = curve[stepIndex + 3];
-            var x3 = curve[stepIndex + 4];
-            var y3 = curve[stepIndex + 5];
-            var x4 = isInCurve ? curve[stepIndex + 6] : 1;
-            var y4 = isInCurve ? curve[stepIndex + 7] : 1;
-            var lower = 0;
-            var higher = 1;
-            while (higher - lower > .01) {
-              var percentage = (higher + lower) / 2;
-              TweenFrameData._getCurvePoint(x1, y1, x2, y2, x3, y3, x4, y4, percentage, result);
-              t - result.x > 0 ? lower = percentage : higher = percentage;
-            }
-            samples[i] = result.y;
-          }
-        };
-        TweenFrameData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.tweenEasing = 0;
-          this.curve = null;
-        };
-        return TweenFrameData;
-      })(FrameData);
-      dragonBones.TweenFrameData = TweenFrameData;
-      var AnimationFrameData = (function(_super) {
-        __extends(AnimationFrameData, _super);
-        function AnimationFrameData() {
-          _super.call(this);
-          this.actions = [];
-          this.events = [];
-        }
-        AnimationFrameData.toString = function() {
-          return "[class dragonBones.AnimationFrameData]";
-        };
-        AnimationFrameData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          for (var i = 0, l = this.actions.length; i < l; ++i) this.actions[i].returnToPool();
-          for (var i = 0, l = this.events.length; i < l; ++i) this.events[i].returnToPool();
-          this.actions.length = 0;
-          this.events.length = 0;
-        };
-        return AnimationFrameData;
-      })(FrameData);
-      dragonBones.AnimationFrameData = AnimationFrameData;
-      var ZOrderFrameData = (function(_super) {
-        __extends(ZOrderFrameData, _super);
-        function ZOrderFrameData() {
-          _super.call(this);
-          this.zOrder = [];
-        }
-        ZOrderFrameData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.zOrder.length = 0;
-        };
-        return ZOrderFrameData;
-      })(FrameData);
-      dragonBones.ZOrderFrameData = ZOrderFrameData;
-      var BoneFrameData = (function(_super) {
-        __extends(BoneFrameData, _super);
-        function BoneFrameData() {
-          _super.call(this);
-          this.transform = new dragonBones.Transform();
-        }
-        BoneFrameData.toString = function() {
-          return "[class dragonBones.BoneFrameData]";
-        };
-        BoneFrameData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.tweenScale = false;
-          this.tweenRotate = 0;
-          this.transform.identity();
-        };
-        return BoneFrameData;
-      })(TweenFrameData);
-      dragonBones.BoneFrameData = BoneFrameData;
-      var SlotFrameData = (function(_super) {
-        __extends(SlotFrameData, _super);
-        function SlotFrameData() {
-          _super.call(this);
-        }
-        SlotFrameData.generateColor = function() {
-          return new dragonBones.ColorTransform();
-        };
-        SlotFrameData.toString = function() {
-          return "[class dragonBones.SlotFrameData]";
-        };
-        SlotFrameData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.displayIndex = 0;
-          this.color = null;
-        };
-        SlotFrameData.DEFAULT_COLOR = new dragonBones.ColorTransform();
-        return SlotFrameData;
-      })(TweenFrameData);
-      dragonBones.SlotFrameData = SlotFrameData;
-      var ExtensionFrameData = (function(_super) {
-        __extends(ExtensionFrameData, _super);
-        function ExtensionFrameData() {
-          _super.call(this);
-          this.tweens = [];
-          this.keys = [];
-        }
-        ExtensionFrameData.toString = function() {
-          return "[class dragonBones.ExtensionFrameData]";
-        };
-        ExtensionFrameData.prototype._onClear = function() {
-          _super.prototype._onClear.call(this);
-          this.type = -1;
-          this.tweens.length = 0;
-          this.keys.length = 0;
-        };
-        return ExtensionFrameData;
-      })(TweenFrameData);
-      dragonBones.ExtensionFrameData = ExtensionFrameData;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var DataParser = (function() {
-        function DataParser() {
-          this._data = null;
-          this._armature = null;
-          this._skin = null;
-          this._slotDisplayDataSet = null;
-          this._animation = null;
-          this._timeline = null;
-          this._isOldData = false;
-          this._isGlobalTransform = false;
-          this._isAutoTween = false;
-          this._animationTweenEasing = 0;
-          this._timelinePivot = new dragonBones.Point();
-          this._helpPoint = new dragonBones.Point();
-          this._helpTransformA = new dragonBones.Transform();
-          this._helpTransformB = new dragonBones.Transform();
-          this._helpMatrix = new dragonBones.Matrix();
-          this._rawBones = [];
-        }
-        DataParser._getArmatureType = function(value) {
-          switch (value.toLowerCase()) {
-           case "stage":
-            return 2;
-
-           case "armature":
-            return 0;
-
-           case "movieclip":
-            return 1;
-
-           default:
-            return -1;
-          }
-        };
-        DataParser._getDisplayType = function(value) {
-          switch (value.toLowerCase()) {
-           case "image":
-            return 0;
-
-           case "mesh":
-            return 2;
-
-           case "armature":
-            return 1;
-
-           case "boundingbox":
-            return 3;
-
-           default:
-            return -1;
-          }
-        };
-        DataParser._getBoundingBoxType = function(value) {
-          switch (value.toLowerCase()) {
-           case "rectangle":
-            return 0;
-
-           case "ellipse":
-            return 1;
-
-           case "polygon":
-            return 2;
-
-           default:
-            return -1;
-          }
-        };
-        DataParser._getBlendMode = function(value) {
-          switch (value.toLowerCase()) {
-           case "normal":
-            return 0;
-
-           case "add":
-            return 1;
-
-           case "alpha":
-            return 2;
-
-           case "darken":
-            return 3;
-
-           case "difference":
-            return 4;
-
-           case "erase":
-            return 5;
-
-           case "hardlight":
-            return 6;
-
-           case "invert":
-            return 7;
-
-           case "layer":
-            return 8;
-
-           case "lighten":
-            return 9;
-
-           case "multiply":
-            return 10;
-
-           case "overlay":
-            return 11;
-
-           case "screen":
-            return 12;
-
-           case "subtract":
-            return 13;
-
-           default:
-            return -1;
-          }
-        };
-        DataParser._getActionType = function(value) {
-          switch (value.toLowerCase()) {
-           case "play":
-            return 0;
-
-           case "stop":
-            return 1;
-
-           case "gotoandplay":
-            return 2;
-
-           case "gotoandstop":
-            return 3;
-
-           case "fadein":
-            return 4;
-
-           case "fadeout":
-            return 5;
-
-           default:
-            return -1;
-          }
-        };
-        DataParser.prototype._getTimelineFrameMatrix = function(animation, timeline, position, transform) {
-          var frameIndex = Math.floor(position * animation.frameCount / animation.duration);
-          if (1 == timeline.frames.length || frameIndex >= timeline.frames.length) transform.copyFrom(timeline.frames[0].transform); else {
-            var frame = timeline.frames[frameIndex];
-            var tweenProgress = 0;
-            if (frame.tweenEasing != dragonBones.DragonBones.NO_TWEEN) {
-              tweenProgress = (position - frame.position) / frame.duration;
-              0 != frame.tweenEasing && (tweenProgress = dragonBones.TweenTimelineState._getEasingValue(tweenProgress, frame.tweenEasing));
-            } else if (frame.curve) {
-              tweenProgress = (position - frame.position) / frame.duration;
-              tweenProgress = dragonBones.TweenTimelineState._getEasingCurveValue(tweenProgress, frame.curve);
-            }
-            var nextFrame = frame.next;
-            transform.x = nextFrame.transform.x - frame.transform.x;
-            transform.y = nextFrame.transform.y - frame.transform.y;
-            transform.skewX = dragonBones.Transform.normalizeRadian(nextFrame.transform.skewX - frame.transform.skewX);
-            transform.skewY = dragonBones.Transform.normalizeRadian(nextFrame.transform.skewY - frame.transform.skewY);
-            transform.scaleX = nextFrame.transform.scaleX - frame.transform.scaleX;
-            transform.scaleY = nextFrame.transform.scaleY - frame.transform.scaleY;
-            transform.x = frame.transform.x + transform.x * tweenProgress;
-            transform.y = frame.transform.y + transform.y * tweenProgress;
-            transform.skewX = frame.transform.skewX + transform.skewX * tweenProgress;
-            transform.skewY = frame.transform.skewY + transform.skewY * tweenProgress;
-            transform.scaleX = frame.transform.scaleX + transform.scaleX * tweenProgress;
-            transform.scaleY = frame.transform.scaleY + transform.scaleY * tweenProgress;
-          }
-          transform.add(timeline.originalTransform);
-        };
-        DataParser.prototype._globalToLocal = function(armature) {
-          var keyFrames = new Array();
-          var bones = armature.sortedBones.concat().reverse();
-          for (var i = 0, l = bones.length; i < l; ++i) {
-            var bone = bones[i];
-            if (bone.parent) {
-              bone.parent.transform.toMatrix(this._helpMatrix);
-              this._helpMatrix.invert();
-              this._helpMatrix.transformPoint(bone.transform.x, bone.transform.y, this._helpPoint);
-              bone.transform.x = this._helpPoint.x;
-              bone.transform.y = this._helpPoint.y;
-              bone.transform.rotation -= bone.parent.transform.rotation;
-            }
-            for (var i_2 in armature.animations) {
-              var animation = armature.animations[i_2];
-              var timeline = animation.getBoneTimeline(bone.name);
-              if (!timeline) continue;
-              var parentTimeline = bone.parent ? animation.getBoneTimeline(bone.parent.name) : null;
-              this._helpTransformB.copyFrom(timeline.originalTransform);
-              keyFrames.length = 0;
-              for (var i_3 = 0, l_2 = timeline.frames.length; i_3 < l_2; ++i_3) {
-                var frame = timeline.frames[i_3];
-                if (keyFrames.indexOf(frame) >= 0) continue;
-                keyFrames.push(frame);
-                if (parentTimeline) {
-                  this._getTimelineFrameMatrix(animation, parentTimeline, frame.position, this._helpTransformA);
-                  frame.transform.add(this._helpTransformB);
-                  this._helpTransformA.toMatrix(this._helpMatrix);
-                  this._helpMatrix.invert();
-                  this._helpMatrix.transformPoint(frame.transform.x, frame.transform.y, this._helpPoint);
-                  frame.transform.x = this._helpPoint.x;
-                  frame.transform.y = this._helpPoint.y;
-                  frame.transform.rotation -= this._helpTransformA.rotation;
-                } else frame.transform.add(this._helpTransformB);
-                frame.transform.minus(bone.transform);
-                if (0 == i_3) {
-                  timeline.originalTransform.copyFrom(frame.transform);
-                  frame.transform.identity();
-                } else frame.transform.minus(timeline.originalTransform);
-              }
-            }
-          }
-        };
-        DataParser.prototype._mergeFrameToAnimationTimeline = function(framePostion, actions, events) {
-          var frameStart = Math.floor(framePostion * this._armature.frameRate);
-          var frames = this._animation.frames;
-          if (0 == frames.length) {
-            var startFrame = dragonBones.BaseObject.borrowObject(dragonBones.AnimationFrameData);
-            startFrame.position = 0;
-            if (this._animation.frameCount > 1) {
-              frames.length = this._animation.frameCount + 1;
-              var endFrame = dragonBones.BaseObject.borrowObject(dragonBones.AnimationFrameData);
-              endFrame.position = this._animation.frameCount / this._armature.frameRate;
-              frames[0] = startFrame;
-              frames[this._animation.frameCount] = endFrame;
-            }
-          }
-          var insertedFrame = null;
-          var replacedFrame = frames[frameStart];
-          if (!replacedFrame || 0 != frameStart && frames[frameStart - 1] != replacedFrame.prev) {
-            insertedFrame = dragonBones.BaseObject.borrowObject(dragonBones.AnimationFrameData);
-            insertedFrame.position = frameStart / this._armature.frameRate;
-            frames[frameStart] = insertedFrame;
-            for (var i = frameStart + 1, l = frames.length; i < l; ++i) replacedFrame && frames[i] == replacedFrame && (frames[i] = null);
-          } else insertedFrame = replacedFrame;
-          if (actions) for (var i = 0, l = actions.length; i < l; ++i) insertedFrame.actions.push(actions[i]);
-          if (events) for (var i = 0, l = events.length; i < l; ++i) insertedFrame.events.push(events[i]);
-          var prevFrame = null;
-          var nextFrame = null;
-          for (var i = 0, l = frames.length; i < l; ++i) {
-            var currentFrame = frames[i];
-            if (currentFrame && nextFrame != currentFrame) {
-              nextFrame = currentFrame;
-              if (prevFrame) {
-                nextFrame.prev = prevFrame;
-                prevFrame.next = nextFrame;
-                prevFrame.duration = nextFrame.position - prevFrame.position;
-              }
-              prevFrame = nextFrame;
-            } else frames[i] = prevFrame;
-          }
-          nextFrame.duration = this._animation.duration - nextFrame.position;
-          nextFrame = frames[0];
-          prevFrame.next = nextFrame;
-          nextFrame.prev = prevFrame;
-        };
-        DataParser.parseDragonBonesData = function(rawData) {
-          return dragonBones.ObjectDataParser.getInstance().parseDragonBonesData(rawData);
-        };
-        DataParser.parseTextureAtlasData = function(rawData, scale) {
-          void 0 === scale && (scale = 1);
-          var textureAtlasData = {};
-          var subTextureList = rawData[DataParser.SUB_TEXTURE];
-          for (var i = 0, len = subTextureList.length; i < len; i++) {
-            var subTextureObject = subTextureList[i];
-            var subTextureName = subTextureObject[DataParser.NAME];
-            var subTextureRegion = new dragonBones.Rectangle();
-            var subTextureFrame = null;
-            subTextureRegion.x = subTextureObject[DataParser.X] / scale;
-            subTextureRegion.y = subTextureObject[DataParser.Y] / scale;
-            subTextureRegion.width = subTextureObject[DataParser.WIDTH] / scale;
-            subTextureRegion.height = subTextureObject[DataParser.HEIGHT] / scale;
-            if (DataParser.FRAME_WIDTH in subTextureObject) {
-              subTextureFrame = new dragonBones.Rectangle();
-              subTextureFrame.x = subTextureObject[DataParser.FRAME_X] / scale;
-              subTextureFrame.y = subTextureObject[DataParser.FRAME_Y] / scale;
-              subTextureFrame.width = subTextureObject[DataParser.FRAME_WIDTH] / scale;
-              subTextureFrame.height = subTextureObject[DataParser.FRAME_HEIGHT] / scale;
-            }
-            textureAtlasData[subTextureName] = {
-              region: subTextureRegion,
-              frame: subTextureFrame,
-              rotated: false
-            };
-          }
-          return textureAtlasData;
-        };
-        DataParser.DATA_VERSION_2_3 = "2.3";
-        DataParser.DATA_VERSION_3_0 = "3.0";
-        DataParser.DATA_VERSION_4_0 = "4.0";
-        DataParser.DATA_VERSION = "4.5";
-        DataParser.TEXTURE_ATLAS = "TextureAtlas";
-        DataParser.SUB_TEXTURE = "SubTexture";
-        DataParser.FORMAT = "format";
-        DataParser.IMAGE_PATH = "imagePath";
-        DataParser.WIDTH = "width";
-        DataParser.HEIGHT = "height";
-        DataParser.ROTATED = "rotated";
-        DataParser.FRAME_X = "frameX";
-        DataParser.FRAME_Y = "frameY";
-        DataParser.FRAME_WIDTH = "frameWidth";
-        DataParser.FRAME_HEIGHT = "frameHeight";
-        DataParser.DRADON_BONES = "dragonBones";
-        DataParser.ARMATURE = "armature";
-        DataParser.BONE = "bone";
-        DataParser.IK = "ik";
-        DataParser.SLOT = "slot";
-        DataParser.SKIN = "skin";
-        DataParser.DISPLAY = "display";
-        DataParser.ANIMATION = "animation";
-        DataParser.Z_ORDER = "zOrder";
-        DataParser.FFD = "ffd";
-        DataParser.FRAME = "frame";
-        DataParser.EVENTS = "events";
-        DataParser.ACTIONS = "actions";
-        DataParser.INTS = "ints";
-        DataParser.FLOATS = "floats";
-        DataParser.STRINGS = "strings";
-        DataParser.PIVOT = "pivot";
-        DataParser.TRANSFORM = "transform";
-        DataParser.AABB = "aabb";
-        DataParser.COLOR = "color";
-        DataParser.FILTER = "filter";
-        DataParser.VERSION = "version";
-        DataParser.IS_GLOBAL = "isGlobal";
-        DataParser.FRAME_RATE = "frameRate";
-        DataParser.TYPE = "type";
-        DataParser.SUB_TYPE = "subType";
-        DataParser.NAME = "name";
-        DataParser.PARENT = "parent";
-        DataParser.SHARE = "share";
-        DataParser.LENGTH = "length";
-        DataParser.DATA = "data";
-        DataParser.DISPLAY_INDEX = "displayIndex";
-        DataParser.BLEND_MODE = "blendMode";
-        DataParser.INHERIT_TRANSLATION = "inheritTranslation";
-        DataParser.INHERIT_ROTATION = "inheritRotation";
-        DataParser.INHERIT_SCALE = "inheritScale";
-        DataParser.INHERIT_ANIMATION = "inheritAnimation";
-        DataParser.TARGET = "target";
-        DataParser.BEND_POSITIVE = "bendPositive";
-        DataParser.CHAIN = "chain";
-        DataParser.WEIGHT = "weight";
-        DataParser.FADE_IN_TIME = "fadeInTime";
-        DataParser.PLAY_TIMES = "playTimes";
-        DataParser.SCALE = "scale";
-        DataParser.OFFSET = "offset";
-        DataParser.POSITION = "position";
-        DataParser.DURATION = "duration";
-        DataParser.TWEEN_EASING = "tweenEasing";
-        DataParser.TWEEN_ROTATE = "tweenRotate";
-        DataParser.TWEEN_SCALE = "tweenScale";
-        DataParser.CURVE = "curve";
-        DataParser.GUIDE_CURVE = "guideCurve";
-        DataParser.EVENT = "event";
-        DataParser.SOUND = "sound";
-        DataParser.ACTION = "action";
-        DataParser.DEFAULT_ACTIONS = "defaultActions";
-        DataParser.X = "x";
-        DataParser.Y = "y";
-        DataParser.SKEW_X = "skX";
-        DataParser.SKEW_Y = "skY";
-        DataParser.SCALE_X = "scX";
-        DataParser.SCALE_Y = "scY";
-        DataParser.ALPHA_OFFSET = "aO";
-        DataParser.RED_OFFSET = "rO";
-        DataParser.GREEN_OFFSET = "gO";
-        DataParser.BLUE_OFFSET = "bO";
-        DataParser.ALPHA_MULTIPLIER = "aM";
-        DataParser.RED_MULTIPLIER = "rM";
-        DataParser.GREEN_MULTIPLIER = "gM";
-        DataParser.BLUE_MULTIPLIER = "bM";
-        DataParser.UVS = "uvs";
-        DataParser.VERTICES = "vertices";
-        DataParser.TRIANGLES = "triangles";
-        DataParser.WEIGHTS = "weights";
-        DataParser.SLOT_POSE = "slotPose";
-        DataParser.BONE_POSE = "bonePose";
-        DataParser.TWEEN = "tween";
-        DataParser.KEY = "key";
-        DataParser.COLOR_TRANSFORM = "colorTransform";
-        DataParser.TIMELINE = "timeline";
-        DataParser.PIVOT_X = "pX";
-        DataParser.PIVOT_Y = "pY";
-        DataParser.Z = "z";
-        DataParser.LOOP = "loop";
-        DataParser.AUTO_TWEEN = "autoTween";
-        DataParser.HIDE = "hide";
-        return DataParser;
-      })();
-      dragonBones.DataParser = DataParser;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var ObjectDataParser = (function(_super) {
-        __extends(ObjectDataParser, _super);
-        function ObjectDataParser() {
-          _super.call(this);
-        }
-        ObjectDataParser._getBoolean = function(rawData, key, defaultValue) {
-          if (key in rawData) {
-            var value = rawData[key];
-            var valueType = typeof value;
-            if ("boolean" == valueType) return value;
-            if ("string" != valueType) return !!value;
-            switch (value) {
-             case "0":
-             case "NaN":
-             case "":
-             case "false":
-             case "null":
-             case "undefined":
-              return false;
-
-             default:
-              return true;
-            }
-          }
-          return defaultValue;
-        };
-        ObjectDataParser._getNumber = function(rawData, key, defaultValue) {
-          if (key in rawData) {
-            var value = rawData[key];
-            if (null == value || "NaN" == value) return defaultValue;
-            return +value || 0;
-          }
-          return defaultValue;
-        };
-        ObjectDataParser._getString = function(rawData, key, defaultValue) {
-          if (key in rawData) return String(rawData[key]);
-          return defaultValue;
-        };
-        ObjectDataParser._getParameter = function(rawData, index, defaultValue) {
-          if (rawData.length > index) return rawData[index];
-          return defaultValue;
-        };
-        ObjectDataParser.prototype._parseArmature = function(rawData, scale) {
-          var armature = dragonBones.BaseObject.borrowObject(dragonBones.ArmatureData);
-          armature.name = ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null);
-          armature.frameRate = ObjectDataParser._getNumber(rawData, ObjectDataParser.FRAME_RATE, this._data.frameRate) || this._data.frameRate;
-          armature.scale = scale;
-          ObjectDataParser.TYPE in rawData && "string" == typeof rawData[ObjectDataParser.TYPE] ? armature.type = ObjectDataParser._getArmatureType(rawData[ObjectDataParser.TYPE]) : armature.type = ObjectDataParser._getNumber(rawData, ObjectDataParser.TYPE, 0);
-          this._armature = armature;
-          this._rawBones.length = 0;
-          if (ObjectDataParser.AABB in rawData) {
-            var aabbObject = rawData[ObjectDataParser.AABB];
-            armature.aabb.x = ObjectDataParser._getNumber(aabbObject, ObjectDataParser.X, 0);
-            armature.aabb.y = ObjectDataParser._getNumber(aabbObject, ObjectDataParser.Y, 0);
-            armature.aabb.width = ObjectDataParser._getNumber(aabbObject, ObjectDataParser.WIDTH, 0);
-            armature.aabb.height = ObjectDataParser._getNumber(aabbObject, ObjectDataParser.HEIGHT, 0);
-          }
-          if (ObjectDataParser.BONE in rawData) {
-            var bones = rawData[ObjectDataParser.BONE];
-            for (var i = 0, l = bones.length; i < l; ++i) {
-              var boneObject = bones[i];
-              var bone = this._parseBone(boneObject);
-              armature.addBone(bone, ObjectDataParser._getString(boneObject, ObjectDataParser.PARENT, null));
-              this._rawBones.push(bone);
-            }
-          }
-          if (ObjectDataParser.IK in rawData) {
-            var iks = rawData[ObjectDataParser.IK];
-            for (var i = 0, l = iks.length; i < l; ++i) this._parseIK(iks[i]);
-          }
-          if (ObjectDataParser.SLOT in rawData) {
-            var slots = rawData[ObjectDataParser.SLOT];
-            var zOrder = 0;
-            for (var i = 0, l = slots.length; i < l; ++i) armature.addSlot(this._parseSlot(slots[i], zOrder++));
-          }
-          if (ObjectDataParser.SKIN in rawData) {
-            var skins = rawData[ObjectDataParser.SKIN];
-            for (var i = 0, l = skins.length; i < l; ++i) armature.addSkin(this._parseSkin(skins[i]));
-          }
-          if (ObjectDataParser.ANIMATION in rawData) {
-            var animations = rawData[ObjectDataParser.ANIMATION];
-            for (var i = 0, l = animations.length; i < l; ++i) armature.addAnimation(this._parseAnimation(animations[i]));
-          }
-          (ObjectDataParser.ACTIONS in rawData || ObjectDataParser.DEFAULT_ACTIONS in rawData) && this._parseActionData(rawData, armature.actions, null, null);
-          this._isOldData && this._isGlobalTransform && this._globalToLocal(armature);
-          this._armature = null;
-          this._rawBones.length = 0;
-          return armature;
-        };
-        ObjectDataParser.prototype._parseBone = function(rawData) {
-          var bone = dragonBones.BaseObject.borrowObject(dragonBones.BoneData);
-          bone.name = ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null);
-          bone.inheritTranslation = ObjectDataParser._getBoolean(rawData, ObjectDataParser.INHERIT_TRANSLATION, true);
-          bone.inheritRotation = ObjectDataParser._getBoolean(rawData, ObjectDataParser.INHERIT_ROTATION, true);
-          bone.inheritScale = ObjectDataParser._getBoolean(rawData, ObjectDataParser.INHERIT_SCALE, true);
-          bone.length = ObjectDataParser._getNumber(rawData, ObjectDataParser.LENGTH, 0) * this._armature.scale;
-          ObjectDataParser.TRANSFORM in rawData && this._parseTransform(rawData[ObjectDataParser.TRANSFORM], bone.transform);
-          this._isOldData && (bone.inheritScale = false);
-          return bone;
-        };
-        ObjectDataParser.prototype._parseIK = function(rawData) {
-          var bone = this._armature.getBone(ObjectDataParser._getString(rawData, ObjectDataParser.BONE in rawData ? ObjectDataParser.BONE : ObjectDataParser.NAME, null));
-          if (bone) {
-            bone.ik = this._armature.getBone(ObjectDataParser._getString(rawData, ObjectDataParser.TARGET, null));
-            bone.bendPositive = ObjectDataParser._getBoolean(rawData, ObjectDataParser.BEND_POSITIVE, true);
-            bone.chain = ObjectDataParser._getNumber(rawData, ObjectDataParser.CHAIN, 0);
-            bone.weight = ObjectDataParser._getNumber(rawData, ObjectDataParser.WEIGHT, 1);
-            if (bone.chain > 0 && bone.parent && !bone.parent.ik) {
-              bone.parent.ik = bone.ik;
-              bone.parent.chainIndex = 0;
-              bone.parent.chain = 0;
-              bone.chainIndex = 1;
-            } else {
-              bone.chain = 0;
-              bone.chainIndex = 0;
-            }
-          }
-        };
-        ObjectDataParser.prototype._parseSlot = function(rawData, zOrder) {
-          var slot = dragonBones.BaseObject.borrowObject(dragonBones.SlotData);
-          slot.name = ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null);
-          slot.parent = this._armature.getBone(ObjectDataParser._getString(rawData, ObjectDataParser.PARENT, null));
-          slot.displayIndex = ObjectDataParser._getNumber(rawData, ObjectDataParser.DISPLAY_INDEX, 0);
-          slot.zOrder = ObjectDataParser._getNumber(rawData, ObjectDataParser.Z, zOrder);
-          if (ObjectDataParser.COLOR in rawData || ObjectDataParser.COLOR_TRANSFORM in rawData) {
-            slot.color = dragonBones.SlotData.generateColor();
-            this._parseColorTransform(rawData[ObjectDataParser.COLOR] || rawData[ObjectDataParser.COLOR_TRANSFORM], slot.color);
-          } else slot.color = dragonBones.SlotData.DEFAULT_COLOR;
-          ObjectDataParser.BLEND_MODE in rawData && "string" == typeof rawData[ObjectDataParser.BLEND_MODE] ? slot.blendMode = ObjectDataParser._getBlendMode(rawData[ObjectDataParser.BLEND_MODE]) : slot.blendMode = ObjectDataParser._getNumber(rawData, ObjectDataParser.BLEND_MODE, 0);
-          (ObjectDataParser.ACTIONS in rawData || ObjectDataParser.DEFAULT_ACTIONS in rawData) && this._parseActionData(rawData, slot.actions, null, null);
-          if (this._isOldData) if (ObjectDataParser.COLOR_TRANSFORM in rawData) {
-            slot.color = dragonBones.SlotData.generateColor();
-            this._parseColorTransform(rawData[ObjectDataParser.COLOR_TRANSFORM], slot.color);
-          } else slot.color = dragonBones.SlotData.DEFAULT_COLOR;
-          return slot;
-        };
-        ObjectDataParser.prototype._parseSkin = function(rawData) {
-          var skin = dragonBones.BaseObject.borrowObject(dragonBones.SkinData);
-          skin.name = ObjectDataParser._getString(rawData, ObjectDataParser.NAME, "__default") || "__default";
-          if (ObjectDataParser.SLOT in rawData) {
-            this._skin = skin;
-            var slots = rawData[ObjectDataParser.SLOT];
-            var zOrder = 0;
-            for (var i = 0, l = slots.length; i < l; ++i) {
-              this._isOldData && this._armature.addSlot(this._parseSlot(slots[i], zOrder++));
-              skin.addSlot(this._parseSlotDisplaySet(slots[i]));
-            }
-            this._skin = null;
-          }
-          return skin;
-        };
-        ObjectDataParser.prototype._parseSlotDisplaySet = function(rawData) {
-          var slotDisplayDataSet = dragonBones.BaseObject.borrowObject(dragonBones.SlotDisplayDataSet);
-          slotDisplayDataSet.slot = this._armature.getSlot(ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null));
-          if (ObjectDataParser.DISPLAY in rawData) {
-            var displayObjectSet = rawData[ObjectDataParser.DISPLAY];
-            var displayDataSet = slotDisplayDataSet.displays;
-            this._slotDisplayDataSet = slotDisplayDataSet;
-            for (var i = 0, l = displayObjectSet.length; i < l; ++i) displayDataSet.push(this._parseDisplay(displayObjectSet[i]));
-            this._slotDisplayDataSet = null;
-          }
-          return slotDisplayDataSet;
-        };
-        ObjectDataParser.prototype._parseDisplay = function(rawData) {
-          var display = dragonBones.BaseObject.borrowObject(dragonBones.DisplayData);
-          display.name = ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null);
-          display.path = ObjectDataParser._getString(rawData, ObjectDataParser.SHARE, display.name);
-          display.inheritAnimation = ObjectDataParser._getBoolean(rawData, ObjectDataParser.INHERIT_ANIMATION, true);
-          ObjectDataParser.TYPE in rawData && "string" == typeof rawData[ObjectDataParser.TYPE] ? display.type = ObjectDataParser._getDisplayType(rawData[ObjectDataParser.TYPE]) : display.type = ObjectDataParser._getNumber(rawData, ObjectDataParser.TYPE, 0);
-          display.isRelativePivot = true;
-          if (ObjectDataParser.PIVOT in rawData) {
-            var pivotObject = rawData[ObjectDataParser.PIVOT];
-            display.pivot.x = ObjectDataParser._getNumber(pivotObject, ObjectDataParser.X, 0);
-            display.pivot.y = ObjectDataParser._getNumber(pivotObject, ObjectDataParser.Y, 0);
-          } else if (this._isOldData) {
-            var transformObject = rawData[ObjectDataParser.TRANSFORM];
-            display.isRelativePivot = false;
-            display.pivot.x = ObjectDataParser._getNumber(transformObject, ObjectDataParser.PIVOT_X, 0) * this._armature.scale;
-            display.pivot.y = ObjectDataParser._getNumber(transformObject, ObjectDataParser.PIVOT_Y, 0) * this._armature.scale;
-          } else {
-            display.pivot.x = .5;
-            display.pivot.y = .5;
-          }
-          ObjectDataParser.TRANSFORM in rawData && this._parseTransform(rawData[ObjectDataParser.TRANSFORM], display.transform);
-          switch (display.type) {
-           case 0:
-           case 1:
-            break;
-
-           case 2:
-            var shareMeshName = ObjectDataParser._getString(rawData, ObjectDataParser.SHARE, null);
-            if (shareMeshName) for (var i = 0, l = this._slotDisplayDataSet.displays.length; i < l; ++i) {
-              var eachDisplay = this._slotDisplayDataSet.displays[i];
-              if (eachDisplay.name == shareMeshName) {
-                display.share = eachDisplay;
-                display.mesh = eachDisplay.mesh;
-                break;
-              }
-            } else display.mesh = this._parseMesh(rawData);
-            break;
-
-           case 3:
-            display.boundingBox = this._BoundingBox(rawData);
-          }
-          return display;
-        };
-        ObjectDataParser.prototype._BoundingBox = function(rawData) {
-          var boundingBox = dragonBones.BaseObject.borrowObject(dragonBones.BoundingBoxData);
-          ObjectDataParser.SUB_TYPE in rawData && "string" == typeof rawData[ObjectDataParser.SUB_TYPE] ? boundingBox.type = ObjectDataParser._getBoundingBoxType(rawData[ObjectDataParser.SUB_TYPE]) : boundingBox.type = ObjectDataParser._getNumber(rawData, ObjectDataParser.SUB_TYPE, 0);
-          switch (boundingBox.type) {
-           case 0:
-           case 1:
-            boundingBox.width = ObjectDataParser._getNumber(rawData, ObjectDataParser.WIDTH, 0);
-            boundingBox.height = ObjectDataParser._getNumber(rawData, ObjectDataParser.HEIGHT, 0);
-            break;
-
-           case 2:
-            if (ObjectDataParser.VERTICES in rawData) {
-              var rawVertices = rawData[ObjectDataParser.VERTICES];
-              boundingBox.vertices.length = rawVertices.length;
-              for (var i = 0, l = rawVertices.length; i < l; i += 2) {
-                var iN = i + 1;
-                var x = rawVertices[i];
-                var y = rawVertices[iN];
-                boundingBox.vertices[i] = x;
-                boundingBox.vertices[iN] = y;
-                if (0 == i) {
-                  boundingBox.x = x;
-                  boundingBox.y = y;
-                  boundingBox.width = x;
-                  boundingBox.height = y;
-                } else {
-                  x < boundingBox.x ? boundingBox.x = x : x > boundingBox.width && (boundingBox.width = x);
-                  y < boundingBox.y ? boundingBox.y = y : y > boundingBox.height && (boundingBox.height = y);
-                }
-              }
-            }
-          }
-          return boundingBox;
-        };
-        ObjectDataParser.prototype._parseMesh = function(rawData) {
-          var mesh = dragonBones.BaseObject.borrowObject(dragonBones.MeshData);
-          var rawVertices = rawData[ObjectDataParser.VERTICES];
-          var rawUVs = rawData[ObjectDataParser.UVS];
-          var rawTriangles = rawData[ObjectDataParser.TRIANGLES];
-          var numVertices = Math.floor(rawVertices.length / 2);
-          var numTriangles = Math.floor(rawTriangles.length / 3);
-          var inverseBindPose = new Array(this._armature.sortedBones.length);
-          mesh.skinned = ObjectDataParser.WEIGHTS in rawData && rawData[ObjectDataParser.WEIGHTS].length > 0;
-          mesh.uvs.length = 2 * numVertices;
-          mesh.vertices.length = 2 * numVertices;
-          mesh.vertexIndices.length = 3 * numTriangles;
-          if (mesh.skinned) {
-            mesh.boneIndices.length = numVertices;
-            mesh.weights.length = numVertices;
-            mesh.boneVertices.length = numVertices;
-            if (ObjectDataParser.SLOT_POSE in rawData) {
-              var rawSlotPose = rawData[ObjectDataParser.SLOT_POSE];
-              mesh.slotPose.a = rawSlotPose[0];
-              mesh.slotPose.b = rawSlotPose[1];
-              mesh.slotPose.c = rawSlotPose[2];
-              mesh.slotPose.d = rawSlotPose[3];
-              mesh.slotPose.tx = rawSlotPose[4] * this._armature.scale;
-              mesh.slotPose.ty = rawSlotPose[5] * this._armature.scale;
-            }
-            if (ObjectDataParser.BONE_POSE in rawData) {
-              var rawBonePose = rawData[ObjectDataParser.BONE_POSE];
-              for (var i = 0, l = rawBonePose.length; i < l; i += 7) {
-                var rawBoneIndex = rawBonePose[i];
-                var boneMatrix = inverseBindPose[rawBoneIndex] = new dragonBones.Matrix();
-                boneMatrix.a = rawBonePose[i + 1];
-                boneMatrix.b = rawBonePose[i + 2];
-                boneMatrix.c = rawBonePose[i + 3];
-                boneMatrix.d = rawBonePose[i + 4];
-                boneMatrix.tx = rawBonePose[i + 5] * this._armature.scale;
-                boneMatrix.ty = rawBonePose[i + 6] * this._armature.scale;
-                boneMatrix.invert();
-              }
-            }
-          }
-          for (var i = 0, iW = 0, l = rawVertices.length; i < l; i += 2) {
-            var iN = i + 1;
-            var vertexIndex = i / 2;
-            var x = mesh.vertices[i] = rawVertices[i] * this._armature.scale;
-            var y = mesh.vertices[iN] = rawVertices[iN] * this._armature.scale;
-            mesh.uvs[i] = rawUVs[i];
-            mesh.uvs[iN] = rawUVs[iN];
-            if (mesh.skinned) {
-              var rawWeights = rawData[ObjectDataParser.WEIGHTS];
-              var numBones = rawWeights[iW];
-              var indices = mesh.boneIndices[vertexIndex] = new Array(numBones);
-              var weights = mesh.weights[vertexIndex] = new Array(numBones);
-              var boneVertices = mesh.boneVertices[vertexIndex] = new Array(2 * numBones);
-              mesh.slotPose.transformPoint(x, y, this._helpPoint);
-              x = mesh.vertices[i] = this._helpPoint.x;
-              y = mesh.vertices[iN] = this._helpPoint.y;
-              for (var iB = 0; iB < numBones; ++iB) {
-                var iI = iW + 1 + 2 * iB;
-                var rawBoneIndex = rawWeights[iI];
-                var boneData = this._rawBones[rawBoneIndex];
-                var boneIndex = mesh.bones.indexOf(boneData);
-                if (boneIndex < 0) {
-                  boneIndex = mesh.bones.length;
-                  mesh.bones[boneIndex] = boneData;
-                  mesh.inverseBindPose[boneIndex] = inverseBindPose[rawBoneIndex];
-                }
-                mesh.inverseBindPose[boneIndex].transformPoint(x, y, this._helpPoint);
-                indices[iB] = boneIndex;
-                weights[iB] = rawWeights[iI + 1];
-                boneVertices[2 * iB] = this._helpPoint.x;
-                boneVertices[2 * iB + 1] = this._helpPoint.y;
-              }
-              iW += 2 * numBones + 1;
-            }
-          }
-          for (var i = 0, l = rawTriangles.length; i < l; ++i) mesh.vertexIndices[i] = rawTriangles[i];
-          return mesh;
-        };
-        ObjectDataParser.prototype._parseAnimation = function(rawData) {
-          var animation = dragonBones.BaseObject.borrowObject(dragonBones.AnimationData);
-          animation.name = ObjectDataParser._getString(rawData, ObjectDataParser.NAME, "__default") || "__default";
-          animation.frameCount = Math.max(ObjectDataParser._getNumber(rawData, ObjectDataParser.DURATION, 1), 1);
-          animation.position = ObjectDataParser._getNumber(rawData, ObjectDataParser.POSITION, 0) / this._armature.frameRate;
-          animation.duration = animation.frameCount / this._armature.frameRate;
-          animation.playTimes = ObjectDataParser._getNumber(rawData, ObjectDataParser.PLAY_TIMES, 1);
-          animation.fadeInTime = ObjectDataParser._getNumber(rawData, ObjectDataParser.FADE_IN_TIME, 0);
-          this._animation = animation;
-          var animationName = ObjectDataParser._getString(rawData, ObjectDataParser.ANIMATION, null);
-          if (animationName) {
-            animation.animation = this._armature.getAnimation(animationName);
-            !animation.animation;
-            return animation;
-          }
-          this._parseTimeline(rawData, animation, this._parseAnimationFrame);
-          if (ObjectDataParser.Z_ORDER in rawData) {
-            animation.zOrderTimeline = dragonBones.BaseObject.borrowObject(dragonBones.ZOrderTimelineData);
-            this._parseTimeline(rawData[ObjectDataParser.Z_ORDER], animation.zOrderTimeline, this._parseZOrderFrame);
-          }
-          if (ObjectDataParser.BONE in rawData) {
-            var boneTimelines = rawData[ObjectDataParser.BONE];
-            for (var i = 0, l = boneTimelines.length; i < l; ++i) animation.addBoneTimeline(this._parseBoneTimeline(boneTimelines[i]));
-          }
-          if (ObjectDataParser.SLOT in rawData) {
-            var slotTimelines = rawData[ObjectDataParser.SLOT];
-            for (var i = 0, l = slotTimelines.length; i < l; ++i) animation.addSlotTimeline(this._parseSlotTimeline(slotTimelines[i]));
-          }
-          if (ObjectDataParser.FFD in rawData) {
-            var ffdTimelines = rawData[ObjectDataParser.FFD];
-            for (var i = 0, l = ffdTimelines.length; i < l; ++i) animation.addFFDTimeline(this._parseFFDTimeline(ffdTimelines[i]));
-          }
-          if (this._isOldData) {
-            this._isAutoTween = ObjectDataParser._getBoolean(rawData, ObjectDataParser.AUTO_TWEEN, true);
-            this._animationTweenEasing = ObjectDataParser._getNumber(rawData, ObjectDataParser.TWEEN_EASING, 0) || 0;
-            animation.playTimes = ObjectDataParser._getNumber(rawData, ObjectDataParser.LOOP, 1);
-            if (ObjectDataParser.TIMELINE in rawData) {
-              var timelineObjects = rawData[ObjectDataParser.TIMELINE];
-              for (var i = 0, l = timelineObjects.length; i < l; ++i) {
-                var timelineObject = timelineObjects[i];
-                animation.addBoneTimeline(this._parseBoneTimeline(timelineObject));
-                animation.addSlotTimeline(this._parseSlotTimeline(timelineObject));
-              }
-            }
-          } else {
-            this._isAutoTween = false;
-            this._animationTweenEasing = 0;
-          }
-          for (var i in this._armature.bones) {
-            var bone = this._armature.bones[i];
-            if (!animation.getBoneTimeline(bone.name)) {
-              var boneTimeline = dragonBones.BaseObject.borrowObject(dragonBones.BoneTimelineData);
-              var boneFrame = dragonBones.BaseObject.borrowObject(dragonBones.BoneFrameData);
-              boneTimeline.bone = bone;
-              boneTimeline.frames[0] = boneFrame;
-              animation.addBoneTimeline(boneTimeline);
-            }
-          }
-          for (var i in this._armature.slots) {
-            var slot = this._armature.slots[i];
-            if (!animation.getSlotTimeline(slot.name)) {
-              var slotTimeline = dragonBones.BaseObject.borrowObject(dragonBones.SlotTimelineData);
-              var slotFrame = dragonBones.BaseObject.borrowObject(dragonBones.SlotFrameData);
-              slotTimeline.slot = slot;
-              slotFrame.displayIndex = slot.displayIndex;
-              if (slot.color == dragonBones.SlotData.DEFAULT_COLOR) slotFrame.color = dragonBones.SlotFrameData.DEFAULT_COLOR; else {
-                slotFrame.color = dragonBones.SlotFrameData.generateColor();
-                slotFrame.color.copyFrom(slot.color);
-              }
-              slotTimeline.frames[0] = slotFrame;
-              animation.addSlotTimeline(slotTimeline);
-              this._isOldData && (slotFrame.displayIndex = -1);
-            }
-          }
-          this._animation = null;
-          return animation;
-        };
-        ObjectDataParser.prototype._parseBoneTimeline = function(rawData) {
-          var timeline = dragonBones.BaseObject.borrowObject(dragonBones.BoneTimelineData);
-          timeline.bone = this._armature.getBone(ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null));
-          this._parseTimeline(rawData, timeline, this._parseBoneFrame);
-          var originalTransform = timeline.originalTransform;
-          var prevFrame = null;
-          for (var i = 0, l = timeline.frames.length; i < l; ++i) {
-            var frame = timeline.frames[i];
-            if (prevFrame) prevFrame != frame && frame.transform.minus(originalTransform); else {
-              originalTransform.copyFrom(frame.transform);
-              frame.transform.identity();
-              0 == originalTransform.scaleX && (originalTransform.scaleX = .001);
-              0 == originalTransform.scaleY && (originalTransform.scaleY = .001);
-            }
-            prevFrame = frame;
-          }
-          1 == timeline.scale && 0 == timeline.offset || (this._animation.hasAsynchronyTimeline = true);
-          if (this._isOldData && (ObjectDataParser.PIVOT_X in rawData || ObjectDataParser.PIVOT_Y in rawData)) {
-            this._timelinePivot.x = ObjectDataParser._getNumber(rawData, ObjectDataParser.PIVOT_X, 0);
-            this._timelinePivot.y = ObjectDataParser._getNumber(rawData, ObjectDataParser.PIVOT_Y, 0);
-          } else this._timelinePivot.clear();
-          return timeline;
-        };
-        ObjectDataParser.prototype._parseSlotTimeline = function(rawData) {
-          var timeline = dragonBones.BaseObject.borrowObject(dragonBones.SlotTimelineData);
-          timeline.slot = this._armature.getSlot(ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null));
-          this._parseTimeline(rawData, timeline, this._parseSlotFrame);
-          1 == timeline.scale && 0 == timeline.offset || (this._animation.hasAsynchronyTimeline = true);
-          return timeline;
-        };
-        ObjectDataParser.prototype._parseFFDTimeline = function(rawData) {
-          var timeline = dragonBones.BaseObject.borrowObject(dragonBones.FFDTimelineData);
-          timeline.skin = this._armature.getSkin(ObjectDataParser._getString(rawData, ObjectDataParser.SKIN, null));
-          timeline.slot = timeline.skin.getSlot(ObjectDataParser._getString(rawData, ObjectDataParser.SLOT, null));
-          var meshName = ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null);
-          for (var i = 0, l = timeline.slot.displays.length; i < l; ++i) {
-            var display = timeline.slot.displays[i];
-            if (display.mesh && display.name == meshName) {
-              timeline.display = display;
-              break;
-            }
-          }
-          this._parseTimeline(rawData, timeline, this._parseFFDFrame);
-          return timeline;
-        };
-        ObjectDataParser.prototype._parseAnimationFrame = function(rawData, frameStart, frameCount) {
-          var frame = dragonBones.BaseObject.borrowObject(dragonBones.AnimationFrameData);
-          this._parseFrame(rawData, frame, frameStart, frameCount);
-          (ObjectDataParser.ACTION in rawData || ObjectDataParser.ACTIONS in rawData) && this._parseActionData(rawData, frame.actions, null, null);
-          (ObjectDataParser.EVENT in rawData || ObjectDataParser.SOUND in rawData) && this._parseEventData(rawData, frame.events, null, null);
-          return frame;
-        };
-        ObjectDataParser.prototype._parseZOrderFrame = function(rawData, frameStart, frameCount) {
-          var frame = dragonBones.BaseObject.borrowObject(dragonBones.ZOrderFrameData);
-          this._parseFrame(rawData, frame, frameStart, frameCount);
-          var rawZOrder = rawData[ObjectDataParser.Z_ORDER];
-          if (rawZOrder && rawZOrder.length > 0) {
-            var slotCount = this._armature.sortedSlots.length;
-            var unchanged = new Array(slotCount - rawZOrder.length / 2);
-            frame.zOrder.length = slotCount;
-            for (var i_4 = 0; i_4 < slotCount; ++i_4) frame.zOrder[i_4] = -1;
-            var originalIndex = 0;
-            var unchangedIndex = 0;
-            for (var i_5 = 0, l = rawZOrder.length; i_5 < l; i_5 += 2) {
-              var slotIndex = rawZOrder[i_5];
-              var offset = rawZOrder[i_5 + 1];
-              while (originalIndex != slotIndex) unchanged[unchangedIndex++] = originalIndex++;
-              frame.zOrder[originalIndex + offset] = originalIndex++;
-            }
-            while (originalIndex < slotCount) unchanged[unchangedIndex++] = originalIndex++;
-            var i = slotCount;
-            while (i--) -1 == frame.zOrder[i] && (frame.zOrder[i] = unchanged[--unchangedIndex]);
-          }
-          return frame;
-        };
-        ObjectDataParser.prototype._parseBoneFrame = function(rawData, frameStart, frameCount) {
-          var frame = dragonBones.BaseObject.borrowObject(dragonBones.BoneFrameData);
-          frame.tweenRotate = ObjectDataParser._getNumber(rawData, ObjectDataParser.TWEEN_ROTATE, 0);
-          frame.tweenScale = ObjectDataParser._getBoolean(rawData, ObjectDataParser.TWEEN_SCALE, true);
-          this._parseTweenFrame(rawData, frame, frameStart, frameCount);
-          if (ObjectDataParser.TRANSFORM in rawData) {
-            var transformObject = rawData[ObjectDataParser.TRANSFORM];
-            this._parseTransform(transformObject, frame.transform);
-            if (this._isOldData) {
-              this._helpPoint.x = this._timelinePivot.x + ObjectDataParser._getNumber(transformObject, ObjectDataParser.PIVOT_X, 0);
-              this._helpPoint.y = this._timelinePivot.y + ObjectDataParser._getNumber(transformObject, ObjectDataParser.PIVOT_Y, 0);
-              frame.transform.toMatrix(this._helpMatrix);
-              this._helpMatrix.transformPoint(this._helpPoint.x, this._helpPoint.y, this._helpPoint, true);
-              frame.transform.x += this._helpPoint.x;
-              frame.transform.y += this._helpPoint.y;
-            }
-          }
-          var bone = this._timeline.bone;
-          var actions = new Array();
-          var events = new Array();
-          if (ObjectDataParser.ACTION in rawData || ObjectDataParser.ACTIONS in rawData) {
-            var slot = this._armature.getSlot(bone.name);
-            this._parseActionData(rawData, actions, bone, slot);
-          }
-          (ObjectDataParser.EVENT in rawData || ObjectDataParser.SOUND in rawData) && this._parseEventData(rawData, events, bone, null);
-          (actions.length > 0 || events.length > 0) && this._mergeFrameToAnimationTimeline(frame.position, actions, events);
-          return frame;
-        };
-        ObjectDataParser.prototype._parseSlotFrame = function(rawData, frameStart, frameCount) {
-          var frame = dragonBones.BaseObject.borrowObject(dragonBones.SlotFrameData);
-          frame.displayIndex = ObjectDataParser._getNumber(rawData, ObjectDataParser.DISPLAY_INDEX, 0);
-          this._parseTweenFrame(rawData, frame, frameStart, frameCount);
-          if (ObjectDataParser.COLOR in rawData || ObjectDataParser.COLOR_TRANSFORM in rawData) {
-            frame.color = dragonBones.SlotFrameData.generateColor();
-            this._parseColorTransform(rawData[ObjectDataParser.COLOR] || rawData[ObjectDataParser.COLOR_TRANSFORM], frame.color);
-          } else frame.color = dragonBones.SlotFrameData.DEFAULT_COLOR;
-          if (this._isOldData) ObjectDataParser._getBoolean(rawData, ObjectDataParser.HIDE, false) && (frame.displayIndex = -1); else if (ObjectDataParser.ACTION in rawData || ObjectDataParser.ACTIONS in rawData) {
-            var slot = this._timeline.slot;
-            var actions = new Array();
-            this._parseActionData(rawData, actions, slot.parent, slot);
-            this._mergeFrameToAnimationTimeline(frame.position, actions, null);
-          }
-          return frame;
-        };
-        ObjectDataParser.prototype._parseFFDFrame = function(rawData, frameStart, frameCount) {
-          var ffdTimeline = this._timeline;
-          var mesh = ffdTimeline.display.mesh;
-          var frame = dragonBones.BaseObject.borrowObject(dragonBones.ExtensionFrameData);
-          frame.type = ObjectDataParser._getNumber(rawData, ObjectDataParser.TYPE, 0);
-          this._parseTweenFrame(rawData, frame, frameStart, frameCount);
-          var rawVertices = rawData[ObjectDataParser.VERTICES];
-          var offset = ObjectDataParser._getNumber(rawData, ObjectDataParser.OFFSET, 0);
-          var x = 0;
-          var y = 0;
-          for (var i = 0, l = mesh.vertices.length; i < l; i += 2) {
-            if (!rawVertices || i < offset || i - offset >= rawVertices.length) {
-              x = 0;
-              y = 0;
-            } else {
-              x = rawVertices[i - offset] * this._armature.scale;
-              y = rawVertices[i + 1 - offset] * this._armature.scale;
-            }
-            if (mesh.skinned) {
-              mesh.slotPose.transformPoint(x, y, this._helpPoint, true);
-              x = this._helpPoint.x;
-              y = this._helpPoint.y;
-              var boneIndices = mesh.boneIndices[i / 2];
-              for (var iB = 0, lB = boneIndices.length; iB < lB; ++iB) {
-                var boneIndex = boneIndices[iB];
-                mesh.inverseBindPose[boneIndex].transformPoint(x, y, this._helpPoint, true);
-                frame.tweens.push(this._helpPoint.x, this._helpPoint.y);
-              }
-            } else frame.tweens.push(x, y);
-          }
-          return frame;
-        };
-        ObjectDataParser.prototype._parseTweenFrame = function(rawData, frame, frameStart, frameCount) {
-          this._parseFrame(rawData, frame, frameStart, frameCount);
-          if (frame.duration > 0) {
-            ObjectDataParser.TWEEN_EASING in rawData ? frame.tweenEasing = ObjectDataParser._getNumber(rawData, ObjectDataParser.TWEEN_EASING, dragonBones.DragonBones.NO_TWEEN) : this._isOldData ? frame.tweenEasing = this._isAutoTween ? this._animationTweenEasing : dragonBones.DragonBones.NO_TWEEN : frame.tweenEasing = dragonBones.DragonBones.NO_TWEEN;
-            this._isOldData && 1 == this._animation.scale && 1 == this._timeline.scale && frame.duration * this._armature.frameRate < 2 && (frame.tweenEasing = dragonBones.DragonBones.NO_TWEEN);
-            if (frameCount > 0 && ObjectDataParser.CURVE in rawData) {
-              frame.curve = new Array(2 * frameCount - 1);
-              dragonBones.TweenFrameData.samplingEasingCurve(rawData[ObjectDataParser.CURVE], frame.curve);
-            }
-          } else {
-            frame.tweenEasing = dragonBones.DragonBones.NO_TWEEN;
-            frame.curve = null;
-          }
-        };
-        ObjectDataParser.prototype._parseFrame = function(rawData, frame, frameStart, frameCount) {
-          frame.position = frameStart / this._armature.frameRate;
-          frame.duration = frameCount / this._armature.frameRate;
-        };
-        ObjectDataParser.prototype._parseTimeline = function(rawData, timeline, frameParser) {
-          timeline.scale = ObjectDataParser._getNumber(rawData, ObjectDataParser.SCALE, 1);
-          timeline.offset = ObjectDataParser._getNumber(rawData, ObjectDataParser.OFFSET, 0);
-          if (ObjectDataParser.FRAME in rawData) {
-            this._timeline = timeline;
-            var rawFrames = rawData[ObjectDataParser.FRAME];
-            if (1 == rawFrames.length) {
-              timeline.frames.length = 1;
-              timeline.frames[0] = frameParser.call(this, rawFrames[0], 0, ObjectDataParser._getNumber(rawFrames[0], ObjectDataParser.DURATION, 1));
-            } else if (rawFrames.length > 1) {
-              timeline.frames.length = this._animation.frameCount + 1;
-              var frameStart = 0;
-              var frameCount = 0;
-              var frame = null;
-              var prevFrame = null;
-              for (var i = 0, iW = 0, l = timeline.frames.length; i < l; ++i) {
-                if (frameStart + frameCount <= i && iW < rawFrames.length) {
-                  var frameObject = rawFrames[iW++];
-                  frameStart = i;
-                  frameCount = ObjectDataParser._getNumber(frameObject, ObjectDataParser.DURATION, 1);
-                  frame = frameParser.call(this, frameObject, frameStart, frameCount);
-                  if (prevFrame) {
-                    prevFrame.next = frame;
-                    frame.prev = prevFrame;
-                    this._isOldData && prevFrame instanceof dragonBones.TweenFrameData && -1 == ObjectDataParser._getNumber(frameObject, ObjectDataParser.DISPLAY_INDEX, 0) && (prevFrame.tweenEasing = dragonBones.DragonBones.NO_TWEEN);
-                  }
-                  prevFrame = frame;
-                }
-                timeline.frames[i] = frame;
-              }
-              frame.duration = this._animation.duration - frame.position;
-              frame = timeline.frames[0];
-              prevFrame.next = frame;
-              frame.prev = prevFrame;
-              this._isOldData && prevFrame instanceof dragonBones.TweenFrameData && -1 == ObjectDataParser._getNumber(rawFrames[0], ObjectDataParser.DISPLAY_INDEX, 0) && (prevFrame.tweenEasing = dragonBones.DragonBones.NO_TWEEN);
-            }
-            this._timeline = null;
-          }
-        };
-        ObjectDataParser.prototype._parseActionData = function(rawData, actions, bone, slot) {
-          var actionsObject = rawData[ObjectDataParser.ACTION] || rawData[ObjectDataParser.ACTIONS] || rawData[ObjectDataParser.DEFAULT_ACTIONS];
-          if ("string" == typeof actionsObject) {
-            var actionData = dragonBones.BaseObject.borrowObject(dragonBones.ActionData);
-            actionData.type = 4;
-            actionData.bone = bone;
-            actionData.slot = slot;
-            actionData.data[0] = actionsObject;
-            actionData.data[1] = -1;
-            actionData.data[2] = -1;
-            actions.push(actionData);
-          } else if (actionsObject instanceof Array) for (var i = 0, l = actionsObject.length; i < l; ++i) {
-            var actionObject = actionsObject[i];
-            var isArray = actionObject instanceof Array;
-            var actionData = dragonBones.BaseObject.borrowObject(dragonBones.ActionData);
-            var animationName = isArray ? ObjectDataParser._getParameter(actionObject, 1, null) : ObjectDataParser._getString(actionObject, "gotoAndPlay", null);
-            if (isArray) {
-              var actionType = actionObject[0];
-              actionData.type = "string" == typeof actionType ? ObjectDataParser._getActionType(actionType) : ObjectDataParser._getParameter(actionObject, 0, 4);
-            } else actionData.type = 2;
-            switch (actionData.type) {
-             case 0:
-              actionData.data[0] = animationName;
-              actionData.data[1] = isArray ? ObjectDataParser._getParameter(actionObject, 2, -1) : -1;
-              break;
-
-             case 1:
-              actionData.data[0] = animationName;
-              break;
-
-             case 2:
-              actionData.data[0] = animationName;
-              actionData.data[1] = isArray ? ObjectDataParser._getParameter(actionObject, 2, 0) : 0;
-              actionData.data[2] = isArray ? ObjectDataParser._getParameter(actionObject, 3, -1) : -1;
-              break;
-
-             case 3:
-              actionData.data[0] = animationName;
-              actionData.data[1] = isArray ? ObjectDataParser._getParameter(actionObject, 2, 0) : 0;
-              break;
-
-             case 4:
-              actionData.data[0] = animationName;
-              actionData.data[1] = isArray ? ObjectDataParser._getParameter(actionObject, 2, -1) : -1;
-              actionData.data[2] = isArray ? ObjectDataParser._getParameter(actionObject, 3, -1) : -1;
-              break;
-
-             case 5:
-              actionData.data[0] = animationName;
-              actionData.data[1] = isArray ? ObjectDataParser._getParameter(actionObject, 2, 0) : 0;
-            }
-            actionData.bone = bone;
-            actionData.slot = slot;
-            actions.push(actionData);
-          }
-        };
-        ObjectDataParser.prototype._parseEventData = function(rawData, events, bone, slot) {
-          if (ObjectDataParser.SOUND in rawData) {
-            var soundEventData = dragonBones.BaseObject.borrowObject(dragonBones.EventData);
-            soundEventData.type = 11;
-            soundEventData.name = ObjectDataParser._getString(rawData, ObjectDataParser.SOUND, null);
-            soundEventData.bone = bone;
-            soundEventData.slot = slot;
-            events.push(soundEventData);
-          }
-          if (ObjectDataParser.EVENT in rawData) {
-            var eventData = dragonBones.BaseObject.borrowObject(dragonBones.EventData);
-            eventData.type = 10;
-            eventData.name = ObjectDataParser._getString(rawData, ObjectDataParser.EVENT, null);
-            eventData.bone = bone;
-            eventData.slot = slot;
-            events.push(eventData);
-          }
-          if (ObjectDataParser.EVENTS in rawData) {
-            var rawEvents = rawData[ObjectDataParser.EVENTS];
-            for (var i = 0, l = rawEvents.length; i < l; ++i) {
-              var rawEvent = rawEvents[i];
-              var boneName = ObjectDataParser._getString(rawEvent, ObjectDataParser.BONE, null);
-              var eventData = dragonBones.BaseObject.borrowObject(dragonBones.EventData);
-              eventData.type = 10;
-              eventData.name = ObjectDataParser._getString(rawEvent, ObjectDataParser.NAME, null);
-              eventData.bone = this._armature.getBone(boneName);
-              if (ObjectDataParser.INTS in rawEvent) {
-                var rawInts = rawEvent[ObjectDataParser.INTS];
-                for (var i_6 = 0, l_3 = rawInts.length; i_6 < l_3; ++i_6) eventData.ints.push(ObjectDataParser._getParameter(rawInts, i_6, 0));
-              }
-              if (ObjectDataParser.FLOATS in rawEvent) {
-                var rawFloats = rawEvent[ObjectDataParser.FLOATS];
-                for (var i_7 = 0, l_4 = rawFloats.length; i_7 < l_4; ++i_7) eventData.floats.push(ObjectDataParser._getParameter(rawFloats, i_7, 0));
-              }
-              if (ObjectDataParser.STRINGS in rawEvent) {
-                var rawStrings = rawEvent[ObjectDataParser.STRINGS];
-                for (var i_8 = 0, l_5 = rawStrings.length; i_8 < l_5; ++i_8) eventData.strings.push(ObjectDataParser._getParameter(rawStrings, i_8, null));
-              }
-              events.push(eventData);
-            }
-          }
-        };
-        ObjectDataParser.prototype._parseTransform = function(rawData, transform) {
-          transform.x = ObjectDataParser._getNumber(rawData, ObjectDataParser.X, 0) * this._armature.scale;
-          transform.y = ObjectDataParser._getNumber(rawData, ObjectDataParser.Y, 0) * this._armature.scale;
-          transform.skewX = ObjectDataParser._getNumber(rawData, ObjectDataParser.SKEW_X, 0) * dragonBones.DragonBones.ANGLE_TO_RADIAN;
-          transform.skewY = ObjectDataParser._getNumber(rawData, ObjectDataParser.SKEW_Y, 0) * dragonBones.DragonBones.ANGLE_TO_RADIAN;
-          transform.scaleX = ObjectDataParser._getNumber(rawData, ObjectDataParser.SCALE_X, 1);
-          transform.scaleY = ObjectDataParser._getNumber(rawData, ObjectDataParser.SCALE_Y, 1);
-        };
-        ObjectDataParser.prototype._parseColorTransform = function(rawData, color) {
-          color.alphaMultiplier = .01 * ObjectDataParser._getNumber(rawData, ObjectDataParser.ALPHA_MULTIPLIER, 100);
-          color.redMultiplier = .01 * ObjectDataParser._getNumber(rawData, ObjectDataParser.RED_MULTIPLIER, 100);
-          color.greenMultiplier = .01 * ObjectDataParser._getNumber(rawData, ObjectDataParser.GREEN_MULTIPLIER, 100);
-          color.blueMultiplier = .01 * ObjectDataParser._getNumber(rawData, ObjectDataParser.BLUE_MULTIPLIER, 100);
-          color.alphaOffset = ObjectDataParser._getNumber(rawData, ObjectDataParser.ALPHA_OFFSET, 0);
-          color.redOffset = ObjectDataParser._getNumber(rawData, ObjectDataParser.RED_OFFSET, 0);
-          color.greenOffset = ObjectDataParser._getNumber(rawData, ObjectDataParser.GREEN_OFFSET, 0);
-          color.blueOffset = ObjectDataParser._getNumber(rawData, ObjectDataParser.BLUE_OFFSET, 0);
-        };
-        ObjectDataParser.prototype.parseDragonBonesData = function(rawData, scale) {
-          void 0 === scale && (scale = 1);
-          if (rawData) {
-            var version = ObjectDataParser._getString(rawData, ObjectDataParser.VERSION, null);
-            this._isOldData = version == ObjectDataParser.DATA_VERSION_2_3 || version == ObjectDataParser.DATA_VERSION_3_0;
-            this._isOldData ? this._isGlobalTransform = ObjectDataParser._getBoolean(rawData, ObjectDataParser.IS_GLOBAL, true) : this._isGlobalTransform = false;
-            if (version == ObjectDataParser.DATA_VERSION || version == ObjectDataParser.DATA_VERSION_4_0 || this._isOldData) {
-              var data = dragonBones.BaseObject.borrowObject(dragonBones.DragonBonesData);
-              data.name = ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null);
-              data.frameRate = ObjectDataParser._getNumber(rawData, ObjectDataParser.FRAME_RATE, 24) || 24;
-              if (ObjectDataParser.ARMATURE in rawData) {
-                this._data = data;
-                var armatures = rawData[ObjectDataParser.ARMATURE];
-                for (var i = 0, l = armatures.length; i < l; ++i) data.addArmature(this._parseArmature(armatures[i], scale));
-                this._data = null;
-              }
-              return data;
-            }
-            throw new Error("Nonsupport data version.");
-          }
-          throw new Error("No data.");
-        };
-        ObjectDataParser.prototype.parseTextureAtlasData = function(rawData, textureAtlasData, scale) {
-          void 0 === scale && (scale = 0);
-          if (!rawData) throw new Error("No data.");
-          textureAtlasData.name = ObjectDataParser._getString(rawData, ObjectDataParser.NAME, null);
-          textureAtlasData.imagePath = ObjectDataParser._getString(rawData, ObjectDataParser.IMAGE_PATH, null);
-          scale > 0 ? textureAtlasData.scale = scale : scale = textureAtlasData.scale = ObjectDataParser._getNumber(rawData, ObjectDataParser.SCALE, textureAtlasData.scale);
-          scale = 1 / scale;
-          if (ObjectDataParser.SUB_TEXTURE in rawData) {
-            var textures = rawData[ObjectDataParser.SUB_TEXTURE];
-            for (var i = 0, l = textures.length; i < l; ++i) {
-              var textureObject = textures[i];
-              var textureData = textureAtlasData.generateTextureData();
-              textureData.name = ObjectDataParser._getString(textureObject, ObjectDataParser.NAME, null);
-              textureData.rotated = ObjectDataParser._getBoolean(textureObject, ObjectDataParser.ROTATED, false);
-              textureData.region.x = ObjectDataParser._getNumber(textureObject, ObjectDataParser.X, 0) * scale;
-              textureData.region.y = ObjectDataParser._getNumber(textureObject, ObjectDataParser.Y, 0) * scale;
-              textureData.region.width = ObjectDataParser._getNumber(textureObject, ObjectDataParser.WIDTH, 0) * scale;
-              textureData.region.height = ObjectDataParser._getNumber(textureObject, ObjectDataParser.HEIGHT, 0) * scale;
-              var frameWidth = ObjectDataParser._getNumber(textureObject, ObjectDataParser.FRAME_WIDTH, -1);
-              var frameHeight = ObjectDataParser._getNumber(textureObject, ObjectDataParser.FRAME_HEIGHT, -1);
-              if (frameWidth > 0 && frameHeight > 0) {
-                textureData.frame = dragonBones.TextureData.generateRectangle();
-                textureData.frame.x = ObjectDataParser._getNumber(textureObject, ObjectDataParser.FRAME_X, 0) * scale;
-                textureData.frame.y = ObjectDataParser._getNumber(textureObject, ObjectDataParser.FRAME_Y, 0) * scale;
-                textureData.frame.width = frameWidth * scale;
-                textureData.frame.height = frameHeight * scale;
-              }
-              textureAtlasData.addTexture(textureData);
-            }
-          }
-        };
-        ObjectDataParser.getInstance = function() {
-          ObjectDataParser._instance || (ObjectDataParser._instance = new ObjectDataParser());
-          return ObjectDataParser._instance;
-        };
-        ObjectDataParser._instance = null;
-        return ObjectDataParser;
-      })(dragonBones.DataParser);
-      dragonBones.ObjectDataParser = ObjectDataParser;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var TextureAtlasData = (function(_super) {
-        __extends(TextureAtlasData, _super);
-        function TextureAtlasData() {
-          _super.call(this);
-          this.textures = {};
-        }
-        TextureAtlasData.prototype._onClear = function() {
-          for (var i in this.textures) {
-            this.textures[i].returnToPool();
-            delete this.textures[i];
-          }
-          this.autoSearch = false;
-          this.scale = 1;
-          this.name = null;
-          this.imagePath = null;
-        };
-        TextureAtlasData.prototype.addTexture = function(value) {
-          if (!value || !value.name || this.textures[value.name]) throw new Error();
-          this.textures[value.name] = value;
-          value.parent = this;
-        };
-        TextureAtlasData.prototype.getTexture = function(name) {
-          return this.textures[name];
-        };
-        return TextureAtlasData;
-      })(dragonBones.BaseObject);
-      dragonBones.TextureAtlasData = TextureAtlasData;
-      var TextureData = (function(_super) {
-        __extends(TextureData, _super);
-        function TextureData() {
-          _super.call(this);
-          this.region = new dragonBones.Rectangle();
-        }
-        TextureData.generateRectangle = function() {
-          return new dragonBones.Rectangle();
-        };
-        TextureData.prototype._onClear = function() {
-          this.rotated = false;
-          this.name = null;
-          this.frame = null;
-          this.parent = null;
-          this.region.clear();
-        };
-        return TextureData;
-      })(dragonBones.BaseObject);
-      dragonBones.TextureData = TextureData;
-    })(dragonBones || (dragonBones = {}));
-    var dragonBones;
-    (function(dragonBones) {
-      var BaseFactory = (function() {
-        function BaseFactory(dataParser) {
-          void 0 === dataParser && (dataParser = null);
-          this.autoSearch = false;
-          this._dataParser = null;
-          this._dragonBonesDataMap = {};
-          this._textureAtlasDataMap = {};
-          this._dataParser = dataParser;
-          if (!this._dataParser) {
-            BaseFactory._defaultParser || (BaseFactory._defaultParser = new dragonBones.ObjectDataParser());
-            this._dataParser = BaseFactory._defaultParser;
-          }
-        }
-        BaseFactory.prototype._getTextureData = function(textureAtlasName, textureName) {
-          var textureAtlasDataList = this._textureAtlasDataMap[textureAtlasName];
-          if (textureAtlasDataList) for (var i = 0, l = textureAtlasDataList.length; i < l; ++i) {
-            var textureData = textureAtlasDataList[i].getTexture(textureName);
-            if (textureData) return textureData;
-          }
-          if (this.autoSearch) for (var i in this._textureAtlasDataMap) {
-            textureAtlasDataList = this._textureAtlasDataMap[i];
-            for (var j = 0, lJ = textureAtlasDataList.length; j < lJ; ++j) {
-              var textureAtlasData = textureAtlasDataList[j];
-              if (textureAtlasData.autoSearch) {
-                var textureData = textureAtlasData.getTexture(textureName);
-                if (textureData) return textureData;
-              }
-            }
-          }
-          return null;
-        };
-        BaseFactory.prototype._fillBuildArmaturePackage = function(dataPackage, dragonBonesName, armatureName, skinName, textureAtlasName) {
-          var dragonBonesData = null;
-          var armatureData = null;
-          if (dragonBonesName) {
-            dragonBonesData = this._dragonBonesDataMap[dragonBonesName];
-            dragonBonesData && (armatureData = dragonBonesData.getArmature(armatureName));
-          }
-          if (!armatureData && (!dragonBonesName || this.autoSearch)) for (var eachDragonBonesName in this._dragonBonesDataMap) {
-            dragonBonesData = this._dragonBonesDataMap[eachDragonBonesName];
-            if (!dragonBonesName || dragonBonesData.autoSearch) {
-              armatureData = dragonBonesData.getArmature(armatureName);
-              if (armatureData) {
-                dragonBonesName = eachDragonBonesName;
-                break;
-              }
-            }
-          }
-          if (armatureData) {
-            dataPackage.dataName = dragonBonesName;
-            dataPackage.textureAtlasName = textureAtlasName;
-            dataPackage.data = dragonBonesData;
-            dataPackage.armature = armatureData;
-            dataPackage.skin = armatureData.getSkin(skinName);
-            dataPackage.skin || (dataPackage.skin = armatureData.defaultSkin);
-            return true;
-          }
-          return false;
-        };
-        BaseFactory.prototype._buildBones = function(dataPackage, armature) {
-          var bones = dataPackage.armature.sortedBones;
-          for (var i = 0, l = bones.length; i < l; ++i) {
-            var boneData = bones[i];
-            var bone = dragonBones.BaseObject.borrowObject(dragonBones.Bone);
-            bone.name = boneData.name;
-            bone.inheritTranslation = boneData.inheritTranslation;
-            bone.inheritRotation = boneData.inheritRotation;
-            bone.inheritScale = boneData.inheritScale;
-            bone.length = boneData.length;
-            bone.origin.copyFrom(boneData.transform);
-            boneData.parent ? armature.addBone(bone, boneData.parent.name) : armature.addBone(bone);
-            if (boneData.ik) {
-              bone.ikBendPositive = boneData.bendPositive;
-              bone.ikWeight = boneData.weight;
-              bone._setIK(armature.getBone(boneData.ik.name), boneData.chain, boneData.chainIndex);
-            }
-          }
-        };
-        BaseFactory.prototype._buildSlots = function(dataPackage, armature) {
-          var currentSkin = dataPackage.skin;
-          var defaultSkin = dataPackage.armature.defaultSkin;
-          var slotDisplayDataSetMap = {};
-          for (var i in defaultSkin.slots) {
-            var slotDisplayDataSet = defaultSkin.slots[i];
-            slotDisplayDataSetMap[slotDisplayDataSet.slot.name] = slotDisplayDataSet;
-          }
-          if (currentSkin != defaultSkin) for (var i in currentSkin.slots) {
-            var slotDisplayDataSet = currentSkin.slots[i];
-            slotDisplayDataSetMap[slotDisplayDataSet.slot.name] = slotDisplayDataSet;
-          }
-          var slots = dataPackage.armature.sortedSlots;
-          for (var i = 0, l = slots.length; i < l; ++i) {
-            var slotData = slots[i];
-            var slotDisplayDataSet = slotDisplayDataSetMap[slotData.name];
-            if (!slotDisplayDataSet) continue;
-            var slot = this._generateSlot(dataPackage, slotDisplayDataSet, armature);
-            if (slot) {
-              slot._displayDataSet = slotDisplayDataSet;
-              slot._setDisplayIndex(slotData.displayIndex);
-              slot._setBlendMode(slotData.blendMode);
-              slot._setColor(slotData.color);
-              armature.addSlot(slot, slotData.parent.name);
-            }
-          }
-        };
-        BaseFactory.prototype._replaceSlotDisplay = function(dataPackage, displayData, slot, displayIndex) {
-          displayIndex < 0 && (displayIndex = slot.displayIndex);
-          if (displayIndex >= 0) {
-            var displayList = slot.displayList;
-            displayList.length <= displayIndex && (displayList.length = displayIndex + 1);
-            slot._replacedDisplayDataSet.length <= displayIndex && (slot._replacedDisplayDataSet.length = displayIndex + 1);
-            slot._replacedDisplayDataSet[displayIndex] = displayData;
-            if (1 == displayData.type) {
-              var childArmature = this.buildArmature(displayData.path, dataPackage.dataName, null, dataPackage.textureAtlasName);
-              displayList[displayIndex] = childArmature;
-            } else {
-              displayData.texture && !dataPackage.textureAtlasName || (displayData.texture = this._getTextureData(dataPackage.textureAtlasName || dataPackage.dataName, displayData.path));
-              displayData.mesh || displayIndex < slot._displayDataSet.displays.length && slot._displayDataSet.displays[displayIndex].mesh ? displayList[displayIndex] = slot.meshDisplay : displayList[displayIndex] = slot.rawDisplay;
-            }
-            slot.displayList = displayList;
-            slot.invalidUpdate();
-          }
-        };
-        BaseFactory.prototype.parseDragonBonesData = function(rawData, name, scale) {
-          void 0 === name && (name = null);
-          void 0 === scale && (scale = 1);
-          var dragonBonesData = this._dataParser.parseDragonBonesData(rawData, scale);
-          this.addDragonBonesData(dragonBonesData, name);
-          return dragonBonesData;
-        };
-        BaseFactory.prototype.parseTextureAtlasData = function(rawData, textureAtlas, name, scale) {
-          void 0 === name && (name = null);
-          void 0 === scale && (scale = 0);
-          var textureAtlasData = this._generateTextureAtlasData(null, null);
-          this._dataParser.parseTextureAtlasData(rawData, textureAtlasData, scale);
-          this._generateTextureAtlasData(textureAtlasData, textureAtlas);
-          this.addTextureAtlasData(textureAtlasData, name);
-          return textureAtlasData;
-        };
-        BaseFactory.prototype.getDragonBonesData = function(name) {
-          return this._dragonBonesDataMap[name];
-        };
-        BaseFactory.prototype.addDragonBonesData = function(data, name) {
-          void 0 === name && (name = null);
-          if (!data) throw new Error();
-          name = name || data.name;
-          name ? this._dragonBonesDataMap[name] ? console.warn("Same name data.", name) : this._dragonBonesDataMap[name] = data : console.warn("Unnamed data.");
-        };
-        BaseFactory.prototype.removeDragonBonesData = function(name, disposeData) {
-          void 0 === disposeData && (disposeData = true);
-          var dragonBonesData = this._dragonBonesDataMap[name];
-          if (dragonBonesData) {
-            if (disposeData) {
-              if (dragonBones.DragonBones.debug) for (var i = 0, l = dragonBones.DragonBones._armatures.length; i < l; ++i) {
-                var armature = dragonBones.DragonBones._armatures[i];
-                if (armature.armatureData.parent == dragonBonesData) throw new Error("ArmatureData: " + armature.armatureData.name + " DragonBonesData: " + name);
-              }
-              dragonBonesData.returnToPool();
-            }
-            delete this._dragonBonesDataMap[name];
-          }
-        };
-        BaseFactory.prototype.getTextureAtlasData = function(name) {
-          return this._textureAtlasDataMap[name];
-        };
-        BaseFactory.prototype.addTextureAtlasData = function(data, name) {
-          void 0 === name && (name = null);
-          if (!data) throw new Error();
-          name = name || data.name;
-          if (name) {
-            var textureAtlasList = this._textureAtlasDataMap[name] = this._textureAtlasDataMap[name] || [];
-            textureAtlasList.indexOf(data) < 0 && textureAtlasList.push(data);
-          } else console.warn("Unnamed data.");
-        };
-        BaseFactory.prototype.removeTextureAtlasData = function(name, disposeData) {
-          void 0 === disposeData && (disposeData = true);
-          var textureAtlasDataList = this._textureAtlasDataMap[name];
-          if (textureAtlasDataList) {
-            if (disposeData) for (var i = 0, l = textureAtlasDataList.length; i < l; ++i) textureAtlasDataList[i].returnToPool();
-            delete this._textureAtlasDataMap[name];
-          }
-        };
-        BaseFactory.prototype.clear = function(disposeData) {
-          void 0 === disposeData && (disposeData = true);
-          for (var i in this._dragonBonesDataMap) {
-            disposeData && this._dragonBonesDataMap[i].returnToPool();
-            delete this._dragonBonesDataMap[i];
-          }
-          for (var i in this._textureAtlasDataMap) {
-            if (disposeData) {
-              var textureAtlasDataList = this._textureAtlasDataMap[i];
-              for (var i_9 = 0, l = textureAtlasDataList.length; i_9 < l; ++i_9) textureAtlasDataList[i_9].returnToPool();
-            }
-            delete this._textureAtlasDataMap[i];
-          }
-        };
-        BaseFactory.prototype.buildArmature = function(armatureName, dragonBonesName, skinName, textureAtlasName) {
-          void 0 === dragonBonesName && (dragonBonesName = null);
-          void 0 === skinName && (skinName = null);
-          void 0 === textureAtlasName && (textureAtlasName = null);
-          var dataPackage = {};
-          if (this._fillBuildArmaturePackage(dataPackage, dragonBonesName, armatureName, skinName, textureAtlasName)) {
-            var armature = this._generateArmature(dataPackage);
-            this._buildBones(dataPackage, armature);
-            this._buildSlots(dataPackage, armature);
-            armature.advanceTime(0);
-            return armature;
-          }
-          console.warn("No armature data.", armatureName, dragonBonesName || "");
-          return null;
-        };
-        BaseFactory.prototype.copyAnimationsToArmature = function(toArmature, fromArmatreName, fromSkinName, fromDragonBonesDataName, ifRemoveOriginalAnimationList) {
-          void 0 === fromSkinName && (fromSkinName = null);
-          void 0 === fromDragonBonesDataName && (fromDragonBonesDataName = null);
-          void 0 === ifRemoveOriginalAnimationList && (ifRemoveOriginalAnimationList = true);
-          var dataPackage = {};
-          if (this._fillBuildArmaturePackage(dataPackage, fromDragonBonesDataName, fromArmatreName, fromSkinName, null)) {
-            var fromArmatureData = dataPackage.armature;
-            if (ifRemoveOriginalAnimationList) toArmature.animation.animations = fromArmatureData.animations; else {
-              var animations = {};
-              for (var animationName in toArmature.animation.animations) animations[animationName] = toArmature.animation.animations[animationName];
-              for (var animationName in fromArmatureData.animations) animations[animationName] = fromArmatureData.animations[animationName];
-              toArmature.animation.animations = animations;
-            }
-            if (dataPackage.skin) {
-              var slots = toArmature.getSlots();
-              for (var i = 0, l = slots.length; i < l; ++i) {
-                var toSlot = slots[i];
-                var toSlotDisplayList = toSlot.displayList;
-                for (var i_10 = 0, l_6 = toSlotDisplayList.length; i_10 < l_6; ++i_10) {
-                  var toDisplayObject = toSlotDisplayList[i_10];
-                  if (toDisplayObject instanceof dragonBones.Armature) {
-                    var displays = dataPackage.skin.getSlot(toSlot.name).displays;
-                    if (i_10 < displays.length) {
-                      var fromDisplayData = displays[i_10];
-                      1 == fromDisplayData.type && this.copyAnimationsToArmature(toDisplayObject, fromDisplayData.path, fromSkinName, fromDragonBonesDataName, ifRemoveOriginalAnimationList);
-                    }
-                  }
-                }
-              }
-              return true;
-            }
-          }
-          return false;
-        };
-        BaseFactory.prototype.replaceSlotDisplay = function(dragonBonesName, armatureName, slotName, displayName, slot, displayIndex) {
-          void 0 === displayIndex && (displayIndex = -1);
-          var dataPackage = {};
-          if (this._fillBuildArmaturePackage(dataPackage, dragonBonesName, armatureName, null, null)) {
-            var slotDisplayDataSet = dataPackage.skin.getSlot(slotName);
-            if (slotDisplayDataSet) for (var i = 0, l = slotDisplayDataSet.displays.length; i < l; ++i) {
-              var displayData = slotDisplayDataSet.displays[i];
-              if (displayData.path == displayName) {
-                this._replaceSlotDisplay(dataPackage, displayData, slot, displayIndex);
-                break;
-              }
-            }
-          }
-        };
-        BaseFactory.prototype.replaceSlotDisplayList = function(dragonBonesName, armatureName, slotName, slot) {
-          var dataPackage = {};
-          if (this._fillBuildArmaturePackage(dataPackage, dragonBonesName, armatureName, null, null)) {
-            var slotDisplayDataSet = dataPackage.skin.getSlot(slotName);
-            if (slotDisplayDataSet) {
-              var displayIndex = 0;
-              for (var i = 0, l = slotDisplayDataSet.displays.length; i < l; ++i) {
-                var displayData = slotDisplayDataSet.displays[i];
-                this._replaceSlotDisplay(dataPackage, displayData, slot, displayIndex++);
-              }
-            }
-          }
-        };
-        BaseFactory.prototype.getAllDragonBonesData = function() {
-          return this._dragonBonesDataMap;
-        };
-        BaseFactory.prototype.getAllTextureAtlasData = function() {
-          return this._textureAtlasDataMap;
-        };
-        BaseFactory._defaultParser = null;
-        return BaseFactory;
-      })();
-      dragonBones.BaseFactory = BaseFactory;
-    })(dragonBones || (dragonBones = {}));
-    module.exports = dragonBones;
-  }), {} ],
-  301: [ (function(require, module, exports) {
     var spine = sp.spine;
     sp._SGSkeleton = _ccsg.Node.extend({
       _skeleton: null,
@@ -57551,7 +51066,7 @@
       }
     });
   }), {} ],
-  302: [ (function(require, module, exports) {
+  294: [ (function(require, module, exports) {
     var spine = sp.spine;
     var animEventType = sp.AnimationEventType;
     sp._atlasLoader = {
@@ -57715,7 +51230,7 @@
       }
     });
   }), {} ],
-  303: [ (function(require, module, exports) {
+  295: [ (function(require, module, exports) {
     require("../../cocos2d/core/CCDrawingPrimitives");
     var spine = sp.spine;
     sp._SGSkeleton.CanvasRenderCmd = function(renderableObject) {
@@ -57888,9 +51403,9 @@
       }
     };
   }), {
-    "../../cocos2d/core/CCDrawingPrimitives": 36
+    "../../cocos2d/core/CCDrawingPrimitives": 37
   } ],
-  304: [ (function(require, module, exports) {
+  296: [ (function(require, module, exports) {
     sp.SkeletonTexture = cc.Class({
       name: "sp.SkeletonTexture",
       extends: sp.spine.Texture,
@@ -57923,7 +51438,7 @@
       }
     });
   }), {} ],
-  305: [ (function(require, module, exports) {
+  297: [ (function(require, module, exports) {
     require("../../cocos2d/core/CCDrawingPrimitives");
     var spine = sp.spine;
     sp._SGSkeleton.WebGLRenderCmd = function(renderableObject) {
@@ -58100,9 +51615,9 @@
       }
     };
   }), {
-    "../../cocos2d/core/CCDrawingPrimitives": 36
+    "../../cocos2d/core/CCDrawingPrimitives": 37
   } ],
-  306: [ (function(require, module, exports) {
+  298: [ (function(require, module, exports) {
     var DefaultSkinsEnum = cc.Enum({
       default: -1
     });
@@ -58468,7 +51983,7 @@
       }
     });
   }), {} ],
-  307: [ (function(require, module, exports) {
+  299: [ (function(require, module, exports) {
     var TextureLoader = (true, cc.Class({
       ctor: function() {
         this.asset = arguments[0];
@@ -58573,7 +52088,7 @@
     });
     sp.SkeletonData = module.exports = SkeletonData;
   }), {} ],
-  308: [ (function(require, module, exports) {
+  300: [ (function(require, module, exports) {
     sp = {};
     sp.VERTEX_INDEX = {
       X1: 0,
@@ -58610,16 +52125,16 @@
     require("./SkeletonData");
     require("./Skeleton");
   }), {
-    "./SGSkeleton": 301,
-    "./SGSkeletonAnimation": 302,
-    "./SGSkeletonCanvasRenderCmd": 303,
-    "./SGSkeletonTexture": 304,
-    "./SGSkeletonWebGLRenderCmd": 305,
-    "./Skeleton": 306,
-    "./SkeletonData": 307,
-    "./lib/spine": 309
+    "./SGSkeleton": 293,
+    "./SGSkeletonAnimation": 294,
+    "./SGSkeletonCanvasRenderCmd": 295,
+    "./SGSkeletonTexture": 296,
+    "./SGSkeletonWebGLRenderCmd": 297,
+    "./Skeleton": 298,
+    "./SkeletonData": 299,
+    "./lib/spine": 301
   } ],
-  309: [ (function(require, module, exports) {
+  301: [ (function(require, module, exports) {
     var __extends = this && this.__extends || function(d, b) {
       for (var p in b) b.hasOwnProperty(p) && (d[p] = b[p]);
       function __() {
@@ -63350,7 +56865,7 @@
     })(spine || (spine = {}));
     module.exports = spine;
   }), {} ],
-  310: [ (function(require, module, exports) {
+  302: [ (function(require, module, exports) {
     (function() {
       "use strict";
       Function.prototype._extend = function(parent) {
@@ -74032,7 +67547,7 @@
       }
     })();
   }), {} ],
-  311: [ (function(require, module, exports) {
+  303: [ (function(require, module, exports) {
     Object.create = Object.create || function(o) {
       function F() {}
       F.prototype = o;
@@ -77034,7 +70549,7 @@
       return Math.abs(this.jAcc);
     };
   }), {} ],
-  312: [ (function(require, module, exports) {
+  304: [ (function(require, module, exports) {
     module.exports = (function() {
       "use strict";
       function t() {
@@ -77549,7 +71064,7 @@
       return M;
     })();
   }), {} ],
-  313: [ (function(require, module, exports) {
+  305: [ (function(require, module, exports) {
     var _global = "undefined" === typeof window ? global : window;
     function defineMacro(name, defaultValue) {
       "undefined" === typeof _global[name] && (_global[name] = defaultValue);
@@ -77591,26 +71106,26 @@
     false;
     module.exports = cc;
   }), {
-    "./CCBoot": 1,
-    "./CCDebugger": 2,
-    "./DebugInfos": 3,
-    "./cocos2d": 243,
-    "./cocos2d/core/predefine": 202,
-    "./cocos2d/kazmath": 247,
-    "./cocos2d/shaders": 274,
-    "./extends": 289,
+    "./CCBoot": 2,
+    "./CCDebugger": 3,
+    "./DebugInfos": 4,
+    "./cocos2d": 244,
+    "./cocos2d/core/predefine": 203,
+    "./cocos2d/kazmath": 248,
+    "./cocos2d/shaders": 275,
+    "./extends": 290,
     "./package.json": void 0,
-    "./polyfill/array": 314,
-    "./polyfill/misc": 315,
-    "./polyfill/string": 316,
-    "./polyfill/typescript": 317
+    "./polyfill/array": 306,
+    "./polyfill/misc": 307,
+    "./polyfill/string": 308,
+    "./polyfill/typescript": 309
   } ],
-  314: [ (function(require, module, exports) {
+  306: [ (function(require, module, exports) {
     Array.isArray || (Array.isArray = function(arg) {
       return "[object Array]" === Object.prototype.toString.call(arg);
     });
   }), {} ],
-  315: [ (function(require, module, exports) {
+  307: [ (function(require, module, exports) {
     Math.sign || (Math.sign = function(x) {
       x = +x;
       if (0 === x || isNaN(x)) return x;
@@ -77632,7 +71147,7 @@
       };
     }
   }), {} ],
-  316: [ (function(require, module, exports) {
+  308: [ (function(require, module, exports) {
     String.prototype.startsWith || (String.prototype.startsWith = function(searchString, position) {
       position = position || 0;
       return this.lastIndexOf(searchString, position) === position;
@@ -77644,7 +71159,7 @@
       return -1 !== lastIndex && lastIndex === position;
     });
   }), {} ],
-  317: [ (function(require, module, exports) {
+  309: [ (function(require, module, exports) {
     var extendStatics = Object.setPrototypeOf || {
       __proto__: []
     } instanceof Array && function(d, b) {
@@ -77894,5 +71409,5 @@
       return m ? m.call(o) : "function" === typeof __values ? __values(o) : o[Symbol.iterator]();
     };
   }), {} ]
-}, {}, [ 313 ]);
+}, {}, [ 305 ]);
 //# sourceMappingURL=cocos2d-js.js.map

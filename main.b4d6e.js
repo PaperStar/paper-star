@@ -150,7 +150,7 @@
 
         // jsList
         var jsList = settings.jsList;
-        var bundledScript = settings.debug ? 'src/project.dev.js' : 'src/project.js';
+        var bundledScript = settings.debug ? 'src/project.dev.8b0c4.js' : 'src/project.js';
         if (jsList) {
             jsList = jsList.map(function (x) { return 'src/' + x; });
             jsList.push(bundledScript);
@@ -188,8 +188,8 @@
                 BK.Script.loadlib('GameRes://' + url);
             };
             require('libs/qqplay-adapter.js');
-            require('src/settings.js');
-            require(window._CCSettings.debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js');
+            require('src/settings.6ed05.js');
+            require(window._CCSettings.debug ? 'cocos2d-js.b5f7f.js' : 'cocos2d-js-min.js');
             require('libs/qqplay-downloader.js');
             var prevPipe = cc.loader.md5Pipe || cc.loader.assetLoader;
             cc.loader.insertPipeAfter(prevPipe, qqPlayDownloader);
@@ -199,7 +199,7 @@
     }
 
     if (false) {
-        require(window._CCSettings.debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js');
+        require(window._CCSettings.debug ? 'cocos2d-js.b5f7f.js' : 'cocos2d-js-min.js');
         var prevPipe = cc.loader.md5Pipe || cc.loader.assetLoader;
         cc.loader.insertPipeAfter(prevPipe, wxDownloader);
         boot();
@@ -207,7 +207,7 @@
     }
 
     if (window.jsb) {
-        require('src/settings.js');
+        require('src/settings.6ed05.js');
         require('src/jsb_polyfill.js');
         boot();
         return;
@@ -219,7 +219,7 @@
 
         var cocos2d = document.createElement('script');
         cocos2d.async = true;
-        cocos2d.src = window._CCSettings.debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js';
+        cocos2d.src = window._CCSettings.debug ? 'cocos2d-js.b5f7f.js' : 'cocos2d-js-min.js';
 
         var engineLoaded = function () {
             document.body.removeChild(cocos2d);
@@ -232,3 +232,24 @@
     }
 
 })();
+
+    // Begin Cocos Analytics
+    (function () {
+        if ((typeof cocosAnalytics) !== 'undefined'){
+            var initArgs = {
+                appID: '638508230',
+                appSecret: 'ff3e16889b927f8ec2bce7d871b4c5c8',
+                channel: '',
+                version: ''
+            };
+
+            if (!initArgs.appID || !initArgs.appSecret || !initArgs.version) {
+                console.error('请在编辑器设置好 Cocos Analytics 的 appID, appSecret 和 version');
+                return;
+            }
+
+            cocosAnalytics.init(initArgs);
+        }
+    })();
+    // End Cocos Analytics
+    

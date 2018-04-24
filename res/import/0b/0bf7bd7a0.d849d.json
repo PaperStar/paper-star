@@ -47,10 +47,37 @@
       ]
     }
   },
+  {
+    "__type__": "cc.SpriteFrame",
+    "content": {
+      "name": "default-button",
+      "texture": "8bJagLpMZPs5RGrC6S0M8H",
+      "rect": [
+        0,
+        0,
+        100,
+        100
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "originalSize": [
+        100,
+        100
+      ],
+      "capInsets": [
+        30,
+        30,
+        30,
+        30
+      ]
+    }
+  },
   [
     {
       "__type__": "cc.SceneAsset",
-      "_name": "menu",
+      "_name": "ModeMenu",
       "scene": {
         "__id__": 1
       },
@@ -97,12 +124,7 @@
           "_fitWidth": true,
           "_fitHeight": false
         },
-        {
-          "__type__": "cbbefM2udNPX7Kb4wj50Spl",
-          "node": {
-            "__id__": 2
-          }
-        }
+        null
       ],
       "_id": "fcPDWSn8FKSKoFGSqRng3d",
       "_contentSize": {
@@ -191,9 +213,6 @@
           "__type__": "cc.Sprite",
           "node": {
             "__id__": 5
-          },
-          "_spriteFrame": {
-            "__uuid__": "e1t1hHrmBJhJfowr6TGpm6"
           },
           "_type": 1,
           "_sizeMode": 0
@@ -302,7 +321,7 @@
     },
     {
       "__type__": "cc.Node",
-      "_name": "joystick",
+      "_name": "FreeMode",
       "_parent": {
         "__id__": 4
       },
@@ -318,7 +337,7 @@
             "__id__": 7
           },
           "_spriteFrame": {
-            "__uuid__": "e1t1hHrmBJhJfowr6TGpm6"
+            "__uuid__": "77Em5zFrFGFrexEEXRkMsQ"
           },
           "_type": 1,
           "_sizeMode": 0
@@ -339,7 +358,7 @@
                 "__id__": 2
               },
               "component": "menu",
-              "handler": "joystick"
+              "handler": "loadFreeMode"
             }
           ],
           "_N$normalColor": {
@@ -408,7 +427,7 @@
             "__id__": 8
           },
           "_useOriginalSize": false,
-          "_N$string": "Joystick",
+          "_N$string": "Free",
           "_N$horizontalAlign": 1,
           "_N$verticalAlign": 1,
           "_N$fontFamily": "Lato, \"PingFang SC\", \"Microsoft YaHei\", Arial, sans-serif",
@@ -425,33 +444,6 @@
       }
     }
   ],
-  {
-    "__type__": "cc.SpriteFrame",
-    "content": {
-      "name": "default",
-      "texture": "36ooIBQwxPKqxZa2UtYv3Q",
-      "rect": [
-        0,
-        0,
-        100,
-        40
-      ],
-      "offset": [
-        0,
-        0
-      ],
-      "originalSize": [
-        100,
-        40
-      ],
-      "capInsets": [
-        10,
-        10,
-        10,
-        10
-      ]
-    }
-  },
   {
     "__type__": "cc.SpriteFrame",
     "content": {

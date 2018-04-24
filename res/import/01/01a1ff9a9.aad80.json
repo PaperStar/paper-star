@@ -1,8 +1,29 @@
 [
+  {
+    "__type__": "cc.SpriteFrame",
+    "content": {
+      "name": "logo-alpha",
+      "texture": "97c8v0fphEJaqhkN91zz3U",
+      "rect": [
+        0,
+        26,
+        250,
+        224
+      ],
+      "offset": [
+        0,
+        -13
+      ],
+      "originalSize": [
+        250,
+        250
+      ]
+    }
+  },
   [
     {
       "__type__": "cc.SceneAsset",
-      "_name": "logo",
+      "_name": "Logo",
       "scene": {
         "__id__": 1
       },
@@ -59,7 +80,7 @@
     },
     {
       "__type__": "cc.Node",
-      "_name": "logo",
+      "_name": "Logo",
       "_parent": {
         "__id__": 2
       },
@@ -68,6 +89,9 @@
           "__type__": "cc.Sprite",
           "node": {
             "__id__": 3
+          },
+          "_spriteFrame": {
+            "__uuid__": "8folOeXkpHP6/jaM4zVsTM"
           }
         },
         {
@@ -84,12 +108,18 @@
             }
           ],
           "playOnLoad": true
+        },
+        {
+          "__type__": "e86f7h7/ThBVJoTB44r2G7D",
+          "node": {
+            "__id__": 3
+          }
         }
       ],
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 500,
-        "height": 500
+        "width": 250,
+        "height": 224
       }
     }
   ],
@@ -114,6 +144,13 @@
           }
         ]
       }
-    }
+    },
+    "events": [
+      {
+        "frame": 1.5,
+        "func": "loadStoryboard",
+        "params": []
+      }
+    ]
   }
 ]
