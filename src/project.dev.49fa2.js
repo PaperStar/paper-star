@@ -619,6 +619,7 @@ require = function() {
       onLoad: function onLoad() {
         cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
         cc.view.enableAutoFullScreen(true);
+        cc.director.setDisplayStats(false);
       },
       start: function start() {
         this.displayEgg();
@@ -1362,6 +1363,7 @@ require = function() {
     "use strict";
     var physicsManager = cc.director.getPhysicsManager();
     physicsManager.enabled = true;
+    cc.director.getPhysicsManager().debugDrawFlags = cc.PhysicsManager.DrawBits.e_aabbBit | cc.PhysicsManager.DrawBits.e_pairBit | cc.PhysicsManager.DrawBits.e_centerOfMassBit | cc.PhysicsManager.DrawBits.e_jointBit | cc.PhysicsManager.DrawBits.e_shapeBit;
     window.D = {
       common: null,
       commonInfo: null
