@@ -1,0 +1,99 @@
+[
+  {
+    "__type__": "cc.SpriteFrame",
+    "content": {
+      "name": "planet-circle",
+      "texture": "d8wbFUtkNLoacNMgeeKtav",
+      "rect": [
+        0,
+        0,
+        300,
+        300
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "originalSize": [
+        300,
+        300
+      ]
+    }
+  },
+  [
+    {
+      "__type__": "cc.Prefab",
+      "_name": "planet",
+      "data": {
+        "__id__": 1
+      },
+      "asyncLoadAssets": null
+    },
+    {
+      "__type__": "cc.Node",
+      "_name": "planet",
+      "_components": [
+        {
+          "__type__": "cc.Sprite",
+          "node": {
+            "__id__": 1
+          },
+          "_spriteFrame": {
+            "__uuid__": "29WT9UV1hLqKXLHK8T47PZ"
+          },
+          "_sizeMode": 0
+        },
+        {
+          "__type__": "cc.RigidBody",
+          "node": {
+            "__id__": 1
+          },
+          "_gravityScale": 0,
+          "_linearDamping": 1,
+          "_angularVelocity": 100
+        },
+        {
+          "__type__": "cc.PhysicsCircleCollider",
+          "node": {
+            "__id__": 1
+          },
+          "tag": 1,
+          "_density": 100,
+          "_friction": 0.5,
+          "_restitution": 0.5,
+          "_radius": 150
+        },
+        {
+          "__type__": "5a006pbT5FD4YGqs5SittTt",
+          "node": {
+            "__id__": 1
+          }
+        }
+      ],
+      "_prefab": {
+        "__type__": "cc.PrefabInfo",
+        "root": {
+          "__id__": 1
+        },
+        "asset": {
+          "__uuid__": "79oFtgrk5Lr6u9PUVn//oQ"
+        },
+        "fileId": "b1cz53gXtPN52y6qoJsF1g"
+      },
+      "_color": {
+        "__type__": "cc.Color"
+      },
+      "_contentSize": {
+        "__type__": "cc.Size",
+        "width": 300,
+        "height": 300
+      },
+      "_position": {
+        "__type__": "cc.Vec2",
+        "x": -3800,
+        "y": 3600
+      },
+      "groupIndex": 4
+    }
+  ]
+]

@@ -280,8 +280,8 @@ require = function() {
       extends: cc.Component,
       properties: {},
       start: function start() {},
-      backToStart: function backToStart() {
-        cc.director.loadScene("start");
+      backToStartMenu: function backToStartMenu() {
+        cc.director.loadScene("StartMenu");
       }
     });
     cc._RF.pop();
@@ -347,7 +347,9 @@ require = function() {
           default: null,
           type: PlayerControl
         },
-        openPanelFlag: true
+        openPanelFlag: true,
+        FullScreenIcon: cc.SpriteFrame,
+        exitFullScreenIcon: cc.SpriteFrame
       },
       onLoad: function onLoad() {
         var _this = this;
@@ -363,6 +365,7 @@ require = function() {
         this.bar = this.node.getChildByName("bar");
         this.shootBtn = this.node.getChildByName("shoot");
         this.shootTouchEvent();
+        this.toggleFullScreenBtn = this.node.getChildByName("FullScreen");
       },
       shootTouchEvent: function shootTouchEvent() {
         var self = this;
@@ -378,8 +381,17 @@ require = function() {
         }, self.player);
       },
       start: function start() {},
-      back: function back() {
-        cc.director.loadScene("menu");
+      backToModeMenu: function backToModeMenu() {
+        confirm("Are you sure?") && cc.director.loadScene("ModeMenu");
+      },
+      toggleFullScreen: function toggleFullScreen() {
+        if (cc.screen.fullScreen()) {
+          cc.screen.exitFullScreen();
+          this.toggleFullScreenBtn.getChildByName("icon").getComponent(cc.Sprite).spriteFrame = this.FullScreenIcon;
+        } else {
+          cc.screen.requestFullScreen();
+          this.toggleFullScreenBtn.getChildByName("icon").getComponent(cc.Sprite).spriteFrame = this.exitFullScreenIcon;
+        }
       },
       togglePanel: function togglePanel() {
         if (this.openPanelFlag) {
@@ -419,8 +431,15 @@ require = function() {
     "use strict";
     cc._RF.push(module, "aab48BGt3tCj4s1/vilD88M", "Joystick");
     "use strict";
-    var Common = require("JoystickCommon");
-    var PlayerControl = require("PlayerControl");
+    var _JoystickCommon = require("JoystickCommon");
+    var _JoystickCommon2 = _interopRequireDefault(_JoystickCommon);
+    var _PlayerControl = require("PlayerControl");
+    var _PlayerControl2 = _interopRequireDefault(_PlayerControl);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
     cc.Class({
       extends: cc.Component,
       properties: {
@@ -436,7 +455,7 @@ require = function() {
         },
         player: {
           default: null,
-          type: PlayerControl,
+          type: _PlayerControl2.default,
           displayName: "操控的角色"
         },
         stickX: {
@@ -448,13 +467,13 @@ require = function() {
           displayName: "摇杆 Y 位置"
         },
         touchType: {
-          default: Common.TouchType.DEFAULT,
-          type: Common.TouchType,
+          default: _JoystickCommon2.default.TouchType.DEFAULT,
+          type: _JoystickCommon2.default.TouchType,
           displayName: "触摸类型"
         },
         directionType: {
-          default: Common.DirectionType.ALL,
-          type: Common.DirectionType,
+          default: _JoystickCommon2.default.DirectionType.ALL,
+          type: _JoystickCommon2.default.DirectionType,
           displayName: "方向类型"
         },
         _stickPos: {
@@ -476,7 +495,7 @@ require = function() {
         this._radius = this.ring.width / 2;
         this._createStickSprite();
         this._initTouchEvent();
-        this.touchType == Common.TouchType.FOLLOW && (this.node.opacity = 0);
+        this.touchType == _JoystickCommon2.default.TouchType.FOLLOW && (this.node.opacity = 0);
       },
       _createStickSprite: function _createStickSprite() {
         this.ring.setPosition(this.stickX, this.stickY);
@@ -491,7 +510,7 @@ require = function() {
       },
       _touchStartEvent: function _touchStartEvent(event) {
         var touchPos = this.node.convertToNodeSpaceAR(event.getLocation());
-        if (this.touchType == Common.TouchType.DEFAULT) {
+        if (this.touchType == _JoystickCommon2.default.TouchType.DEFAULT) {
           this._stickPos = this.ring.getPosition();
           var distance = cc.pDistance(touchPos, cc.p(0, 0));
           var posX = this.ring.getPosition().x + touchPos.x;
@@ -502,7 +521,7 @@ require = function() {
           }
           return false;
         }
-        if (this.touchType == Common.TouchType.FOLLOW) {
+        if (this.touchType == _JoystickCommon2.default.TouchType.FOLLOW) {
           this._stickPos = touchPos;
           this.node.opacity = 255;
           this._touchLocation = event.getLocation();
@@ -512,7 +531,7 @@ require = function() {
       },
       _touchMoveEvent: function _touchMoveEvent(event) {
         this.player.isStop = false;
-        if (this.touchType == Common.TouchType.FOLLOW && this._touchLocation.x == event.getLocation().x && this._touchLocation.y == event.getLocation().y) return false;
+        if (this.touchType == _JoystickCommon2.default.TouchType.FOLLOW && this._touchLocation.x == event.getLocation().x && this._touchLocation.y == event.getLocation().y) return false;
         var touchPos = this.ring.convertToNodeSpaceAR(event.getLocation());
         var distance = cc.pDistance(touchPos, cc.p(0, 0));
         var posX = this._stickPos.x + touchPos.x;
@@ -532,7 +551,7 @@ require = function() {
         this.player.isStop = true;
         this.player.speedUpFlag = false;
         this.dot.setPosition(this.ring.getPosition());
-        this.touchType == Common.TouchType.FOLLOW && (this.node.opacity = 0);
+        this.touchType == _JoystickCommon2.default.TouchType.FOLLOW && (this.node.opacity = 0);
         this.player.getComponent(cc.RigidBody).linearDamping = .5;
       },
       _setSpeed: function _setSpeed(point) {
@@ -826,18 +845,31 @@ require = function() {
           cc.log("Game scene preloaded");
         });
       },
-      startGame: function startGame() {
-        cc.director.loadScene("menu", function() {
-          console.log("Menu is loaded.");
+      backToStartMenu: function backToStartMenu() {
+        this.loadStartMenu();
+      },
+      loadStartMenu: function loadStartMenu() {
+        cc.director.loadScene("StartMenu", function() {
+          console.log("StartMenu is loaded.");
         });
       },
-      settingMenu: function settingMenu() {
-        cc.director.loadScene("setting", function() {
-          console.log("Setting menu is loaded.");
+      loadModeMenu: function loadModeMenu() {
+        cc.director.loadScene("ModeMenu", function() {
+          console.log("ModeMenu is loaded.");
         });
       },
-      gravity: function gravity() {
-        cc.director.loadScene("game");
+      loadSetMenu: function loadSetMenu() {
+        cc.director.loadScene("SetMenu", function() {
+          console.log("SetMenu is loaded.");
+        });
+      },
+      loadAchieveSystem: function loadAchieveSystem() {
+        cc.director.loadScene("AchieveSystem", function() {
+          console.log("AchieveSystem is loaded.");
+        });
+      },
+      loadGravityMode: function loadGravityMode() {
+        cc.director.loadScene("GravityMode");
       },
       loadFreeMode: function loadFreeMode() {
         cc.director.loadScene("FreeMode");
@@ -1041,6 +1073,69 @@ require = function() {
     Helpers: "Helpers",
     bulletManager: "bulletManager"
   } ],
+  SetCommon: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "61e1e3r1JlIg4jzBa0ZH7lT", "SetCommon");
+    "use strict";
+    var _JoystickCommon = require("JoystickCommon");
+    var _JoystickCommon2 = _interopRequireDefault(_JoystickCommon);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
+    var setting = {
+      touchType: _JoystickCommon2.default.TouchType.FOLLOW
+    };
+    cc._RF.pop();
+  }, {
+    JoystickCommon: "JoystickCommon"
+  } ],
+  SetMenu: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "61ee5T8IIVORqDemqwaecMU", "SetMenu");
+    "use strict";
+    cc.Class({
+      extends: cc.Component,
+      properties: {
+        fullScreenIcon: cc.SpriteFrame,
+        exitFullScreenIcon: cc.SpriteFrame
+      },
+      onLoad: function onLoad() {
+        this.toggleFullScreenIcon = cc.find("Canvas/menu/ScrollMenu/view/content/FullScreenConfig/item/icon").getComponent(cc.Sprite);
+        this.FullScreenToggle = cc.find("Canvas/menu/ScrollMenu/view/content/FullScreenConfig/FullScreenToggle").getComponent(cc.Toggle);
+      },
+      start: function start() {
+        if (cc.screen.fullScreen()) {
+          this.FullScreenToggle.isChecked = true;
+          this.toggleFullScreenIcon.spriteFrame = this.exitFullScreenIcon;
+        } else {
+          this.FullScreenToggle.isChecked = false;
+          this.toggleFullScreenIcon.spriteFrame = this.fullScreenIcon;
+        }
+      },
+      backToStartMenu: function backToStartMenu() {
+        this.loadStartMenu();
+      },
+      loadStartMenu: function loadStartMenu() {
+        cc.director.loadScene("StartMenu", function() {
+          console.log("StartMenu is loaded.");
+        });
+      },
+      toggleFullScreen: function toggleFullScreen() {
+        if (cc.screen.fullScreen()) {
+          cc.screen.exitFullScreen();
+          this.FullScreenToggle.isChecked = false;
+          this.toggleFullScreenIcon.spriteFrame = this.fullScreenIcon;
+        } else {
+          cc.screen.requestFullScreen();
+          this.FullScreenToggle.isChecked = true;
+          this.toggleFullScreenIcon.spriteFrame = this.exitFullScreenIcon;
+        }
+      }
+    });
+    cc._RF.pop();
+  }, {} ],
   SpriteFrameSet: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "97019Q80jpE2Yfz4zbuCZBq", "SpriteFrameSet");
@@ -1062,10 +1157,15 @@ require = function() {
     cc.Class({
       extends: cc.Component,
       properties: {},
-      onLoad: function onLoad() {},
+      onLoad: function onLoad() {
+        cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
+        cc.view.enableAutoFullScreen(true);
+        cc.director.setDisplayStats(false);
+      },
       start: function start() {
         this.ctx = this.getComponent(cc.Graphics);
-        this.center = cc.p(200, this.node.height / 2);
+        var canvas = cc.director.getScene().getChildByName("Canvas");
+        this.center = cc.p(200, canvas.height / 2);
         this.init();
         this.drawOrbitPlanet();
         this.drawStarLine();
@@ -1186,7 +1286,13 @@ require = function() {
     "use strict";
     cc._RF.push(module, "6415b7/Qj9EGpMoPltMn3e8", "bulletManager");
     "use strict";
-    var bullet = require("bullet");
+    var _bullet = require("bullet");
+    var _bullet2 = _interopRequireDefault(_bullet);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
     var bPosition = cc.Class({
       name: "bPosition",
       properties: {
@@ -1233,7 +1339,7 @@ require = function() {
         }
       },
       onLoad: function onLoad() {
-        var bulletPool = new cc.NodePool(bullet);
+        var bulletPool = new cc.NodePool(_bullet2.default);
         this.bulletPool = bulletPool;
       },
       start: function start() {},
@@ -1329,6 +1435,13 @@ require = function() {
     "use strict";
     cc._RF.push(module, "b605bpAEohD4KevRc8lgwUh", "common");
     "use strict";
+    var _SetCommon = require("SetCommon");
+    var _SetCommon2 = _interopRequireDefault(_SetCommon);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
     var gameState = cc.Enum({
       none: 0,
       start: 1,
@@ -1347,7 +1460,9 @@ require = function() {
       start: function start() {}
     });
     cc._RF.pop();
-  }, {} ],
+  }, {
+    SetCommon: "SetCommon"
+  } ],
   en: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "e4ddc8a/vVFwY6n9VQQvxiE", "en");
@@ -1491,31 +1606,6 @@ require = function() {
     });
     cc._RF.pop();
   }, {} ],
-  setting: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "61ee5T8IIVORqDemqwaecMU", "setting");
-    "use strict";
-    cc.Class({
-      extends: cc.Component,
-      properties: {},
-      start: function start() {},
-      setScreen: function setScreen() {
-        cc.screen.fullScreen() ? this.exitFullScreen() : this.requestFullScreen();
-      },
-      requestFullScreen: function requestFullScreen() {
-        cc.screen.requestFullScreen();
-      },
-      exitFullScreen: function exitFullScreen() {
-        cc.screen.exitFullScreen();
-      },
-      backStart: function backStart() {
-        cc.director.loadScene("start", function() {
-          console.log("Start menu is loaded.");
-        });
-      }
-    });
-    cc._RF.pop();
-  }, {} ],
   zh: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "ec922g5eNBOwqDl8nSECXnf", "zh");
@@ -1530,4 +1620,4 @@ require = function() {
     };
     cc._RF.pop();
   }, {} ]
-}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "Game", "GameMng", "MapControl", "bullet", "bulletManager", "planet", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "InGameUI", "Joystick", "JoystickCommon", "StartMenuUI", "Helpers", "common", "global", "Launch", "Menu", "setting", "PlayerControl", "en", "zh" ]);
+}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "Game", "GameMng", "MapControl", "bullet", "bulletManager", "planet", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "InGameUI", "Joystick", "JoystickCommon", "StartMenuUI", "Helpers", "SetCommon", "common", "global", "Launch", "Menu", "SetMenu", "PlayerControl", "en", "zh" ]);

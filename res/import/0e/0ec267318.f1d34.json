@@ -524,6 +524,10 @@
             "__id__": 11
           },
           "_useOriginalSize": false,
+          "_N$file": {
+            "__uuid__": "f6P/eABx9ObJ9ZTsOvXNeX"
+          },
+          "_isSystemFontUsed": false,
           "_N$string": "SCORE",
           "_N$horizontalAlign": 1,
           "_N$verticalAlign": 1,
@@ -535,7 +539,7 @@
       },
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 128,
+        "width": 166,
         "height": 40
       },
       "_position": {
@@ -556,6 +560,10 @@
             "__id__": 12
           },
           "_useOriginalSize": false,
+          "_N$file": {
+            "__uuid__": "f6P/eABx9ObJ9ZTsOvXNeX"
+          },
+          "_isSystemFontUsed": false,
           "_N$string": "0",
           "_N$horizontalAlign": 1,
           "_N$verticalAlign": 1,
@@ -567,7 +575,7 @@
       },
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 23,
+        "width": 32,
         "height": 40
       },
       "_position": {
@@ -874,6 +882,10 @@
           "_actualFontSize": 30,
           "_fontSize": 30,
           "_lineHeight": 30,
+          "_N$file": {
+            "__uuid__": "f6P/eABx9ObJ9ZTsOvXNeX"
+          },
+          "_isSystemFontUsed": false,
           "_N$string": "00'59",
           "_N$horizontalAlign": 1,
           "_N$verticalAlign": 1,
@@ -885,7 +897,7 @@
       },
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 76,
+        "width": 101,
         "height": 30
       },
       "_position": {
@@ -962,6 +974,10 @@
           "_actualFontSize": 30,
           "_fontSize": 30,
           "_lineHeight": 30,
+          "_N$file": {
+            "__uuid__": "f6P/eABx9ObJ9ZTsOvXNeX"
+          },
+          "_isSystemFontUsed": false,
           "_N$string": "0",
           "_N$horizontalAlign": 1,
           "_N$verticalAlign": 1,
@@ -973,7 +989,7 @@
       },
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 17,
+        "width": 24,
         "height": 30
       },
       "_position": {
@@ -1049,6 +1065,10 @@
           "_actualFontSize": 30,
           "_fontSize": 30,
           "_lineHeight": 30,
+          "_N$file": {
+            "__uuid__": "f6P/eABx9ObJ9ZTsOvXNeX"
+          },
+          "_isSystemFontUsed": false,
           "_N$string": "0",
           "_N$horizontalAlign": 1,
           "_N$verticalAlign": 1,
@@ -1060,7 +1080,7 @@
       },
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 17,
+        "width": 24,
         "height": 30
       },
       "_position": {
@@ -1136,6 +1156,10 @@
           "_actualFontSize": 30,
           "_fontSize": 30,
           "_lineHeight": 30,
+          "_N$file": {
+            "__uuid__": "f6P/eABx9ObJ9ZTsOvXNeX"
+          },
+          "_isSystemFontUsed": false,
           "_N$string": "0",
           "_N$horizontalAlign": 1,
           "_N$verticalAlign": 1,
@@ -1147,7 +1171,7 @@
       },
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 17,
+        "width": 24,
         "height": 30
       },
       "_position": {
@@ -1180,7 +1204,7 @@
                 "__id__": 8
               },
               "component": "GameOverUI",
-              "handler": "backToStart"
+              "handler": "backToStartMenu"
             }
           ],
           "_N$normalColor": {
