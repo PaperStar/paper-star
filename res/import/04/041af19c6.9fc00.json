@@ -23,6 +23,57 @@
   [
     {
       "__type__": "cc.Prefab",
+      "_name": "gravity-radial",
+      "data": {
+        "__id__": 1
+      },
+      "asyncLoadAssets": null
+    },
+    {
+      "__type__": "cc.Node",
+      "_name": "gravity-radial",
+      "_components": [
+        {
+          "__type__": "cc.RigidBody",
+          "node": {
+            "__id__": 1
+          },
+          "_type": 0,
+          "enabledContactListener": true
+        },
+        {
+          "__type__": "cc.PhysicsCircleCollider",
+          "node": {
+            "__id__": 1
+          },
+          "_sensor": true,
+          "_friction": 0.5,
+          "_restitution": 0.2,
+          "_radius": 500
+        },
+        {
+          "__type__": "4410bRTQAVK5KwT44wKlIBI",
+          "node": {
+            "__id__": 1
+          }
+        }
+      ],
+      "_prefab": {
+        "__type__": "cc.PrefabInfo",
+        "root": {
+          "__id__": 1
+        },
+        "asset": {
+          "__uuid__": "5fkT3ov/xI8p+DSI0W/7yx"
+        },
+        "fileId": "a0TdSb2g1J0KyVegrhBodD"
+      },
+      "groupIndex": 4
+    }
+  ],
+  [
+    {
+      "__type__": "cc.Prefab",
       "_name": "planet",
       "data": {
         "__id__": 1
@@ -67,6 +118,9 @@
           "__type__": "5a006pbT5FD4YGqs5SittTt",
           "node": {
             "__id__": 1
+          },
+          "gravityRadial": {
+            "__uuid__": "5fkT3ov/xI8p+DSI0W/7yx"
           }
         }
       ],

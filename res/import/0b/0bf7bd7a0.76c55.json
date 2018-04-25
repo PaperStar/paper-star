@@ -126,8 +126,7 @@
           },
           "_fitWidth": true,
           "_fitHeight": false
-        },
-        null
+        }
       ],
       "_id": "fcPDWSn8FKSKoFGSqRng3d",
       "_contentSize": {
@@ -397,9 +396,9 @@
             {
               "__type__": "cc.ClickEvent",
               "target": {
-                "__id__": 2
+                "__id__": 4
               },
-              "component": "menu",
+              "component": "Menu",
               "handler": "loadFreeMode"
             }
           ],

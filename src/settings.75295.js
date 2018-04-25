@@ -142,6 +142,10 @@ window._CCSettings = {
                 "res/icon/star-full.png",
                 "cc.Texture2D"
             ],
+            "d46HpGFnZIVJIx9SvZWCuo": [
+                "res/icon/triangle.png",
+                "cc.Texture2D"
+            ],
             "e7UglhhmJKPI+sHNDpChEC": [
                 "res/icon/trophy.png",
                 "cc.Texture2D"
@@ -232,6 +236,10 @@ window._CCSettings = {
             uuid: "3cJOebUrVGj6zySCdnYS7E"
         },
         {
+            url: "db://assets/Scene/game/mode/GravityMode.fire",
+            uuid: "b8yClz9CVCPonuWfcC5QlT"
+        },
+        {
             url: "db://assets/Scene/game/mode/PropsMode.fire",
             uuid: "471GWCKKhBtoNfGd+MyBkg"
         },
@@ -282,6 +290,31 @@ window._CCSettings = {
             "cbDXzHh1RBE4p0pvIhFU/P",
             "f3VcYdNLlPqLgC3qB2/MPA"
         ],
+        "0238f25f0": [
+            "02gunMAstB3bas2ntDNIf/",
+            "22n4mQDQBOqa1BpaWvplix",
+            "29FYIk+N1GYaeWH/q1NxQO",
+            "351m2Zn0JKv4Ve7ZR5O0MM",
+            "55lWtldR1Geph6loTvYsec",
+            "62OEyIozVIV5TdtzStc8om",
+            "675ovJ2tVK2aLYfgPUWOMv",
+            "77Em5zFrFGFrexEEXRkMsQ",
+            "803/ynb6ZGqJhsQS9d+ZzW",
+            "8855/VlrRKd6H0MSRnFxAU",
+            "8amKwqATBB8Z4msSPcc/K0",
+            "9aacc1cp9PfrHiiQDkP4z7",
+            "a2MjXRFdtLlYQ5ouAFv/+R",
+            "b8yClz9CVCPonuWfcC5QlT",
+            "d02gXtXndG5a27gpJyv4MZ",
+            "daA9FNkEhPuJOsd9UxessW",
+            "e97GVMl6JHh5Ml5qEDdSGa",
+            "f0BIwQ8D5Ml7nTNQbh1YlS"
+        ],
+        "041af19c6": [
+            "29WT9UV1hLqKXLHK8T47PZ",
+            "5fkT3ov/xI8p+DSI0W/7yx",
+            "79oFtgrk5Lr6u9PUVn//oQ"
+        ],
         "0700fd5e7": [
             "13peA/duZAxLZI4wqgldIt",
             "471GWCKKhBtoNfGd+MyBkg",
@@ -292,32 +325,6 @@ window._CCSettings = {
             "a2MjXRFdtLlYQ5ouAFv/+R",
             "f4217NZahDaLGC9FMudZgy"
         ],
-        "0702262bd": [
-            "02gunMAstB3bas2ntDNIf/",
-            "22n4mQDQBOqa1BpaWvplix",
-            "29FYIk+N1GYaeWH/q1NxQO",
-            "351m2Zn0JKv4Ve7ZR5O0MM",
-            "3cBo7ApSdHG5S48+37ug4r",
-            "3cJOebUrVGj6zySCdnYS7E",
-            "55lWtldR1Geph6loTvYsec",
-            "60TpivupdKxqRgHIQO2cZV",
-            "62OEyIozVIV5TdtzStc8om",
-            "675ovJ2tVK2aLYfgPUWOMv",
-            "77Em5zFrFGFrexEEXRkMsQ",
-            "80E5Bn+I1FDb+oyoIpTtMM",
-            "803/ynb6ZGqJhsQS9d+ZzW",
-            "8855/VlrRKd6H0MSRnFxAU",
-            "89FrgPL6lHQ6rm/cCDOXkC",
-            "8amKwqATBB8Z4msSPcc/K0",
-            "9aacc1cp9PfrHiiQDkP4z7",
-            "a2MjXRFdtLlYQ5ouAFv/+R",
-            "b1YlhbCQNL05egeQ834+tK",
-            "d02gXtXndG5a27gpJyv4MZ",
-            "d5Hu0iJwZLC7wrQjllg8ry",
-            "daA9FNkEhPuJOsd9UxessW",
-            "e97GVMl6JHh5Ml5qEDdSGa",
-            "f0BIwQ8D5Ml7nTNQbh1YlS"
-        ],
         "079095525": [
             "25L20dT91G0bhSaCsoXNnq",
             "9cSymPKwNCGaw9w/+8y2vH"
@@ -327,6 +334,37 @@ window._CCSettings = {
             "69Xe3kQjlPGYLPe9yWRYFy",
             "a2MjXRFdtLlYQ5ouAFv/+R",
             "d6u43SGSFFg6KupJjzc3st"
+        ],
+        "087b70b43": [
+            "02gunMAstB3bas2ntDNIf/",
+            "0dCK7BFrNOJJRiG0ZWUM8d",
+            "22n4mQDQBOqa1BpaWvplix",
+            "26AxJXIc9JKatRYe3AI86d",
+            "29FYIk+N1GYaeWH/q1NxQO",
+            "351m2Zn0JKv4Ve7ZR5O0MM",
+            "3cJOebUrVGj6zySCdnYS7E",
+            "55lWtldR1Geph6loTvYsec",
+            "62OEyIozVIV5TdtzStc8om",
+            "675ovJ2tVK2aLYfgPUWOMv",
+            "77Em5zFrFGFrexEEXRkMsQ",
+            "803/ynb6ZGqJhsQS9d+ZzW",
+            "8855/VlrRKd6H0MSRnFxAU",
+            "8amKwqATBB8Z4msSPcc/K0",
+            "9aacc1cp9PfrHiiQDkP4z7",
+            "a2MjXRFdtLlYQ5ouAFv/+R",
+            "d02gXtXndG5a27gpJyv4MZ",
+            "daA9FNkEhPuJOsd9UxessW",
+            "e97GVMl6JHh5Ml5qEDdSGa",
+            "f0BIwQ8D5Ml7nTNQbh1YlS"
+        ],
+        "08bc0f708": [
+            "3cBo7ApSdHG5S48+37ug4r",
+            "60TpivupdKxqRgHIQO2cZV",
+            "80E5Bn+I1FDb+oyoIpTtMM",
+            "89FrgPL6lHQ6rm/cCDOXkC",
+            "a2MjXRFdtLlYQ5ouAFv/+R",
+            "b1YlhbCQNL05egeQ834+tK",
+            "d5Hu0iJwZLC7wrQjllg8ry"
         ],
         "0b3526479": [
             "0epYDzRxxBDrFMwySu5a1X",
@@ -352,10 +390,6 @@ window._CCSettings = {
             "e97GVMl6JHh5Ml5qEDdSGa",
             "f0BIwQ8D5Ml7nTNQbh1YlS"
         ],
-        "0ca6ad485": [
-            "29WT9UV1hLqKXLHK8T47PZ",
-            "79oFtgrk5Lr6u9PUVn//oQ"
-        ],
         "0ec267318": [
             "07MoA6edZGIaajO+WmoHvA",
             "0dCK7BFrNOJJRiG0ZWUM8d",
@@ -377,14 +411,16 @@ window._CCSettings = {
     "md5AssetsMap": {
         "01/016dc82c9.json": "d424b",
         "01/01a1ff9a9.json": "aad80",
+        "02/0238f25f0.json": "22206",
+        "04/041af19c6.json": "9fc00",
         "07/0700fd5e7.json": "9b7cc",
-        "07/0702262bd.json": "57a4c",
         "07/079095525.json": "db4ba",
         "08/085feac46.json": "8b871",
+        "08/087b70b43.json": "755f7",
+        "08/08bc0f708.json": "692c8",
         "0b/0b3526479.json": "ead13",
         "0b/0bd6ba493.json": "c7c0a",
-        "0b/0bf7bd7a0.json": "d73ad",
-        "0c/0ca6ad485.json": "8563e",
+        "0b/0bf7bd7a0.json": "76c55",
         "0e/0ec267318.json": "f1d34",
         "12/1252c971-be3b-46fc-b5cb-dae14bd30386.json": "a0f2e",
         "f6/f63ff780-071f-4e6c-9f59-4ec3af5cd797.json": "a984e",
@@ -410,6 +446,7 @@ window._CCSettings = {
         "assets/res/icon/shoot.png": "761ff",
         "assets/res/icon/star-empty.png": "e28c4",
         "assets/res/icon/star-full.png": "298e9",
+        "assets/res/icon/triangle.png": "5788d",
         "assets/res/icon/trophy.png": "a9f5c",
         "assets/res/icon/two.png": "dd18a",
         "assets/res/logo-alpha.png": "8fb81",

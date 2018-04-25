@@ -366,6 +366,8 @@ require = function() {
         this.shootBtn = this.node.getChildByName("shoot");
         this.shootTouchEvent();
         this.toggleFullScreenBtn = this.node.getChildByName("FullScreen");
+        this.lifeLabel = this.node.getChildByName("Life").getChildByName("num").getComponent(cc.Label);
+        this.lifeLabel.string = this.player.life;
       },
       shootTouchEvent: function shootTouchEvent() {
         var self = this;
@@ -528,6 +530,8 @@ require = function() {
           this.ring.setPosition(touchPos);
           this.dot.setPosition(touchPos);
         }
+        this.player.node.getChildByName("jet").opacity = 255;
+        cc.log(this.player.node.getChildByName("jet").opacity);
       },
       _touchMoveEvent: function _touchMoveEvent(event) {
         this.player.isStop = false;
@@ -553,6 +557,7 @@ require = function() {
         this.dot.setPosition(this.ring.getPosition());
         this.touchType == _JoystickCommon2.default.TouchType.FOLLOW && (this.node.opacity = 0);
         this.player.getComponent(cc.RigidBody).linearDamping = .5;
+        this.player.node.getChildByName("jet").opacity = 0;
       },
       _setSpeed: function _setSpeed(point) {
         var distance = cc.pDistance(point, this.ring.getPosition());
@@ -655,8 +660,8 @@ require = function() {
       loadStoryboard: function loadStoryboard() {
         cc.director.loadScene("Story");
       },
-      loadStartScene: function loadStartScene() {
-        cc.director.loadScene("Start");
+      loadStartMenu: function loadStartMenu() {
+        cc.director.loadScene("StartMenu");
       }
     });
     cc._RF.pop();
@@ -868,11 +873,17 @@ require = function() {
           console.log("AchieveSystem is loaded.");
         });
       },
+      loadFreeMode: function loadFreeMode() {
+        cc.director.loadScene("FreeMode");
+      },
       loadGravityMode: function loadGravityMode() {
         cc.director.loadScene("GravityMode");
       },
-      loadFreeMode: function loadFreeMode() {
-        cc.director.loadScene("FreeMode");
+      loadMissionMode: function loadMissionMode() {
+        cc.director.loadScene("MissionMode");
+      },
+      loadPropsMode: function loadPropsMode() {
+        cc.director.loadScene("PropsMode");
       }
     });
     cc._RF.pop();
@@ -901,6 +912,10 @@ require = function() {
         bulletCollisionTime: {
           default: 2,
           displayName: "子弹可碰撞次数"
+        },
+        life: {
+          default: 3,
+          displayName: "生命数"
         },
         curExp: {
           default: 0,
@@ -994,6 +1009,7 @@ require = function() {
           this.isStop = true;
           this.speedUpFlag = false;
           this.getComponent(cc.RigidBody).linearDamping = .5;
+          this.getChildByName("jet").opacity = 0;
           break;
 
          case cc.KEY.left:
@@ -1011,6 +1027,7 @@ require = function() {
         this.speedUpFlag = true;
         this.accelSpeed = Math.abs(this.accelSpeed);
         this.getComponent(cc.RigidBody).linearDamping = 0;
+        this.getChildByName("jet").opacity = 255;
       },
       moveLeft: function moveLeft() {
         this.moveLeftFlag = true;
@@ -1072,24 +1089,6 @@ require = function() {
     CameraControl: "CameraControl",
     Helpers: "Helpers",
     bulletManager: "bulletManager"
-  } ],
-  SetCommon: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "61e1e3r1JlIg4jzBa0ZH7lT", "SetCommon");
-    "use strict";
-    var _JoystickCommon = require("JoystickCommon");
-    var _JoystickCommon2 = _interopRequireDefault(_JoystickCommon);
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {
-        default: obj
-      };
-    }
-    var setting = {
-      touchType: _JoystickCommon2.default.TouchType.FOLLOW
-    };
-    cc._RF.pop();
-  }, {
-    JoystickCommon: "JoystickCommon"
   } ],
   SetMenu: [ function(require, module, exports) {
     "use strict";
@@ -1405,12 +1404,11 @@ require = function() {
         this.scheduleOnce(this.vanish, this.lifeTime);
         this.node.rotation = 0;
         this.node.getChildByName("sprite").opacity = 255;
-        cc.log(this.node.getChildByName("sprite"));
         this.collisionTime = this.player.bulletCollisionTime;
       },
       hit: function hit() {},
       onBeginContact: function onBeginContact(contact, selfCollider, otherCollider) {
-        this.collisionTime--;
+        "gravity-radial" !== otherCollider.node.name && this.collisionTime--;
         if (this.collisionTime <= 0) {
           this.anim.play("break");
           this.collisionTime = 2;
@@ -1435,13 +1433,6 @@ require = function() {
     "use strict";
     cc._RF.push(module, "b605bpAEohD4KevRc8lgwUh", "common");
     "use strict";
-    var _SetCommon = require("SetCommon");
-    var _SetCommon2 = _interopRequireDefault(_SetCommon);
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {
-        default: obj
-      };
-    }
     var gameState = cc.Enum({
       none: 0,
       start: 1,
@@ -1460,9 +1451,7 @@ require = function() {
       start: function start() {}
     });
     cc._RF.pop();
-  }, {
-    SetCommon: "SetCommon"
-  } ],
+  }, {} ],
   en: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "e4ddc8a/vVFwY6n9VQQvxiE", "en");
@@ -1485,6 +1474,68 @@ require = function() {
     };
     cc._RF.pop();
   }, {} ],
+  "gravity-radial": [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "4410bRTQAVK5KwT44wKlIBI", "gravity-radial");
+    "use strict";
+    var Gravity = require("gravity");
+    cc.Class({
+      extends: Gravity,
+      properties: {
+        gravityForce: 500
+      },
+      onLoad: function onLoad() {
+        this._position = cc.v2();
+        this._center = cc.v2();
+      },
+      _applyForce: function _applyForce(body) {
+        var position = this._position;
+        var center = this._center;
+        body.getWorldPosition(position);
+        this.body.getWorldPosition(center);
+        var dir = cc.pSub(center, position);
+        if (0 != dir.x && 0 != dir.y) {
+          var f = center.subSelf(position).normalizeSelf().mulSelf(this.gravityForce * body.getMass());
+          body.applyForce(f, position, false);
+        }
+      }
+    });
+    cc._RF.pop();
+  }, {
+    gravity: "gravity"
+  } ],
+  gravity: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "8fd9b25QPBGm5s57qWUlbm0", "gravity");
+    "use strict";
+    cc.Class({
+      extends: cc.Component,
+      onEnable: function onEnable() {
+        var manager = cc.director.getPhysicsManager();
+        this.bodies = [];
+        this.body = this.getComponent(cc.RigidBody);
+        this.originGravity = manager.gravity;
+        manager.gravity = cc.v2();
+      },
+      onDisable: function onDisable() {
+        cc.director.getPhysicsManager().gravity = this.originGravity;
+      },
+      onBeginContact: function onBeginContact(contact, selfCollider, otherCollider) {
+        this.bodies.push(otherCollider.body);
+      },
+      onEndContact: function onEndContact(contact, selfCollider, otherCollider) {
+        var index = this.bodies.indexOf(otherCollider.body);
+        -1 !== index && this.bodies.splice(index, 1);
+      },
+      update: function update(dt) {
+        if (!this.body) return;
+        var bodies = this.bodies;
+        for (var i = 0; i < bodies.length; i++) this._applyForce(bodies[i]);
+      },
+      _applyForce: function _applyForce(body) {}
+    });
+    cc._RF.pop();
+  }, {} ],
   planet: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "5a006pbT5FD4YGqs5SittTt", "planet");
@@ -1492,9 +1543,19 @@ require = function() {
     cc.Class({
       extends: cc.Component,
       properties: {
-        HP: 1e3
+        HP: 1e3,
+        gravityRadial: cc.Prefab,
+        radius: 100,
+        gravityRadius: 200,
+        gravityForce: 300
       },
-      start: function start() {}
+      start: function start() {
+        var planeGravityRadial = cc.instantiate(this.gravityRadial);
+        planeGravityRadial.parent = this.node;
+        planeGravityRadial.getComponent(cc.PhysicsCircleCollider).radius = this.node.width + 200 * Math.random();
+        this.gravityForce = 100 + 200 * Math.random();
+        planeGravityRadial.getComponent("gravity-radial").gravityForce = this.gravityForce;
+      }
     });
     cc._RF.pop();
   }, {} ],
@@ -1620,4 +1681,4 @@ require = function() {
     };
     cc._RF.pop();
   }, {} ]
-}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "Game", "GameMng", "MapControl", "bullet", "bulletManager", "planet", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "InGameUI", "Joystick", "JoystickCommon", "StartMenuUI", "Helpers", "SetCommon", "common", "global", "Launch", "Menu", "SetMenu", "PlayerControl", "en", "zh" ]);
+}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "Game", "GameMng", "MapControl", "bullet", "bulletManager", "gravity-radial", "gravity", "planet", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "InGameUI", "Joystick", "JoystickCommon", "StartMenuUI", "Helpers", "common", "global", "Launch", "Menu", "SetMenu", "PlayerControl", "en", "zh" ]);
