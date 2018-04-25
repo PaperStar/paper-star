@@ -177,6 +177,10 @@ window._CCSettings = {
             "d8wbFUtkNLoacNMgeeKtav": [
                 "res/scene/planet/planet-circle.png",
                 "cc.Texture2D"
+            ],
+            "18e3ace03": [
+                "res/anim/star/star-anim-atlas-1.png",
+                "cc.Texture2D"
             ]
         },
         internal: {
@@ -290,6 +294,23 @@ window._CCSettings = {
             "cbDXzHh1RBE4p0pvIhFU/P",
             "f3VcYdNLlPqLgC3qB2/MPA"
         ],
+        "020cbfdfa": [
+            "0cA+/epVBH25JGBw4MHwtE",
+            "2dhwvS1pBBp57fjz02xkrd",
+            "4azaDy2rtBzbbMWy/LddnJ",
+            "62gutAkXJHUqrOrTNLibLy",
+            "65wEg+LLhFM4Lu15o6UkUV",
+            "6euLEN2xdJ060e1TE+sdgc",
+            "8aFahVvfxAeL7vLKsKj0r8",
+            "902e4VYEVANJfXK4k4jo/L",
+            "9bPOtEbpFBj4zbHRcJdysG",
+            "9eJRJXoj5MdIzDEF+Pm7yG",
+            "a68aDnXblIY7EYXlOi6/VE",
+            "adxlWhgLtO75MFlOV1J2sO",
+            "cd2dA8EZFNipDjErOqXO9H",
+            "e7urorfURCLp/35l59RUDr",
+            "e87kiAmpFFgrcwiHP28uOK"
+        ],
         "0238f25f0": [
             "02gunMAstB3bas2ntDNIf/",
             "22n4mQDQBOqa1BpaWvplix",
@@ -372,13 +393,16 @@ window._CCSettings = {
             "9aacc1cp9PfrHiiQDkP4z7",
             "a2MjXRFdtLlYQ5ouAFv/+R"
         ],
-        "0bd6ba493": [
+        "0b4534fcb": [
             "0dCK7BFrNOJJRiG0ZWUM8d",
             "1fL+EtJ95EZo1Ndew50xAS",
+            "2dhwvS1pBBp57fjz02xkrd",
             "4dMK+HfBdDpYtq8RvYqYJx",
             "9aAzSM2atNzJCvuppyR3aw",
+            "9bPOtEbpFBj4zbHRcJdysG",
             "a2MjXRFdtLlYQ5ouAFv/+R",
             "adGroavBdFOoHyPEXVzvbo",
+            "adxlWhgLtO75MFlOV1J2sO",
             "d4hLBwSbJOP73FoMOWxKh4",
             "d9SBxvpNtGYJa4w26qxcOc"
         ],
@@ -411,20 +435,23 @@ window._CCSettings = {
     "md5AssetsMap": {
         "01/016dc82c9.json": "d424b",
         "01/01a1ff9a9.json": "aad80",
+        "02/020cbfdfa.json": "5276d",
         "02/0238f25f0.json": "22206",
         "04/041af19c6.json": "9fc00",
         "07/0700fd5e7.json": "9b7cc",
         "07/079095525.json": "db4ba",
-        "08/085feac46.json": "8b871",
-        "08/087b70b43.json": "755f7",
+        "08/085feac46.json": "860b8",
+        "08/087b70b43.json": "f1767",
         "08/08bc0f708.json": "692c8",
         "0b/0b3526479.json": "ead13",
-        "0b/0bd6ba493.json": "c7c0a",
+        "0b/0b4534fcb.json": "931bb",
         "0b/0bf7bd7a0.json": "76c55",
         "0e/0ec267318.json": "f1d34",
         "12/1252c971-be3b-46fc-b5cb-dae14bd30386.json": "a0f2e",
+        "35/3578a96c-4a50-4701-9796-c5bbf3d7d2fe.json": "a38b1",
         "f6/f63ff780-071f-4e6c-9f59-4ec3af5cd797.json": "a984e",
         "f6/f63ff780-071f-4e6c-9f59-4ec3af5cd797/ArchitectsDaughter.ttf": "c83be",
+        "assets/res/anim/star/star-anim-atlas-1.png": "8ae42",
         "assets/res/button/circle-full.png": "13b33",
         "assets/res/button/circle.png": "2c763",
         "assets/res/button/default-button.png": "24289",

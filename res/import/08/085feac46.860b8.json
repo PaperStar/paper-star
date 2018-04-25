@@ -21,23 +21,8 @@
     },
     "events": [
       {
-        "frame": 0,
-        "func": "",
-        "params": []
-      },
-      {
-        "frame": 0,
-        "func": "",
-        "params": []
-      },
-      {
-        "frame": 0,
-        "func": "",
-        "params": []
-      },
-      {
         "frame": 6,
-        "func": "loadStartScene",
+        "func": "loadStartMenu",
         "params": []
       },
       {

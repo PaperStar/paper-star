@@ -241,6 +241,15 @@
           },
           "planet": {
             "__uuid__": "79oFtgrk5Lr6u9PUVn//oQ"
+          },
+          "fiveStarAnim": {
+            "__uuid__": "cd2dA8EZFNipDjErOqXO9H"
+          },
+          "fourStarAnim": {
+            "__uuid__": "902e4VYEVANJfXK4k4jo/L"
+          },
+          "twoStarAnim": {
+            "__uuid__": "8aFahVvfxAeL7vLKsKj0r8"
           }
         }
       ],
@@ -262,6 +271,13 @@
         },
         {
           "__id__": 6
+        },
+        {
+          "__type__": "cc.Node",
+          "_name": "StarAnim",
+          "_parent": {
+            "__id__": 4
+          }
         }
       ],
       "_components": [

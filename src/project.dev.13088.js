@@ -650,7 +650,7 @@ require = function() {
         cc.director.preloadScene("Story", function() {
           cc.log("Story scene preloaded");
         });
-        cc.director.preloadScene("Start", function() {
+        cc.director.preloadScene("StartMenu", function() {
           cc.log("Start scene preloaded");
         });
       },
@@ -794,13 +794,31 @@ require = function() {
           default: null,
           type: cc.Prefab
         },
-        planetNum: 10
+        planetNum: 10,
+        fiveStarAnim: cc.Prefab,
+        fourStarAnim: cc.Prefab,
+        twoStarAnim: cc.Prefab
       },
       onLoad: function onLoad() {
+        this.StarAnim = this.node.getChildByName("bg").getChildByName("StarAnim");
         this.generatePlanet(this.planetNum);
-        this.generateAPlanet(cc.p(300, 0));
+        this.generateManyStarAnim(30);
       },
       start: function start() {},
+      generateManyStarAnim: function generateManyStarAnim(num) {
+        for (var i = 0; i < num; i++) {
+          this.generateStarAnim(this.fiveStarAnim);
+          this.generateStarAnim(this.fourStarAnim);
+          this.generateStarAnim(this.twoStarAnim);
+        }
+      },
+      generateStarAnim: function generateStarAnim(StarPrefab) {
+        var Star = cc.instantiate(StarPrefab);
+        Star.parent = this.StarAnim;
+        var randomPosition = cc.p(cc.randomMinus1To1() * this.map.width / 2, cc.randomMinus1To1() * this.map.height / 2);
+        Star.setPosition(randomPosition);
+        Star.scale = Math.random() + .1;
+      },
       generatePlanet: function generatePlanet(num) {
         var PlanetArray = [];
         for (var i = 0; i < num; i++) {
