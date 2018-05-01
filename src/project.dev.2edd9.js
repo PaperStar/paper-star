@@ -65,7 +65,7 @@ require = function() {
         this.bossIdx = 0;
       },
       startBoss: function startBoss() {
-        this.bossIdx === BossType.Demon && this.waveMng.startBossSpawn(this.demonSpawn);
+        this.bossIdx === BossType.Carrier && this.waveMng.startBossSpawn(this.demonSpawn);
       },
       endBoss: function endBoss() {
         this.bossIdx++;
@@ -430,49 +430,103 @@ require = function() {
     cc._RF.push(module, "f4ee95gSANDb5KSvEMM3orA", "Foe");
     "use strict";
     var _Types = require("Types");
-    var AttackType = cc.Enum({
-      Melee: -1,
-      Range: -1
-    });
     cc.Class({
       extends: cc.Component,
       properties: {
-        forType: {
-          default: _Types.FoeType.Foe0,
+        foeType: {
+          default: _Types.FoeType.Foe1,
           type: _Types.FoeType
         },
         atkType: {
-          default: AttackType.Melee,
-          type: AttackType
+          default: _Types.AttackType.Melee,
+          type: _Types.AttackType
         },
         bulletType: {
           default: _Types.BulletType.Arrow,
           type: _Types.BulletType
         },
         hp: 0,
+        curHP: 0,
+        score: 0,
         crashDamage: 0,
+        moveSpeed: 0,
+        turnSpeed: 0,
+        moveDir: cc.v2(0, 1),
+        atkDir: cc.v2(),
         atkRange: 0,
         atkDuration: 0,
-        atkStun: 0,
         atkPrepTime: 0,
-        corpseDuration: 0,
         fxSmoke: cc.ParticleSystem
       },
       start: function start() {},
       init: function init(waveMng) {
         this.waveMng = waveMng;
-        this.player = this.player;
+        this.player = waveMng.player;
         this.isAttacking = false;
         this.isAlive = false;
         this.isInvincible = false;
         this.isMoving = false;
-        this.move = this.getComponent("Move");
-        this.anim = this.getComponent(cc.Animation);
+        this.curHP = this.hp;
+        this.anim = this.node.getChildByName("sprite").getComponent(cc.Animation);
+        this.anim.play("fadeIn");
+        this.readyToMove();
+        this.body = this.getComponent(cc.RigidBody);
       },
       readyToMove: function readyToMove() {
         this.isAlive = true;
         this.isMoving = true;
         this.fxSmoke.resetSystem();
+      },
+      prepAttack: function prepAttack() {
+        this.isAttacking = true;
+        this.scheduleOnce(this.attack, this.atkPrepTime);
+      },
+      attack: function attack() {
+        if (false === this.isAlive) return;
+        this.atkDir = cc.pNormalize(cc.pSub(this.player.node.position, this.node.position));
+        this.isAttacking = false;
+        this.isMoving = true;
+      },
+      rotate: function rotate() {
+        var sepAngle = cc.radiansToDegrees(cc.pAngleSigned(this.moveDir, this.atkDir));
+        sepAngle > 2 ? this.node.rotation -= this.turnSpeed : sepAngle < -1 && (this.node.rotation += this.turnSpeed);
+        this.moveDir = cc.pForAngle(cc.degreesToRadians(90 - this.node.rotation));
+      },
+      attackOnTarget: function attackOnTarget() {},
+      dead: function dead() {
+        this.isMoving = false;
+        this.isAttacking = false;
+        this.anim.play("dead");
+        this.unscheduleAllCallbacks();
+        this.node.stopAllActions();
+        this.player.addKills();
+        this.waveMng.killFoe(this.score);
+        this.scheduleOnce(this.recycle, this.anim.currentClip.duration);
+      },
+      recycle: function recycle() {
+        this.waveMng.despawnFoe(this);
+      },
+      onBeginContact: function onBeginContact(contact, selfCollider, otherCollider) {
+        switch (otherCollider.node.name) {
+         case "bullet":
+          this.hp -= 10;
+          break;
+
+         default:
+          this.hp--;
+        }
+        if (this.hp <= 0 && this.isAlive) {
+          this.isAlive = false;
+          this.dead();
+        }
+      },
+      update: function update(dt) {
+        if (false === this.isAlive) return;
+        this.isAttacking || this.prepAttack();
+        if (this.isMoving) {
+          this.atkType === _Types.AttackType.Melee && (this.body.linearVelocity = cc.pMult(this.moveDir, this.moveSpeed));
+          this.rotate();
+        } else this.body.linearVelocity = cc.v2(0, 0);
       }
     });
     cc._RF.pop();
@@ -659,6 +713,7 @@ require = function() {
         this.HPBar = this.Info.getChildByName("HPBar").getComponent(cc.ProgressBar);
         this.lifeLabel = this.Info.getChildByName("Life").getChildByName("num").getComponent(cc.Label);
         this.lifeLabel.string = this.player.life;
+        this.scoreLabel = this.Info.getChildByName("Score").getComponent(cc.Label);
       },
       showWave: function showWave(num) {
         this.waveUI.node.active = true;
@@ -666,6 +721,9 @@ require = function() {
       },
       showKills: function showKills(num) {
         this.killDisplay.playKill(num);
+      },
+      addScore: function addScore(num) {
+        this.scoreLabel.string = parseInt(this.scoreLabel.string) + num;
       },
       addCombo: function addCombo() {
         this.comboDisplay.playCombo();
@@ -1216,98 +1274,21 @@ require = function() {
     });
     cc._RF.pop();
   }, {} ],
-  Move: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "03fecYvs+9L07SPviQLuLj3", "Move");
-    "use strict";
-    var MoveState = cc.Enum({
-      None: -1,
-      Stand: -1,
-      Up: -1,
-      Right: -1,
-      Down: -1,
-      Left: -1
-    });
-    cc.Class({
-      extends: cc.Component,
-      properties: {
-        moveSpeed: 0,
-        anim: {
-          default: null,
-          type: cc.Animation
-        }
-      },
-      statics: {
-        MoveState: MoveState
-      },
-      onLoad: function onLoad() {
-        this.moveState = MoveState.Stand;
-        this.node.on("stand", this.stand, this);
-        this.node.on("freeze", this.stop, this);
-        this.node.on("update-dir", this.updateDir, this);
-      },
-      stand: function stand() {
-        if (this.moveState !== MoveState.Stand) {
-          this.anim.play("stand");
-          this.moveState = MoveState.Stand;
-        }
-      },
-      stop: function stop() {
-        this.anim.stop();
-        this.moveState = MoveState.None;
-        this.moveDir = null;
-      },
-      moveUp: function moveUp() {
-        if (this.moveState !== MoveState.Up) {
-          this.anim.play("run_up");
-          this.anim.node.scaleX = 1;
-          this.moveState = MoveState.Up;
-        }
-      },
-      moveDown: function moveDown() {
-        if (this.moveState !== MoveState.Down) {
-          this.anim.play("run_down");
-          this.anim.node.scaleX = 1;
-          this.moveState = MoveState.Down;
-        }
-      },
-      moveRight: function moveRight() {
-        if (this.moveState !== MoveState.Right) {
-          this.anim.play("run_right");
-          this.anim.node.scaleX = 1;
-          this.moveState = MoveState.Right;
-        }
-      },
-      moveLeft: function moveLeft() {
-        if (this.moveState !== MoveState.Left) {
-          this.anim.play("run_right");
-          this.anim.node.scaleX = -1;
-          this.moveState = MoveState.Left;
-        }
-      },
-      updateDir: function updateDir(event) {
-        this.moveDir = event.detail.dir;
-      },
-      update: function update(dt) {
-        if (this.moveDir) {
-          this.node.x += this.moveSpeed * this.moveDir.x * dt;
-          this.node.y += this.moveSpeed * this.moveDir.y * dt;
-          var deg = cc.radiansToDegrees(cc.pToAngle(this.moveDir));
-          deg >= 45 && deg < 135 ? this.moveUp() : deg >= 135 || deg < -135 ? this.moveLeft() : deg >= -45 && deg < 45 ? this.moveRight() : this.moveDown();
-        } else this.moveState !== MoveState.None && this.stand();
-      }
-    });
-    cc._RF.pop();
-  }, {} ],
   NodePool: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "3d2c9yXFAFHD741J+bbrJcq", "NodePool");
     "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
     var NodePool = cc.Class({
       name: "NodePool",
       properties: {
         prefab: cc.Prefab,
-        size: 0
+        size: {
+          default: 0,
+          type: cc.Integer
+        }
       },
       init: function init() {
         this.NodePool = new cc.NodePool();
@@ -1320,10 +1301,11 @@ require = function() {
         return this.NodePool.get();
       },
       put: function put(obj) {
-        this.NodePool.put(obj);
+        return this.NodePool.put(obj);
       }
     });
-    module.exports = NodePool;
+    exports.default = NodePool;
+    module.exports = exports["default"];
     cc._RF.pop();
   }, {} ],
   PlayerFX: [ function(require, module, exports) {
@@ -1370,6 +1352,7 @@ require = function() {
     "use strict";
     var _Helpers = require("Helpers");
     var _Helpers2 = _interopRequireDefault(_Helpers);
+    var _Types = require("../Types");
     function _interopRequireDefault(obj) {
       return obj && obj.__esModule ? obj : {
         default: obj
@@ -1449,6 +1432,7 @@ require = function() {
         this.initPlayer();
         this.onControl();
         this.node.setPosition(cc.p(0, 0));
+        this.oneShootKills = 0;
       },
       ready: function ready() {
         this.inputEnabled = true;
@@ -1574,10 +1558,18 @@ require = function() {
         this.moveDir = cc.pForAngle(cc.degreesToRadians(this.moveAngle));
         this.roleRotate();
         this.isStop || (this.getComponent(cc.RigidBody).linearVelocity = cc.v2(this.moveSpeed * this.moveDir.x, this.moveSpeed * this.moveDir.y));
+      },
+      addKills: function addKills() {
+        this.oneShootKills++;
+        this.game.inGameUI.addCombo();
+      },
+      onAtkFinished: function onAtkFinished() {
+        this.oneShootKills >= 3 && this.game.inGameUI.showKills(this.oneShootKills);
       }
     });
     cc._RF.pop();
   }, {
+    "../Types": "Types",
     CameraControl: "CameraControl",
     Helpers: "Helpers",
     bulletManager: "bulletManager"
@@ -1736,7 +1728,7 @@ require = function() {
       name: "Spawn",
       properties: {
         foeType: {
-          default: _Types.FoeType.Foe0,
+          default: _Types.FoeType.Foe1,
           type: _Types.FoeType
         },
         total: 0,
@@ -1905,8 +1897,8 @@ require = function() {
       value: true
     });
     var BossType = cc.Enum({
-      Demon: -1,
-      SkeletonKing: -1
+      Carrier: -1,
+      BlackBomber: -1
     });
     var FoeType = cc.Enum({
       Foe0: -1,
@@ -1916,15 +1908,29 @@ require = function() {
       Boss1: -1,
       Boss2: -1
     });
+    var AttackType = cc.Enum({
+      Melee: -1,
+      Range: -1
+    });
     var BulletType = cc.Enum({
       Line: -1,
       Chain: -1,
       FireBall: -1,
       None: 999
     });
+    var PropType = cc.Enum({
+      Chain: -1,
+      FireBall: -1,
+      Star: -1,
+      Fast: -1,
+      Slow: -1,
+      Life: -1
+    });
     exports.BossType = BossType;
     exports.FoeType = FoeType;
+    exports.AttackType = AttackType;
     exports.BulletType = BulletType;
+    exports.PropType = PropType;
     cc._RF.pop();
   }, {} ],
   WaveMng: [ function(require, module, exports) {
@@ -1949,7 +1955,7 @@ require = function() {
           type: _Spawn2.default
         },
         bossType: {
-          default: _Types.BossType.Demon,
+          default: _Types.BossType.Carrier,
           type: _Types.BossType
         }
       },
@@ -1993,6 +1999,7 @@ require = function() {
         this.spawnIdx = 0;
         this.currentWave = this.waves[this.waveIdx];
         this.foeGroup.setContentSize(this.map.node.getContentSize());
+        this.testPos = cc.p(0, 0);
       },
       startSpawn: function startSpawn() {
         this.schedule(this.spawnFoe, this.currentSpawn.spawnInterval);
@@ -2042,7 +2049,7 @@ require = function() {
         var newFoe = this.currentSpawn.spawn(this.game.poolMng);
         if (newFoe) {
           this.foeGroup.addChild(newFoe);
-          newFoe.setPosition(this.getNewFoePosition());
+          newFoe.setPosition(this.testPos.addSelf(cc.p(100, 100)));
           newFoe.getComponent("Foe").init(this);
         }
       },
@@ -2055,27 +2062,28 @@ require = function() {
           newFoe.getComponent("Foe").init(this);
         }
       },
-      spawnProjectile: function spawnProjectile(projectileType, pos, dir, rot) {
-        var newProjectile = this.game.poolMng.requestProjectile(projectileType);
-        if (newProjectile) {
-          this.foeGroup.addChild(newProjectile);
-          newProjectile.setPosition(pos);
-          newProjectile.getComponent("Projectile").init(this, dir);
-        } else cc.log("requesting too many projectiles! please increase size");
+      spawnBullet: function spawnBullet(bulletType, pos, dir, rot) {
+        var newBullet = this.game.poolMng.putBullet(bulletType);
+        if (newBullet) {
+          this.foeGroup.addChild(newBullet);
+          newBullet.setPosition(pos);
+          newBullet.getComponent("Bullet").init(this, dir);
+        } else cc.log("Too many Bullets!");
       },
-      killFoe: function killFoe() {
+      killFoe: function killFoe(score) {
         this.killedFoe++;
+        this.game.inGameUI.addScore(score);
       },
       hitFoe: function hitFoe() {
         this.game.cameraShake();
       },
       despawnFoe: function despawnFoe(foe) {
         var foeType = foe.foeType;
-        this.game.poolMng.returnFoe(foeType, foe.node);
+        this.game.poolMng.putFoe(foeType, foe.node);
       },
-      despawnProjectile: function despawnProjectile(projectile) {
-        var type = projectile.projectileType;
-        this.game.poolMng.returnProjectile(type, projectile.node);
+      despawnBullet: function despawnBullet(bullet) {
+        var type = bullet.bulletType;
+        this.game.poolMng.putBullet(type, bullet.node);
       },
       getNewFoePosition: function getNewFoePosition() {
         var randX = cc.randomMinus1To1() * (this.foeGroup.width - this.spawnMargin) / 2;
@@ -2566,4 +2574,4 @@ require = function() {
     };
     cc._RF.pop();
   }, {} ]
-}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "AnimHelper", "BossMng", "Foe", "Spawn", "Game", "MapControl", "bullet", "bulletManager", "gravity-radial", "gravity", "planet", "PlayerFX", "SortMng", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "ComboDisplay", "DeathUI", "InGameUI", "KillDisplay", "WaveUI", "Joystick", "JoystickCommon", "StartMenuUI", "Helpers", "common", "global", "Launch", "Menu", "SetMenu", "NodePool", "Move", "Player", "SkillProgress", "PoolMng", "Types", "en", "zh", "BossProgress", "ButtonScaler", "WaveProgress" ]);
+}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "AnimHelper", "BossMng", "Foe", "Spawn", "Game", "MapControl", "bullet", "bulletManager", "gravity-radial", "gravity", "planet", "PlayerFX", "SortMng", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "ComboDisplay", "DeathUI", "InGameUI", "KillDisplay", "WaveUI", "Joystick", "JoystickCommon", "StartMenuUI", "Helpers", "common", "global", "Launch", "Menu", "SetMenu", "NodePool", "Player", "SkillProgress", "PoolMng", "Types", "en", "zh", "BossProgress", "ButtonScaler", "WaveProgress" ]);
