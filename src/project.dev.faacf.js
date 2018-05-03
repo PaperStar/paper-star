@@ -102,6 +102,107 @@ require = function() {
     });
     cc._RF.pop();
   }, {} ],
+  Bullet: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "cd9f4n6ZY5AWaItfDxKgjeO", "Bullet");
+    "use strict";
+    var _Types = require("Types");
+    cc.Class({
+      extends: cc.Component,
+      properties: {
+        bulletType: {
+          default: _Types.BulletType.Line,
+          type: _Types.BulletType
+        },
+        length: 20,
+        moveSpeed: 500,
+        delay: {
+          default: .3,
+          tooltip: "子弹延迟发射时间"
+        },
+        width: {
+          default: 2,
+          displayName: "子弹宽度"
+        },
+        lifeTime: {
+          default: 10,
+          displayName: "存活时间"
+        },
+        collisionTime: {
+          default: 2,
+          displayName: "可碰撞次数"
+        },
+        damage: {
+          default: 10,
+          displayName: "伤害值"
+        },
+        sprite: cc.Sprite,
+        canBreak: true,
+        brokenFX: cc.Node,
+        isVisible: false
+      },
+      init: function init(waveMng, dir, role) {
+        this.waveMng = waveMng;
+        this.isVisible = true;
+        this.node.rotation = 0;
+        this.sprite.enabled = true;
+        this.sprite.node.opacity = 255;
+        this.role = role;
+        if ("player" == role.node.name) {
+          this.scheduleOnce(function() {
+            role._delayFlag = false;
+          }, this.delay);
+          var color = role.node.color;
+          this.sprite.node.color = color;
+          this.brokenFX.getChildByName("pieceU").color = color;
+          this.brokenFX.getChildByName("pieceD").color = color;
+        }
+        this.collisionTime = role.bulletCollisionTime;
+        this.anim = this.getComponent(cc.Animation);
+        this.anim.stop();
+        this.node.height = this.length;
+        this.node.width = this.width;
+        this.getComponent(cc.PhysicsBoxCollider).size.height = this.length;
+        this.getComponent(cc.PhysicsBoxCollider).size.width = this.width;
+        this.getComponent(cc.RigidBody).linearVelocity = cc.pMult(dir, this.moveSpeed);
+        this.brokenFX.active = false;
+      },
+      broke: function broke() {
+        this.isMoving = false;
+        this.sprite.enabled = false;
+        this.brokenFX.active = true;
+        this.anim.play("break");
+        this.scheduleOnce(this.recycle, this.anim.currentClip.duration);
+      },
+      hit: function hit() {},
+      onBeginContact: function onBeginContact(contact, selfCollider, otherCollider) {
+        switch (otherCollider.node.name) {
+         case "gravity-radial":
+          break;
+
+         default:
+          this.collisionTime--;
+        }
+        if (this.isVisible && this.collisionTime <= 0) {
+          this.isVisible = false;
+          this.broke();
+        }
+      },
+      vanish: function vanish() {
+        this.anim.play("vanish");
+        this.scheduleOnce(this.recycle, this.anim.currentClip.duration);
+      },
+      recycle: function recycle() {
+        this.waveMng.despawnBullet(this);
+      },
+      update: function update(dt) {
+        if (false === this.isMoving) return;
+      }
+    });
+    cc._RF.pop();
+  }, {
+    Types: "Types"
+  } ],
   ButtonScaler: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "d7564Cn9+NOM6YfHHX7zsyO", "ButtonScaler");
@@ -405,15 +506,14 @@ require = function() {
       properties: {},
       init: function init(game) {
         this.game = game;
+        this.node.active = true;
         this.hide();
       },
       show: function show() {
-        this.node.active = true;
         this.node.setPosition(0, 0);
       },
       hide: function hide() {
         this.node.x = 3e3;
-        this.node.active = false;
       },
       start: function start() {},
       revive: function revive() {
@@ -445,8 +545,12 @@ require = function() {
           default: _Types.BulletType.Arrow,
           type: _Types.BulletType
         },
+        bulletCollisionTime: {
+          default: 2,
+          displayName: "子弹可碰撞次数"
+        },
         hp: 0,
-        curHP: 0,
+        curHp: 0,
         score: 0,
         crashDamage: 0,
         moveSpeed: 0,
@@ -466,7 +570,8 @@ require = function() {
         this.isAlive = false;
         this.isInvincible = false;
         this.isMoving = false;
-        this.curHP = this.hp;
+        this.curHp = this.hp;
+        this.node.rotation = 360 * Math.random();
         this.anim = this.node.getChildByName("sprite").getComponent(cc.Animation);
         this.anim.play("fadeIn");
         this.readyToMove();
@@ -496,11 +601,13 @@ require = function() {
       dead: function dead() {
         this.isMoving = false;
         this.isAttacking = false;
-        this.anim.play("dead");
         this.unscheduleAllCallbacks();
         this.node.stopAllActions();
-        this.player.addKills();
-        this.waveMng.killFoe(this.score);
+        if (this.player && this.player.isAlive) {
+          this.player.addKills();
+          this.waveMng.killFoe(this.score);
+        }
+        this.anim.play("dead");
         this.scheduleOnce(this.recycle, this.anim.currentClip.duration);
       },
       recycle: function recycle() {
@@ -539,8 +646,15 @@ require = function() {
     "use strict";
     cc.Class({
       extends: cc.Component,
-      properties: {},
-      start: function start() {},
+      properties: {
+        score: cc.Label
+      },
+      start: function start() {
+        var app = "paper-star";
+        var curRecord = JSON.parse(cc.sys.localStorage.getItem(app + "-curRecord"));
+        var records = JSON.parse(cc.sys.localStorage.getItem(app + "-records"));
+        this.score.string = curRecord.score;
+      },
       backToStartMenu: function backToStartMenu() {
         cc.director.loadScene("StartMenu");
       }
@@ -598,14 +712,10 @@ require = function() {
         this.deathUI.init(this);
       },
       pause: function pause() {
-        var scheduler = cc.director.getScheduler();
-        scheduler.pauseTarget(this.waveMng);
-        this.sortMng.enabled = false;
+        cc.director.pause();
       },
       resume: function resume() {
-        var scheduler = cc.director.getScheduler();
-        scheduler.resumeTarget(this.waveMng);
-        this.sortMng.enabled = true;
+        cc.director.resume();
       },
       cameraShake: function cameraShake() {
         this.cameraRoot.play("shake");
@@ -615,6 +725,7 @@ require = function() {
         this.pause();
       },
       revive: function revive() {
+        this.resume();
         this.deathUI.hide();
         this.playerFX.playRevive();
         this.player.revive();
@@ -636,6 +747,19 @@ require = function() {
         this.player.ready();
       },
       gameOver: function gameOver() {
+        var app = "paper-star";
+        var curRecord = {
+          score: this.player.score,
+          time: new Date()
+        };
+        var records = cc.sys.localStorage.getItem(app + "-records");
+        if (records) {
+          records = JSON.parse(records);
+          records instanceof Array || (records = []);
+          records.unshift(curRecord);
+        }
+        cc.sys.localStorage.setItem(app + "-curRecord", JSON.stringify(curRecord));
+        cc.sys.localStorage.setItem(app + "-records", JSON.stringify(records));
         cc.director.loadScene("GameOver");
       },
       restart: function restart() {
@@ -722,8 +846,14 @@ require = function() {
       showKills: function showKills(num) {
         this.killDisplay.playKill(num);
       },
-      addScore: function addScore(num) {
-        this.scoreLabel.string = parseInt(this.scoreLabel.string) + num;
+      showLife: function showLife() {
+        this.lifeLabel.string = this.player.life;
+      },
+      showHp: function showHp() {
+        this.HPBar.progress = this.player.curHp / this.HPBar.totalLength;
+      },
+      showScore: function showScore(num) {
+        this.scoreLabel.string = num;
       },
       addCombo: function addCombo() {
         this.comboDisplay.playCombo();
@@ -762,9 +892,7 @@ require = function() {
           this.openPanelFlag = true;
         }
       },
-      update: function update(dt) {
-        this.HPBar.progress = this.player.HP / this.HPBar.totalLength;
-      }
+      update: function update(dt) {}
     });
     cc._RF.pop();
   }, {
@@ -1316,33 +1444,41 @@ require = function() {
       extends: cc.Component,
       properties: {
         introAnim: cc.Animation,
+        deadAnim: cc.Animation,
         reviveAnim: cc.Animation
       },
       init: function init(game) {
         this.game = game;
         this.introAnim.node.active = false;
+        this.deadAnim.node.active = false;
         this.reviveAnim.node.active = false;
       },
       playIntro: function playIntro() {
         this.introAnim.node.active = true;
         this.introAnim.play("start");
       },
+      playDead: function playDead() {
+        this.deadAnim.node.active = true;
+        this.deadAnim.node.rotation = this.game.player.node.rotation;
+        this.game.player.node.active = false;
+        this.deadAnim.play("dead");
+      },
       playRevive: function playRevive() {
         this.reviveAnim.node.active = true;
-        this.reviveAnim.node.setPosition(this.game.player.node.position);
         this.reviveAnim.play("revive");
       },
       introFinish: function introFinish() {
         this.game.playerReady();
         this.introAnim.node.active = false;
       },
+      deadFinish: function deadFinish() {
+        this.deadAnim.node.active = false;
+      },
       reviveFinish: function reviveFinish() {
         this.game.playerReady();
         this.reviveAnim.node.active = false;
       },
-      reviveKill: function reviveKill() {
-        this.game.clearAllFoes();
-      }
+      reviveKill: function reviveKill() {}
     });
     cc._RF.pop();
   }, {} ],
@@ -1353,28 +1489,25 @@ require = function() {
     var _Helpers = require("Helpers");
     var _Helpers2 = _interopRequireDefault(_Helpers);
     var _Types = require("../Types");
+    var _CameraControl = require("CameraControl");
+    var _CameraControl2 = _interopRequireDefault(_CameraControl);
     function _interopRequireDefault(obj) {
       return obj && obj.__esModule ? obj : {
         default: obj
       };
     }
-    var CameraControl = require("CameraControl");
-    var bulletManager = require("bulletManager");
     cc.Class({
       extends: cc.Component,
       properties: {
         fxTrail: cc.ParticleSystem,
-        camera: CameraControl,
-        map: {
-          default: null,
-          type: cc.Node,
-          displayName: "所在地图"
+        camera: _CameraControl2.default,
+        bulletType: {
+          default: _Types.BulletType.Line,
+          type: _Types.BulletType
         },
-        bulletManager: {
-          default: null,
-          type: bulletManager
-        },
-        HP: 100,
+        hp: 100,
+        curHp: 100,
+        score: 0,
         bulletCollisionTime: {
           default: 2,
           displayName: "子弹可碰撞次数"
@@ -1429,6 +1562,8 @@ require = function() {
       },
       init: function init(game) {
         this.game = game;
+        this.curHp = this.hp;
+        this.score = 0;
         this.initPlayer();
         this.onControl();
         this.node.setPosition(cc.p(0, 0));
@@ -1456,14 +1591,17 @@ require = function() {
           break;
 
          case cc.KEY.up:
+         case cc.KEY.w:
           this.moveUp();
           break;
 
          case cc.KEY.left:
+         case cc.KEY.a:
           this.moveLeft();
           break;
 
          case cc.KEY.right:
+         case cc.KEY.d:
           this.moveRight();
         }
       },
@@ -1512,16 +1650,11 @@ require = function() {
         this.fxTrail.stopSystem();
       },
       shoot: function shoot() {
-        if (this._shootFlag && !this._delayFlag) {
-          var rotation = this.getComponent(cc.RigidBody).getWorldRotation();
-          var radian = cc.degreesToRadians(90 - rotation);
-          var dir = cc.pForAngle(radian);
-          this.bulletManager.createBullet(this.emitter.getPosition(), dir, this.node.color);
-          this._delayFlag = true;
-          this.scheduleOnce(function() {
-            this._delayFlag = false;
-          }, this.bulletManager.delay);
-        }
+        var rotation = this.getComponent(cc.RigidBody).getWorldRotation();
+        var radian = cc.degreesToRadians(90 - rotation);
+        var dir = cc.pForAngle(radian);
+        this._delayFlag = true;
+        this.game.waveMng.spawnBullet(this.bulletType, dir, this);
       },
       roleRotate: function roleRotate() {
         this.moveLeftFlag && (this.moveAngle += 2);
@@ -1530,9 +1663,8 @@ require = function() {
         this.node.rotation = degree;
       },
       speedUp: function speedUp() {
-        this.speedUpFlag && this.accelSpeed > 0 && this.moveSpeed < this.maxSpeed && (this.moveSpeed += this.accelSpeed);
+        this.accelSpeed > 0 && this.moveSpeed < this.maxSpeed && (this.moveSpeed += this.accelSpeed);
       },
-      dead: function dead() {},
       getExp: function getExp(enemyLv) {
         if (0 == enemyLv) return 50;
         return 200 ^ enemyLv - 1;
@@ -1545,16 +1677,41 @@ require = function() {
           return true;
         }
       },
-      onBeginContact: function onBeginContact(contact, selfCollider, otherCollider) {},
-      onEndContact: function onEndContact(contact, selfCollider, otherCollider) {
+      onBeginContact: function onBeginContact(contact, selfCollider, otherCollider) {
         switch (otherCollider.node.name) {
          case "planet":
-          this.HP -= .1;
+          this.curHp--;
+          break;
+
+         case "bullet":
+          this.curHp -= otherCollider.node.getComponent("bullet").damage;
+          cc.log(otherCollider.node.getComponent("bullet").damage);
+          break;
+
+         default:
+          this.curHp--;
         }
+        this.game.inGameUI.showHp();
+        this.curHp <= 0 && this.isAlive && this.dead();
       },
+      dead: function dead() {
+        this.isAlive = false;
+        this.life--;
+        this.game.playerFX.playDead();
+        this.game.inGameUI.showLife();
+        var self = this;
+        this.life > 0 ? this.scheduleOnce(function() {
+          self.game.death();
+        }, this.game.playerFX.deadAnim.currentClip.duration) : this.game.gameOver();
+      },
+      revive: function revive() {
+        this.isAlive = true;
+        this.curHp = this.hp;
+      },
+      onEndContact: function onEndContact(contact, selfCollider, otherCollider) {},
       update: function update() {
-        this.speedUp();
-        this.shoot();
+        this.speedUpFlag && this.speedUp();
+        this._shootFlag && !this._delayFlag && this.shoot();
         this.moveDir = cc.pForAngle(cc.degreesToRadians(this.moveAngle));
         this.roleRotate();
         this.isStop || (this.getComponent(cc.RigidBody).linearVelocity = cc.v2(this.moveSpeed * this.moveDir.x, this.moveSpeed * this.moveDir.y));
@@ -1562,6 +1719,10 @@ require = function() {
       addKills: function addKills() {
         this.oneShootKills++;
         this.game.inGameUI.addCombo();
+      },
+      addScore: function addScore(score) {
+        this.score += score;
+        this.game.inGameUI.showScore(this.score);
       },
       onAtkFinished: function onAtkFinished() {
         this.oneShootKills >= 3 && this.game.inGameUI.showKills(this.oneShootKills);
@@ -1571,8 +1732,7 @@ require = function() {
   }, {
     "../Types": "Types",
     CameraControl: "CameraControl",
-    Helpers: "Helpers",
-    bulletManager: "bulletManager"
+    Helpers: "Helpers"
   } ],
   PoolMng: [ function(require, module, exports) {
     "use strict";
@@ -1606,13 +1766,13 @@ require = function() {
         return this.foePools[foeType].get();
       },
       putFoe: function putFoe(foeType, obj) {
-        this.foePools[foeType].put(obj);
+        return this.foePools[foeType].put(obj);
       },
       getBullet: function getBullet(type) {
         return this.bulletPools[type].get();
       },
       putBullet: function putBullet(type, obj) {
-        this.bulletPools[type].put(obj);
+        return this.bulletPools[type].put(obj);
       }
     });
     cc._RF.pop();
@@ -2062,17 +2222,20 @@ require = function() {
           newFoe.getComponent("Foe").init(this);
         }
       },
-      spawnBullet: function spawnBullet(bulletType, pos, dir, rot) {
-        var newBullet = this.game.poolMng.putBullet(bulletType);
+      spawnBullet: function spawnBullet(bulletType, dir, role) {
+        var newBullet = this.game.poolMng.getBullet(bulletType);
         if (newBullet) {
-          this.foeGroup.addChild(newBullet);
-          newBullet.setPosition(pos);
-          newBullet.getComponent("Bullet").init(this, dir);
+          role.node.getChildByName("BulletGroup").addChild(newBullet);
+          if (role.node.getChildByName("emitter")) {
+            var pos = role.node.getChildByName("emitter").getPosition();
+            newBullet.setPosition(pos);
+          }
+          newBullet.getComponent("Bullet").init(this, dir, role);
         } else cc.log("Too many Bullets!");
       },
       killFoe: function killFoe(score) {
         this.killedFoe++;
-        this.game.inGameUI.addScore(score);
+        this.player.addScore(score);
       },
       hitFoe: function hitFoe() {
         this.game.cameraShake();
@@ -2156,154 +2319,6 @@ require = function() {
       },
       hide: function hide() {
         this.node.active = false;
-      }
-    });
-    cc._RF.pop();
-  }, {} ],
-  bulletManager: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "6415b7/Qj9EGpMoPltMn3e8", "bulletManager");
-    "use strict";
-    var _bullet = require("bullet");
-    var _bullet2 = _interopRequireDefault(_bullet);
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : {
-        default: obj
-      };
-    }
-    var bPosition = cc.Class({
-      name: "bPosition",
-      properties: {
-        xAxis: {
-          default: "",
-          tooltip: "初始x轴，相对 Player"
-        },
-        yAxis: {
-          default: "",
-          tooltip: "初始y轴，相对 Player"
-        }
-      }
-    });
-    var bulletLine = cc.Class({
-      name: "bulletLine",
-      properties: {
-        name: "Line",
-        freqTime: 0,
-        prefab: cc.Prefab,
-        position: {
-          default: [],
-          type: bPosition,
-          tooltip: "每次多少排子弹"
-        },
-        finiteTime: 0
-      }
-    });
-    var bulletTwoLine = cc.Class({
-      name: "bulletTwoLine",
-      extends: bulletLine,
-      properties: {}
-    });
-    cc.Class({
-      extends: cc.Component,
-      properties: {
-        bulletLine: {
-          default: null,
-          type: bulletLine,
-          tooltip: "直线子弹"
-        },
-        delay: {
-          default: .3,
-          tooltip: "子弹延迟发射时间"
-        }
-      },
-      onLoad: function onLoad() {
-        var bulletPool = new cc.NodePool(_bullet2.default);
-        this.bulletPool = bulletPool;
-      },
-      start: function start() {},
-      createBullet: function createBullet(pos, dir, color) {
-        var bullet = null;
-        bullet = this.bulletPool.size() > 0 ? this.bulletPool.get(this) : cc.instantiate(this.bulletLine.prefab);
-        bullet.parent = this.node;
-        bullet.getComponent("bullet").init(pos, dir, color);
-      },
-      put: function put(node) {
-        this.bulletPool.put(node);
-      }
-    });
-    cc._RF.pop();
-  }, {
-    bullet: "bullet"
-  } ],
-  bullet: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "cd9f4n6ZY5AWaItfDxKgjeO", "bullet");
-    "use strict";
-    cc.Class({
-      extends: cc.Component,
-      properties: {
-        speed: 500,
-        length: 20,
-        width: {
-          default: 2,
-          displayName: "子弹宽度"
-        },
-        lifeTime: {
-          default: 10,
-          displayName: "存活时间"
-        },
-        collisionTime: {
-          default: 2,
-          displayName: "可碰撞次数"
-        },
-        damage: {
-          default: 10,
-          displayName: "伤害值"
-        },
-        sprite: cc.Sprite,
-        canBreak: true
-      },
-      init: function init(position, dir, color) {
-        this.player = this.node.parent.parent.parent.getComponent("Player");
-        this.bulletManager = this.node.parent.getComponent("bulletManager");
-        this.anim = this.getComponent(cc.Animation);
-        this.node.height = this.length;
-        this.node.width = this.width;
-        this.getComponent(cc.PhysicsBoxCollider).size.height = this.length;
-        this.getComponent(cc.PhysicsBoxCollider).size.width = this.width;
-        this.node.getChildByName("sprite").color = color;
-        this.node.getChildByName("brokenFX").getChildByName("pieceU").color = color;
-        this.node.getChildByName("brokenFX").getChildByName("pieceD").color = color;
-        this.node.setPosition(position);
-        this.getComponent(cc.RigidBody).linearVelocity = cc.v2(dir.x * this.speed, dir.y * this.speed);
-        this.scheduleOnce(this.vanish, this.lifeTime);
-      },
-      reuse: function reuse() {
-        this.unscheduleAllCallbacks();
-        this.scheduleOnce(this.vanish, this.lifeTime);
-        this.node.rotation = 0;
-        this.node.getChildByName("sprite").opacity = 255;
-        this.collisionTime = this.player.bulletCollisionTime;
-      },
-      hit: function hit() {},
-      onBeginContact: function onBeginContact(contact, selfCollider, otherCollider) {
-        "gravity-radial" !== otherCollider.node.name && this.collisionTime--;
-        if (this.collisionTime <= 0) {
-          this.anim.play("break");
-          this.collisionTime = 2;
-          this.scheduleOnce(function() {
-            this.bulletManager.put(this.node);
-          }.bind(this), this.anim.currentClip.duration);
-        }
-      },
-      vanish: function vanish() {
-        this.anim.play("vanish");
-        this.scheduleOnce(function() {
-          this.bulletManager.put(this.node);
-        }.bind(this), this.anim.currentClip.duration);
-      },
-      update: function update(dt) {
-        if (false === this.isMoving) return;
       }
     });
     cc._RF.pop();
@@ -2430,13 +2445,15 @@ require = function() {
     cc.Class({
       extends: cc.Component,
       properties: {
-        HP: 1e3,
+        hp: 1e3,
+        curHp: 1e3,
         gravityRadial: cc.Prefab,
         radius: 100,
         gravityRadius: 200,
         gravityForce: 300
       },
       init: function init() {
+        this.curHp = this.hp;
         this.node.color = cc.hexToColor(_Helpers2.default.getRandomColor());
         this.getComponent(cc.RigidBody).angularVelocity = 200 * cc.randomMinus1To1();
         this.node.scale = 1 * Math.random() + .3;
@@ -2574,4 +2591,4 @@ require = function() {
     };
     cc._RF.pop();
   }, {} ]
-}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "AnimHelper", "BossMng", "Foe", "Spawn", "Game", "MapControl", "bullet", "bulletManager", "gravity-radial", "gravity", "planet", "PlayerFX", "SortMng", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "ComboDisplay", "DeathUI", "InGameUI", "KillDisplay", "WaveUI", "Joystick", "JoystickCommon", "StartMenuUI", "Helpers", "common", "global", "Launch", "Menu", "SetMenu", "NodePool", "Player", "SkillProgress", "PoolMng", "Types", "en", "zh", "BossProgress", "ButtonScaler", "WaveProgress" ]);
+}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "AnimHelper", "BossMng", "Foe", "Spawn", "Game", "MapControl", "Bullet", "gravity-radial", "gravity", "planet", "PlayerFX", "SortMng", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "ComboDisplay", "DeathUI", "InGameUI", "KillDisplay", "WaveUI", "Joystick", "JoystickCommon", "StartMenuUI", "Helpers", "common", "global", "Launch", "Menu", "SetMenu", "NodePool", "Player", "SkillProgress", "PoolMng", "Types", "en", "zh", "BossProgress", "ButtonScaler", "WaveProgress" ]);
