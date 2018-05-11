@@ -670,7 +670,7 @@
           },
           "_alignFlags": 33,
           "_right": 30,
-          "_top": 20,
+          "_top": 80,
           "_bottom": 350,
           "_verticalCenter": -748.8,
           "_horizontalCenter": -180
@@ -694,7 +694,7 @@
       "_position": {
         "__type__": "cc.Vec2",
         "x": 425,
-        "y": 225
+        "y": 165
       }
     },
     {
@@ -793,7 +793,7 @@
     "__type__": "cc.SpriteFrame",
     "content": {
       "name": "back",
-      "texture": "1ba2d2e85",
+      "texture": "157dbf3b3",
       "rect": [
         2,
         2,
@@ -835,10 +835,10 @@
     "__type__": "cc.SpriteFrame",
     "content": {
       "name": "FullScreen",
-      "texture": "1ba2d2e85",
+      "texture": "157dbf3b3",
       "rect": [
-        350,
-        555,
+        691,
+        171,
         164,
         164
       ],
@@ -856,10 +856,10 @@
     "__type__": "cc.SpriteFrame",
     "content": {
       "name": "exitFullScreen",
-      "texture": "1ba2d2e85",
+      "texture": "157dbf3b3",
       "rect": [
-        423,
-        723,
+        369,
+        726,
         163,
         163
       ],

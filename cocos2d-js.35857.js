@@ -29,7 +29,7 @@
   2: [ (function(require, module, exports) {
     cc._LogInfos = cc._LogInfos || {};
     var engineVersion;
-    engineVersion = "1.9.0";
+    engineVersion = "1.9.1";
     window["CocosEngine"] = cc.ENGINE_VERSION = engineVersion;
     cc._renderContext = null;
     cc._supportRender = false;
@@ -88,8 +88,8 @@
       _engineInitCalled = true;
     };
   }), {
-    "./cocos2d/core/platform/CCSys": 186,
-    "./cocos2d/core/utils": 226
+    "./cocos2d/core/platform/CCSys": 179,
+    "./cocos2d/core/utils": 219
   } ],
   3: [ (function(require, module, exports) {
     var logList;
@@ -217,7 +217,7 @@
       };
     }
   }), {
-    "./cocos2d/core/platform/CCEnum": 179
+    "./cocos2d/core/platform/CCEnum": 172
   } ],
   4: [ (function(require, module, exports) {
     true;
@@ -4365,7 +4365,7 @@
     false;
     module.exports = AnimationAnimator;
   }), {
-    "../core/utils/binary-search": 223,
+    "../core/utils/binary-search": 216,
     "./animation-curves": 14,
     "./motion-path-helper": 20,
     "./playable": 21,
@@ -4630,7 +4630,7 @@
       quickFindIndex: quickFindIndex
     };
   }), {
-    "../core/utils/binary-search": 223,
+    "../core/utils/binary-search": 216,
     "./bezier": 17,
     "./types": 22
   } ],
@@ -5332,7 +5332,7 @@
       Bezier: Bezier
     };
   }), {
-    "../core/utils/binary-search": 223,
+    "../core/utils/binary-search": 216,
     "./animation-curves": 14,
     "./bezier": 17
   } ],
@@ -5544,6 +5544,7 @@
       };
       proto.stop = function() {
         if (!this._element) return;
+        false;
         try {
           this._element.currentTime = 0;
         } catch (error) {}
@@ -5717,8 +5718,8 @@
     })(WebAudioElement.prototype);
     module.exports = cc.Audio = Audio;
   }), {
-    "../core/event/event-target": 113,
-    "../core/platform/CCSys": 186
+    "../core/event/event-target": 106,
+    "../core/platform/CCSys": 179
   } ],
   24: [ (function(require, module, exports) {
     var Audio = require("./CCAudio");
@@ -5734,6 +5735,7 @@
         var oldId = list.shift();
         var oldAudio = id2audio[oldId];
         oldAudio.stop();
+        oldAudio.destroy();
       }
       audio = new Audio(path);
       var callback = function() {
@@ -5865,6 +5867,7 @@
         if (!audio || !audio.stop) return false;
         audio.off("load", audio.__callback);
         audio.stop();
+        audio.destroy();
         return true;
       },
       stopAll: function() {
@@ -5872,6 +5875,7 @@
           var audio = id2audio[id];
           if (audio && audio.stop) {
             audio.stop();
+            audio.destroy();
             audio.off("load", audio.__callback);
           }
         }
@@ -6222,7 +6226,7 @@
       this._dirtyFlag = 0;
     };
   }), {
-    "../shape-nodes/CCDrawNode": 276
+    "../shape-nodes/CCDrawNode": 264
   } ],
   28: [ (function(require, module, exports) {
     require("../core/CCDrawingPrimitives");
@@ -6452,7 +6456,7 @@
     };
     module.exports = Base64;
   }), {
-    "../core/utils/misc": 227
+    "../core/utils/misc": 220
   } ],
   31: [ (function(require, module, exports) {
     var GZip = function Jacob__GZip(data) {
@@ -8517,12 +8521,12 @@
     cc.Director.PROJECTION_DEFAULT = cc.Director.PROJECTION_2D;
   }), {
     "./component-scheduler": 71,
-    "./event-manager": 111,
-    "./event/event-listeners": 112,
-    "./event/event-target": 113,
-    "./load-pipeline/auto-release-utils": 135,
-    "./node-activator": 148,
-    "./platform/_CCClass": 189
+    "./event-manager": 104,
+    "./event/event-listeners": 105,
+    "./event/event-target": 106,
+    "./load-pipeline/auto-release-utils": 128,
+    "./node-activator": 141,
+    "./platform/_CCClass": 182
   } ],
   35: [ (function(require, module, exports) {
     require("./CCDirector");
@@ -8560,7 +8564,7 @@
   }), {
     "./CCDirector": 34,
     "./CCGame": 40,
-    "./event-manager": 111
+    "./event-manager": 104
   } ],
   36: [ (function(require, module, exports) {
     require("./CCDirector");
@@ -8682,10 +8686,10 @@
       };
     }));
   }), {
-    "../kazmath": 248,
+    "../kazmath": 239,
     "./CCDirector": 34,
     "./CCGame": 40,
-    "./event-manager": 111
+    "./event-manager": 104
   } ],
   37: [ (function(require, module, exports) {
     var game = require("./CCGame");
@@ -9396,7 +9400,8 @@
         if (isWeChatGame) {
           this.container = cc.container = localContainer = document.createElement("DIV");
           this.frame = localContainer.parentNode === document.body ? document.documentElement : localContainer.parentNode;
-          this.canvas = cc._canvas = localCanvas = canvas;
+          localCanvas = cc.sys.browserType === cc.sys.BROWSER_TYPE_WECHAT_GAME_SUB ? wx.getSharedCanvas() : canvas;
+          this.canvas = cc._canvas = localCanvas;
         } else if (isQQPlay) {
           this.container = cc.container = document.createElement("DIV");
           this.frame = document.documentElement;
@@ -9435,7 +9440,7 @@
         if (cc._renderType === game.RENDER_TYPE_WEBGL) {
           var opts = {
             stencil: true,
-            antialias: false,
+            antialias: cc.macro.ENABLE_WEBGL_ANTIALIAS,
             alpha: cc.macro.ENABLE_TRANSPARENT_CANVAS
           };
           isWeChatGame && (opts["preserveDrawingBuffer"] = true);
@@ -9496,10 +9501,10 @@
     cc.game = module.exports = game;
   }), {
     "../audio/CCAudioEngine": 24,
-    "./event/event-target": 113,
-    "./platform/BKInputManager": 175,
-    "./platform/CCInputManager": 181,
-    "./platform/CCView": 187
+    "./event/event-target": 106,
+    "./platform/BKInputManager": 168,
+    "./platform/CCInputManager": 174,
+    "./platform/CCView": 180
   } ],
   41: [ (function(require, module, exports) {
     "use strict";
@@ -10529,12 +10534,12 @@
     Node.EventType = EventType;
     cc.Node = module.exports = Node;
   }), {
-    "./event-manager": 111,
-    "./event/event": 114,
-    "./utils/base-node": 222,
-    "./utils/misc": 227,
-    "./utils/prefab-helper": 229,
-    "./utils/scene-graph-helper": 230
+    "./event-manager": 104,
+    "./event/event": 107,
+    "./utils/base-node": 215,
+    "./utils/misc": 220,
+    "./utils/prefab-helper": 222,
+    "./utils/scene-graph-helper": 223
   } ],
   42: [ (function(require, module, exports) {
     var NIL = function() {};
@@ -11227,7 +11232,7 @@
     cc.Prefab = module.exports = Prefab;
     cc.js.obsolete(cc, "cc._Prefab", "Prefab");
   }), {
-    "../platform/instantiate-jit": 196
+    "../platform/instantiate-jit": 189
   } ],
   50: [ (function(require, module, exports) {
     var CCObject = require("../platform/CCObject");
@@ -11251,7 +11256,7 @@
     });
     module.exports = cc.RawAsset;
   }), {
-    "../platform/CCObject": 183
+    "../platform/CCObject": 176
   } ],
   51: [ (function(require, module, exports) {
     var Scene = cc.Class({
@@ -11340,8 +11345,8 @@
     require("./CCBitmapFont");
     require("./CCLabelAtlas");
   }), {
-    "../sprites/CCSpriteFrame": 216,
-    "../textures/CCTexture2D": 217,
+    "../sprites/CCSpriteFrame": 209,
+    "../textures/CCTexture2D": 210,
     "./CCAsset": 44,
     "./CCAudioClip": 45,
     "./CCBitmapFont": 46,
@@ -12224,8 +12229,8 @@
     };
     Misc.propertyDefine(_ccsg.Node, SameNameGetSets, DiffNameGetSets);
   }), {
-    "../event-manager": 111,
-    "../utils/misc": 227
+    "../event-manager": 104,
+    "../utils/misc": 220
   } ],
   57: [ (function(require, module, exports) {
     cc.CustomRenderCmd = function(target, func) {
@@ -13982,10 +13987,10 @@
     });
     module.exports = ComponentScheduler;
   }), {
-    "./platform/CCClass": 177,
-    "./platform/CCObject": 183,
-    "./platform/js": 198,
-    "./utils/misc": 227
+    "./platform/CCClass": 170,
+    "./platform/CCObject": 176,
+    "./platform/js": 191,
+    "./utils/misc": 220
   } ],
   72: [ (function(require, module, exports) {
     var AnimationAnimator = require("../../animation/animation-animator");
@@ -14348,6 +14353,7 @@
       },
       onDestroy: function() {
         this.stop();
+        this.audio.destroy();
         cc.audioEngine.uncache(this._clip);
       },
       play: function() {
@@ -14857,7 +14863,7 @@
     });
     cc.Canvas = module.exports = Canvas;
   }), {
-    "../event-manager": 111,
+    "../event-manager": 104,
     "./CCComponent": 77
   } ],
   77: [ (function(require, module, exports) {
@@ -15027,9 +15033,9 @@
     Component.prototype.__scriptUuid = "";
     cc.Component = module.exports = Component;
   }), {
-    "../platform/CCObject": 183,
-    "../platform/id-generater": 194,
-    "../platform/js": 198
+    "../platform/CCObject": 176,
+    "../platform/id-generater": 187,
+    "../platform/js": 191
   } ],
   78: [ (function(require, module, exports) {
     cc.Component.EventHandler = cc.Class({
@@ -15080,253 +15086,6 @@
     });
   }), {} ],
   79: [ (function(require, module, exports) {
-    require("../editbox/CCSGEditBox");
-    var KeyboardReturnType = _ccsg.EditBox.KeyboardReturnType;
-    var InputMode = _ccsg.EditBox.InputMode;
-    var InputFlag = _ccsg.EditBox.InputFlag;
-    var EditBox = cc.Class({
-      name: "cc.EditBox",
-      extends: cc._RendererUnderSG,
-      editor: false,
-      properties: {
-        _useOriginalSize: true,
-        _string: "",
-        string: {
-          tooltip: false,
-          get: function() {
-            return this._sgNode.string;
-          },
-          set: function(value) {
-            this._sgNode.string = this._string = value;
-          }
-        },
-        backgroundImage: {
-          tooltip: false,
-          default: null,
-          type: cc.SpriteFrame,
-          notify: function() {
-            var sgNode = this._sgNode;
-            var backgroundSprite = sgNode.getBackgroundSprite();
-            if (this.backgroundImage) {
-              var sprite = this._createBackgroundSprite();
-              sprite.setContentSize(sgNode.getContentSize());
-            } else backgroundSprite.removeFromParent();
-          }
-        },
-        returnType: {
-          default: KeyboardReturnType.DEFAULT,
-          tooltip: false,
-          displayName: "KeyboardReturnType",
-          type: KeyboardReturnType,
-          notify: function() {
-            this._sgNode.returnType = this.returnType;
-          }
-        },
-        inputFlag: {
-          tooltip: false,
-          default: InputFlag.DEFAULT,
-          type: InputFlag,
-          notify: function() {
-            this._sgNode.inputFlag = this.inputFlag;
-          }
-        },
-        inputMode: {
-          tooltip: false,
-          default: InputMode.ANY,
-          type: InputMode,
-          notify: function() {
-            this._sgNode.inputMode = this.inputMode;
-          }
-        },
-        fontSize: {
-          tooltip: false,
-          default: 20,
-          notify: function() {
-            this._sgNode.fontSize = this.fontSize;
-          }
-        },
-        lineHeight: {
-          tooltip: false,
-          default: 40,
-          notify: function() {
-            this._sgNode.setLineHeight(this.lineHeight);
-          }
-        },
-        fontColor: {
-          tooltip: false,
-          default: cc.Color.WHITE,
-          notify: function() {
-            this._sgNode.fontColor = this.fontColor;
-          }
-        },
-        placeholder: {
-          tooltip: false,
-          default: "Enter text here...",
-          notify: function() {
-            this._sgNode.placeholder = this.placeholder;
-          }
-        },
-        placeholderFontSize: {
-          tooltip: false,
-          default: 20,
-          notify: function() {
-            this._sgNode.placeholderFontSize = this.placeholderFontSize;
-          }
-        },
-        placeholderFontColor: {
-          tooltip: false,
-          default: cc.Color.GRAY,
-          notify: function() {
-            this._sgNode.placeholderFontColor = this.placeholderFontColor;
-          }
-        },
-        maxLength: {
-          tooltip: false,
-          default: 20,
-          notify: function() {
-            this._sgNode.maxLength = this.maxLength;
-          }
-        },
-        stayOnTop: {
-          tooltip: false,
-          default: false,
-          notify: function() {
-            true;
-            this._sgNode.stayOnTop(this.stayOnTop);
-            this._sgNode.fontSize = this.fontSize;
-            this._sgNode.fontColor = this.fontColor;
-          }
-        },
-        _tabIndex: 0,
-        tabIndex: {
-          tooltip: false,
-          get: function() {
-            return this._tabIndex;
-          },
-          set: function(value) {
-            this._tabIndex = value;
-            this._sgNode.setTabIndex(value);
-          }
-        },
-        editingDidBegan: {
-          default: [],
-          type: cc.Component.EventHandler
-        },
-        textChanged: {
-          default: [],
-          type: cc.Component.EventHandler
-        },
-        editingDidEnded: {
-          default: [],
-          type: cc.Component.EventHandler
-        },
-        editingReturn: {
-          default: [],
-          type: cc.Component.EventHandler
-        }
-      },
-      statics: {
-        KeyboardReturnType: KeyboardReturnType,
-        InputFlag: InputFlag,
-        InputMode: InputMode
-      },
-      _applyCapInset: function(sprite) {
-        var backgroundImage = this.backgroundImage;
-        sprite.setInsetTop(backgroundImage.insetTop);
-        sprite.setInsetBottom(backgroundImage.insetBottom);
-        sprite.setInsetRight(backgroundImage.insetRight);
-        sprite.setInsetLeft(backgroundImage.insetLeft);
-      },
-      _createSgNode: function() {
-        return new _ccsg.EditBox(cc.size(160, 40));
-      },
-      _createBackgroundSprite: function() {
-        var sgNode = this._sgNode;
-        var bgSprite = new cc.Scale9Sprite();
-        bgSprite.setRenderingType(cc.Scale9Sprite.RenderingType.SLICED);
-        if (this.backgroundImage) {
-          this.backgroundImage.ensureLoadTexture();
-          bgSprite.setSpriteFrame(this.backgroundImage);
-          this._applyCapInset(bgSprite);
-        }
-        sgNode.initWithSizeAndBackgroundSprite(cc.size(160, 40), bgSprite);
-        return bgSprite;
-      },
-      _initSgNode: function() {
-        var sgNode = this._sgNode;
-        true;
-        sgNode.createDomElementIfNeeded();
-        this._createBackgroundSprite();
-        false;
-        sgNode.setContentSize(this.node.getContentSize());
-        sgNode.inputMode = this.inputMode;
-        sgNode.maxLength = this.maxLength;
-        sgNode.string = this._string;
-        sgNode.fontSize = this.fontSize;
-        sgNode.fontColor = this.fontColor;
-        sgNode.placeholder = this.placeholder;
-        sgNode.placeholderFontSize = this.placeholderFontSize;
-        sgNode.placeholderFontColor = this.placeholderFontColor;
-        sgNode.inputFlag = this.inputFlag;
-        sgNode.returnType = this.returnType;
-        sgNode.setLineHeight(this.lineHeight);
-        sgNode.stayOnTop(this.stayOnTop);
-        sgNode.setTabIndex(this.tabIndex);
-        sgNode.setDelegate(this);
-      },
-      editBoxEditingDidBegan: function() {
-        cc.Component.EventHandler.emitEvents(this.editingDidBegan, this);
-        this.node.emit("editing-did-began", this);
-      },
-      editBoxEditingDidEnded: function() {
-        cc.Component.EventHandler.emitEvents(this.editingDidEnded, this);
-        this.node.emit("editing-did-ended", this);
-      },
-      editBoxTextChanged: function(editBox, text) {
-        cc.Component.EventHandler.emitEvents(this.textChanged, text, this);
-        this.node.emit("text-changed", this);
-      },
-      editBoxEditingReturn: function() {
-        cc.Component.EventHandler.emitEvents(this.editingReturn, this);
-        this.node.emit("editing-return", this);
-      },
-      onDestroy: function() {
-        this._sgNode.setDelegate(null);
-        this._super();
-      },
-      __preload: function() {
-        this._super();
-        true;
-        this._registerEvent();
-      },
-      _registerEvent: function() {
-        true;
-        this.node.on(cc.Node.EventType.TOUCH_START, this._onTouchBegan, this);
-        this.node.on(cc.Node.EventType.TOUCH_END, this._onTouchEnded, this);
-      },
-      _onTouchBegan: function(event) {
-        this._sgNode && this._sgNode._onTouchBegan(event.touch);
-        event.stopPropagation();
-      },
-      _onTouchEnded: function(event) {
-        this._sgNode && this._sgNode._onTouchEnded();
-        event.stopPropagation();
-      },
-      setFocus: function() {
-        this._sgNode && this._sgNode.setFocus();
-      },
-      isFocused: function() {
-        var isFocused = false;
-        this._sgNode && (isFocused = this._sgNode.isFocused());
-        return isFocused;
-      }
-    });
-    false;
-    cc.EditBox = module.exports = EditBox;
-  }), {
-    "../editbox/CCSGEditBox": 106
-  } ],
-  80: [ (function(require, module, exports) {
     require("../label/CCSGLabel");
     require("../label/CCSGLabelCanvasRenderCmd");
     require("../label/CCSGLabelWebGLRenderCmd");
@@ -15590,11 +15349,11 @@
     });
     cc.Label = module.exports = Label;
   }), {
-    "../label/CCSGLabel": 127,
-    "../label/CCSGLabelCanvasRenderCmd": 128,
-    "../label/CCSGLabelWebGLRenderCmd": 129
+    "../label/CCSGLabel": 120,
+    "../label/CCSGLabelCanvasRenderCmd": 121,
+    "../label/CCSGLabelWebGLRenderCmd": 122
   } ],
-  81: [ (function(require, module, exports) {
+  80: [ (function(require, module, exports) {
     var LabelOutline = cc.Class({
       name: "cc.LabelOutline",
       extends: require("./CCComponent"),
@@ -15649,7 +15408,7 @@
   }), {
     "./CCComponent": 77
   } ],
-  82: [ (function(require, module, exports) {
+  81: [ (function(require, module, exports) {
     var Type = cc.Enum({
       NONE: 0,
       HORIZONTAL: 1,
@@ -16170,7 +15929,7 @@
   }), {
     "./CCComponent": 77
   } ],
-  83: [ (function(require, module, exports) {
+  82: [ (function(require, module, exports) {
     require("../../clipping-nodes/CCClippingNode");
     require("../../clipping-nodes/CCClippingNodeCanvasRenderCmd");
     require("../../clipping-nodes/CCClippingNodeWebGLRenderCmd");
@@ -16353,408 +16112,9 @@
     "../../clipping-nodes/CCClippingNode": 26,
     "../../clipping-nodes/CCClippingNodeCanvasRenderCmd": 27,
     "../../clipping-nodes/CCClippingNodeWebGLRenderCmd": 28,
-    "../../shape-nodes/CCDrawNode": 276
+    "../../shape-nodes/CCDrawNode": 264
   } ],
-  84: [ (function(require, module, exports) {
-    var SizeMode = cc.Enum({
-      Unified: 0,
-      Free: 1
-    });
-    var Direction = cc.Enum({
-      Horizontal: 0,
-      Vertical: 1
-    });
-    var EventType = cc.Enum({
-      PAGE_TURNING: 0
-    });
-    var PageView = cc.Class({
-      name: "cc.PageView",
-      extends: cc.ScrollView,
-      editor: false,
-      ctor: function() {
-        this._curPageIdx = 0;
-        this._lastPageIdx = 0;
-        this._pages = [];
-        this._scrollCenterOffsetX = [];
-        this._scrollCenterOffsetY = [];
-      },
-      properties: {
-        sizeMode: {
-          default: SizeMode.Unified,
-          type: SizeMode,
-          tooltip: false,
-          notify: function() {
-            this._syncSizeMode();
-          }
-        },
-        direction: {
-          default: Direction.Horizontal,
-          type: Direction,
-          tooltip: false,
-          notify: function() {
-            this._syncScrollDirection();
-          }
-        },
-        scrollThreshold: {
-          default: .5,
-          type: cc.Float,
-          slide: true,
-          range: [ 0, 1, .01 ],
-          tooltip: false
-        },
-        autoPageTurningThreshold: {
-          default: 100,
-          type: cc.Float,
-          tooltip: false
-        },
-        pageTurningEventTiming: {
-          default: .1,
-          type: cc.Float,
-          range: [ 0, 1, .01 ],
-          tooltip: false
-        },
-        indicator: {
-          default: null,
-          type: cc.PageViewIndicator,
-          tooltip: false,
-          notify: function() {
-            this.indicator && this.indicator.setPageView(this);
-          }
-        },
-        pageTurningSpeed: {
-          default: .3,
-          type: cc.Float,
-          tooltip: false
-        },
-        pageEvents: {
-          default: [],
-          type: cc.Component.EventHandler,
-          tooltip: false
-        }
-      },
-      statics: {
-        SizeMode: SizeMode,
-        Direction: Direction,
-        EventType: EventType
-      },
-      __preload: function() {
-        this.node.on("size-changed", this._updateAllPagesSize, this);
-      },
-      onEnable: function() {
-        this._super();
-        true;
-        this.node.on("scroll-ended-with-threshold", this._dispatchPageTurningEvent, this);
-      },
-      onDisable: function() {
-        this._super();
-        true;
-        this.node.off("scroll-ended-with-threshold", this._dispatchPageTurningEvent, this);
-      },
-      onLoad: function() {
-        this._initPages();
-        this.indicator && this.indicator.setPageView(this);
-      },
-      onDestroy: function() {
-        this.node.off("size-changed", this._updateAllPagesSize, this);
-      },
-      getCurrentPageIndex: function() {
-        return this._curPageIdx;
-      },
-      setCurrentPageIndex: function(index) {
-        this.scrollToPage(index, true);
-      },
-      getPages: function() {
-        return this._pages;
-      },
-      addPage: function(page) {
-        if (!page || -1 !== this._pages.indexOf(page) || !this.content) return;
-        this.content.addChild(page);
-        this._pages.push(page);
-        this._updatePageView();
-      },
-      insertPage: function(page, index) {
-        if (index < 0 || !page || -1 !== this._pages.indexOf(page) || !this.content) return;
-        var pageCount = this._pages.length;
-        if (index >= pageCount) this.addPage(page); else {
-          this._pages.splice(index, 0, page);
-          this.content.addChild(page);
-          this._updatePageView();
-        }
-      },
-      removePage: function(page) {
-        if (!page || !this.content) return;
-        var index = this._pages.indexOf(page);
-        if (-1 === index) {
-          cc.warnID(4300, page.name);
-          return;
-        }
-        this.removePageAtIndex(index);
-      },
-      removePageAtIndex: function(index) {
-        var pageList = this._pages;
-        if (index < 0 || index >= pageList.length) return;
-        var page = pageList[index];
-        if (!page) return;
-        this.content.removeChild(page);
-        pageList.splice(index, 1);
-        this._updatePageView();
-      },
-      removeAllPages: function() {
-        if (!this.content) return;
-        var locPages = this._pages;
-        for (var i = 0, len = locPages.length; i < len; i++) this.content.removeChild(locPages[i]);
-        this._pages.length = 0;
-        this._updatePageView();
-      },
-      scrollToPage: function(idx, timeInSecond) {
-        if (idx < 0 || idx >= this._pages.length) return;
-        timeInSecond = void 0 !== timeInSecond ? timeInSecond : .3;
-        this._curPageIdx = idx;
-        this.scrollToOffset(this._moveOffsetValue(idx), timeInSecond, true);
-        this.indicator && this.indicator._changedState();
-      },
-      getScrollEndedEventTiming: function() {
-        return this.pageTurningEventTiming;
-      },
-      _syncScrollDirection: function() {
-        this.horizontal = this.direction === Direction.Horizontal;
-        this.vertical = this.direction === Direction.Vertical;
-      },
-      _syncSizeMode: function() {
-        if (!this.content) return;
-        var layout = this.content.getComponent(cc.Layout);
-        if (layout) {
-          if (0 === this._pages.length) layout.padding = 0; else {
-            var lastPage = this._pages[this._pages.length - 1];
-            if (this.sizeMode === SizeMode.Free) if (this.direction === Direction.Horizontal) {
-              layout.paddingLeft = (this.node.width - this._pages[0].width) / 2;
-              layout.paddingRight = (this.node.width - lastPage.width) / 2;
-            } else if (this.direction === Direction.Vertical) {
-              layout.paddingTop = (this.node.height - this._pages[0].height) / 2;
-              layout.paddingBottom = (this.node.height - lastPage.height) / 2;
-            }
-          }
-          layout.updateLayout();
-        }
-      },
-      _updatePageView: function() {
-        var pageCount = this._pages.length;
-        if (this._curPageIdx >= pageCount) {
-          this._curPageIdx = 0 === pageCount ? 0 : pageCount - 1;
-          this._lastPageIdx = this._curPageIdx;
-        }
-        for (var i = 0; i < pageCount; ++i) {
-          this._pages[i].setSiblingIndex(i);
-          this.direction === Direction.Horizontal ? this._scrollCenterOffsetX[i] = Math.abs(this.content.x + this._pages[i].x) : this._scrollCenterOffsetY[i] = Math.abs(this.content.y + this._pages[i].y);
-        }
-        var layout = this.content.getComponent(cc.Layout);
-        layout && layout.enabled && layout.updateLayout();
-        this.indicator && this.indicator._refresh();
-      },
-      _updateAllPagesSize: function() {
-        if (this.sizeMode !== SizeMode.Unified) return;
-        var locPages = this._pages;
-        var selfSize = this.node.getContentSize();
-        for (var i = 0, len = locPages.length; i < len; i++) locPages[i].setContentSize(selfSize);
-      },
-      _initPages: function() {
-        if (!this.content) return;
-        var children = this.content.children;
-        for (var i = 0; i < children.length; ++i) {
-          var page = children[i];
-          if (this._pages.indexOf(page) >= 0) continue;
-          this._pages.push(page);
-        }
-        this._syncScrollDirection();
-        this._syncSizeMode();
-        this._updatePageView();
-      },
-      _dispatchPageTurningEvent: function() {
-        if (this._lastPageIdx === this._curPageIdx) return;
-        this._lastPageIdx = this._curPageIdx;
-        cc.Component.EventHandler.emitEvents(this.pageEvents, this, EventType.PAGE_TURNING);
-        this.node.emit("page-turning", this);
-      },
-      _isScrollable: function(offset, index, nextIndex) {
-        if (this.sizeMode === SizeMode.Free) {
-          var curPageCenter, nextPageCenter;
-          if (this.direction === Direction.Horizontal) {
-            curPageCenter = this._scrollCenterOffsetX[index];
-            nextPageCenter = this._scrollCenterOffsetX[nextIndex];
-            return Math.abs(offset.x) >= Math.abs(curPageCenter - nextPageCenter) * this.scrollThreshold;
-          }
-          if (this.direction === Direction.Vertical) {
-            curPageCenter = this._scrollCenterOffsetY[index];
-            nextPageCenter = this._scrollCenterOffsetY[nextIndex];
-            return Math.abs(offset.y) >= Math.abs(curPageCenter - nextPageCenter) * this.scrollThreshold;
-          }
-        } else {
-          if (this.direction === Direction.Horizontal) return Math.abs(offset.x) >= this.node.width * this.scrollThreshold;
-          if (this.direction === Direction.Vertical) return Math.abs(offset.y) >= this.node.height * this.scrollThreshold;
-        }
-      },
-      _isQuicklyScrollable: function(touchMoveVelocity) {
-        if (this.direction === Direction.Horizontal) {
-          if (Math.abs(touchMoveVelocity.x) > this.autoPageTurningThreshold) return true;
-        } else if (this.direction === Direction.Vertical && Math.abs(touchMoveVelocity.y) > this.autoPageTurningThreshold) return true;
-        return false;
-      },
-      _moveOffsetValue: function(idx) {
-        var offset = cc.p(0, 0);
-        this.sizeMode === SizeMode.Free ? this.direction === Direction.Horizontal ? offset.x = this._scrollCenterOffsetX[idx] : this.direction === Direction.Vertical && (offset.y = this._scrollCenterOffsetY[idx]) : this.direction === Direction.Horizontal ? offset.x = idx * this.node.width : this.direction === Direction.Vertical && (offset.y = idx * this.node.height);
-        return offset;
-      },
-      _getDragDirection: function(moveOffset) {
-        if (this.direction === Direction.Horizontal) {
-          if (0 === moveOffset.x) return 0;
-          return moveOffset.x > 0 ? 1 : -1;
-        }
-        if (this.direction === Direction.Vertical) {
-          if (0 === moveOffset.y) return 0;
-          return moveOffset.y < 0 ? 1 : -1;
-        }
-      },
-      _handleReleaseLogic: function(touch) {
-        var bounceBackStarted = this._startBounceBackIfNeeded();
-        var moveOffset = cc.pSub(this._touchBeganPosition, this._touchEndPosition);
-        if (bounceBackStarted) {
-          var dragDirection = this._getDragDirection(moveOffset);
-          if (0 === dragDirection) return;
-          this._curPageIdx = dragDirection > 0 ? this._pages.length - 1 : 0;
-          this.indicator && this.indicator._changedState();
-        } else {
-          var index = this._curPageIdx, nextIndex = index + this._getDragDirection(moveOffset);
-          var timeInSecond = this.pageTurningSpeed * Math.abs(index - nextIndex);
-          if (nextIndex < this._pages.length) {
-            if (this._isScrollable(moveOffset, index, nextIndex)) {
-              this.scrollToPage(nextIndex, timeInSecond);
-              return;
-            }
-            var touchMoveVelocity = this._calculateTouchMoveVelocity();
-            if (this._isQuicklyScrollable(touchMoveVelocity)) {
-              this.scrollToPage(nextIndex, timeInSecond);
-              return;
-            }
-          }
-          this.scrollToPage(index, timeInSecond);
-        }
-      },
-      _onTouchBegan: function(event, captureListeners) {
-        this._touchBeganPosition = event.touch.getLocation();
-        this._super(event, captureListeners);
-      },
-      _onTouchMoved: function(event, captureListeners) {
-        this._super(event, captureListeners);
-      },
-      _onTouchEnded: function(event, captureListeners) {
-        this._touchEndPosition = event.touch.getLocation();
-        this._super(event, captureListeners);
-      },
-      _onTouchCancelled: function(event, captureListeners) {
-        this._touchEndPosition = event.touch.getLocation();
-        this._super(event, captureListeners);
-      },
-      _onMouseWheel: function() {}
-    });
-    cc.PageView = module.exports = PageView;
-  }), {} ],
-  85: [ (function(require, module, exports) {
-    var Direction = cc.Enum({
-      HORIZONTAL: 0,
-      VERTICAL: 1
-    });
-    var PageViewIndicator = cc.Class({
-      name: "cc.PageViewIndicator",
-      extends: require("./CCComponent"),
-      editor: false,
-      properties: {
-        _layout: null,
-        _pageView: null,
-        _indicators: [],
-        spriteFrame: {
-          default: null,
-          type: cc.SpriteFrame,
-          tooltip: false
-        },
-        direction: {
-          default: Direction.HORIZONTAL,
-          type: Direction,
-          tooltip: false
-        },
-        cellSize: {
-          default: cc.size(20, 20),
-          tooltip: false
-        },
-        spacing: {
-          default: 0,
-          tooltip: false
-        }
-      },
-      statics: {
-        Direction: Direction
-      },
-      onLoad: function() {
-        this._updateLayout();
-      },
-      setPageView: function(target) {
-        this._pageView = target;
-        this._refresh();
-      },
-      _updateLayout: function() {
-        this._layout = this.getComponent(cc.Layout);
-        this._layout || (this._layout = this.addComponent(cc.Layout));
-        if (this.direction === Direction.HORIZONTAL) {
-          this._layout.type = cc.Layout.Type.HORIZONTAL;
-          this._layout.spacingX = this.spacing;
-        } else if (this.direction === Direction.VERTICAL) {
-          this._layout.type = cc.Layout.Type.VERTICAL;
-          this._layout.spacingY = this.spacing;
-        }
-        this._layout.resizeMode = cc.Layout.ResizeMode.CONTAINER;
-      },
-      _createIndicator: function() {
-        var node = new cc.Node();
-        var sprite = node.addComponent(cc.Sprite);
-        sprite.spriteFrame = this.spriteFrame;
-        node.parent = this.node;
-        node.width = this.cellSize.width;
-        node.height = this.cellSize.height;
-        return node;
-      },
-      _changedState: function() {
-        var indicators = this._indicators;
-        if (0 === indicators.length) return;
-        var idx = this._pageView._curPageIdx;
-        if (idx >= indicators.length) return;
-        for (var i = 0; i < indicators.length; ++i) {
-          var node = indicators[i];
-          node.opacity = 127.5;
-        }
-        indicators[idx].opacity = 255;
-      },
-      _refresh: function() {
-        if (!this._pageView) return;
-        var indicators = this._indicators;
-        var pages = this._pageView.getPages();
-        if (pages.length === indicators.length) return;
-        var i = 0;
-        if (pages.length > indicators.length) for (i = 0; i < pages.length; ++i) indicators[i] || (indicators[i] = this._createIndicator()); else {
-          var count = indicators.length - pages.length;
-          for (i = count; i > 0; --i) {
-            var node = indicators[i - 1];
-            this.node.removeChild(node);
-            indicators.splice(i - 1, 1);
-          }
-        }
-        this._layout && this._layout.enabledInHierarchy && this._layout.updateLayout();
-        this._changedState();
-      }
-    });
-    cc.PageViewIndicator = module.exports = PageViewIndicator;
-  }), {
-    "./CCComponent": 77
-  } ],
-  86: [ (function(require, module, exports) {
+  83: [ (function(require, module, exports) {
     var Mode = cc.Enum({
       HORIZONTAL: 0,
       VERTICAL: 1,
@@ -16887,7 +16247,7 @@
   }), {
     "./CCComponent": 77
   } ],
-  87: [ (function(require, module, exports) {
+  84: [ (function(require, module, exports) {
     var RendererInSG = cc.Class({
       extends: require("./CCSGComponent"),
       name: "cc._RendererInSG",
@@ -16944,9 +16304,9 @@
     });
     cc._RendererInSG = module.exports = RendererInSG;
   }), {
-    "./CCSGComponent": 90
+    "./CCSGComponent": 87
   } ],
-  88: [ (function(require, module, exports) {
+  85: [ (function(require, module, exports) {
     var RendererUnderSG = cc.Class({
       extends: require("./CCSGComponent"),
       name: "cc._RendererUnderSG",
@@ -16986,9 +16346,9 @@
     });
     cc._RendererUnderSG = module.exports = RendererUnderSG;
   }), {
-    "./CCSGComponent": 90
+    "./CCSGComponent": 87
   } ],
-  89: [ (function(require, module, exports) {
+  86: [ (function(require, module, exports) {
     require("../label/CCHtmlTextParser");
     require("../label/CCTextUtils");
     var HorizontalAlign = cc.TextAlignment;
@@ -17466,10 +16826,10 @@
     });
     cc.RichText = module.exports = RichText;
   }), {
-    "../label/CCHtmlTextParser": 126,
-    "../label/CCTextUtils": 130
+    "../label/CCHtmlTextParser": 119,
+    "../label/CCTextUtils": 123
   } ],
-  90: [ (function(require, module, exports) {
+  87: [ (function(require, module, exports) {
     var SceneGraphHelper = require("../utils/scene-graph-helper");
     var SGComponent = cc.Class({
       extends: require("./CCComponent"),
@@ -17493,10 +16853,10 @@
     });
     cc._SGComponent = module.exports = SGComponent;
   }), {
-    "../utils/scene-graph-helper": 230,
+    "../utils/scene-graph-helper": 223,
     "./CCComponent": 77
   } ],
-  91: [ (function(require, module, exports) {
+  88: [ (function(require, module, exports) {
     var GETTINGSHORTERFACTOR = 20;
     var Direction = cc.Enum({
       HORIZONTAL: 0,
@@ -17688,7 +17048,7 @@
   }), {
     "./CCComponent": 77
   } ],
-  92: [ (function(require, module, exports) {
+  89: [ (function(require, module, exports) {
     var NUMBER_OF_GATHERED_TOUCHES_FOR_MOVE_SPEED = 5;
     var OUT_OF_BOUNDARY_BREAKING_FACTOR = .05;
     var EPSILON = 1e-4;
@@ -18474,9 +17834,9 @@
     });
     cc.ScrollView = module.exports = ScrollView;
   }), {
-    "./CCViewGroup": 101
+    "./CCViewGroup": 96
   } ],
-  93: [ (function(require, module, exports) {
+  90: [ (function(require, module, exports) {
     var Direction = cc.Enum({
       Horizontal: 0,
       Vertical: 1
@@ -18601,7 +17961,7 @@
   }), {
     "./CCComponent": 77
   } ],
-  94: [ (function(require, module, exports) {
+  91: [ (function(require, module, exports) {
     var Base = require("./CCRendererUnderSG");
     var SpriteType = cc.Scale9Sprite.RenderingType;
     var FillType = cc.Scale9Sprite.FillType;
@@ -18863,10 +18223,10 @@
     misc.propertyDefine(Sprite, SameNameGetSets, DiffNameGetSets);
     cc.Sprite = module.exports = Sprite;
   }), {
-    "../utils/misc": 227,
-    "./CCRendererUnderSG": 88
+    "../utils/misc": 220,
+    "./CCRendererUnderSG": 85
   } ],
-  95: [ (function(require, module, exports) {
+  92: [ (function(require, module, exports) {
     var SpriteDistortion = cc.Class({
       name: "cc.SpriteDistortion",
       extends: require("./CCComponent"),
@@ -18916,69 +18276,7 @@
   }), {
     "./CCComponent": 77
   } ],
-  96: [ (function(require, module, exports) {
-    var ComponentType = cc.Enum({
-      NONE: 0,
-      CHECKBOX: 1,
-      TEXT_ATLAS: 2,
-      SLIDER_BAR: 3,
-      LIST_VIEW: 4,
-      PAGE_VIEW: 5
-    });
-    var ListDirection = cc.Enum({
-      VERTICAL: 0,
-      HORIZONTAL: 1
-    });
-    var VerticalAlign = cc.Enum({
-      TOP: 0,
-      CENTER: 1,
-      BOTTOM: 2
-    });
-    var HorizontalAlign = cc.Enum({
-      LEFT: 0,
-      CENTER: 1,
-      RIGHT: 2
-    });
-    var StudioComponent = cc.Class({
-      name: "cc.StudioComponent",
-      extends: cc.Component,
-      editor: false,
-      properties: false,
-      statics: {
-        ComponentType: ComponentType,
-        ListDirection: ListDirection,
-        VerticalAlign: VerticalAlign,
-        HorizontalAlign: HorizontalAlign
-      }
-    });
-    var PrefabHelper = require("../utils/prefab-helper");
-    StudioComponent.PlaceHolder = cc.Class({
-      name: "cc.StudioComponent.PlaceHolder",
-      extends: cc.Component,
-      properties: {
-        _baseUrl: "",
-        nestedPrefab: cc.Prefab
-      },
-      onLoad: function() {
-        if (!this.nestedPrefab) {
-          false;
-          return;
-        }
-        this._replaceWithNestedPrefab();
-      },
-      _replaceWithNestedPrefab: function() {
-        var node = this.node;
-        var _prefab = node._prefab;
-        _prefab.root = node;
-        _prefab.asset = this.nestedPrefab;
-        PrefabHelper.syncWithPrefab(node);
-      }
-    });
-    cc.StudioComponent = module.exports = StudioComponent;
-  }), {
-    "../utils/prefab-helper": 229
-  } ],
-  97: [ (function(require, module, exports) {
+  93: [ (function(require, module, exports) {
     var Toggle = cc.Class({
       name: "cc.Toggle",
       extends: require("./CCButton"),
@@ -19072,11 +18370,11 @@
       return null;
     }));
   }), {
-    "../platform/js": 198,
+    "../platform/js": 191,
     "./CCButton": 75,
-    "./CCToggleGroup": 99
+    "./CCToggleGroup": 95
   } ],
-  98: [ (function(require, module, exports) {
+  94: [ (function(require, module, exports) {
     var ToggleContainer = cc.Class({
       name: "cc.ToggleContainer",
       extends: cc.Component,
@@ -19124,9 +18422,9 @@
     }));
     cc.ToggleContainer = module.exports = ToggleContainer;
   }), {
-    "../platform/js": 198
+    "../platform/js": 191
   } ],
-  99: [ (function(require, module, exports) {
+  95: [ (function(require, module, exports) {
     var ToggleGroup = cc.Class({
       name: "cc.ToggleGroup",
       extends: cc.Component,
@@ -19188,182 +18486,9 @@
     }));
     cc.ToggleGroup = module.exports = ToggleGroup;
   }), {
-    "../platform/js": 198
+    "../platform/js": 191
   } ],
-  100: [ (function(require, module, exports) {
-    require("../videoplayer/CCSGVideoPlayer");
-    var EventType = _ccsg.VideoPlayer.EventType;
-    var ResourceType = cc.Enum({
-      REMOTE: 0,
-      LOCAL: 1
-    });
-    var VideoPlayer = cc.Class({
-      name: "cc.VideoPlayer",
-      extends: cc._RendererUnderSG,
-      editor: false,
-      properties: {
-        _resourceType: ResourceType.REMOTE,
-        resourceType: {
-          tooltip: false,
-          type: ResourceType,
-          set: function(value) {
-            this._resourceType = value;
-            this._updateVideoSource();
-          },
-          get: function() {
-            return this._resourceType;
-          }
-        },
-        _remoteURL: "",
-        remoteURL: {
-          tooltip: false,
-          type: cc.String,
-          set: function(url) {
-            this._remoteURL = url;
-            this._updateVideoSource();
-          },
-          get: function() {
-            return this._remoteURL;
-          }
-        },
-        _clip: {
-          default: null,
-          url: cc.RawAsset
-        },
-        clip: {
-          tooltip: false,
-          get: function() {
-            return this._clip;
-          },
-          set: function(value) {
-            "string" !== typeof value && (value = "");
-            this._clip = value;
-            this._updateVideoSource();
-          },
-          url: cc.RawAsset
-        },
-        currentTime: {
-          tooltip: false,
-          type: cc.Float,
-          set: function(time) {
-            this._sgNode && this._sgNode.seekTo(time);
-          },
-          get: function() {
-            if (this._sgNode) return this._sgNode.currentTime();
-            return -1;
-          }
-        },
-        keepAspectRatio: {
-          tooltip: false,
-          default: true,
-          type: cc.Boolean,
-          notify: function() {
-            this._sgNode.setKeepAspectRatioEnabled(this.keepAspectRatio);
-          }
-        },
-        isFullscreen: {
-          tooltip: false,
-          default: false,
-          type: cc.Boolean,
-          notify: function() {
-            this._sgNode.setFullScreenEnabled(this.isFullscreen);
-          }
-        },
-        videoPlayerEvent: {
-          default: [],
-          type: cc.Component.EventHandler
-        }
-      },
-      statics: {
-        EventType: EventType,
-        ResourceType: ResourceType
-      },
-      onLoad: function() {
-        false;
-      },
-      _createSgNode: function() {
-        false;
-        return new _ccsg.VideoPlayer();
-      },
-      _updateVideoSource: function() {
-        var sgNode = this._sgNode;
-        this.resourceType === ResourceType.REMOTE ? sgNode.setURL(this.remoteURL) : sgNode.setURL(this._clip || "");
-      },
-      _initSgNode: function() {
-        var sgNode = this._sgNode;
-        if (sgNode) {
-          true;
-          sgNode.createDomElementIfNeeded();
-          this._updateVideoSource();
-          sgNode.seekTo(this.currentTime);
-          sgNode.setKeepAspectRatioEnabled(this.keepAspectRatio);
-          sgNode.setFullScreenEnabled(this.isFullscreen);
-          sgNode.setContentSize(this.node.getContentSize());
-          this.pause();
-          true;
-          sgNode.setEventListener(EventType.PLAYING, this.onPlaying.bind(this));
-          sgNode.setEventListener(EventType.PAUSED, this.onPasued.bind(this));
-          sgNode.setEventListener(EventType.STOPPED, this.onStopped.bind(this));
-          sgNode.setEventListener(EventType.COMPLETED, this.onCompleted.bind(this));
-          sgNode.setEventListener(EventType.META_LOADED, this.onMetaLoaded.bind(this));
-          sgNode.setEventListener(EventType.CLICKED, this.onClicked.bind(this));
-          sgNode.setEventListener(EventType.READY_TO_PLAY, this.onReadyToPlay.bind(this));
-        }
-      },
-      onReadyToPlay: function() {
-        cc.Component.EventHandler.emitEvents(this.videoPlayerEvent, this, EventType.READY_TO_PLAY);
-        this.node.emit("ready-to-play", this);
-      },
-      onMetaLoaded: function() {
-        cc.Component.EventHandler.emitEvents(this.videoPlayerEvent, this, EventType.META_LOADED);
-        this.node.emit("meta-loaded", this);
-      },
-      onClicked: function() {
-        cc.Component.EventHandler.emitEvents(this.videoPlayerEvent, this, EventType.CLICKED);
-        this.node.emit("clicked", this);
-      },
-      onPlaying: function() {
-        cc.Component.EventHandler.emitEvents(this.videoPlayerEvent, this, EventType.PLAYING);
-        this.node.emit("playing", this);
-      },
-      onPasued: function() {
-        cc.Component.EventHandler.emitEvents(this.videoPlayerEvent, this, EventType.PAUSED);
-        this.node.emit("paused", this);
-      },
-      onStopped: function() {
-        cc.Component.EventHandler.emitEvents(this.videoPlayerEvent, this, EventType.STOPPED);
-        this.node.emit("stopped", this);
-      },
-      onCompleted: function() {
-        cc.Component.EventHandler.emitEvents(this.videoPlayerEvent, this, EventType.COMPLETED);
-        this.node.emit("completed", this);
-      },
-      play: function() {
-        this._sgNode && this._sgNode.play();
-      },
-      resume: function() {
-        this._sgNode && this._sgNode.resume();
-      },
-      pause: function() {
-        this._sgNode && this._sgNode.pause();
-      },
-      stop: function() {
-        this._sgNode && this._sgNode.stop();
-      },
-      getDuration: function() {
-        if (this._sgNode) return this._sgNode.duration();
-        return -1;
-      },
-      isPlaying: function() {
-        if (this._sgNode) return this._sgNode.isPlaying();
-        return false;
-      }
-    });
-    cc.VideoPlayer = module.exports = VideoPlayer;
-  }), {
-    "../videoplayer/CCSGVideoPlayer": 241
-  } ],
-  101: [ (function(require, module, exports) {
+  96: [ (function(require, module, exports) {
     var ViewGroup = cc.Class({
       name: "cc.ViewGroup",
       extends: require("./CCComponent")
@@ -19372,95 +18497,7 @@
   }), {
     "./CCComponent": 77
   } ],
-  102: [ (function(require, module, exports) {
-    require("../webview/CCSGWebView");
-    var EventType = _ccsg.WebView.EventType;
-    function emptyCallback() {}
-    var WebView = cc.Class({
-      name: "cc.WebView",
-      extends: cc._RendererUnderSG,
-      editor: false,
-      properties: {
-        _useOriginalSize: true,
-        _url: "",
-        url: {
-          type: String,
-          tooltip: false,
-          get: function() {
-            return this._url;
-          },
-          set: function(url) {
-            this._url = url;
-            var sgNode = this._sgNode;
-            sgNode && sgNode.loadURL(url);
-          }
-        },
-        webviewEvents: {
-          default: [],
-          type: cc.Component.EventHandler
-        }
-      },
-      statics: {
-        EventType: EventType
-      },
-      onLoad: false,
-      _createSgNode: function() {
-        false;
-        return new _ccsg.WebView();
-      },
-      _initSgNode: function() {
-        var sgNode = this._sgNode;
-        if (!sgNode) return;
-        true;
-        sgNode.createDomElementIfNeeded();
-        sgNode.loadURL(this._url);
-        false;
-        sgNode.setContentSize(this.node.getContentSize());
-      },
-      onEnable: function() {
-        this._super();
-        true;
-        var sgNode = this._sgNode;
-        sgNode.setEventListener(EventType.LOADED, this._onWebViewLoaded.bind(this));
-        sgNode.setEventListener(EventType.LOADING, this._onWebViewLoading.bind(this));
-        sgNode.setEventListener(EventType.ERROR, this._onWebViewLoadError.bind(this));
-      },
-      onDisable: function() {
-        this._super();
-        true;
-        var sgNode = this._sgNode;
-        sgNode.setEventListener(EventType.LOADED, emptyCallback);
-        sgNode.setEventListener(EventType.LOADING, emptyCallback);
-        sgNode.setEventListener(EventType.ERROR, emptyCallback);
-      },
-      _onWebViewLoaded: function() {
-        cc.Component.EventHandler.emitEvents(this.webviewEvents, this, EventType.LOADED);
-        this.node.emit("loaded", this);
-      },
-      _onWebViewLoading: function() {
-        cc.Component.EventHandler.emitEvents(this.webviewEvents, this, EventType.LOADING);
-        this.node.emit("loading", this);
-        return true;
-      },
-      _onWebViewLoadError: function() {
-        cc.Component.EventHandler.emitEvents(this.webviewEvents, this, EventType.ERROR);
-        this.node.emit("error", this);
-      },
-      setJavascriptInterfaceScheme: function(scheme) {
-        this._sgNode && this._sgNode.setJavascriptInterfaceScheme(scheme);
-      },
-      setOnJSCallback: function(callback) {
-        this._sgNode && this._sgNode.setOnJSCallback(callback);
-      },
-      evaluateJS: function(str) {
-        this._sgNode && this._sgNode.evaluateJS(str);
-      }
-    });
-    cc.WebView = module.exports = WebView;
-  }), {
-    "../webview/CCSGWebView": 242
-  } ],
-  103: [ (function(require, module, exports) {
+  97: [ (function(require, module, exports) {
     var WidgetManager = require("../base-ui/CCWidgetManager");
     var AlignFlags = WidgetManager._AlignFlags;
     var TOP = AlignFlags.TOP;
@@ -19737,7 +18774,7 @@
     "../base-ui/CCWidgetManager": 60,
     "./CCComponent": 77
   } ],
-  104: [ (function(require, module, exports) {
+  98: [ (function(require, module, exports) {
     require("./CCComponent");
     require("./CCRendererInSG");
     require("./CCRendererUnderSG");
@@ -19752,31 +18789,31 @@
     "./CCCanvas": 76,
     "./CCComponent": 77,
     "./CCComponentEventHandler": 78,
-    "./CCEditBox": 79,
-    "./CCLabel": 80,
-    "./CCLabelOutline": 81,
-    "./CCLayout": 82,
-    "./CCMask": 83,
-    "./CCPageView": 84,
-    "./CCPageViewIndicator": 85,
-    "./CCProgressBar": 86,
-    "./CCRendererInSG": 87,
-    "./CCRendererUnderSG": 88,
-    "./CCRichText": 89,
-    "./CCScrollBar": 91,
-    "./CCScrollView": 92,
-    "./CCSlider": 93,
-    "./CCSprite": 94,
-    "./CCSpriteDistortion": 95,
-    "./CCToggle": 97,
-    "./CCToggleContainer": 98,
-    "./CCToggleGroup": 99,
-    "./CCVideoPlayer": 100,
-    "./CCWebView": 102,
-    "./CCWidget": 103,
-    "./missing-script": 105
+    "./CCEditBox": 1,
+    "./CCLabel": 79,
+    "./CCLabelOutline": 80,
+    "./CCLayout": 81,
+    "./CCMask": 82,
+    "./CCPageView": 1,
+    "./CCPageViewIndicator": 1,
+    "./CCProgressBar": 83,
+    "./CCRendererInSG": 84,
+    "./CCRendererUnderSG": 85,
+    "./CCRichText": 86,
+    "./CCScrollBar": 88,
+    "./CCScrollView": 89,
+    "./CCSlider": 90,
+    "./CCSprite": 91,
+    "./CCSpriteDistortion": 92,
+    "./CCToggle": 93,
+    "./CCToggleContainer": 94,
+    "./CCToggleGroup": 95,
+    "./CCVideoPlayer": 1,
+    "./CCWebView": 1,
+    "./CCWidget": 97,
+    "./missing-script": 99
   } ],
-  105: [ (function(require, module, exports) {
+  99: [ (function(require, module, exports) {
     var JS = cc.js;
     var BUILTIN_CLASSID_RE = require("../utils/misc").BUILTIN_CLASSID_RE;
     var MissingClass = cc.Class({
@@ -19827,841 +18864,9 @@
     });
     cc._MissingScript = module.exports = MissingScript;
   }), {
-    "../utils/misc": 227
+    "../utils/misc": 220
   } ],
-  106: [ (function(require, module, exports) {
-    var SCROLLY = 40;
-    var LEFT_PADDING = 2;
-    var DELAY_TIME = 400;
-    var FOCUS_DELAY_UC = 400;
-    var FOCUS_DELAY_FIREFOX = 0;
-    var Utils = require("../platform/utils");
-    var sys = require("../platform/CCSys");
-    function adjustEditBoxPosition(editBox) {
-      var worldPos = editBox.convertToWorldSpace(cc.p(0, 0));
-      var windowHeight = cc.visibleRect.height;
-      var windowWidth = cc.visibleRect.width;
-      var factor = .5;
-      windowWidth > windowHeight && (factor = .7);
-      setTimeout((function() {
-        if (window.scrollY < SCROLLY && worldPos.y < windowHeight * factor) {
-          var scrollOffset = windowHeight * factor - worldPos.y - window.scrollY;
-          scrollOffset < 35 && (scrollOffset = 35);
-          scrollOffset > 320 && (scrollOffset = 320);
-          window.scrollTo(scrollOffset, scrollOffset);
-        }
-      }), DELAY_TIME);
-    }
-    var capitalize = function(string) {
-      return string.replace(/(?:^|\s)\S/g, (function(a) {
-        return a.toUpperCase();
-      }));
-    };
-    function capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-    var KeyboardReturnType = cc.Enum({
-      DEFAULT: 0,
-      DONE: 1,
-      SEND: 2,
-      SEARCH: 3,
-      GO: 4
-    });
-    var InputMode = cc.Enum({
-      ANY: 0,
-      EMAIL_ADDR: 1,
-      NUMERIC: 2,
-      PHONE_NUMBER: 3,
-      URL: 4,
-      DECIMAL: 5,
-      SINGLE_LINE: 6
-    });
-    var InputFlag = cc.Enum({
-      PASSWORD: 0,
-      SENSITIVE: 1,
-      INITIAL_CAPS_WORD: 2,
-      INITIAL_CAPS_SENTENCE: 3,
-      INITIAL_CAPS_ALL_CHARACTERS: 4,
-      DEFAULT: 5
-    });
-    cc.EditBoxDelegate = cc._Class.extend({
-      editBoxEditingDidBegan: function(sender) {},
-      editBoxEditingDidEnded: function(sender) {},
-      editBoxTextChanged: function(sender, text) {},
-      editBoxEditingReturn: function(sender) {}
-    });
-    _ccsg.EditBox = _ccsg.Node.extend({
-      _backgroundSprite: null,
-      _delegate: null,
-      _editBoxInputMode: InputMode.ANY,
-      _editBoxInputFlag: InputFlag.DEFAULT,
-      _keyboardReturnType: KeyboardReturnType.DEFAULT,
-      _maxLength: 50,
-      _text: "",
-      _placeholderText: "",
-      _alwaysOnTop: false,
-      _placeholderFontName: "",
-      _placeholderFontSize: 14,
-      __fullscreen: false,
-      __autoResize: false,
-      _placeholderColor: null,
-      _className: "EditBox",
-      ctor: function(size, normal9SpriteBg) {
-        _ccsg.Node.prototype.ctor.call(this);
-        this._textColor = cc.Color.WHITE;
-        this._placeholderColor = cc.Color.GRAY;
-        this.initWithSizeAndBackgroundSprite(size, normal9SpriteBg);
-        this._renderCmd._createLabels();
-      },
-      _createRenderCmd: function() {
-        return cc._renderType === cc.game.RENDER_TYPE_CANVAS ? new _ccsg.EditBox.CanvasRenderCmd(this) : new _ccsg.EditBox.WebGLRenderCmd(this);
-      },
-      setContentSize: function(width, height) {
-        if (void 0 !== width.width && void 0 !== width.height) {
-          height = width.height;
-          width = width.width;
-        }
-        _ccsg.Node.prototype.setContentSize.call(this, width, height);
-        this._updateEditBoxSize(width, height);
-      },
-      setVisible: function(visible) {
-        _ccsg.Node.prototype.setVisible.call(this, visible);
-        this._renderCmd.updateVisibility();
-      },
-      createDomElementIfNeeded: function() {
-        this._renderCmd._edTxt || this._renderCmd.setInputMode(this._editBoxInputMode);
-      },
-      setTabIndex: function(index) {
-        this._renderCmd._edTxt && (this._renderCmd._edTxt.tabIndex = index);
-      },
-      getTabIndex: function() {
-        if (this._renderCmd._edTxt) return this._renderCmd._edTxt.tabIndex;
-        cc.warnID(4700);
-        return -1;
-      },
-      setFocus: function() {
-        this._renderCmd._edTxt && this._renderCmd._edTxt.focus();
-      },
-      isFocused: function() {
-        if (this._renderCmd._edTxt) return document.activeElement === this._renderCmd._edTxt;
-        cc.warnID(4700);
-        return false;
-      },
-      stayOnTop: function(flag) {
-        if (this._alwaysOnTop === flag) return;
-        this._alwaysOnTop = flag;
-        this._renderCmd.stayOnTop(this._alwaysOnTop);
-      },
-      cleanup: function() {
-        this._super();
-        this._renderCmd.removeDom();
-      },
-      _onTouchBegan: function(touch) {
-        var touchPoint = touch.getLocation();
-        var bb = cc.rect(0, 0, this._contentSize.width, this._contentSize.height);
-        var hitted = cc.rectContainsPoint(bb, this.convertToNodeSpace(touchPoint));
-        if (hitted) {
-          false;
-          return true;
-        }
-        this._renderCmd._endEditing();
-        return false;
-      },
-      _onTouchEnded: function() {
-        this._renderCmd._beginEditing();
-      },
-      _updateBackgroundSpriteSize: function(width, height) {
-        this._backgroundSprite && this._backgroundSprite.setContentSize(width, height);
-      },
-      _updateEditBoxSize: function(size, height) {
-        var newWidth = "number" === typeof size.width ? size.width : size;
-        var newHeight = "number" === typeof size.height ? size.height : height;
-        this._updateBackgroundSpriteSize(newWidth, newHeight);
-        this._renderCmd.updateSize(newWidth, newHeight);
-      },
-      setLineHeight: function(lineHeight) {
-        this._renderCmd.setLineHeight(lineHeight);
-      },
-      setFont: function(fontName, fontSize) {
-        this._renderCmd.setFont(fontName, fontSize);
-      },
-      _setFont: function(fontStyle) {
-        this._renderCmd._setFont(fontStyle);
-      },
-      getBackgroundSprite: function() {
-        return this._backgroundSprite;
-      },
-      setFontName: function(fontName) {
-        this._renderCmd.setFontName(fontName);
-      },
-      setFontSize: function(fontSize) {
-        this._renderCmd.setFontSize(fontSize);
-      },
-      setString: function(text) {
-        text.length >= this._maxLength && (text = text.slice(0, this._maxLength));
-        this._text = text;
-        this._renderCmd.setString(text);
-      },
-      setFontColor: function(color) {
-        this._textColor = color;
-        this._renderCmd.setFontColor(color);
-      },
-      setMaxLength: function(maxLength) {
-        if (!isNaN(maxLength)) {
-          maxLength < 0 && (maxLength = 65535);
-          this._maxLength = maxLength;
-          this._renderCmd.setMaxLength(maxLength);
-        }
-      },
-      getMaxLength: function() {
-        return this._maxLength;
-      },
-      setPlaceHolder: function(text) {
-        if (null !== text) {
-          this._renderCmd.setPlaceHolder(text);
-          this._placeholderText = text;
-        }
-      },
-      setPlaceholderFont: function(fontName, fontSize) {
-        this._placeholderFontName = fontName;
-        this._placeholderFontSize = fontSize;
-        this._renderCmd._updateDOMPlaceholderFontStyle();
-      },
-      _setPlaceholderFont: function(fontStyle) {
-        var res = cc.LabelTTF._fontStyleRE.exec(fontStyle);
-        if (res) {
-          this._placeholderFontName = res[2];
-          this._placeholderFontSize = parseInt(res[1]);
-          this._renderCmd._updateDOMPlaceholderFontStyle();
-        }
-      },
-      setPlaceholderFontName: function(fontName) {
-        this._placeholderFontName = fontName;
-        this._renderCmd._updateDOMPlaceholderFontStyle();
-      },
-      setPlaceholderFontSize: function(fontSize) {
-        this._placeholderFontSize = fontSize;
-        this._renderCmd._updateDOMPlaceholderFontStyle();
-      },
-      setPlaceholderFontColor: function(color) {
-        this._placeholderColor = color;
-        this._renderCmd.setPlaceholderFontColor(color);
-      },
-      setInputFlag: function(inputFlag) {
-        this._editBoxInputFlag = inputFlag;
-        this._renderCmd.setInputFlag(inputFlag);
-      },
-      getString: function() {
-        return this._text;
-      },
-      initWithSizeAndBackgroundSprite: function(size, normal9SpriteBg) {
-        this._backgroundSprite && this._backgroundSprite.removeFromParent();
-        this._backgroundSprite = normal9SpriteBg;
-        _ccsg.Node.prototype.setContentSize.call(this, size);
-        if (this._backgroundSprite && !this._backgroundSprite.parent) {
-          this._backgroundSprite.setAnchorPoint(cc.p(0, 0));
-          this.addChild(this._backgroundSprite);
-          this._updateBackgroundSpriteSize(size.width, size.height);
-        }
-        this.x = 0;
-        this.y = 0;
-        return true;
-      },
-      setDelegate: function(delegate) {
-        this._delegate = delegate;
-      },
-      getPlaceHolder: function() {
-        return this._placeholderText;
-      },
-      setInputMode: function(inputMode) {
-        if (this._editBoxInputMode === inputMode) return;
-        var oldText = this.getString();
-        this._editBoxInputMode = inputMode;
-        this._renderCmd.setInputMode(inputMode);
-        this._renderCmd.transform();
-        this.setString(oldText);
-        this._renderCmd._updateLabelPosition(this.getContentSize());
-      },
-      setReturnType: function(returnType) {
-        this._keyboardReturnType = returnType;
-        this._renderCmd._updateDomInputType();
-      },
-      initWithBackgroundColor: function(size, bgColor) {
-        this._edWidth = size.width;
-        this.dom.style.width = this._edWidth.toString() + "px";
-        this._edHeight = size.height;
-        this.dom.style.height = this._edHeight.toString() + "px";
-        this.dom.style.backgroundColor = cc.colorToHex(bgColor);
-      }
-    });
-    var _p = _ccsg.EditBox.prototype;
-    cc.defineGetterSetter(_p, "font", null, _p._setFont);
-    cc.defineGetterSetter(_p, "fontName", null, _p.setFontName);
-    cc.defineGetterSetter(_p, "fontSize", null, _p.setFontSize);
-    cc.defineGetterSetter(_p, "fontColor", null, _p.setFontColor);
-    cc.defineGetterSetter(_p, "string", _p.getString, _p.setString);
-    cc.defineGetterSetter(_p, "maxLength", _p.getMaxLength, _p.setMaxLength);
-    cc.defineGetterSetter(_p, "placeholder", _p.getPlaceHolder, _p.setPlaceHolder);
-    cc.defineGetterSetter(_p, "placeholderFont", null, _p._setPlaceholderFont);
-    cc.defineGetterSetter(_p, "placeholderFontName", null, _p.setPlaceholderFontName);
-    cc.defineGetterSetter(_p, "placeholderFontSize", null, _p.setPlaceholderFontSize);
-    cc.defineGetterSetter(_p, "placeholderFontColor", null, _p.setPlaceholderFontColor);
-    cc.defineGetterSetter(_p, "inputFlag", null, _p.setInputFlag);
-    cc.defineGetterSetter(_p, "delegate", null, _p.setDelegate);
-    cc.defineGetterSetter(_p, "inputMode", null, _p.setInputMode);
-    cc.defineGetterSetter(_p, "returnType", null, _p.setReturnType);
-    _p = null;
-    _ccsg.EditBox.InputMode = InputMode;
-    _ccsg.EditBox.InputFlag = InputFlag;
-    _ccsg.EditBox.KeyboardReturnType = KeyboardReturnType;
-    (function(editbox) {
-      editbox._polyfill = {
-        zoomInvalid: false
-      };
-      sys.OS_ANDROID !== sys.os || sys.browserType !== sys.BROWSER_TYPE_SOUGOU && sys.browserType !== sys.BROWSER_TYPE_360 || (editbox._polyfill.zoomInvalid = true);
-    })(_ccsg.EditBox);
-    (function(polyfill) {
-      var EditBoxImpl = function() {};
-      var proto = EditBoxImpl.prototype = Object.create(Object.prototype);
-      proto.updateMatrix = function() {
-        if (!this._edTxt) return;
-        var node = this._node, scaleX = cc.view._scaleX, scaleY = cc.view._scaleY;
-        var dpr = cc.view._devicePixelRatio;
-        var t = this._worldTransform;
-        scaleX /= dpr;
-        scaleY /= dpr;
-        var container = cc.game.container;
-        var a = t.a * scaleX, b = t.b, c = t.c, d = t.d * scaleY;
-        var offsetX = container && container.style.paddingLeft && parseInt(container.style.paddingLeft);
-        var offsetY = container && container.style.paddingBottom && parseInt(container.style.paddingBottom);
-        var tx = t.tx * scaleX + offsetX, ty = t.ty * scaleY + offsetY;
-        if (polyfill.zoomInvalid) {
-          this.updateSize(node._contentSize.width * a, node._contentSize.height * d);
-          a = 1;
-          d = 1;
-        }
-        var matrix = "matrix(" + a + "," + -b + "," + -c + "," + d + "," + tx + "," + -ty + ")";
-        this._edTxt.style["transform"] = matrix;
-        this._edTxt.style["-webkit-transform"] = matrix;
-        this._edTxt.style["transform-origin"] = "0px 100% 0px";
-        this._edTxt.style["-webkit-transform-origin"] = "0px 100% 0px";
-      };
-      proto.updateVisibility = function() {
-        if (!this._edTxt) return;
-        this._node.visible ? this._edTxt.style.visibility = "visible" : this._edTxt.style.visibility = "hidden";
-      };
-      proto.stayOnTop = function(flag) {
-        if (flag) {
-          this._removeLabels();
-          this._edTxt.style.display = "";
-        } else {
-          this._createLabels();
-          this._edTxt.style.display = "none";
-          this._showLabels();
-        }
-      };
-      proto._beginEditingOnMobile = function(editBox) {
-        this.__orientationChanged = function() {
-          adjustEditBoxPosition(editBox);
-        };
-        window.addEventListener("orientationchange", this.__orientationChanged);
-        if (cc.view.isAutoFullScreenEnabled()) {
-          this.__fullscreen = true;
-          cc.view.enableAutoFullScreen(false);
-          cc.screen.exitFullScreen();
-        } else this.__fullscreen = false;
-        this.__autoResize = cc.view.__resizeWithBrowserSize;
-        cc.view.resizeWithBrowserSize(false);
-      };
-      proto._endEditingOnMobile = function() {
-        if (this.__rotateScreen) {
-          cc.container.style["-webkit-transform"] = "rotate(90deg)";
-          cc.container.style.transform = "rotate(90deg)";
-          var view = cc.view;
-          var width = view._originalDesignResolutionSize.width;
-          var height = view._originalDesignResolutionSize.height;
-          width > 0 && view.setDesignResolutionSize(width, height, view._resolutionPolicy);
-          this.__rotateScreen = false;
-        }
-        window.removeEventListener("orientationchange", this.__orientationChanged);
-        window.scrollTo(0, 0);
-        this.__fullscreen && cc.view.enableAutoFullScreen(true);
-        this.__autoResize && cc.view.resizeWithBrowserSize(true);
-      };
-      proto._onFocusOnMobile = function(editBox) {
-        if (cc.view._isRotated) {
-          cc.container.style["-webkit-transform"] = "rotate(0deg)";
-          cc.container.style.transform = "rotate(0deg)";
-          cc.view._isRotated = false;
-          var policy = cc.view.getResolutionPolicy();
-          policy.apply(cc.view, cc.view.getDesignResolutionSize());
-          cc.view._isRotated = true;
-          window.scrollTo(35, 35);
-          this.__rotateScreen = true;
-        } else this.__rotateScreen = false;
-        adjustEditBoxPosition(editBox);
-      };
-      proto._createDomInput = function() {
-        this.removeDom();
-        var thisPointer = this;
-        var tmpEdTxt = this._edTxt = document.createElement("input");
-        tmpEdTxt.type = "text";
-        tmpEdTxt.style.fontSize = this._edFontSize + "px";
-        tmpEdTxt.style.color = "#000000";
-        tmpEdTxt.style.border = 0;
-        tmpEdTxt.style.background = "transparent";
-        tmpEdTxt.style.width = "100%";
-        tmpEdTxt.style.height = "100%";
-        tmpEdTxt.style.active = 0;
-        tmpEdTxt.style.outline = "medium";
-        tmpEdTxt.style.padding = "0";
-        tmpEdTxt.style.textTransform = "uppercase";
-        tmpEdTxt.style.display = "none";
-        tmpEdTxt.style.position = "absolute";
-        tmpEdTxt.style.bottom = "0px";
-        tmpEdTxt.style.left = LEFT_PADDING + "px";
-        tmpEdTxt.style["-moz-appearance"] = "textfield";
-        tmpEdTxt.style.className = "cocosEditBox";
-        function _inputValueHandle(target) {
-          var editBox = thisPointer._editBox;
-          target.value.length > target.maxLength && (target.value = target.value.slice(0, target.maxLength));
-          if (editBox._delegate && editBox._delegate.editBoxTextChanged && editBox._text !== target.value) {
-            editBox._text = target.value;
-            thisPointer._updateDomTextCases();
-            editBox._delegate.editBoxTextChanged(editBox, editBox._text);
-          }
-        }
-        var inputLock = false;
-        tmpEdTxt.addEventListener("compositionstart", (function() {
-          inputLock = true;
-        }));
-        tmpEdTxt.addEventListener("compositionend", (function() {
-          inputLock = false;
-          _inputValueHandle(this);
-        }));
-        tmpEdTxt.addEventListener("input", (function() {
-          if (inputLock) return;
-          _inputValueHandle(this);
-        }));
-        tmpEdTxt.addEventListener("keypress", (function(e) {
-          var editBox = thisPointer._editBox;
-          if (e.keyCode === cc.KEY.enter) {
-            e.stopPropagation();
-            e.preventDefault();
-            if ("" === this.value) {
-              this.style.fontSize = editBox._placeholderFontSize + "px";
-              this.style.color = cc.colorToHex(editBox._placeholderColor);
-            }
-            editBox._text = this.value;
-            thisPointer._updateDomTextCases();
-            thisPointer._endEditing();
-            editBox._delegate && editBox._delegate.editBoxEditingReturn && editBox._delegate.editBoxEditingReturn(editBox);
-            cc._canvas.focus();
-          }
-        }));
-        tmpEdTxt.addEventListener("focus", (function() {
-          var editBox = thisPointer._editBox;
-          this.style.fontSize = thisPointer._edFontSize + "px";
-          this.style.color = cc.colorToHex(editBox._textColor);
-          thisPointer._hiddenLabels();
-          sys.isMobile && thisPointer._onFocusOnMobile(editBox);
-          editBox._delegate && editBox._delegate.editBoxEditingDidBegan && editBox._delegate.editBoxEditingDidBegan(editBox);
-        }));
-        tmpEdTxt.addEventListener("blur", (function() {
-          var editBox = thisPointer._editBox;
-          editBox._text = this.value;
-          thisPointer._updateDomTextCases();
-          editBox._delegate && editBox._delegate.editBoxEditingDidEnded && editBox._delegate.editBoxEditingDidEnded(editBox);
-          if ("" === this.value) {
-            this.style.fontSize = editBox._placeholderFontSize + "px";
-            this.style.color = cc.colorToHex(editBox._placeholderColor);
-          }
-          thisPointer._endEditing();
-        }));
-        this._addDomToGameContainer();
-        return tmpEdTxt;
-      };
-      proto._createDomTextArea = function() {
-        this.removeDom();
-        var thisPointer = this;
-        var tmpEdTxt = this._edTxt = document.createElement("textarea");
-        tmpEdTxt.type = "text";
-        tmpEdTxt.style.fontSize = this._edFontSize + "px";
-        tmpEdTxt.style.color = "#000000";
-        tmpEdTxt.style.border = 0;
-        tmpEdTxt.style.background = "transparent";
-        tmpEdTxt.style.width = "100%";
-        tmpEdTxt.style.height = "100%";
-        tmpEdTxt.style.active = 0;
-        tmpEdTxt.style.outline = "medium";
-        tmpEdTxt.style.padding = "0";
-        tmpEdTxt.style.resize = "none";
-        tmpEdTxt.style.textTransform = "uppercase";
-        tmpEdTxt.style.overflow_y = "scroll";
-        tmpEdTxt.style.display = "none";
-        tmpEdTxt.style.position = "absolute";
-        tmpEdTxt.style.bottom = "0px";
-        tmpEdTxt.style.left = LEFT_PADDING + "px";
-        tmpEdTxt.style.className = "cocosEditBox";
-        function _inputValueHandle(target) {
-          target.value.length > target.maxLength && (target.value = target.value.slice(0, target.maxLength));
-          var editBox = thisPointer._editBox;
-          if (editBox._delegate && editBox._delegate.editBoxTextChanged && editBox._text.toLowerCase() !== target.value.toLowerCase()) {
-            editBox._text = target.value;
-            thisPointer._updateDomTextCases();
-            editBox._delegate.editBoxTextChanged(editBox, editBox._text);
-          }
-        }
-        var inputLock = false;
-        tmpEdTxt.addEventListener("compositionstart", (function() {
-          inputLock = true;
-        }));
-        tmpEdTxt.addEventListener("compositionend", (function() {
-          inputLock = false;
-          _inputValueHandle(this);
-        }));
-        tmpEdTxt.addEventListener("input", (function() {
-          if (inputLock) return;
-          _inputValueHandle(this);
-        }));
-        tmpEdTxt.addEventListener("focus", (function() {
-          var editBox = thisPointer._editBox;
-          thisPointer._hiddenLabels();
-          this.style.fontSize = thisPointer._edFontSize + "px";
-          this.style.color = cc.colorToHex(editBox._textColor);
-          sys.isMobile && thisPointer._onFocusOnMobile(editBox);
-          editBox._delegate && editBox._delegate.editBoxEditingDidBegan && editBox._delegate.editBoxEditingDidBegan(editBox);
-        }));
-        tmpEdTxt.addEventListener("keypress", (function(e) {
-          var editBox = thisPointer._editBox;
-          if (e.keyCode === cc.KEY.enter) {
-            e.stopPropagation();
-            editBox._delegate && editBox._delegate.editBoxEditingReturn && editBox._delegate.editBoxEditingReturn(editBox);
-          }
-        }));
-        tmpEdTxt.addEventListener("blur", (function() {
-          var editBox = thisPointer._editBox;
-          editBox._text = this.value;
-          thisPointer._updateDomTextCases();
-          editBox._delegate && editBox._delegate.editBoxEditingDidEnded && editBox._delegate.editBoxEditingDidEnded(editBox);
-          if ("" === this.value) {
-            this.style.fontSize = editBox._placeholderFontSize + "px";
-            this.style.color = cc.colorToHex(editBox._placeholderColor);
-          }
-          thisPointer._endEditing();
-        }));
-        this._addDomToGameContainer();
-        return tmpEdTxt;
-      };
-      false;
-      proto._createWXInput = function(multiline) {
-        this.removeDom();
-        var thisPointer = this;
-        var tmpEdTxt = this._edTxt = document.createElement("input");
-        tmpEdTxt.type = "text";
-        tmpEdTxt.focus = function() {
-          var editBox = thisPointer._editBox;
-          wx.showKeyboard({
-            defaultValue: editBox._text,
-            maxLength: 140,
-            multiple: multiline,
-            confirmHold: true,
-            confirmType: "done",
-            success: function(res) {
-              editBox._delegate && editBox._delegate.editBoxEditingDidBegan && editBox._delegate.editBoxEditingDidBegan(editBox);
-            },
-            fail: function(res) {
-              cc.warn(res.errMsg);
-              thisPointer._endEditing();
-            }
-          });
-          wx.onKeyboardConfirm((function(res) {
-            editBox._text = res.value;
-            thisPointer._updateDomTextCases();
-            editBox._delegate && editBox._delegate.editBoxEditingReturn && editBox._delegate.editBoxEditingReturn(editBox);
-            wx.hideKeyboard({
-              success: function(res) {
-                editBox._delegate && editBox._delegate.editBoxEditingDidEnded && editBox._delegate.editBoxEditingDidEnded(editBox);
-              },
-              fail: function(res) {
-                cc.warn(res.errMsg);
-              }
-            });
-          }));
-          wx.onKeyboardInput((function(res) {
-            if (editBox._delegate && editBox._delegate.editBoxTextChanged && editBox._text !== res.value) {
-              editBox._text = res.value;
-              thisPointer._updateDomTextCases();
-              editBox._delegate.editBoxTextChanged(editBox, editBox._text);
-            }
-          }));
-          wx.onKeyboardComplete((function() {
-            thisPointer._endEditing();
-            wx.offKeyboardConfirm();
-            wx.offKeyboardInput();
-            wx.offKeyboardComplete();
-          }));
-        };
-      };
-      proto._createLabels = function() {
-        var editBoxSize = this._editBox.getContentSize();
-        if (!this._textLabel) {
-          this._textLabel = _ccsg.Label.pool.get();
-          this._textLabel.setAnchorPoint(cc.p(0, 1));
-          this._textLabel.setOverflow(_ccsg.Label.Overflow.CLAMP);
-          this._editBox.addChild(this._textLabel, 100);
-        }
-        if (!this._placeholderLabel) {
-          this._placeholderLabel = _ccsg.Label.pool.get();
-          this._placeholderLabel.setAnchorPoint(cc.p(0, 1));
-          this._placeholderLabel.setColor(cc.Color.GRAY);
-          this._editBox.addChild(this._placeholderLabel, 100);
-        }
-        this._updateLabelPosition(editBoxSize);
-      };
-      proto._removeLabels = function() {
-        if (!this._textLabel) return;
-        this._editBox.removeChild(this._textLabel);
-        this._textLabel = null;
-      };
-      proto._updateLabelPosition = function(editBoxSize) {
-        if (!this._textLabel || !this._placeholderLabel) return;
-        var labelContentSize = cc.size(editBoxSize.width - LEFT_PADDING, editBoxSize.height);
-        this._textLabel.setContentSize(labelContentSize);
-        this._placeholderLabel.setLineHeight(editBoxSize.height);
-        var placeholderLabelSize = this._placeholderLabel.getContentSize();
-        if (this._editBox._editBoxInputMode === InputMode.ANY) {
-          this._textLabel.setPosition(LEFT_PADDING, editBoxSize.height);
-          this._placeholderLabel.setPosition(LEFT_PADDING, editBoxSize.height);
-          this._placeholderLabel.setVerticalAlign(cc.VerticalTextAlignment.TOP);
-          this._textLabel.setVerticalAlign(cc.VerticalTextAlignment.TOP);
-          this._textLabel.enableWrapText(true);
-        } else {
-          this._textLabel.enableWrapText(false);
-          this._textLabel.setPosition(LEFT_PADDING, editBoxSize.height);
-          this._placeholderLabel.setPosition(LEFT_PADDING, (editBoxSize.height + placeholderLabelSize.height) / 2);
-          this._placeholderLabel.setVerticalAlign(cc.VerticalTextAlignment.CENTER);
-          this._textLabel.setVerticalAlign(cc.VerticalTextAlignment.CENTER);
-        }
-      };
-      proto.setLineHeight = function(lineHeight) {
-        this._textLabel && this._textLabel.setLineHeight(lineHeight);
-      };
-      proto._hiddenLabels = function() {
-        this._textLabel && this._textLabel.setVisible(false);
-        this._placeholderLabel && this._placeholderLabel.setVisible(false);
-      };
-      proto._updateDomTextCases = function() {
-        var inputFlag = this._editBox._editBoxInputFlag;
-        inputFlag === InputFlag.INITIAL_CAPS_ALL_CHARACTERS ? this._editBox._text = this._editBox._text.toUpperCase() : inputFlag === InputFlag.INITIAL_CAPS_WORD ? this._editBox._text = capitalize(this._editBox._text) : inputFlag === InputFlag.INITIAL_CAPS_SENTENCE && (this._editBox._text = capitalizeFirstLetter(this._editBox._text));
-      };
-      proto._updateLabelStringStyle = function() {
-        if ("password" === this._edTxt.type) {
-          var passwordString = "";
-          var len = this._editBox._text.length;
-          for (var i = 0; i < len; ++i) passwordString += "●";
-          this._textLabel && this._textLabel.setString(passwordString);
-        } else {
-          this._updateDomTextCases();
-          this._textLabel && this._textLabel.setString(this._editBox._text);
-        }
-      };
-      proto._showLabels = function() {
-        this._hiddenLabels();
-        var text = (false, this._edTxt.value);
-        if ("" === text) {
-          if (this._placeholderLabel) {
-            this._placeholderLabel.setVisible(true);
-            this._placeholderLabel.setString(this._editBox._placeholderText);
-          }
-        } else if (this._textLabel) {
-          this._textLabel.setVisible(true);
-          this._textLabel.setString(this._editBox._text);
-        }
-        this._updateLabelStringStyle();
-      };
-      proto._beginEditing = function() {
-        var self = this;
-        if (sys.platform === sys.WECHAT_GAME) this._edTxt.focus(); else if (!self._editBox._alwaysOnTop && sys.platform !== sys.QQ_PLAY && "none" === self._edTxt.style.display) {
-          self._edTxt.style.display = "";
-          function startFocus() {
-            self._edTxt.focus();
-          }
-          sys.browserType === sys.BROWSER_TYPE_UC ? setTimeout(startFocus, FOCUS_DELAY_UC) : sys.browserType === sys.BROWSER_TYPE_FIREFOX ? setTimeout(startFocus, FOCUS_DELAY_FIREFOX) : startFocus();
-        }
-        sys.isMobile && !self._editingMode && sys.platform !== sys.QQ_PLAY && self._beginEditingOnMobile(self._editBox);
-        self._editingMode = true;
-      };
-      proto._endEditing = function() {
-        this._editBox._alwaysOnTop || sys.platform === sys.QQ_PLAY || (this._edTxt.style.display = "none");
-        this._showLabels();
-        if (sys.platform !== sys.WECHAT_GAME && sys.platform !== sys.QQ_PLAY && sys.isMobile && this._editingMode) {
-          var self = this;
-          setTimeout((function() {
-            self._endEditingOnMobile();
-          }), DELAY_TIME);
-        }
-        this._editingMode = false;
-      };
-      proto._setFont = function(fontStyle) {
-        var res = cc.LabelTTF._fontStyleRE.exec(fontStyle);
-        var textFontName = res[2];
-        var textFontSize = parseInt(res[1]);
-        res && this.setFont(textFontName, textFontSize);
-      };
-      proto.setFont = function(fontName, fontSize) {
-        this._edFontName = fontName || this._edFontName;
-        this._edFontSize = fontSize || this._edFontSize;
-        this._updateDOMFontStyle();
-      };
-      proto.setFontName = function(fontName) {
-        this._edFontName = fontName || this._edFontName;
-        this._updateDOMFontStyle();
-      };
-      proto.setFontSize = function(fontSize) {
-        this._edFontSize = fontSize || this._edFontSize;
-        this._updateDOMFontStyle();
-      };
-      proto.setFontColor = function(color) {
-        if (!this._edTxt) return;
-        this._edTxt.value !== this._editBox._placeholderText && (this._edTxt.style.color = cc.colorToHex(color));
-        this._textLabel && this._textLabel.setColor(color);
-      };
-      proto.setPlaceHolder = function(text) {
-        this._placeholderLabel.setString(text);
-      };
-      proto.setMaxLength = function(maxLength) {
-        if (!this._edTxt) return;
-        this._edTxt.maxLength = maxLength;
-      };
-      proto._updateDOMPlaceholderFontStyle = function() {
-        this._placeholderLabel.setFontFamily(this._editBox._placeholderFontName);
-        this._placeholderLabel.setFontSize(this._editBox._placeholderFontSize);
-      };
-      proto.setPlaceholderFontColor = function(color) {
-        this._placeholderLabel.setColor(color);
-      };
-      proto._updateDomInputType = function() {
-        if (!this._edTxt) return;
-        var inputMode = this._editBox._editBoxInputMode;
-        if (inputMode === InputMode.EMAIL_ADDR) this._edTxt.type = "email"; else if (inputMode === InputMode.NUMERIC || inputMode === InputMode.DECIMAL) this._edTxt.type = "number"; else if (inputMode === InputMode.PHONE_NUMBER) {
-          this._edTxt.type = "number";
-          this._edTxt.pattern = "[0-9]*";
-        } else if (inputMode === InputMode.URL) this._edTxt.type = "url"; else {
-          this._edTxt.type = "text";
-          this._editBox._keyboardReturnType === KeyboardReturnType.SEARCH && (this._edTxt.type = "search");
-        }
-        this._editBox._editBoxInputFlag === InputFlag.PASSWORD && (this._edTxt.type = "password");
-      };
-      proto.setInputFlag = function(inputFlag) {
-        if (!this._edTxt) return;
-        this._updateDomInputType();
-        this._edTxt.style.textTransform = "none";
-        inputFlag === InputFlag.INITIAL_CAPS_ALL_CHARACTERS ? this._edTxt.style.textTransform = "uppercase" : inputFlag === InputFlag.INITIAL_CAPS_WORD && (this._edTxt.style.textTransform = "capitalize");
-        this._updateLabelStringStyle();
-      };
-      proto.setInputMode = function(inputMode) {
-        if (sys.platform === sys.WECHAT_GAME) this._createWXInput(inputMode === InputMode.ANY); else {
-          false;
-          inputMode === InputMode.ANY ? this._createDomTextArea() : this._createDomInput();
-        }
-        this._updateDomInputType();
-        var contentSize = this._node.getContentSize();
-        this.updateSize(contentSize.width, contentSize.height);
-      };
-      proto.setString = function(text) {
-        if (!this._edTxt) return;
-        if (null !== text) {
-          this._edTxt.value = text;
-          if ("" === text) {
-            if (this._placeholderLabel) {
-              this._placeholderLabel.setString(this._editBox._placeholderText);
-              this._placeholderLabel.setColor(this._editBox._placeholderColor);
-            }
-            if (!this._editingMode) {
-              this._placeholderLabel && this._placeholderLabel.setVisible(true);
-              this._textLabel && this._textLabel.setVisible(false);
-            }
-          } else {
-            this._edTxt.style.color = cc.colorToHex(this._editBox._textColor);
-            this._textLabel && this._textLabel.setColor(this._editBox._textColor);
-            if (!this._editingMode) {
-              this._placeholderLabel && this._placeholderLabel.setVisible(false);
-              this._textLabel && this._textLabel.setVisible(true);
-            }
-            this._updateLabelStringStyle();
-          }
-        }
-      };
-      proto._updateDOMFontStyle = function() {
-        if (!this._edTxt) return;
-        if ("" !== this._edTxt.value) {
-          this._edTxt.style.fontFamily = this._edFontName;
-          this._edTxt.style.fontSize = this._edFontSize + "px";
-        }
-        if (this._textLabel) {
-          this._textLabel.setFontSize(this._edFontSize);
-          this._textLabel.setFontFamily(this._edFontName);
-        }
-      };
-      proto.updateSize = function(newWidth, newHeight) {
-        var editboxDomNode = this._edTxt;
-        if (!editboxDomNode) return;
-        editboxDomNode.style["width"] = newWidth + "px";
-        editboxDomNode.style["height"] = newHeight + "px";
-        this._updateLabelPosition(cc.size(newWidth, newHeight));
-      };
-      proto._addDomToGameContainer = function() {
-        cc.game.container.appendChild(this._edTxt);
-      };
-      proto.removeDom = function() {
-        var editBox = this._edTxt;
-        if (editBox) {
-          var hasChild = Utils.contains(cc.game.container, editBox);
-          hasChild && cc.game.container.removeChild(editBox);
-        }
-        this._edTxt = null;
-      };
-      proto.initializeRenderCmd = function(node) {
-        this._editBox = node;
-        this._edFontSize = 14;
-        this._edFontName = "Arial";
-        this._textLabel = null;
-        this._placeholderLabel = null;
-        this._editingMode = false;
-        this.__fullscreen = false;
-        this.__autoResize = false;
-        this.__rotateScreen = false;
-        this.__orientationChanged = null;
-      };
-      _ccsg.EditBox.CanvasRenderCmd = function(node) {
-        this._rootCtor(node);
-        this.initializeRenderCmd(node);
-      };
-      var canvasRenderCmdProto = _ccsg.EditBox.CanvasRenderCmd.prototype = Object.create(_ccsg.Node.CanvasRenderCmd.prototype);
-      cc.js.mixin(canvasRenderCmdProto, proto);
-      canvasRenderCmdProto.constructor = _ccsg.EditBox.CanvasRenderCmd;
-      canvasRenderCmdProto.transform = function(parentCmd, recursive) {
-        this.originTransform(parentCmd, recursive);
-        this.updateMatrix();
-      };
-      _ccsg.EditBox.WebGLRenderCmd = function(node) {
-        this._rootCtor(node);
-        this.initializeRenderCmd(node);
-      };
-      var webGLRenderCmdProto = _ccsg.EditBox.WebGLRenderCmd.prototype = Object.create(_ccsg.Node.WebGLRenderCmd.prototype);
-      cc.js.mixin(webGLRenderCmdProto, proto);
-      webGLRenderCmdProto.constructor = _ccsg.EditBox.WebGLRenderCmd;
-      webGLRenderCmdProto.transform = function(parentCmd, recursive) {
-        this.originTransform(parentCmd, recursive);
-        this.updateMatrix();
-      };
-    })(_ccsg.EditBox._polyfill);
-  }), {
-    "../platform/CCSys": 186,
-    "../platform/utils": 202
-  } ],
-  107: [ (function(require, module, exports) {
+  100: [ (function(require, module, exports) {
     var JS = cc.js;
     require("../event/event");
     var EventMouse = function(eventType, bubbles) {
@@ -20826,9 +19031,9 @@
     cc.Event.EventKeyboard = EventKeyboard;
     module.exports = cc.Event;
   }), {
-    "../event/event": 114
+    "../event/event": 107
   } ],
-  108: [ (function(require, module, exports) {
+  101: [ (function(require, module, exports) {
     cc.EventListener = cc._Class.extend({
       ctor: function(type, listenerID, callback) {
         this._onEvent = callback;
@@ -21069,7 +19274,7 @@
     });
     cc._EventListenerKeyboard.LISTENER_ID = "__cc_keyboard";
   }), {} ],
-  109: [ (function(require, module, exports) {
+  102: [ (function(require, module, exports) {
     var js = require("../platform/js");
     var _EventListenerVector = cc._Class.extend({
       ctor: function() {
@@ -21695,9 +19900,9 @@
     }));
     module.exports = eventManager;
   }), {
-    "../platform/js": 198
+    "../platform/js": 191
   } ],
-  110: [ (function(require, module, exports) {
+  103: [ (function(require, module, exports) {
     cc.Touch = cc._Class.extend({
       ctor: function(x, y, id) {
         this._lastModified = 0;
@@ -21775,7 +19980,7 @@
       }
     });
   }), {} ],
-  111: [ (function(require, module, exports) {
+  104: [ (function(require, module, exports) {
     require("./CCEvent");
     var eventManager;
     false;
@@ -21784,12 +19989,12 @@
     eventManager = require("./CCEventManager");
     module.exports = eventManager;
   }), {
-    "./CCEvent": 107,
-    "./CCEventListener": 108,
-    "./CCEventManager": 109,
-    "./CCTouch": 110
+    "./CCEvent": 100,
+    "./CCEventListener": 101,
+    "./CCEventManager": 102,
+    "./CCTouch": 103
   } ],
-  112: [ (function(require, module, exports) {
+  105: [ (function(require, module, exports) {
     var JS = cc.js;
     var CallbacksHandler = require("../platform/callbacks-invoker").CallbacksHandler;
     function EventListeners() {
@@ -21821,9 +20026,9 @@
     module.exports = EventListeners;
     false;
   }), {
-    "../platform/callbacks-invoker": 191
+    "../platform/callbacks-invoker": 184
   } ],
-  113: [ (function(require, module, exports) {
+  106: [ (function(require, module, exports) {
     var EventListeners = require("./event-listeners");
     require("./event");
     var JS = cc.js;
@@ -22001,10 +20206,10 @@
     EventTarget.prototype._EventTargetTargetOff = EventTarget.prototype.targetOff;
     cc.EventTarget = module.exports = EventTarget;
   }), {
-    "./event": 114,
-    "./event-listeners": 112
+    "./event": 107,
+    "./event-listeners": 105
   } ],
-  114: [ (function(require, module, exports) {
+  107: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     cc.Event = function(type, bubbles) {
       this.type = type;
@@ -22080,20 +20285,20 @@
     cc.Event.EventCustom = EventCustom;
     module.exports = cc.Event;
   }), {
-    "../platform/js": 198
+    "../platform/js": 191
   } ],
-  115: [ (function(require, module, exports) {
+  108: [ (function(require, module, exports) {
     require("./event");
     require("./event-listeners");
     require("./event-target");
     require("./system-event");
   }), {
-    "./event": 114,
-    "./event-listeners": 112,
-    "./event-target": 113,
-    "./system-event": 116
+    "./event": 107,
+    "./event-listeners": 105,
+    "./event-target": 106,
+    "./system-event": 109
   } ],
-  116: [ (function(require, module, exports) {
+  109: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     var eventManager = require("../event-manager");
     var inputManger;
@@ -22169,11 +20374,11 @@
     true;
     cc.systemEvent = new cc.SystemEvent();
   }), {
-    "../event-manager": 111,
-    "../event/event-target": 113,
-    "../platform/CCInputManager": 181
+    "../event-manager": 104,
+    "../event/event-target": 106,
+    "../platform/CCInputManager": 174
   } ],
-  117: [ (function(require, module, exports) {
+  110: [ (function(require, module, exports) {
     "use strict";
     module.exports = earcut;
     function earcut(data, holeIndices, dim) {
@@ -22565,7 +20770,7 @@
       return result;
     };
   }), {} ],
-  118: [ (function(require, module, exports) {
+  111: [ (function(require, module, exports) {
     var Js = cc.js;
     var LineCap = require("./types").LineCap;
     var LineJoin = require("./types").LineJoin;
@@ -22697,10 +20902,10 @@
     };
     module.exports = CanvasRenderCmd;
   }), {
-    "./helper": 122,
-    "./types": 124
+    "./helper": 115,
+    "./types": 117
   } ],
-  119: [ (function(require, module, exports) {
+  112: [ (function(require, module, exports) {
     var CanvasRenderCmd = require("./graphics-canvas-cmd");
     var WebGLRenderCmd = require("./graphics-webgl-cmd");
     var LineCap = require("./types").LineCap;
@@ -22812,11 +21017,11 @@
     };
     module.exports = GraphicsNode;
   }), {
-    "./graphics-canvas-cmd": 118,
-    "./graphics-webgl-cmd": 120,
-    "./types": 124
+    "./graphics-canvas-cmd": 111,
+    "./graphics-webgl-cmd": 113,
+    "./types": 117
   } ],
-  120: [ (function(require, module, exports) {
+  113: [ (function(require, module, exports) {
     var LineCap = require("./types").LineCap;
     var LineJoin = require("./types").LineJoin;
     var Earcut = require("./earcut");
@@ -23521,11 +21726,11 @@
     };
     module.exports = WebGLRenderCmd;
   }), {
-    "./earcut": 117,
-    "./helper": 122,
-    "./types": 124
+    "./earcut": 110,
+    "./helper": 115,
+    "./types": 117
   } ],
-  121: [ (function(require, module, exports) {
+  114: [ (function(require, module, exports) {
     var LineCap = require("./types").LineCap;
     var LineJoin = require("./types").LineJoin;
     var Graphics = cc.Class({
@@ -23656,9 +21861,9 @@
     });
     cc.Graphics = module.exports = Graphics;
   }), {
-    "./types": 124
+    "./types": 117
   } ],
-  122: [ (function(require, module, exports) {
+  115: [ (function(require, module, exports) {
     var PI = Math.PI;
     var min = Math.min;
     var max = Math.max;
@@ -23725,7 +21930,7 @@
       roundRect: roundRect
     };
   }), {} ],
-  123: [ (function(require, module, exports) {
+  116: [ (function(require, module, exports) {
     "use strict";
     var GraphicsNode;
     true;
@@ -23736,11 +21941,11 @@
     }
     require("./graphics");
   }), {
-    "../utils/misc": 227,
-    "./graphics": 121,
-    "./graphics-node": 119
+    "../utils/misc": 220,
+    "./graphics": 114,
+    "./graphics-node": 112
   } ],
-  124: [ (function(require, module, exports) {
+  117: [ (function(require, module, exports) {
     "use strict";
     var LineCap = cc.Enum({
       BUTT: 0,
@@ -23757,7 +21962,7 @@
       LineJoin: LineJoin
     };
   }), {} ],
-  125: [ (function(require, module, exports) {
+  118: [ (function(require, module, exports) {
     require("./platform");
     require("./assets");
     true;
@@ -23778,12 +21983,12 @@
     "./camera/CCCamera": 61,
     "./collider": 70,
     "./collider/CCIntersection": 68,
-    "./components": 104,
-    "./graphics": 123,
-    "./physics": 159,
-    "./platform": 195
+    "./components": 98,
+    "./graphics": 116,
+    "./physics": 152,
+    "./platform": 188
   } ],
-  126: [ (function(require, module, exports) {
+  119: [ (function(require, module, exports) {
     var eventRegx = /^(click)(\s)*=/;
     var imageAttrReg = /(\s)*src(\s)*=|(\s)*height(\s)*=|(\s)*width(\s)*=|(\s)*click(\s)*=/;
     cc.HtmlTextParser = function() {
@@ -24013,7 +22218,7 @@
     };
     cc.htmlTextParser = new cc.HtmlTextParser();
   }), {} ],
-  127: [ (function(require, module, exports) {
+  120: [ (function(require, module, exports) {
     require("./CCTextUtils");
     var EventTarget = require("../event/event-target");
     var JS = require("../platform/js");
@@ -24364,11 +22569,13 @@
       },
       _loadTTFFont: function(fontHandle) {
         var self = this;
-        var fontFamilyName = cc.CustomFontLoader._getFontFamily(fontHandle);
         var callback = function() {
           self._notifyLabelSkinDirty();
           self.emit("load");
         };
+        var fontFamilyName = "";
+        false;
+        fontFamilyName = cc.CustomFontLoader._getFontFamily(fontHandle);
         cc.CustomFontLoader.loadTTF(fontHandle, callback);
         return fontFamilyName;
       },
@@ -24917,11 +23124,11 @@
       set: _ccsg.Node.prototype._setHeight
     });
   }), {
-    "../event/event-target": 113,
-    "../platform/js": 198,
-    "./CCTextUtils": 130
+    "../event/event-target": 106,
+    "../platform/js": 191,
+    "./CCTextUtils": 123
   } ],
-  128: [ (function(require, module, exports) {
+  121: [ (function(require, module, exports) {
     (function() {
       _ccsg.Label.TTFLabelBaker = function() {};
       var proto = _ccsg.Label.TTFLabelBaker.prototype = Object.create(Object.prototype);
@@ -25269,7 +23476,7 @@
       };
     })();
   }), {} ],
-  129: [ (function(require, module, exports) {
+  122: [ (function(require, module, exports) {
     _ccsg.Label.WebGLRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
       this._needDraw = true;
@@ -25355,7 +23562,7 @@
       return len;
     };
   }), {} ],
-  130: [ (function(require, module, exports) {
+  123: [ (function(require, module, exports) {
     var CustomFontDescriptor = function() {
       this._status = "unloaded";
       this._observers = [];
@@ -25509,7 +23716,7 @@
             width = allWidth - measureText(tmpText);
           }
           checkWhile = 0;
-          while (width < maxWidth && checkWhile++ < checkCount) {
+          while (width <= maxWidth && checkWhile++ < checkCount) {
             if (tmpText) {
               var exec = this.label_wordRex.exec(tmpText);
               pushNum = exec ? exec[0].length : 1;
@@ -25540,7 +23747,7 @@
               sText = text.substr(0, fuzzyLen);
             }
           }
-          if (0 === wrappedWords.length && "" === sLine && "" === tmpText) wrappedWords.push(sText); else {
+          if (0 === wrappedWords.length) wrappedWords.push(sText); else {
             sText = sText.trim();
             sText.length > 0 && wrappedWords.push(sText);
           }
@@ -25557,7 +23764,7 @@
     cc.TextUtils = module.exports = TextUtils;
     cc.CustomFontLoader = module.exports = CustomFontLoader;
   }), {} ],
-  131: [ (function(require, module, exports) {
+  124: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var Pipeline = require("./pipeline");
     var LoadingItems = require("./loading-items");
@@ -25907,18 +24114,18 @@
     false;
     module.exports = cc.loader;
   }), {
-    "../platform/js": 198,
-    "../platform/utils": 202,
-    "./asset-loader": 132,
-    "./asset-table": 133,
-    "./auto-release-utils": 135,
-    "./downloader": 136,
-    "./loader": 139,
-    "./loading-items": 140,
-    "./pipeline": 143,
-    "./released-asset-checker": 144
+    "../platform/js": 191,
+    "../platform/utils": 195,
+    "./asset-loader": 125,
+    "./asset-table": 126,
+    "./auto-release-utils": 128,
+    "./downloader": 129,
+    "./loader": 132,
+    "./loading-items": 133,
+    "./pipeline": 136,
+    "./released-asset-checker": 137
   } ],
-  132: [ (function(require, module, exports) {
+  125: [ (function(require, module, exports) {
     var Path = require("../utils/CCPath");
     var Pipeline = require("./pipeline");
     var LoadingItems = require("./loading-items");
@@ -25968,11 +24175,11 @@
     };
     Pipeline.AssetLoader = module.exports = AssetLoader;
   }), {
-    "../utils/CCPath": 220,
-    "./loading-items": 140,
-    "./pipeline": 143
+    "../utils/CCPath": 213,
+    "./loading-items": 133,
+    "./pipeline": 136
   } ],
-  133: [ (function(require, module, exports) {
+  126: [ (function(require, module, exports) {
     var pushToMap = require("../utils/misc").pushToMap;
     function Entry(uuid, type) {
       this.uuid = uuid;
@@ -26053,9 +24260,9 @@
     };
     module.exports = AssetTable;
   }), {
-    "../utils/misc": 227
+    "../utils/misc": 220
   } ],
-  134: [ (function(require, module, exports) {
+  127: [ (function(require, module, exports) {
     var Path = require("../utils/CCPath");
     var sys = require("../platform/CCSys");
     var Pipeline = require("./pipeline");
@@ -26121,11 +24328,11 @@
     module.exports = downloadAudio;
   }), {
     "../../audio/CCAudioEngine": 24,
-    "../platform/CCSys": 186,
-    "../utils/CCPath": 220,
-    "./pipeline": 143
+    "../platform/CCSys": 179,
+    "../utils/CCPath": 213,
+    "./pipeline": 136
   } ],
-  135: [ (function(require, module, exports) {
+  128: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     function parseDepends(key, parsed) {
       var item = cc.loader.getItem(key);
@@ -26190,9 +24397,9 @@
       }
     };
   }), {
-    "../platform/js": 198
+    "../platform/js": 191
   } ],
-  136: [ (function(require, module, exports) {
+  129: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var sys = require("../platform/CCSys");
     var Path = require("../utils/CCPath");
@@ -26392,17 +24599,17 @@
     };
     Pipeline.Downloader = module.exports = Downloader;
   }), {
-    "../platform/CCSys": 186,
-    "../platform/js": 198,
-    "../utils/CCPath": 220,
-    "../utils/misc": 227,
-    "./audio-downloader": 134,
-    "./pack-downloader": 142,
-    "./pipeline": 143,
-    "./text-downloader": 145,
-    "./utils": 146
+    "../platform/CCSys": 179,
+    "../platform/js": 191,
+    "../utils/CCPath": 213,
+    "../utils/misc": 220,
+    "./audio-downloader": 127,
+    "./pack-downloader": 135,
+    "./pipeline": 136,
+    "./text-downloader": 138,
+    "./utils": 139
   } ],
-  137: [ (function(require, module, exports) {
+  130: [ (function(require, module, exports) {
     require("./downloader");
     require("./loader");
     require("./json-unpacker");
@@ -26410,14 +24617,14 @@
     require("./pipeline");
     require("./CCLoader");
   }), {
-    "./CCLoader": 131,
-    "./downloader": 136,
-    "./json-unpacker": 138,
-    "./loader": 139,
-    "./loading-items": 140,
-    "./pipeline": 143
+    "./CCLoader": 124,
+    "./downloader": 129,
+    "./json-unpacker": 131,
+    "./loader": 132,
+    "./loading-items": 133,
+    "./pipeline": 136
   } ],
-  138: [ (function(require, module, exports) {
+  131: [ (function(require, module, exports) {
     function JsonUnpacker() {
       this.jsons = {};
       this.state = -1;
@@ -26437,7 +24644,7 @@
     false;
     module.exports = JsonUnpacker;
   }), {} ],
-  139: [ (function(require, module, exports) {
+  132: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var sys = require("../platform/CCSys");
     var Pipeline = require("./pipeline");
@@ -26507,14 +24714,14 @@
     };
     Pipeline.Loader = module.exports = Loader;
   }), {
-    "../platform/CCSys": 186,
-    "../platform/js": 198,
-    "../textures/CCTexture2D": 217,
-    "../utils/misc": 227,
-    "./pipeline": 143,
-    "./uuid-loader": 147
+    "../platform/CCSys": 179,
+    "../platform/js": 191,
+    "../textures/CCTexture2D": 210,
+    "../utils/misc": 220,
+    "./pipeline": 136,
+    "./uuid-loader": 140
   } ],
-  140: [ (function(require, module, exports) {
+  133: [ (function(require, module, exports) {
     var CallbacksInvoker = require("../platform/callbacks-invoker");
     var Path = require("../utils/CCPath");
     var JS = require("../platform/js");
@@ -26798,11 +25005,11 @@
     };
     cc.LoadingItems = module.exports = LoadingItems;
   }), {
-    "../platform/callbacks-invoker": 191,
-    "../platform/js": 198,
-    "../utils/CCPath": 220
+    "../platform/callbacks-invoker": 184,
+    "../platform/js": 191,
+    "../utils/CCPath": 213
   } ],
-  141: [ (function(require, module, exports) {
+  134: [ (function(require, module, exports) {
     var Pipeline = require("./pipeline");
     var ID = "MD5Pipe";
     var ExtnameRegex = /(\.[^.\n\\/]*)$/;
@@ -26840,9 +25047,9 @@
     };
     Pipeline.MD5Pipe = module.exports = MD5Pipe;
   }), {
-    "./pipeline": 143
+    "./pipeline": 136
   } ],
-  142: [ (function(require, module, exports) {
+  135: [ (function(require, module, exports) {
     var JsonUnpacker = require("./json-unpacker");
     var pushToMap = require("../utils/misc").pushToMap;
     var uuidToPack = {};
@@ -26883,6 +25090,14 @@
           var res = self._doLoadNewPack(uuid, packUuid, packJson);
           res ? callback(null, res) : callback(error(uuid, packUuid));
         }));
+      },
+      _doPreload: function(packUuid, packJson) {
+        var unpacker = globalUnpackers[packUuid];
+        unpacker || (unpacker = globalUnpackers[packUuid] = new JsonUnpacker());
+        if (unpacker.state !== PackState.Loaded) {
+          unpacker.read(packIndices[packUuid], packJson);
+          unpacker.state = PackState.Loaded;
+        }
       },
       _doLoadNewPack: function(uuid, packUuid, packJson) {
         var unpacker = globalUnpackers[packUuid];
@@ -26931,10 +25146,10 @@
     };
     false;
   }), {
-    "../utils/misc": 227,
-    "./json-unpacker": 138
+    "../utils/misc": 220,
+    "./json-unpacker": 131
   } ],
-  143: [ (function(require, module, exports) {
+  136: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var LoadingItems = require("./loading-items");
     var ItemState = LoadingItems.ItemState;
@@ -27071,10 +25286,10 @@
     };
     cc.Pipeline = module.exports = Pipeline;
   }), {
-    "../platform/js": 198,
-    "./loading-items": 140
+    "../platform/js": 191,
+    "./loading-items": 133
   } ],
-  144: [ (function(require, module, exports) {
+  137: [ (function(require, module, exports) {
     true;
     var JS;
     var tmpInfo;
@@ -27128,9 +25343,9 @@
       module.exports = ReleasedAssetChecker;
     })();
   }), {
-    "../platform/js": 198
+    "../platform/js": 191
   } ],
-  145: [ (function(require, module, exports) {
+  138: [ (function(require, module, exports) {
     var sys = require("../platform/CCSys");
     false;
     var urlAppendTimestamp = require("./utils").urlAppendTimestamp;
@@ -27165,10 +25380,10 @@
       xhr.send(null);
     };
   }), {
-    "../platform/CCSys": 186,
-    "./utils": 146
+    "../platform/CCSys": 179,
+    "./utils": 139
   } ],
-  146: [ (function(require, module, exports) {
+  139: [ (function(require, module, exports) {
     var _noCacheRex = /\?/;
     module.exports = {
       urlAppendTimestamp: function(url) {
@@ -27177,7 +25392,7 @@
       }
     };
   }), {} ],
-  147: [ (function(require, module, exports) {
+  140: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     require("../platform/deserialize");
     var LoadingItems = require("./loading-items");
@@ -27332,11 +25547,11 @@
     module.exports = loadUuid;
     loadUuid.isSceneObj = isSceneObj;
   }), {
-    "../platform/deserialize": 193,
-    "../platform/js": 198,
-    "./loading-items": 140
+    "../platform/deserialize": 186,
+    "../platform/js": 191,
+    "./loading-items": 133
   } ],
-  148: [ (function(require, module, exports) {
+  141: [ (function(require, module, exports) {
     var CompScheduler = require("./component-scheduler");
     var Flags = require("./platform/CCObject").Flags;
     var JS = require("./platform/js");
@@ -27506,11 +25721,11 @@
     module.exports = NodeActivator;
   }), {
     "./component-scheduler": 71,
-    "./platform/CCObject": 183,
-    "./platform/js": 198,
-    "./utils/misc": 227
+    "./platform/CCObject": 176,
+    "./platform/js": 191,
+    "./utils/misc": 220
   } ],
-  149: [ (function(require, module, exports) {
+  142: [ (function(require, module, exports) {
     var PTM_RATIO = require("./CCPhysicsTypes").PTM_RATIO;
     var ContactType = require("./CCPhysicsTypes").ContactType;
     var pools = [];
@@ -27729,9 +25944,9 @@
     PhysicsContact.ContactType = ContactType;
     cc.PhysicsContact = module.exports = PhysicsContact;
   }), {
-    "./CCPhysicsTypes": 151
+    "./CCPhysicsTypes": 144
   } ],
-  150: [ (function(require, module, exports) {
+  143: [ (function(require, module, exports) {
     var ContactType = require("./CCPhysicsTypes").ContactType;
     var BodyType = require("./CCPhysicsTypes").BodyType;
     var RayCastType = require("./CCPhysicsTypes").RayCastType;
@@ -28016,9 +26231,9 @@
     }));
     cc.PhysicsManager = module.exports = PhysicsManager;
   }), {
-    "./CCPhysicsTypes": 151
+    "./CCPhysicsTypes": 144
   } ],
-  151: [ (function(require, module, exports) {
+  144: [ (function(require, module, exports) {
     var ContactType = {
       BEGIN_CONTACT: "begin-contact",
       END_CONTACT: "end-contact",
@@ -28048,7 +26263,7 @@
       PHYSICS_ANGLE_TO_ANGLE: -180 / Math.PI
     };
   }), {} ],
-  152: [ (function(require, module, exports) {
+  145: [ (function(require, module, exports) {
     function At(i, vertices) {
       var s = vertices.length;
       return vertices[i < 0 ? s - -i % s : i % s];
@@ -28232,7 +26447,7 @@
       IsCounterClockWise: IsCounterClockWise
     };
   }), {} ],
-  153: [ (function(require, module, exports) {
+  146: [ (function(require, module, exports) {
     var PTM_RATIO = require("./CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("./CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var PHYSICS_ANGLE_TO_ANGLE = require("./CCPhysicsTypes").PHYSICS_ANGLE_TO_ANGLE;
@@ -28626,10 +26841,10 @@
     });
     cc.RigidBody = module.exports = RigidBody;
   }), {
-    "./CCPhysicsTypes": 151,
-    "./utils": 174
+    "./CCPhysicsTypes": 144,
+    "./utils": 167
   } ],
-  154: [ (function(require, module, exports) {
+  147: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PhysicsBoxCollider = cc.Class({
       name: "cc.PhysicsBoxCollider",
@@ -28653,9 +26868,9 @@
     });
     cc.PhysicsBoxCollider = module.exports = PhysicsBoxCollider;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  155: [ (function(require, module, exports) {
+  148: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PhysicsChainCollider = cc.Class({
       name: "cc.PhysicsChainCollider",
@@ -28695,9 +26910,9 @@
     });
     cc.PhysicsChainCollider = module.exports = PhysicsChainCollider;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  156: [ (function(require, module, exports) {
+  149: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PhysicsCircleCollider = cc.Class({
       name: "cc.PhysicsCircleCollider",
@@ -28720,9 +26935,9 @@
     });
     cc.PhysicsCircleCollider = module.exports = PhysicsCircleCollider;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  157: [ (function(require, module, exports) {
+  150: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var getWorldScale = require("../utils").getWorldScale;
     var PhysicsCollider = cc.Class({
@@ -28892,10 +27107,10 @@
     });
     cc.PhysicsCollider = module.exports = PhysicsCollider;
   }), {
-    "../CCPhysicsTypes": 151,
-    "../utils": 174
+    "../CCPhysicsTypes": 144,
+    "../utils": 167
   } ],
-  158: [ (function(require, module, exports) {
+  151: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PolygonSeparator = require("../CCPolygonSeparator");
     var PhysicsPolygonCollider = cc.Class({
@@ -28942,10 +27157,10 @@
     });
     cc.PhysicsPolygonCollider = module.exports = PhysicsPolygonCollider;
   }), {
-    "../CCPhysicsTypes": 151,
-    "../CCPolygonSeparator": 152
+    "../CCPhysicsTypes": 144,
+    "../CCPolygonSeparator": 145
   } ],
-  159: [ (function(require, module, exports) {
+  152: [ (function(require, module, exports) {
     true;
     window.b2 = require("../../../external/box2d/box2d");
     false;
@@ -28973,31 +27188,31 @@
     require("./platform/CCPhysicsAABBQueryCallback");
     require("./platform/CCPhysicsRayCastCallback");
   }), {
-    "../../../external/box2d/box2d": 302,
-    "./CCPhysicsContact": 149,
-    "./CCPhysicsManager": 150,
-    "./CCRigidBody": 153,
-    "./collider/CCPhysicsBoxCollider": 154,
-    "./collider/CCPhysicsChainCollider": 155,
-    "./collider/CCPhysicsCircleCollider": 156,
-    "./collider/CCPhysicsCollider": 157,
-    "./collider/CCPhysicsPolygonCollider": 158,
-    "./joint/CCDistanceJoint": 160,
-    "./joint/CCJoint": 161,
-    "./joint/CCMotorJoint": 162,
-    "./joint/CCMouseJoint": 163,
-    "./joint/CCPrismaticJoint": 164,
-    "./joint/CCRevoluteJoint": 165,
-    "./joint/CCRopeJoint": 166,
-    "./joint/CCWeldJoint": 167,
-    "./joint/CCWheelJoint": 168,
-    "./platform/CCPhysicsAABBQueryCallback": 169,
-    "./platform/CCPhysicsContactListner": 170,
-    "./platform/CCPhysicsDebugDraw": 171,
-    "./platform/CCPhysicsRayCastCallback": 172,
-    "./platform/CCPhysicsUtils": 173
+    "../../../external/box2d/box2d": 270,
+    "./CCPhysicsContact": 142,
+    "./CCPhysicsManager": 143,
+    "./CCRigidBody": 146,
+    "./collider/CCPhysicsBoxCollider": 147,
+    "./collider/CCPhysicsChainCollider": 148,
+    "./collider/CCPhysicsCircleCollider": 149,
+    "./collider/CCPhysicsCollider": 150,
+    "./collider/CCPhysicsPolygonCollider": 151,
+    "./joint/CCDistanceJoint": 153,
+    "./joint/CCJoint": 154,
+    "./joint/CCMotorJoint": 155,
+    "./joint/CCMouseJoint": 156,
+    "./joint/CCPrismaticJoint": 157,
+    "./joint/CCRevoluteJoint": 158,
+    "./joint/CCRopeJoint": 159,
+    "./joint/CCWeldJoint": 160,
+    "./joint/CCWheelJoint": 161,
+    "./platform/CCPhysicsAABBQueryCallback": 162,
+    "./platform/CCPhysicsContactListner": 163,
+    "./platform/CCPhysicsDebugDraw": 164,
+    "./platform/CCPhysicsRayCastCallback": 165,
+    "./platform/CCPhysicsUtils": 166
   } ],
-  160: [ (function(require, module, exports) {
+  153: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var DistanceJoint = cc.Class({
       name: "cc.DistanceJoint",
@@ -29050,9 +27265,9 @@
     });
     cc.DistanceJoint = module.exports = DistanceJoint;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  161: [ (function(require, module, exports) {
+  154: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var Joint = cc.Class({
       name: "cc.Joint",
@@ -29151,9 +27366,9 @@
     });
     cc.Joint = module.exports = Joint;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  162: [ (function(require, module, exports) {
+  155: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var MotorJoint = cc.Class({
@@ -29241,9 +27456,9 @@
     });
     cc.MotorJoint = module.exports = MotorJoint;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  163: [ (function(require, module, exports) {
+  156: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var tempB2Vec2 = new b2.Vec2();
     var MouseJoint = cc.Class({
@@ -29374,9 +27589,9 @@
     });
     cc.MouseJoint = module.exports = MouseJoint;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  164: [ (function(require, module, exports) {
+  157: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var PrismaticJoint = cc.Class({
@@ -29448,9 +27663,9 @@
     });
     cc.PrismaticJoint = module.exports = PrismaticJoint;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  165: [ (function(require, module, exports) {
+  158: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var PHYSICS_ANGLE_TO_ANGLE = require("../CCPhysicsTypes").PHYSICS_ANGLE_TO_ANGLE;
@@ -29536,9 +27751,9 @@
     });
     cc.RevoluteJoint = module.exports = RevoluteJoint;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  166: [ (function(require, module, exports) {
+  159: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var RopeJoint = cc.Class({
       name: "cc.RopeJoint",
@@ -29567,9 +27782,9 @@
     });
     cc.RopeJoint = module.exports = RopeJoint;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  167: [ (function(require, module, exports) {
+  160: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var WeldJoint = cc.Class({
@@ -29616,9 +27831,9 @@
     });
     cc.WeldJoint = module.exports = WeldJoint;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  168: [ (function(require, module, exports) {
+  161: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var ANGLE_TO_PHYSICS_ANGLE = require("../CCPhysicsTypes").ANGLE_TO_PHYSICS_ANGLE;
     var WheelJoint = cc.Class({
@@ -29701,9 +27916,9 @@
     });
     cc.WheelJoint = module.exports = WheelJoint;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  169: [ (function(require, module, exports) {
+  162: [ (function(require, module, exports) {
     function PhysicsAABBQueryCallback() {
       this._point = new b2.Vec2();
       this._isPoint = false;
@@ -29735,7 +27950,7 @@
     };
     cc.PhysicsAABBQueryCallback = module.exports = PhysicsAABBQueryCallback;
   }), {} ],
-  170: [ (function(require, module, exports) {
+  163: [ (function(require, module, exports) {
     function PhysicsContactListener() {
       this._contactFixtures = [];
     }
@@ -29782,7 +27997,7 @@
     };
     cc.PhysicsContactListener = module.exports = PhysicsContactListener;
   }), {} ],
-  171: [ (function(require, module, exports) {
+  164: [ (function(require, module, exports) {
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var PhysicsDebugDraw = cc.Class({
       name: "cc.PhysicsDebugDraw",
@@ -29853,9 +28068,9 @@
     });
     cc.PhysicsDebugDraw = module.exports = PhysicsDebugDraw;
   }), {
-    "../CCPhysicsTypes": 151
+    "../CCPhysicsTypes": 144
   } ],
-  172: [ (function(require, module, exports) {
+  165: [ (function(require, module, exports) {
     function PhysicsRayCastCallback() {
       this._type = 0;
       this._fixtures = [];
@@ -29900,7 +28115,7 @@
     };
     cc.PhysicsRayCastCallback = module.exports = PhysicsRayCastCallback;
   }), {} ],
-  173: [ (function(require, module, exports) {
+  166: [ (function(require, module, exports) {
     var PHYSICS_ANGLE_TO_ANGLE = require("../CCPhysicsTypes").PHYSICS_ANGLE_TO_ANGLE;
     var PTM_RATIO = require("../CCPhysicsTypes").PTM_RATIO;
     var convertToNodeRotation = require("../utils").convertToNodeRotation;
@@ -29933,10 +28148,10 @@
     };
     cc.PhysicsUtils = module.exports = PhysicsUtils;
   }), {
-    "../CCPhysicsTypes": 151,
-    "../utils": 174
+    "../CCPhysicsTypes": 144,
+    "../utils": 167
   } ],
-  174: [ (function(require, module, exports) {
+  167: [ (function(require, module, exports) {
     function getWorldRotation(node) {
       var rot = node.rotationX;
       var parent = node.parent;
@@ -29972,7 +28187,7 @@
       convertToNodeRotation: convertToNodeRotation
     };
   }), {} ],
-  175: [ (function(require, module, exports) {
+  168: [ (function(require, module, exports) {
     var js;
     var macro;
     var sys;
@@ -29981,12 +28196,12 @@
     var bkInputManager;
     false;
   }), {
-    "../event-manager": 111,
-    "../platform/js": 198,
-    "./CCMacro": 182,
-    "./CCSys": 186
+    "../event-manager": 104,
+    "../platform/js": 191,
+    "./CCMacro": 175,
+    "./CCSys": 179
   } ],
-  176: [ (function(require, module, exports) {
+  169: [ (function(require, module, exports) {
     var Asset = require("../assets/CCAsset");
     var callInNextTick = require("./utils").callInNextTick;
     var Loader = require("../load-pipeline/CCLoader");
@@ -30148,14 +28363,14 @@
     module.exports = cc.AssetLibrary = AssetLibrary;
   }), {
     "../assets/CCAsset": 44,
-    "../load-pipeline/CCLoader": 131,
-    "../load-pipeline/auto-release-utils": 135,
-    "../load-pipeline/md5-pipe": 141,
-    "../load-pipeline/pack-downloader": 142,
-    "../utils/decode-uuid": 224,
-    "./utils": 202
+    "../load-pipeline/CCLoader": 124,
+    "../load-pipeline/auto-release-utils": 128,
+    "../load-pipeline/md5-pipe": 134,
+    "../load-pipeline/pack-downloader": 135,
+    "../utils/decode-uuid": 217,
+    "./utils": 195
   } ],
-  177: [ (function(require, module, exports) {
+  170: [ (function(require, module, exports) {
     var JS = require("./js");
     var Enum = require("./CCEnum");
     var Utils = require("./utils");
@@ -30527,6 +28742,8 @@
       var mixins = options.mixins;
       var cls = define(name, base, mixins, options);
       name || (name = cc.js.getClassName(cls));
+      cls._sealed = true;
+      base && (base._sealed = false);
       var properties = options.properties;
       if ("function" === typeof properties || base && null === base.__props__ || mixins && mixins.some((function(x) {
         return null === x.__props__;
@@ -30680,14 +28897,14 @@
     };
     false;
   }), {
-    "./CCEnum": 179,
-    "./attribute": 190,
-    "./js": 198,
-    "./preprocess-class": 199,
-    "./requiring-frame": 200,
-    "./utils": 202
+    "./CCEnum": 172,
+    "./attribute": 183,
+    "./js": 191,
+    "./preprocess-class": 192,
+    "./requiring-frame": 193,
+    "./utils": 195
   } ],
-  178: [ (function(require, module, exports) {
+  171: [ (function(require, module, exports) {
     require("./CCClass");
     var Preprocess = require("./preprocess-class");
     var JS = require("./js");
@@ -30860,12 +29077,12 @@
       mixins: mixins
     };
   }), {
-    "./CCClass": 177,
-    "./js": 198,
-    "./preprocess-class": 199,
-    "./utils": 202
+    "./CCClass": 170,
+    "./js": 191,
+    "./preprocess-class": 192,
+    "./utils": 195
   } ],
-  179: [ (function(require, module, exports) {
+  172: [ (function(require, module, exports) {
     var JS = require("./js");
     function Enum(obj) {
       if ("__enums__" in obj) return obj;
@@ -30912,9 +29129,9 @@
     false;
     module.exports = cc.Enum = Enum;
   }), {
-    "./js": 198
+    "./js": 191
   } ],
-  180: [ (function(require, module, exports) {
+  173: [ (function(require, module, exports) {
     cc.ClassManager || require("./_CCClass");
     var eventManager = require("../event-manager");
     var inputManager = require("./CCInputManager");
@@ -30993,11 +29210,11 @@
       }
     };
   }), {
-    "../event-manager": 111,
-    "./CCInputManager": 181,
-    "./_CCClass": 189
+    "../event-manager": 104,
+    "./CCInputManager": 174,
+    "./_CCClass": 182
   } ],
-  181: [ (function(require, module, exports) {
+  174: [ (function(require, module, exports) {
     var js = require("../platform/js");
     var macro = require("./CCMacro");
     var sys = require("./CCSys");
@@ -31317,9 +29534,9 @@
             MSPointerUp: selfPointer.handleTouchesEnd,
             MSPointerCancel: selfPointer.handleTouchesCancel
           };
-          var _loop = function(eventName) {
-            var touchEvent = _pointerEventsMap[eventName];
-            element.addEventListener(eventName, (function(event) {
+          var _loop = function(_eventName) {
+            var touchEvent = _pointerEventsMap[_eventName];
+            element.addEventListener(_eventName, (function(event) {
               var pos = selfPointer.getHTMLElementPosition(element);
               pos.left -= document.documentElement.scrollLeft;
               pos.top -= document.documentElement.scrollTop;
@@ -31327,7 +29544,7 @@
               event.stopPropagation();
             }), false);
           };
-          for (var eventName in _pointerEventsMap) _loop(eventName);
+          for (var _eventName in _pointerEventsMap) _loop(_eventName);
         }
         if (supportTouches) {
           var _touchEventsMap = {
@@ -31345,7 +29562,26 @@
               selfPointer.handleTouchesCancel(touchesToHandle);
             }
           };
-          var _loop2 = function(eventName) {
+          var registerTouchEvent;
+          if (cc.sys.browserType === cc.sys.BROWSER_TYPE_WECHAT_GAME_SUB) {
+            _touchEventsMap = {
+              onTouchStart: _touchEventsMap.touchstart,
+              onTouchMove: _touchEventsMap.touchmove,
+              onTouchEnd: _touchEventsMap.touchend,
+              onTouchCancel: _touchEventsMap.touchcancel
+            };
+            registerTouchEvent = function(eventName) {
+              var handler = _touchEventsMap[eventName];
+              wx[eventName]((function(event) {
+                if (!event.changedTouches) return;
+                var pos = selfPointer.getHTMLElementPosition(element);
+                var body = document.body;
+                pos.left -= body.scrollLeft || 0;
+                pos.top -= body.scrollTop || 0;
+                handler(selfPointer.getTouchesByEvent(event, pos));
+              }));
+            };
+          } else registerTouchEvent = function(eventName) {
             var handler = _touchEventsMap[eventName];
             element.addEventListener(eventName, (function(event) {
               if (!event.changedTouches) return;
@@ -31358,10 +29594,12 @@
               event.preventDefault();
             }), false);
           };
-          for (var eventName in _touchEventsMap) _loop2(eventName);
+          for (var eventName in _touchEventsMap) registerTouchEvent(eventName);
         }
-        this._registerKeyboardEvent();
-        this._registerAccelerometerEvent();
+        if (cc.sys.browserType !== cc.sys.BROWSER_TYPE_WECHAT_GAME_SUB) {
+          this._registerKeyboardEvent();
+          this._registerAccelerometerEvent();
+        }
         this._isRegisterEvent = true;
       },
       _registerKeyboardEvent: function() {},
@@ -31380,12 +29618,12 @@
     }));
     module.exports = inputManager;
   }), {
-    "../event-manager": 111,
-    "../platform/js": 198,
-    "./CCMacro": 182,
-    "./CCSys": 186
+    "../event-manager": 104,
+    "../platform/js": 191,
+    "./CCMacro": 175,
+    "./CCSys": 179
   } ],
-  182: [ (function(require, module, exports) {
+  175: [ (function(require, module, exports) {
     require("./_CCClass");
     cc.KEY = {
       none: 0,
@@ -31624,7 +29862,8 @@
       ENABLE_GC_FOR_NATIVE_OBJECTS: true,
       ENABLE_TILEDMAP_CULLING: true,
       DOWNLOAD_MAX_CONCURRENT: 64,
-      ENABLE_TRANSPARENT_CANVAS: false
+      ENABLE_TRANSPARENT_CANVAS: false,
+      ENABLE_WEBGL_ANTIALIAS: false
     };
     var ENABLE_CULLING = true;
     cc.defineGetterSetter(cc.macro, "ENABLE_CULLING", (function() {
@@ -31673,9 +29912,9 @@
     };
     module.exports = cc.macro;
   }), {
-    "./_CCClass": 189
+    "./_CCClass": 182
   } ],
-  183: [ (function(require, module, exports) {
+  176: [ (function(require, module, exports) {
     var JS = require("./js");
     var CCClass = require("./CCClass");
     var Destroyed = 1;
@@ -31830,16 +30069,16 @@
     };
     false;
     prototype._deserialize = null;
-    cc.isValid = function(value) {
-      return "object" === typeof value ? !!value && !(value._objFlags & Destroyed) : "undefined" !== typeof value;
+    cc.isValid = function(value, strictMode) {
+      return "object" === typeof value ? !!value && !(value._objFlags & (strictMode ? Destroyed | ToDestroy : Destroyed)) : "undefined" !== typeof value;
     };
     false, false;
     cc.Object = module.exports = CCObject;
   }), {
-    "./CCClass": 177,
-    "./js": 198
+    "./CCClass": 170,
+    "./js": 191
   } ],
-  184: [ (function(require, module, exports) {
+  177: [ (function(require, module, exports) {
     cc.SAXParser = cc._Class.extend({
       ctor: function() {
         if (window.DOMParser) {
@@ -31910,7 +30149,7 @@
     cc.saxParser = new cc.SAXParser();
     cc.plistParser = new cc.PlistParser();
   }), {} ],
-  185: [ (function(require, module, exports) {
+  178: [ (function(require, module, exports) {
     cc.screen = {
       _supportsFullScreen: false,
       _preOnFullScreenChange: null,
@@ -31961,7 +30200,7 @@
     };
     cc.screen.init();
   }), {} ],
-  186: [ (function(require, module, exports) {
+  179: [ (function(require, module, exports) {
     if (cc.sys) return;
     cc.sys = {};
     var sys = cc.sys;
@@ -32017,6 +30256,7 @@
     sys.QQ_PLAY = 105;
     sys.BROWSER_TYPE_WECHAT = "wechat";
     sys.BROWSER_TYPE_WECHAT_GAME = "wechatgame";
+    sys.BROWSER_TYPE_WECHAT_GAME_SUB = "wechatgamesub";
     sys.BROWSER_TYPE_QQ_PLAY = "qqplay";
     sys.BROWSER_TYPE_ANDROID = "androidbrowser";
     sys.BROWSER_TYPE_IE = "ie";
@@ -32283,7 +30523,7 @@
     };
     module.exports = sys;
   }), {} ],
-  187: [ (function(require, module, exports) {
+  180: [ (function(require, module, exports) {
     var eventManager = require("../event-manager");
     var __BrowserGetter = {
       init: function() {
@@ -32348,6 +30588,16 @@
       };
       __BrowserGetter.availHeight = function() {
         return window.innerHeight;
+      };
+      break;
+
+     case cc.sys.BROWSER_TYPE_WECHAT_GAME_SUB:
+      var sharedCanvas = wx.getSharedCanvas();
+      __BrowserGetter.availWidth = function() {
+        return sharedCanvas.width;
+      };
+      __BrowserGetter.availHeight = function() {
+        return sharedCanvas.height;
       };
     }
     var _scissorRect = null;
@@ -32796,6 +31046,14 @@
         view.isRetinaEnabled() && (devicePixelRatio = view._devicePixelRatio = Math.min(2, window.devicePixelRatio || 1));
         locCanvas.width = w * devicePixelRatio;
         locCanvas.height = h * devicePixelRatio;
+        if (cc.sys.browserType === cc.sys.BROWSER_TYPE_WECHAT_GAME) {
+          var openDataContext = wx.getOpenDataContext();
+          var sharedCanvas = openDataContext.canvas;
+          if (sharedCanvas) {
+            sharedCanvas.width = locCanvas.width;
+            sharedCanvas.height = locCanvas.height;
+          }
+        }
         cc._renderContext.resetCache && cc._renderContext.resetCache();
       },
       _fixContainer: function() {
@@ -32970,9 +31228,9 @@
     cc.ResolutionPolicy.UNKNOWN = 5;
     module.exports = View;
   }), {
-    "../event-manager": 111
+    "../event-manager": 104
   } ],
-  188: [ (function(require, module, exports) {
+  181: [ (function(require, module, exports) {
     cc.visibleRect = {
       topLeft: cc.p(0, 0),
       topRight: cc.p(0, 0),
@@ -33010,7 +31268,7 @@
       }
     };
   }), {} ],
-  189: [ (function(require, module, exports) {
+  182: [ (function(require, module, exports) {
     var ClassManager = cc.ClassManager = {
       instanceId: 0 | 998 * Math.random(),
       getNewInstanceId: function() {
@@ -33115,7 +31373,7 @@
     };
     cc._Class = module.exports = Class;
   }), {} ],
-  190: [ (function(require, module, exports) {
+  183: [ (function(require, module, exports) {
     var JS = require("./js");
     var isPlainEmptyObj = require("./utils").isPlainEmptyObj_DEV;
     var DELIMETER = "$_$";
@@ -33203,11 +31461,11 @@
       ScriptUuid: {}
     };
   }), {
-    "./CCClass": 177,
-    "./js": 198,
-    "./utils": 202
+    "./CCClass": 170,
+    "./js": 191,
+    "./utils": 195
   } ],
-  191: [ (function(require, module, exports) {
+  184: [ (function(require, module, exports) {
     var JS = require("./js");
     var fastRemoveAt = JS.array.fastRemoveAt;
     function CallbackList() {
@@ -33331,9 +31589,9 @@
     CallbacksInvoker.CallbacksHandler = CallbacksHandler;
     module.exports = CallbacksInvoker;
   }), {
-    "./js": 198
+    "./js": 191
   } ],
-  192: [ (function(require, module, exports) {
+  185: [ (function(require, module, exports) {
     function deepFlatten(strList, array) {
       for (var i = 0; i < array.length; i++) {
         var item = array[i];
@@ -33350,7 +31608,7 @@
       flattenCodeArray: flattenCodeArray
     };
   }), {} ],
-  193: [ (function(require, module, exports) {
+  186: [ (function(require, module, exports) {
     var JS = require("./js");
     var CCObject = require("./CCObject");
     var Attr = require("./attribute");
@@ -33681,13 +31939,13 @@
       cc.warnID(5302, id);
     };
   }), {
-    "../utils/misc": 227,
-    "./CCClass": 177,
-    "./CCObject": 183,
-    "./attribute": 190,
-    "./js": 198
+    "../utils/misc": 220,
+    "./CCClass": 170,
+    "./CCObject": 176,
+    "./attribute": 183,
+    "./js": 191
   } ],
-  194: [ (function(require, module, exports) {
+  187: [ (function(require, module, exports) {
     var NonUuidMark = ".";
     function IdGenerater(category) {
       this.id = 0 | 998 * Math.random();
@@ -33699,7 +31957,7 @@
     IdGenerater.global = new IdGenerater("global");
     module.exports = IdGenerater;
   }), {} ],
-  195: [ (function(require, module, exports) {
+  188: [ (function(require, module, exports) {
     require("./js");
     require("./CCClass");
     require("./CCClassDecorator");
@@ -33718,23 +31976,23 @@
     true;
     require("./CCVisibleRect");
   }), {
-    "./CCAssetLibrary": 176,
-    "./CCClass": 177,
-    "./CCClassDecorator": 178,
-    "./CCEnum": 179,
-    "./CCMacro": 182,
-    "./CCObject": 183,
-    "./CCSys": 186,
-    "./CCVisibleRect": 188,
-    "./callbacks-invoker": 191,
-    "./deserialize": 193,
-    "./instantiate": 197,
-    "./instantiate-jit": 196,
-    "./js": 198,
-    "./requiring-frame": 200,
-    "./url": 201
+    "./CCAssetLibrary": 169,
+    "./CCClass": 170,
+    "./CCClassDecorator": 171,
+    "./CCEnum": 172,
+    "./CCMacro": 175,
+    "./CCObject": 176,
+    "./CCSys": 179,
+    "./CCVisibleRect": 181,
+    "./callbacks-invoker": 184,
+    "./deserialize": 186,
+    "./instantiate": 190,
+    "./instantiate-jit": 189,
+    "./js": 191,
+    "./requiring-frame": 193,
+    "./url": 194
   } ],
-  196: [ (function(require, module, exports) {
+  189: [ (function(require, module, exports) {
     var CCObject = require("./CCObject");
     var Destroyed = CCObject.Flags.Destroyed;
     var PersistentMask = CCObject.Flags.PersistentMask;
@@ -34008,13 +32266,13 @@
     };
     false;
   }), {
-    "./CCClass": 177,
-    "./CCObject": 183,
-    "./attribute": 190,
-    "./compiler": 192,
-    "./js": 198
+    "./CCClass": 170,
+    "./CCObject": 176,
+    "./attribute": 183,
+    "./compiler": 185,
+    "./js": 191
   } ],
-  197: [ (function(require, module, exports) {
+  190: [ (function(require, module, exports) {
     var CCObject = require("./CCObject");
     var Destroyed = CCObject.Flags.Destroyed;
     var PersistentMask = CCObject.Flags.PersistentMask;
@@ -34136,11 +32394,11 @@
     cc.instantiate = instantiate;
     module.exports = instantiate;
   }), {
-    "./CCObject": 183,
-    "./attribute": 190,
-    "./utils": 202
+    "./CCObject": 176,
+    "./attribute": 183,
+    "./utils": 195
   } ],
-  198: [ (function(require, module, exports) {
+  191: [ (function(require, module, exports) {
     var tempCIDGenerater = new (require("./id-generater"))("TmpCId.");
     function _getPropertyDescriptor(obj, name) {
       while (obj) {
@@ -34496,10 +32754,10 @@
     cc.js = js;
     module.exports = js;
   }), {
-    "../utils/mutable-forward-iterator": 228,
-    "./id-generater": 194
+    "../utils/mutable-forward-iterator": 221,
+    "./id-generater": 187
   } ],
-  199: [ (function(require, module, exports) {
+  192: [ (function(require, module, exports) {
     var SerializableAttrs = {
       url: {
         canUsedInGet: true
@@ -34626,9 +32884,9 @@
       return true;
     };
   }), {
-    "./CCClass": 177
+    "./CCClass": 170
   } ],
-  200: [ (function(require, module, exports) {
+  193: [ (function(require, module, exports) {
     var requiringFrames = [];
     cc._RF = {
       push: function(module, uuid, script) {
@@ -34659,7 +32917,7 @@
     };
     false;
   }), {} ],
-  201: [ (function(require, module, exports) {
+  194: [ (function(require, module, exports) {
     var _mounts = {};
     cc.url = {
       _rawAssets: "",
@@ -34690,7 +32948,7 @@
     };
     module.exports = cc.url;
   }), {} ],
-  202: [ (function(require, module, exports) {
+  195: [ (function(require, module, exports) {
     module.exports = {
       contains: function(refNode, otherNode) {
         if ("function" == typeof refNode.contains) return refNode.contains(otherNode);
@@ -34716,7 +32974,7 @@
     false;
     false;
   }), {} ],
-  203: [ (function(require, module, exports) {
+  196: [ (function(require, module, exports) {
     require("./platform/js");
     require("./value-types");
     require("./utils");
@@ -34742,23 +33000,23 @@
     "./CCDirectorCanvas": 35,
     "./CCDirectorWebGL": 36,
     "./CCScheduler": 43,
-    "./event": 115,
-    "./event-manager": 111,
-    "./load-pipeline": 137,
-    "./platform/CCInputExtension": 180,
-    "./platform/CCInputManager": 181,
-    "./platform/CCMacro": 182,
-    "./platform/CCSAXParser": 184,
-    "./platform/CCScreen": 185,
-    "./platform/CCSys": 186,
-    "./platform/CCView": 187,
-    "./platform/js": 198,
-    "./renderer": 207,
-    "./textures": 219,
-    "./utils": 226,
-    "./value-types": 240
+    "./event": 108,
+    "./event-manager": 104,
+    "./load-pipeline": 130,
+    "./platform/CCInputExtension": 173,
+    "./platform/CCInputManager": 174,
+    "./platform/CCMacro": 175,
+    "./platform/CCSAXParser": 177,
+    "./platform/CCScreen": 178,
+    "./platform/CCSys": 179,
+    "./platform/CCView": 180,
+    "./platform/js": 191,
+    "./renderer": 200,
+    "./textures": 212,
+    "./utils": 219,
+    "./value-types": 233
   } ],
-  204: [ (function(require, module, exports) {
+  197: [ (function(require, module, exports) {
     var Region = function() {
       this._minX = 0;
       this._minY = 0;
@@ -34986,7 +33244,7 @@
     cc.Region = Region;
     cc.DirtyRegion = DirtyRegion;
   }), {} ],
-  205: [ (function(require, module, exports) {
+  198: [ (function(require, module, exports) {
     cc.rendererCanvas = {
       childrenOrderDirty: true,
       assignedZ: 0,
@@ -35287,7 +33545,7 @@
       };
     })();
   }), {} ],
-  206: [ (function(require, module, exports) {
+  199: [ (function(require, module, exports) {
     var _batchedInfo = {
       texture: null,
       blendSrc: null,
@@ -35612,16 +33870,16 @@
       }
     };
   }), {} ],
-  207: [ (function(require, module, exports) {
+  200: [ (function(require, module, exports) {
     require("./RendererCanvas");
     require("./RendererWebGL");
     require("./DirtyRegion");
   }), {
-    "./DirtyRegion": 204,
-    "./RendererCanvas": 205,
-    "./RendererWebGL": 206
+    "./DirtyRegion": 197,
+    "./RendererCanvas": 198,
+    "./RendererWebGL": 199
   } ],
-  208: [ (function(require, module, exports) {
+  201: [ (function(require, module, exports) {
     _ccsg.Scene = _ccsg.Node.extend({
       _className: "Scene",
       ctor: function() {
@@ -35632,7 +33890,7 @@
       }
     });
   }), {} ],
-  209: [ (function(require, module, exports) {
+  202: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     var Misc = require("../utils/misc");
     _ccsg.Sprite = _ccsg.Node.extend({
@@ -35948,10 +34206,10 @@
     };
     Misc.propertyDefine(_ccsg.Sprite, SameNameGetSets, DiffNameGetSets);
   }), {
-    "../event/event-target": 113,
-    "../utils/misc": 227
+    "../event/event-target": 106,
+    "../utils/misc": 220
   } ],
-  210: [ (function(require, module, exports) {
+  203: [ (function(require, module, exports) {
     _ccsg.Sprite.CanvasRenderCmd = function(renderable) {
       this._rootCtor(renderable);
       this._needDraw = true;
@@ -36129,7 +34387,7 @@
       return nCanvas;
     };
   }), {} ],
-  211: [ (function(require, module, exports) {
+  204: [ (function(require, module, exports) {
     var macro = cc.macro;
     _ccsg.Sprite.WebGLRenderCmd = function(renderable) {
       this._rootCtor(renderable);
@@ -36352,7 +34610,7 @@
       return len;
     };
   }), {} ],
-  212: [ (function(require, module, exports) {
+  205: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     function sortIndex(a, b) {
       return a - b;
@@ -37407,9 +35665,9 @@
       RADIAL: 2
     });
   }), {
-    "../event/event-target": 113
+    "../event/event-target": 106
   } ],
-  213: [ (function(require, module, exports) {
+  206: [ (function(require, module, exports) {
     cc.Scale9Sprite.CanvasRenderCmd = function(renderable) {
       this._rootCtor(renderable);
       this._node.loaded() ? this._needDraw = true : this._needDraw = false;
@@ -37449,8 +35707,10 @@
       if (null === this._textureToRender || this._originalTexture !== locTexture) {
         this._textureToRender = this._originalTexture = locTexture;
         cc.Scale9Sprite.state.GRAY === this._state && (this._textureToRender = this._textureToRender._generateGrayTexture());
-        var color = node.getDisplayedColor();
-        !locTexture || 255 === color.r && 255 === color.g && 255 === color.b || (this._textureToRender = this._textureToRender._generateColorTexture(color.r, color.g, color.b));
+        if (cc.sys.browserType !== cc.sys.BROWSER_TYPE_WECHAT_GAME_SUB) {
+          var color = node.getDisplayedColor();
+          !locTexture || 255 === color.r && 255 === color.g && 255 === color.b || (this._textureToRender = this._textureToRender._generateColorTexture(color.r, color.g, color.b));
+        }
       }
       var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
       wrapper.setTransform(this._worldTransform, scaleX, scaleY);
@@ -37530,7 +35790,7 @@
       }
     };
   }), {} ],
-  214: [ (function(require, module, exports) {
+  207: [ (function(require, module, exports) {
     var ccgl = cc.gl;
     cc.Scale9Sprite.WebGLRenderCmd = function(renderable) {
       this._rootCtor(renderable);
@@ -37684,7 +35944,7 @@
       fShader: "precision lowp float;\nvarying vec4 v_fragmentColor;\nvarying vec2 v_texCoord;\nuniform vec2 u_offset;\nuniform vec2 u_offset_tiling;\nconst float PI = 3.14159265359;\nvoid main()\n{\nfloat halfPI = 0.5 * PI;\nfloat maxFactor = sin(halfPI);\nvec2 uv = v_texCoord;\nvec2 xy = 2.0 * uv.xy - 1.0;\nfloat d = length(xy);\nif (d < (2.0-maxFactor)) {\nd = length(xy * maxFactor);\nfloat z = sqrt(1.0 - d * d);\nfloat r = atan(d, z) / PI;\nfloat phi = atan(xy.y, xy.x);\nuv.x = r * cos(phi) + 0.5;\nuv.y = r * sin(phi) + 0.5;\n} else {\ndiscard;\n}\nuv = uv * u_offset_tiling + u_offset;\nuv = fract(uv);\ngl_FragColor = v_fragmentColor * texture2D(CC_Texture0, uv);\n}"
     };
   }), {} ],
-  215: [ (function(require, module, exports) {
+  208: [ (function(require, module, exports) {
     cc.SpriteBatchNode = _ccsg.Node.extend({
       _blendFunc: null,
       _texture: null,
@@ -37775,7 +36035,7 @@
     cc.defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
     cc.defineGetterSetter(_p, "shaderProgram", _p.getShaderProgram, _p.setShaderProgram);
   }), {} ],
-  216: [ (function(require, module, exports) {
+  209: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     cc.SpriteFrame = cc.Class({
       name: "cc.SpriteFrame",
@@ -37949,9 +36209,9 @@
     proto.initWithTexture = proto.setTexture;
   }), {
     "../assets/CCAsset": 44,
-    "../event/event-target": 113
+    "../event/event-target": 106
   } ],
-  217: [ (function(require, module, exports) {
+  210: [ (function(require, module, exports) {
     var EventTarget = require("../event/event-target");
     var sys = require("../platform/CCSys");
     var JS = require("../platform/js");
@@ -38418,14 +36678,14 @@
   }), {
     "../CCGame": 40,
     "../assets/CCRawAsset": 50,
-    "../event/event-target": 113,
-    "../platform/CCClass": 177,
-    "../platform/CCSys": 186,
-    "../platform/_CCClass": 189,
-    "../platform/js": 198,
-    "../utils/misc": 227
+    "../event/event-target": 106,
+    "../platform/CCClass": 170,
+    "../platform/CCSys": 179,
+    "../platform/_CCClass": 182,
+    "../platform/js": 191,
+    "../utils/misc": 220
   } ],
-  218: [ (function(require, module, exports) {
+  211: [ (function(require, module, exports) {
     var game = require("../CCGame");
     var Texture2D = require("./CCTexture2D");
     var textureCache = {
@@ -38603,16 +36863,16 @@
     cc.textureCache = module.exports = textureCache;
   }), {
     "../CCGame": 40,
-    "./CCTexture2D": 217
+    "./CCTexture2D": 210
   } ],
-  219: [ (function(require, module, exports) {
+  212: [ (function(require, module, exports) {
     require("./CCTexture2D");
     require("./CCTextureCache");
   }), {
-    "./CCTexture2D": 217,
-    "./CCTextureCache": 218
+    "./CCTexture2D": 210,
+    "./CCTextureCache": 211
   } ],
-  220: [ (function(require, module, exports) {
+  213: [ (function(require, module, exports) {
     require("../platform/CCSys");
     var EXTNAME_RE = /(\.[^\.\/\?\\]*)(\?.*)?$/;
     var DIRNAME_RE = /((.*)(\/|\\|\\\\))?(.*?\..*$)?/;
@@ -38689,9 +36949,9 @@
     };
     module.exports = cc.path;
   }), {
-    "../platform/CCSys": 186
+    "../platform/CCSys": 179
   } ],
-  221: [ (function(require, module, exports) {
+  214: [ (function(require, module, exports) {
     var PStats = require("../../../external/pstats/pstats");
     var macro = require("../platform/CCMacro");
     var _fps = document.createElement("div");
@@ -38775,10 +37035,10 @@
       }
     };
   }), {
-    "../../../external/pstats/pstats": 304,
-    "../platform/CCMacro": 182
+    "../../../external/pstats/pstats": 272,
+    "../platform/CCMacro": 175
   } ],
-  222: [ (function(require, module, exports) {
+  215: [ (function(require, module, exports) {
     var Flags = require("../platform/CCObject").Flags;
     var Misc = require("./misc");
     var IdGenerater = require("../platform/id-generater");
@@ -38798,16 +37058,22 @@
       return typeOrClassName;
     }
     function findComponent(node, constructor) {
-      for (var i = 0; i < node._components.length; ++i) {
+      if (constructor._sealed) for (var i = 0; i < node._components.length; ++i) {
         var comp = node._components[i];
-        if (comp instanceof constructor) return comp;
+        if (comp.constructor === constructor) return comp;
+      } else for (var _i = 0; _i < node._components.length; ++_i) {
+        var _comp = node._components[_i];
+        if (_comp instanceof constructor) return _comp;
       }
       return null;
     }
     function findComponents(node, constructor, components) {
-      for (var i = 0; i < node._components.length; ++i) {
+      if (constructor._sealed) for (var i = 0; i < node._components.length; ++i) {
         var comp = node._components[i];
-        comp instanceof constructor && components.push(comp);
+        comp.constructor === constructor && components.push(comp);
+      } else for (var _i2 = 0; _i2 < node._components.length; ++_i2) {
+        var _comp2 = node._components[_i2];
+        _comp2 instanceof constructor && components.push(_comp2);
       }
     }
     function findChildComponent(children, constructor) {
@@ -39218,12 +37484,12 @@
     false;
     cc._BaseNode = module.exports = BaseNode;
   }), {
-    "../event-manager": 111,
-    "../platform/CCObject": 183,
-    "../platform/id-generater": 194,
-    "./misc": 227
+    "../event-manager": 104,
+    "../platform/CCObject": 176,
+    "../platform/id-generater": 187,
+    "./misc": 220
   } ],
-  223: [ (function(require, module, exports) {
+  216: [ (function(require, module, exports) {
     var EPSILON = 1e-6;
     function binarySearchEpsilon(array, value) {
       for (var l = 0, h = array.length - 1, m = h >>> 1; l <= h; m = l + h >>> 1) {
@@ -39239,7 +37505,7 @@
       binarySearchEpsilon: binarySearchEpsilon
     };
   }), {} ],
-  224: [ (function(require, module, exports) {
+  217: [ (function(require, module, exports) {
     var Base64Values = require("./misc").BASE64_VALUES;
     var HexChars = "0123456789abcdef".split("");
     var _t = [ "", "", "", "" ];
@@ -39262,9 +37528,9 @@
     };
     false;
   }), {
-    "./misc": 227
+    "./misc": 220
   } ],
-  225: [ (function(require, module, exports) {
+  218: [ (function(require, module, exports) {
     cc.find = module.exports = function(path, referenceNode) {
       if (null == path) {
         cc.errorID(5600);
@@ -39298,18 +37564,18 @@
       return match;
     };
   }), {} ],
-  226: [ (function(require, module, exports) {
+  219: [ (function(require, module, exports) {
     require("./CCPath");
     (true, true) && true && require("./CCProfiler");
     require("./find");
     require("./mutable-forward-iterator");
   }), {
-    "./CCPath": 220,
-    "./CCProfiler": 221,
-    "./find": 225,
-    "./mutable-forward-iterator": 228
+    "./CCPath": 213,
+    "./CCProfiler": 214,
+    "./find": 218,
+    "./mutable-forward-iterator": 221
   } ],
-  227: [ (function(require, module, exports) {
+  220: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     var sys = require("../platform/CCSys");
     var misc = exports;
@@ -39373,10 +37639,10 @@
       } else exists.push(value); else map[key] = pushFront ? [ value, exists ] : [ exists, value ]; else map[key] = value;
     };
   }), {
-    "../platform/CCSys": 186,
-    "../platform/js": 198
+    "../platform/CCSys": 179,
+    "../platform/js": 191
   } ],
-  228: [ (function(require, module, exports) {
+  221: [ (function(require, module, exports) {
     function MutableForwardIterator(array) {
       this.i = 0;
       this.array = array;
@@ -39405,7 +37671,7 @@
     };
     module.exports = MutableForwardIterator;
   }), {} ],
-  229: [ (function(require, module, exports) {
+  222: [ (function(require, module, exports) {
     cc._PrefabInfo = cc.Class({
       name: "cc.PrefabInfo",
       properties: {
@@ -39460,7 +37726,7 @@
       }
     };
   }), {} ],
-  230: [ (function(require, module, exports) {
+  223: [ (function(require, module, exports) {
     var SceneGraphUtils = {
       removeSgNode: function() {
         var sgNode = this._sgNode;
@@ -39477,7 +37743,7 @@
     false;
     module.exports = SceneGraphUtils;
   }), {} ],
-  231: [ (function(require, module, exports) {
+  224: [ (function(require, module, exports) {
     cc.AffineTransform = function(a, b, c, d, tx, ty) {
       this.a = a;
       this.b = b;
@@ -39716,7 +37982,7 @@
       out.ty = determinant * (b * t.tx - a * t.ty);
     };
   }), {} ],
-  232: [ (function(require, module, exports) {
+  225: [ (function(require, module, exports) {
     var ValueType = require("./CCValueType");
     var JS = require("../platform/js");
     var Color = (function() {
@@ -39959,11 +38225,11 @@
     };
     module.exports = cc.Color;
   }), {
-    "../platform/CCClass": 177,
-    "../platform/js": 198,
-    "./CCValueType": 238
+    "../platform/CCClass": 170,
+    "../platform/js": 191,
+    "./CCValueType": 231
   } ],
-  233: [ (function(require, module, exports) {
+  226: [ (function(require, module, exports) {
     var POINT_EPSILON = parseFloat("1.192092896e-07F");
     cc.pNeg = function(point) {
       return cc.p(-point.x, -point.y);
@@ -40129,7 +38395,7 @@
       cc.pMultIn(v, 1 / Math.sqrt(v.x * v.x + v.y * v.y));
     };
   }), {} ],
-  234: [ (function(require, module, exports) {
+  227: [ (function(require, module, exports) {
     var ValueType = require("./CCValueType");
     var JS = require("../platform/js");
     function Rect(x, y, w, h) {
@@ -40292,11 +38558,11 @@
     };
     module.exports = cc.Rect;
   }), {
-    "../platform/CCClass": 177,
-    "../platform/js": 198,
-    "./CCValueType": 238
+    "../platform/CCClass": 170,
+    "../platform/js": 191,
+    "./CCValueType": 231
   } ],
-  235: [ (function(require, module, exports) {
+  228: [ (function(require, module, exports) {
     var ValueType = require("./CCValueType");
     var JS = require("../platform/js");
     function Size(width, height) {
@@ -40341,11 +38607,11 @@
     };
     cc.Size = module.exports = Size;
   }), {
-    "../platform/CCClass": 177,
-    "../platform/js": 198,
-    "./CCValueType": 238
+    "../platform/CCClass": 170,
+    "../platform/js": 191,
+    "./CCValueType": 231
   } ],
-  236: [ (function(require, module, exports) {
+  229: [ (function(require, module, exports) {
     cc.Acceleration = function(x, y, z, timestamp) {
       this.x = x || 0;
       this.y = y || 0;
@@ -40401,7 +38667,7 @@
       BOTTOM: 2
     });
   }), {} ],
-  237: [ (function(require, module, exports) {
+  230: [ (function(require, module, exports) {
     cc.WebGLColor = function(r, g, b, a, arrayBuffer, offset) {
       this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.WebGLColor.BYTES_PER_ELEMENT);
       this._offset = offset || 0;
@@ -40850,7 +39116,7 @@
     cc.js.getset(_p, "b", _p._getB, _p._setB);
     cc.js.getset(_p, "c", _p._getC, _p._setC);
   }), {} ],
-  238: [ (function(require, module, exports) {
+  231: [ (function(require, module, exports) {
     var JS = require("../platform/js");
     function ValueType() {}
     JS.setClassName("cc.ValueType", ValueType);
@@ -40862,9 +39128,9 @@
     cc.ValueType = ValueType;
     module.exports = ValueType;
   }), {
-    "../platform/js": 198
+    "../platform/js": 191
   } ],
-  239: [ (function(require, module, exports) {
+  232: [ (function(require, module, exports) {
     var ValueType = require("./CCValueType");
     var JS = require("../platform/js");
     var CCClass = require("../platform/CCClass");
@@ -41052,11 +39318,11 @@
     };
     module.exports = cc.Vec2;
   }), {
-    "../platform/CCClass": 177,
-    "../platform/js": 198,
-    "./CCValueType": 238
+    "../platform/CCClass": 170,
+    "../platform/js": 191,
+    "./CCValueType": 231
   } ],
-  240: [ (function(require, module, exports) {
+  233: [ (function(require, module, exports) {
     require("./CCValueType");
     require("./CCVec2");
     require("./CCPointExtension");
@@ -41067,629 +39333,17 @@
     require("./CCAffineTransform");
     require("./CCTypesWebGL");
   }), {
-    "./CCAffineTransform": 231,
-    "./CCColor": 232,
-    "./CCPointExtension": 233,
-    "./CCRect": 234,
-    "./CCSize": 235,
-    "./CCTypes": 236,
-    "./CCTypesWebGL": 237,
-    "./CCValueType": 238,
-    "./CCVec2": 239
+    "./CCAffineTransform": 224,
+    "./CCColor": 225,
+    "./CCPointExtension": 226,
+    "./CCRect": 227,
+    "./CCSize": 228,
+    "./CCTypes": 229,
+    "./CCTypesWebGL": 230,
+    "./CCValueType": 231,
+    "./CCVec2": 232
   } ],
-  241: [ (function(require, module, exports) {
-    var Utils = require("../platform/utils");
-    var sys = require("../platform/CCSys");
-    var eventManager = require("../event-manager");
-    _ccsg.VideoPlayer = _ccsg.Node.extend({
-      ctor: function() {
-        _ccsg.Node.prototype.ctor.call(this);
-        this._EventList = {};
-      },
-      _createRenderCmd: function() {
-        return new _ccsg.VideoPlayer.RenderCmd(this);
-      },
-      setURL: function(url) {
-        this._renderCmd.updateURL(url);
-      },
-      getURL: function() {
-        return this._renderCmd._url;
-      },
-      play: function() {
-        this._renderCmd.play();
-      },
-      pause: function() {
-        this._renderCmd.pause();
-      },
-      _resume: function() {
-        this._renderCmd.play();
-      },
-      stop: function() {
-        this._renderCmd.stop();
-      },
-      seekTo: function(time) {
-        this._renderCmd.seekTo(time);
-      },
-      isPlaying: function() {
-        return this._renderCmd.isPlaying();
-      },
-      duration: function() {
-        return this._renderCmd.duration();
-      },
-      currentTime: function() {
-        return this._renderCmd.currentTime();
-      },
-      createDomElementIfNeeded: function() {
-        this._renderCmd._video || this._renderCmd.createDom();
-      },
-      setKeepAspectRatioEnabled: function() {
-        cc.logID(7700);
-      },
-      isKeepAspectRatioEnabled: function() {
-        return true;
-      },
-      setFullScreenEnabled: function(enable) {
-        var video = this._renderCmd._video;
-        if (!video) return;
-        enable ? cc.screen.requestFullScreen(video) : cc.screen.exitFullScreen(video);
-      },
-      isFullScreenEnabled: function() {
-        cc.logID(7701);
-      },
-      setEventListener: function(event, callback) {
-        this._EventList[event] = callback;
-      },
-      removeEventListener: function(event) {
-        this._EventList[event] = null;
-      },
-      _dispatchEvent: function(event) {
-        var callback = this._EventList[event];
-        callback && callback.call(this, this, this._renderCmd._video.src);
-      },
-      onPlayEvent: function() {
-        var callback = this._EventList[_ccsg.VideoPlayer.EventType.PLAYING];
-        callback.call(this, this, this._renderCmd._video.src);
-      },
-      setContentSize: function(width, height) {
-        if (void 0 !== width.width && void 0 !== width.height) {
-          height = width.height;
-          width = width.width;
-        }
-        _ccsg.Node.prototype.setContentSize.call(this, width, height);
-        this._renderCmd.updateSize(width, height);
-      },
-      onEnter: function() {
-        _ccsg.Node.prototype.onEnter.call(this);
-        var list = _ccsg.VideoPlayer.elements;
-        -1 === list.indexOf(this) && list.push(this);
-      },
-      cleanup: function() {
-        this._super();
-        this._renderCmd.removeDom();
-      },
-      onExit: function() {
-        _ccsg.Node.prototype.onExit.call(this);
-        var list = _ccsg.VideoPlayer.elements;
-        var index = list.indexOf(this);
-        -1 !== index && list.splice(index, 1);
-      },
-      setVisible: function(visible) {
-        _ccsg.Node.prototype.setVisible.call(this, visible);
-        this._renderCmd.updateVisibility();
-      }
-    });
-    _ccsg.VideoPlayer.elements = [];
-    _ccsg.VideoPlayer.pauseElements = [];
-    eventManager.addCustomListener(cc.game.EVENT_HIDE, (function() {
-      var list = _ccsg.VideoPlayer.elements;
-      for (var node, i = 0; i < list.length; i++) {
-        node = list[i];
-        if (list[i]._playing) {
-          node.pause();
-          _ccsg.VideoPlayer.pauseElements.push(node);
-        }
-      }
-    }));
-    cc.game.on(cc.game.EVENT_SHOW, (function() {
-      var list = _ccsg.VideoPlayer.pauseElements;
-      var node = list.pop();
-      while (node) {
-        node.play();
-        node = list.pop();
-      }
-    }));
-    _ccsg.VideoPlayer.EventType = {
-      PLAYING: 0,
-      PAUSED: 1,
-      STOPPED: 2,
-      COMPLETED: 3,
-      META_LOADED: 4,
-      CLICKED: 5,
-      READY_TO_PLAY: 6
-    };
-    (function(video) {
-      video._polyfill = {
-        devicePixelRatio: false,
-        event: "canplay",
-        canPlayType: []
-      };
-      (function() {
-        var dom = document.createElement("video");
-        if (sys.platform !== sys.WECHAT_GAME && sys.platform !== sys.QQ_PLAY) {
-          if (dom.canPlayType("video/ogg")) {
-            video._polyfill.canPlayType.push(".ogg");
-            video._polyfill.canPlayType.push(".ogv");
-          }
-          dom.canPlayType("video/mp4") && video._polyfill.canPlayType.push(".mp4");
-          dom.canPlayType("video/webm") && video._polyfill.canPlayType.push(".webm");
-        }
-      })();
-      cc.sys.browserType === cc.sys.BROWSER_TYPE_FIREFOX && (video._polyfill.autoplayAfterOperation = true);
-      cc.sys.OS_ANDROID !== cc.sys.os || cc.sys.browserType !== cc.sys.BROWSER_TYPE_SOUGOU && cc.sys.browserType !== cc.sys.BROWSER_TYPE_360 || (video._polyfill.zoomInvalid = true);
-      var style = document.createElement("style");
-      style.innerHTML = ".cocosVideo:-moz-full-screen{transform:matrix(1,0,0,1,0,0) !important;}.cocosVideo:full-screen{transform:matrix(1,0,0,1,0,0) !important;}.cocosVideo:-webkit-full-screen{transform:matrix(1,0,0,1,0,0) !important;}";
-      document.head.appendChild(style);
-    })(_ccsg.VideoPlayer);
-    (function(polyfill) {
-      _ccsg.VideoPlayer.RenderCmd = function(node) {
-        this._rootCtor(node);
-        this._video = null;
-        this._url = "";
-        this._played = false;
-        this._playing = false;
-        this._ignorePause = false;
-      };
-      var proto = _ccsg.VideoPlayer.RenderCmd.prototype = Object.create(_ccsg.Node.CanvasRenderCmd.prototype);
-      proto.constructor = _ccsg.VideoPlayer.RenderCmd;
-      proto.transform = function(parentCmd, recursive) {
-        this.originTransform(parentCmd, recursive);
-        this.updateMatrix();
-      };
-      proto.updateMatrix = function() {
-        if (!this._video) return;
-        var node = this._node, scaleX = cc.view._scaleX, scaleY = cc.view._scaleY;
-        var dpr = cc.view._devicePixelRatio;
-        var t = this._worldTransform;
-        scaleX /= dpr;
-        scaleY /= dpr;
-        var container = cc.game.container;
-        var a = t.a * scaleX, b = t.b, c = t.c, d = t.d * scaleY;
-        var offsetX = container && container.style.paddingLeft && parseInt(container.style.paddingLeft);
-        var offsetY = container && container.style.paddingBottom && parseInt(container.style.paddingBottom);
-        var tx = t.tx * scaleX + offsetX, ty = t.ty * scaleY + offsetY;
-        if (polyfill.zoomInvalid) {
-          this.updateSize(node._contentSize.width * a, node._contentSize.height * d);
-          a = 1;
-          d = 1;
-        }
-        var matrix = "matrix(" + a + "," + -b + "," + -c + "," + d + "," + tx + "," + -ty + ")";
-        this._video.style["transform"] = matrix;
-        this._video.style["-webkit-transform"] = matrix;
-        this._video.style["transform-origin"] = "0px 100% 0px";
-        this._video.style["-webkit-transform-origin"] = "0px 100% 0px";
-      };
-      proto.updateURL = function(path) {
-        cc.loader.md5Pipe && (path = cc.loader.md5Pipe.transformURL(path));
-        var source, video, extname;
-        var node = this._node;
-        if (this._url == path) return;
-        this._url = path;
-        cc.loader.resPath && !/^http/.test(path) && (path = cc.path.join(cc.loader.resPath, path));
-        this.removeDom();
-        this.createDom();
-        this.bindEvent();
-        video = this._video;
-        var cb = function() {
-          if (true == this._loaded) return;
-          this._loaded = true;
-          node.setContentSize(node._contentSize.width, node._contentSize.height);
-          video.currentTime = 0;
-          node._dispatchEvent(_ccsg.VideoPlayer.EventType.READY_TO_PLAY);
-          this.updateVisibility();
-          this.updateMatrix();
-        }.bind(this);
-        video.oncanplay = cb;
-        video.style["visibility"] = "hidden";
-        this._loaded = false;
-        this._played = false;
-        this._playing = false;
-        source = document.createElement("source");
-        source.src = path;
-        video.appendChild(source);
-        extname = cc.path.extname(path);
-        for (var i = 0; i < polyfill.canPlayType.length; i++) if (extname !== polyfill.canPlayType[i]) {
-          source = document.createElement("source");
-          source.src = path.replace(extname, polyfill.canPlayType[i]);
-          video.appendChild(source);
-        }
-      };
-      proto.bindEvent = function() {
-        var node = this._node, video = this._video, self = this;
-        video.onloadedmetadata = function() {
-          node._dispatchEvent(_ccsg.VideoPlayer.EventType.META_LOADED);
-        };
-        video.addEventListener("ended", function() {
-          if (self._video !== video) return;
-          this._playing = false;
-          node._dispatchEvent(_ccsg.VideoPlayer.EventType.COMPLETED);
-        }.bind(this));
-        video.addEventListener("play", (function() {
-          if (self._video !== video) return;
-          node._dispatchEvent(_ccsg.VideoPlayer.EventType.PLAYING);
-        }));
-        video.addEventListener("pause", (function() {
-          if (self._ignorePause || self._video !== video) return;
-          node._dispatchEvent(_ccsg.VideoPlayer.EventType.PAUSED);
-        }));
-        video.addEventListener("click", (function() {
-          node._dispatchEvent(_ccsg.VideoPlayer.EventType.CLICKED);
-        }));
-      };
-      proto.updateVisibility = function() {
-        var node = this._node;
-        if (!this._video) return;
-        var video = this._video;
-        if (node.visible) video.style.visibility = "visible"; else {
-          video.style.visibility = "hidden";
-          video.pause();
-          this._playing = false;
-        }
-      };
-      proto.createDom = function() {
-        var video = document.createElement("video");
-        video.style.position = "absolute";
-        video.style.bottom = "0px";
-        video.style.left = "0px";
-        video.className = "cocosVideo";
-        video.setAttribute("preload", true);
-        video.setAttribute("webkit-playsinline", "");
-        video.setAttribute("playsinline", "");
-        this._video = video;
-        cc.game.container.appendChild(video);
-      };
-      proto.removeDom = function() {
-        var video = this._video;
-        if (video) {
-          var hasChild = Utils.contains(cc.game.container, video);
-          hasChild && cc.game.container.removeChild(video);
-        }
-        this._video = null;
-        this._url = "";
-      };
-      proto.updateSize = function(width, height) {
-        var video = this._video;
-        if (!video) return;
-        video.style["width"] = width + "px";
-        video.style["height"] = height + "px";
-      };
-      proto.play = function() {
-        var video = this._video;
-        if (!video || !this._node.isVisible()) return;
-        this._played = true;
-        if (this._playing) return;
-        if (_ccsg.VideoPlayer._polyfill.autoplayAfterOperation) {
-          var self = this;
-          setTimeout((function() {
-            video.play();
-            self._playing = true;
-          }), 20);
-        } else {
-          video.play();
-          this._playing = true;
-        }
-      };
-      proto.pause = function() {
-        var video = this._video;
-        if (!this._playing) return;
-        this._playing = false;
-        if (!video) return;
-        video.pause();
-      };
-      proto.stop = function() {
-        var video = this._video;
-        if (!video || !this._node.isVisible()) return;
-        this._ignorePause = true;
-        video.pause();
-        var node = this._node;
-        setTimeout(function() {
-          node._dispatchEvent(_ccsg.VideoPlayer.EventType.STOPPED);
-          this._ignorePause = false;
-        }.bind(this), 0);
-        video.currentTime = 0;
-        this._playing = false;
-      };
-      proto.seekTo = function(sec) {
-        var video = this._video;
-        if (!video) return;
-        if (this._loaded) video.currentTime = sec; else {
-          var cb = function() {
-            video.currentTime = sec;
-            video.removeEventListener(polyfill.event, cb);
-          };
-          video.addEventListener(polyfill.event, cb);
-        }
-        _ccsg.VideoPlayer._polyfill.autoplayAfterOperation && this.isPlaying() && setTimeout((function() {
-          video.play();
-        }), 20);
-      };
-      proto.isPlaying = function() {
-        var video = this._video;
-        _ccsg.VideoPlayer._polyfill.autoplayAfterOperation && this._playing && setTimeout((function() {
-          video.play();
-        }), 20);
-        return this._playing;
-      };
-      proto.duration = function() {
-        var video = this._video;
-        var duration = -1;
-        if (!video) return duration;
-        duration = video.duration;
-        duration <= 0 && cc.logID(7702);
-        return duration;
-      };
-      proto.currentTime = function() {
-        var video = this._video;
-        if (!video) return -1;
-        return video.currentTime;
-      };
-    })(_ccsg.VideoPlayer._polyfill);
-  }), {
-    "../event-manager": 111,
-    "../platform/CCSys": 186,
-    "../platform/utils": 202
-  } ],
-  242: [ (function(require, module, exports) {
-    var Utils = require("../platform/utils");
-    var eventManager = require("../event-manager");
-    _ccsg.WebView = _ccsg.Node.extend({
-      ctor: function() {
-        _ccsg.Node.prototype.ctor.call(this);
-        this.setContentSize(cc.size(300, 200));
-        this._EventList = {};
-      },
-      createDomElementIfNeeded: function() {
-        this._renderCmd._div || this._renderCmd.createNativeControl();
-      },
-      setOnJSCallback: function(callback) {},
-      setJavascriptInterfaceScheme: function(scheme) {},
-      loadData: function(data, MIMEType, encoding, baseURL) {},
-      loadHTMLString: function(string, baseURL) {},
-      loadURL: function(url) {
-        this._renderCmd.updateURL(url);
-        this._dispatchEvent(_ccsg.WebView.EventType.LOADING);
-      },
-      stopLoading: function() {
-        cc.logID(7800);
-      },
-      reload: function() {
-        var iframe = this._renderCmd._iframe;
-        if (iframe) {
-          var win = iframe.contentWindow;
-          win && win.location && win.location.reload();
-        }
-      },
-      canGoBack: function() {
-        cc.logID(7801);
-        return true;
-      },
-      canGoForward: function() {
-        cc.logID(7802);
-        return true;
-      },
-      goBack: function() {
-        try {
-          if (_ccsg.WebView._polyfill.closeHistory) return cc.logID(7803);
-          var iframe = this._renderCmd._iframe;
-          if (iframe) {
-            var win = iframe.contentWindow;
-            win && win.location && win.history.back.call(win);
-          }
-        } catch (err) {
-          cc.log(err);
-        }
-      },
-      goForward: function() {
-        try {
-          if (_ccsg.WebView._polyfill.closeHistory) return cc.logID(7804);
-          var iframe = this._renderCmd._iframe;
-          if (iframe) {
-            var win = iframe.contentWindow;
-            win && win.location && win.history.forward.call(win);
-          }
-        } catch (err) {
-          cc.log(err);
-        }
-      },
-      evaluateJS: function(str) {
-        var iframe = this._renderCmd._iframe;
-        if (iframe) {
-          var win = iframe.contentWindow;
-          try {
-            win.eval(str);
-            this._dispatchEvent(_ccsg.WebView.EventType.JS_EVALUATED);
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      },
-      setScalesPageToFit: function() {
-        cc.logID(7805);
-      },
-      setEventListener: function(event, callback) {
-        this._EventList[event] = callback;
-      },
-      removeEventListener: function(event) {
-        this._EventList[event] = null;
-      },
-      _dispatchEvent: function(event) {
-        var callback = this._EventList[event];
-        callback && callback.call(this, this, this._renderCmd._iframe.src);
-      },
-      _createRenderCmd: function() {
-        return new _ccsg.WebView.RenderCmd(this);
-      },
-      setContentSize: function(width, height) {
-        if (void 0 !== width.width && void 0 !== width.height) {
-          height = width.height;
-          width = width.width;
-        }
-        _ccsg.Node.prototype.setContentSize.call(this, width, height);
-        this._renderCmd.updateSize(width, height);
-      },
-      cleanup: function() {
-        this._super();
-        this._renderCmd.removeDom();
-      },
-      setVisible: function(visible) {
-        _ccsg.Node.prototype.setVisible.call(this, visible);
-        this._renderCmd.updateVisibility();
-      }
-    });
-    _ccsg.WebView.EventType = {
-      LOADING: 0,
-      LOADED: 1,
-      ERROR: 2,
-      JS_EVALUATED: 3
-    };
-    (function() {
-      var polyfill = _ccsg.WebView._polyfill = {
-        devicePixelRatio: false,
-        enableDiv: false
-      };
-      cc.sys.os === cc.sys.OS_IOS && (polyfill.enableDiv = true);
-      cc.sys.isMobile ? cc.sys.browserType === cc.sys.BROWSER_TYPE_FIREFOX && (polyfill.enableBG = true) : cc.sys.browserType === cc.sys.BROWSER_TYPE_IE && (polyfill.closeHistory = true);
-    })();
-    (function(polyfill) {
-      var RenderCmd;
-      RenderCmd = cc._renderType === cc.game.RENDER_TYPE_CANVAS ? _ccsg.Node.CanvasRenderCmd : _ccsg.Node.WebGLRenderCmd;
-      _ccsg.WebView.RenderCmd = function(node) {
-        this._rootCtor(node);
-        this._parent = null;
-        this._div = null;
-        this._iframe = null;
-        this._listener = null;
-      };
-      var proto = _ccsg.WebView.RenderCmd.prototype = Object.create(RenderCmd.prototype);
-      proto.constructor = _ccsg.WebView.RenderCmd;
-      proto.transform = function(parentCmd, recursive) {
-        this.originTransform(parentCmd, recursive);
-        this.updateMatrix();
-      };
-      proto.updateStatus = function() {
-        polyfill.devicePixelRatio = cc.view.isRetinaEnabled();
-        var flags = _ccsg.Node._dirtyFlags, locFlag = this._dirtyFlag;
-        if (locFlag & flags.transformDirty) {
-          this.transform(this.getParentRenderCmd(), true);
-          this.updateMatrix();
-          this._dirtyFlag &= ~_ccsg.Node._dirtyFlags.transformDirty;
-        }
-      };
-      proto.initEvent = function() {
-        var node = this._node;
-        this._iframe.addEventListener("load", (function() {
-          node._dispatchEvent(_ccsg.WebView.EventType.LOADED);
-        }));
-        this._iframe.addEventListener("error", (function() {
-          node._dispatchEvent(_ccsg.WebView.EventType.ERROR);
-        }));
-      };
-      proto.resize = function(view) {
-        view = view || cc.view;
-        var node = this._node;
-        if (node._parent && node._visible) this.updateMatrix(); else {
-          var list = eventManager._listenersMap[cc.game.EVENT_RESIZE].getFixedPriorityListeners();
-          eventManager._removeListenerInVector(list, this._listener);
-          this._listener = null;
-        }
-      };
-      proto.updateMatrix = function() {
-        if (!this._div) return;
-        var node = this._node, scaleX = cc.view._scaleX, scaleY = cc.view._scaleY;
-        var dpr = cc.view._devicePixelRatio;
-        var t = this._worldTransform;
-        scaleX /= dpr;
-        scaleY /= dpr;
-        var container = cc.game.container;
-        var a = t.a * scaleX, b = t.b, c = t.c, d = t.d * scaleY;
-        var offsetX = container && container.style.paddingLeft && parseInt(container.style.paddingLeft);
-        var offsetY = container && container.style.paddingBottom && parseInt(container.style.paddingBottom);
-        var tx = t.tx * scaleX + offsetX, ty = t.ty * scaleY + offsetY;
-        var matrix = "matrix(" + a + "," + -b + "," + -c + "," + d + "," + tx + "," + -ty + ")";
-        this._div.style["transform"] = matrix;
-        this._div.style["-webkit-transform"] = matrix;
-        this._div.style["transform-origin"] = "0px 100% 0px";
-        this._div.style["-webkit-transform-origin"] = "0px 100% 0px";
-      };
-      proto.initStyle = function() {
-        if (!this._div) return;
-        var div = this._div;
-        div.style.position = "absolute";
-        div.style.bottom = "0px";
-        div.style.left = "0px";
-      };
-      proto.updateURL = function(url) {
-        var iframe = this._iframe;
-        iframe.src = url;
-        var self = this;
-        var cb = function() {
-          self._loaded = true;
-          self.updateVisibility();
-          iframe.removeEventListener("load", cb);
-        };
-        iframe.addEventListener("load", cb);
-      };
-      proto.updateSize = function(w, h) {
-        var div = this._div;
-        if (div) {
-          div.style["width"] = w + "px";
-          div.style["height"] = h + "px";
-        }
-      };
-      proto.createDom = function() {
-        if (polyfill.enableDiv) {
-          this._div = document.createElement("div");
-          this._div.style["-webkit-overflow"] = "auto";
-          this._div.style["-webkit-overflow-scrolling"] = "touch";
-          this._iframe = document.createElement("iframe");
-          this._div.appendChild(this._iframe);
-          this._iframe.style.width = "100%";
-          this._iframe.style.height = "100%";
-        } else this._div = this._iframe = document.createElement("iframe");
-        polyfill.enableBG && (this._div.style["background"] = "#FFF");
-        this._div.style["background"] = "#FFF";
-        var contentSize = this._node._contentSize;
-        this._div.style.height = contentSize.height + "px";
-        this._div.style.width = contentSize.width + "px";
-        this._div.style.overflow = "scroll";
-        this._iframe.style.border = "none";
-        cc.game.container.appendChild(this._div);
-        this.updateVisibility();
-      };
-      proto.createNativeControl = function() {
-        this.createDom();
-        this.initStyle();
-        this.initEvent();
-      };
-      proto.removeDom = function() {
-        var div = this._div;
-        if (div) {
-          var hasChild = Utils.contains(cc.game.container, div);
-          hasChild && cc.game.container.removeChild(div);
-        }
-        this._div = null;
-      };
-      proto.updateVisibility = function() {
-        var node = this._node;
-        if (!this._div) return;
-        var div = this._div;
-        node.visible ? div.style.visibility = "visible" : div.style.visibility = "hidden";
-      };
-    })(_ccsg.WebView._polyfill);
-  }), {
-    "../event-manager": 111,
-    "../platform/utils": 202
-  } ],
-  243: [ (function(require, module, exports) {
+  234: [ (function(require, module, exports) {
     var js = cc.js;
     var deprecateEnum;
     var markAsRemoved;
@@ -41698,7 +39352,7 @@
     var ERR;
     false;
   }), {} ],
-  244: [ (function(require, module, exports) {
+  235: [ (function(require, module, exports) {
     require("./core/CCGame");
     require("./actions");
     require("./core/base-nodes/CCSGNode");
@@ -41725,19 +39379,19 @@
     "./core/base-nodes/CCSGNodeBaseRenderCmd": 57,
     "./core/base-nodes/CCSGNodeCanvasRenderCmd": 58,
     "./core/base-nodes/CCSGNodeWebGLRenderCmd": 59,
-    "./core/scenes/CCSGScene": 208,
-    "./core/sprites/CCSGSprite": 209,
-    "./core/sprites/CCSGSpriteCanvasRenderCmd": 210,
-    "./core/sprites/CCSGSpriteWebGLRenderCmd": 211,
-    "./core/sprites/CCScale9Sprite": 212,
-    "./core/sprites/CCScale9SpriteCanvasRenderCmd": 213,
-    "./core/sprites/CCScale9SpriteWebGLRenderCmd": 214,
-    "./core/sprites/CCSpriteBatchNode": 215,
-    "./render-texture/CCRenderTexture": 268,
-    "./render-texture/CCRenderTextureCanvasRenderCmd": 269,
-    "./render-texture/CCRenderTextureWebGLRenderCmd": 270
+    "./core/scenes/CCSGScene": 201,
+    "./core/sprites/CCSGSprite": 202,
+    "./core/sprites/CCSGSpriteCanvasRenderCmd": 203,
+    "./core/sprites/CCSGSpriteWebGLRenderCmd": 204,
+    "./core/sprites/CCScale9Sprite": 205,
+    "./core/sprites/CCScale9SpriteCanvasRenderCmd": 206,
+    "./core/sprites/CCScale9SpriteWebGLRenderCmd": 207,
+    "./core/sprites/CCSpriteBatchNode": 208,
+    "./render-texture/CCRenderTexture": 256,
+    "./render-texture/CCRenderTextureCanvasRenderCmd": 257,
+    "./render-texture/CCRenderTextureWebGLRenderCmd": 258
   } ],
-  245: [ (function(require, module, exports) {
+  236: [ (function(require, module, exports) {
     cc.math.AABB = function(min, max) {
       this.min = min || new cc.math.Vec3();
       this.max = max || new cc.math.Vec3();
@@ -41758,7 +39412,7 @@
       return pOut;
     };
   }), {} ],
-  246: [ (function(require, module, exports) {
+  237: [ (function(require, module, exports) {
     cc.math.Matrix4Stack = function(top, stack) {
       this.top = top;
       this.stack = stack || [];
@@ -41798,7 +39452,7 @@
       this._matrixPool.push(matrix);
     };
   }), {} ],
-  247: [ (function(require, module, exports) {
+  238: [ (function(require, module, exports) {
     var math = cc.math;
     math.KM_GL_MODELVIEW = 5888;
     math.KM_GL_PROJECTION = 5889;
@@ -41914,7 +39568,7 @@
       }
     };
   }), {} ],
-  248: [ (function(require, module, exports) {
+  239: [ (function(require, module, exports) {
     require("./utility");
     require("./vec2");
     require("./vec3");
@@ -41928,20 +39582,20 @@
     require("./gl/mat4stack");
     require("./gl/matrix");
   }), {
-    "./aabb": 245,
-    "./gl/mat4stack": 246,
-    "./gl/matrix": 247,
-    "./mat3": 249,
-    "./mat4": 250,
-    "./plane": 251,
-    "./quaternion": 252,
-    "./ray2": 253,
-    "./utility": 254,
-    "./vec2": 255,
-    "./vec3": 256,
-    "./vec4": 257
+    "./aabb": 236,
+    "./gl/mat4stack": 237,
+    "./gl/matrix": 238,
+    "./mat3": 240,
+    "./mat4": 241,
+    "./plane": 242,
+    "./quaternion": 243,
+    "./ray2": 244,
+    "./utility": 245,
+    "./vec2": 246,
+    "./vec3": 247,
+    "./vec4": 248
   } ],
-  249: [ (function(require, module, exports) {
+  240: [ (function(require, module, exports) {
     true;
     window.Uint16Array = window.Uint16Array || window.Array;
     window.Float32Array = window.Float32Array || window.Array;
@@ -42161,7 +39815,7 @@
       return cc.math.Quaternion.rotationMatrix(this).toAxisAndAngle();
     };
   }), {} ],
-  250: [ (function(require, module, exports) {
+  241: [ (function(require, module, exports) {
     cc.math.Matrix4 = function(mat4) {
       mat4 && mat4.mat ? this.mat = new Float32Array(mat4.mat) : this.mat = new Float32Array(16);
     };
@@ -42769,7 +40423,7 @@
       return temp.toAxisAndAngle();
     };
   }), {} ],
-  251: [ (function(require, module, exports) {
+  242: [ (function(require, module, exports) {
     cc.math.Plane = function(a, b, c, d) {
       if (a && void 0 === b) {
         this.a = a.a;
@@ -42833,7 +40487,7 @@
       return cc.math.Plane.POINT_ON_PLANE;
     };
   }), {} ],
-  252: [ (function(require, module, exports) {
+  243: [ (function(require, module, exports) {
     cc.math.Quaternion = function(x, y, z, w) {
       if (x && void 0 === y) {
         this.x = x.x;
@@ -43071,7 +40725,7 @@
       return retVec;
     };
   }), {} ],
-  253: [ (function(require, module, exports) {
+  244: [ (function(require, module, exports) {
     cc.math.Ray2 = function(start, dir) {
       this.start = start || new cc.math.Vec2();
       this.dir = dir || new cc.math.Vec2();
@@ -43151,7 +40805,7 @@
       return intersected;
     };
   }), {} ],
-  254: [ (function(require, module, exports) {
+  245: [ (function(require, module, exports) {
     cc.math = cc.math || {};
     cc.math.EPSILON = 1 / 64;
     cc.math.square = function(s) {
@@ -43161,7 +40815,7 @@
       return lhs + cc.math.EPSILON > rhs && lhs - cc.math.EPSILON < rhs;
     };
   }), {} ],
-  255: [ (function(require, module, exports) {
+  246: [ (function(require, module, exports) {
     cc.math.Vec2 = function(x, y) {
       if (void 0 === y) {
         this.x = x.x;
@@ -43231,7 +40885,7 @@
       return this.x < vec.x + cc.math.EPSILON && this.x > vec.x - cc.math.EPSILON && this.y < vec.y + cc.math.EPSILON && this.y > vec.y - cc.math.EPSILON;
     };
   }), {} ],
-  256: [ (function(require, module, exports) {
+  247: [ (function(require, module, exports) {
     cc.math.Vec3 = cc.math.Vec3 = function(x, y, z) {
       if (x && void 0 === y) {
         this.x = x.x;
@@ -43360,7 +41014,7 @@
       return tyArr;
     };
   }), {} ],
-  257: [ (function(require, module, exports) {
+  248: [ (function(require, module, exports) {
     cc.math.Vec4 = function(x, y, z, w) {
       if (x && void 0 === y) {
         this.x = x.x;
@@ -43467,534 +41121,7 @@
       return tyArr;
     };
   }), {} ],
-  258: [ (function(require, module, exports) {
-    require("./CCSGMotionStreak");
-    require("./CCSGMotionStreakWebGLRenderCmd");
-    var MotionStreak = cc.Class({
-      name: "cc.MotionStreak",
-      extends: cc.Component,
-      editor: false,
-      ctor: function() {
-        this._root = null;
-        this._motionStreak = null;
-      },
-      properties: {
-        preview: {
-          default: false,
-          editorOnly: true,
-          notify: false,
-          animatable: false
-        },
-        _fadeTime: 1,
-        fadeTime: {
-          get: function() {
-            return this._fadeTime;
-          },
-          set: function(value) {
-            this._fadeTime = value;
-            this._motionStreak && this._motionStreak.setFadeTime(value);
-          },
-          animatable: false,
-          tooltip: false
-        },
-        _minSeg: 1,
-        minSeg: {
-          get: function() {
-            return this._minSeg;
-          },
-          set: function(value) {
-            this._minSeg = value;
-            this._motionStreak && this._motionStreak.setMinSeg(value);
-          },
-          animatable: false,
-          tooltip: false
-        },
-        _stroke: 64,
-        stroke: {
-          get: function() {
-            return this._stroke;
-          },
-          set: function(value) {
-            this._stroke = value;
-            this._motionStreak && this._motionStreak.setStroke(value);
-          },
-          animatable: false,
-          tooltip: false
-        },
-        _texture: {
-          default: "",
-          url: cc.Texture2D
-        },
-        texture: {
-          get: function() {
-            return this._texture;
-          },
-          set: function(value) {
-            this._texture = value;
-            if (this._motionStreak) {
-              value && cc.js.isString(value) && (value = cc.textureCache.addImage(value));
-              this._motionStreak.setTexture(value);
-            }
-          },
-          url: cc.Texture2D,
-          animatable: false,
-          tooltip: false
-        },
-        _color: cc.Color.WHITE,
-        color: {
-          get: function() {
-            return this._color;
-          },
-          set: function(value) {
-            this._color = value;
-            this._motionStreak && this._motionStreak.tintWithColor(value);
-          },
-          tooltip: false
-        },
-        _fastMode: false,
-        fastMode: {
-          get: function() {
-            return this._fastMode;
-          },
-          set: function(value) {
-            this._fastMode = value;
-            this._motionStreak && this._motionStreak.setFastMode(value);
-          },
-          animatable: false,
-          tooltip: false
-        }
-      },
-      onFocusInEditor: false,
-      onLostFocusInEditor: false,
-      reset: function() {
-        this._motionStreak.reset();
-      },
-      __preload: function() {
-        if (cc._renderType !== cc.game.RENDER_TYPE_WEBGL && true) {
-          cc.warnID(5900);
-          return;
-        }
-        this._root = new _ccsg.Node();
-        var motionStreak = new _ccsg.MotionStreak();
-        motionStreak.initWithFade(this._fadeTime, this._minSeg, this._stroke, this.node.color, this._texture || null);
-        motionStreak.setFastMode(this._fastMode);
-        this._root.addChild(motionStreak);
-        var sgNode = this.node._sgNode;
-        sgNode && sgNode.addChild(this._root, -10);
-        this._motionStreak = motionStreak;
-      },
-      onEnable: function() {
-        this.node.on("position-changed", this._onNodePositionChanged, this);
-      },
-      onDisable: function() {
-        this.node.off("position-changed", this._onNodePositionChanged, this);
-      },
-      _onNodePositionChanged: function() {
-        false;
-        if (this._motionStreak) {
-          var node = this.node;
-          var worldMt = node.getNodeToWorldTransform();
-          var tx = worldMt.tx - (node.width / 2 + node.anchorX * node.width);
-          var ty = worldMt.ty - (node.height / 2 + node.anchorY * node.height);
-          this._root.setPosition(-tx, -ty);
-          this._motionStreak.setPosition(tx, ty);
-        }
-      }
-    });
-    cc.MotionStreak = module.exports = MotionStreak;
-  }), {
-    "./CCSGMotionStreak": 259,
-    "./CCSGMotionStreakWebGLRenderCmd": 260
-  } ],
-  259: [ (function(require, module, exports) {
-    function vertexLineToPolygon(points, stroke, vertices, offset, nuPoints) {
-      nuPoints += offset;
-      if (nuPoints <= 1) return;
-      stroke *= .5;
-      var idx;
-      var nuPointsMinus = nuPoints - 1;
-      for (var i = offset; i < nuPoints; i++) {
-        idx = 2 * i;
-        var p1 = cc.p(points[2 * i], points[2 * i + 1]);
-        var perpVector;
-        if (0 === i) perpVector = cc.pPerp(cc.pNormalize(cc.pSub(p1, cc.p(points[2 * (i + 1)], points[2 * (i + 1) + 1])))); else if (i === nuPointsMinus) perpVector = cc.pPerp(cc.pNormalize(cc.pSub(cc.p(points[2 * (i - 1)], points[2 * (i - 1) + 1]), p1))); else {
-          var p0 = cc.p(points[2 * (i - 1)], points[2 * (i - 1) + 1]);
-          var p2 = cc.p(points[2 * (i + 1)], points[2 * (i + 1) + 1]);
-          var p2p1 = cc.pNormalize(cc.pSub(p2, p1));
-          var p0p1 = cc.pNormalize(cc.pSub(p0, p1));
-          var angle = Math.acos(cc.pDot(p2p1, p0p1));
-          perpVector = angle < cc.degreesToRadians(70) ? cc.pPerp(cc.pNormalize(cc.pMidpoint(p2p1, p0p1))) : angle < cc.degreesToRadians(170) ? cc.pNormalize(cc.pMidpoint(p2p1, p0p1)) : cc.pPerp(cc.pNormalize(cc.pSub(p2, p0)));
-        }
-        perpVector = cc.pMult(perpVector, stroke);
-        vertices[2 * idx] = p1.x + perpVector.x;
-        vertices[2 * idx + 1] = p1.y + perpVector.y;
-        vertices[2 * (idx + 1)] = p1.x - perpVector.x;
-        vertices[2 * (idx + 1) + 1] = p1.y - perpVector.y;
-      }
-      offset = 0 === offset ? 0 : offset - 1;
-      for (i = offset; i < nuPointsMinus; i++) {
-        idx = 2 * i;
-        var idx1 = idx + 2;
-        var v1 = cc.v2(vertices[2 * idx], vertices[2 * idx + 1]);
-        var v2 = cc.v2(vertices[2 * (idx + 1)], vertices[2 * (idx + 1) + 1]);
-        var v3 = cc.v2(vertices[2 * idx1], vertices[2 * idx1 + 1]);
-        var v4 = cc.v2(vertices[2 * (idx1 + 1)], vertices[2 * (idx1 + 1) + 1]);
-        var fixVertexResult = vertexLineIntersect(v1.x, v1.y, v4.x, v4.y, v2.x, v2.y, v3.x, v3.y);
-        var isSuccess = !fixVertexResult.isSuccess;
-        isSuccess || (fixVertexResult.value < 0 || fixVertexResult.value > 1) && (isSuccess = true);
-        if (isSuccess) {
-          vertices[2 * idx1] = v4.x;
-          vertices[2 * idx1 + 1] = v4.y;
-          vertices[2 * (idx1 + 1)] = v3.x;
-          vertices[2 * (idx1 + 1) + 1] = v3.y;
-        }
-      }
-    }
-    function vertexLineIntersect(Ax, Ay, Bx, By, Cx, Cy, Dx, Dy) {
-      var distAB, theCos, theSin, newX;
-      if (Ax === Bx && Ay === By || Cx === Dx && Cy === Dy) return {
-        isSuccess: false,
-        value: 0
-      };
-      Bx -= Ax;
-      By -= Ay;
-      Cx -= Ax;
-      Cy -= Ay;
-      Dx -= Ax;
-      Dy -= Ay;
-      distAB = Math.sqrt(Bx * Bx + By * By);
-      theCos = Bx / distAB;
-      theSin = By / distAB;
-      newX = Cx * theCos + Cy * theSin;
-      Cy = Cy * theCos - Cx * theSin;
-      Cx = newX;
-      newX = Dx * theCos + Dy * theSin;
-      Dy = Dy * theCos - Dx * theSin;
-      Dx = newX;
-      if (Cy === Dy) return {
-        isSuccess: false,
-        value: 0
-      };
-      var t = (Dx + (Cx - Dx) * Dy / (Dy - Cy)) / distAB;
-      return {
-        isSuccess: true,
-        value: t
-      };
-    }
-    function vertexListIsClockwise(verts) {
-      for (var i = 0, len = verts.length; i < len; i++) {
-        var a = verts[i];
-        var b = verts[(i + 1) % len];
-        var c = verts[(i + 2) % len];
-        if (cc.pCross(cc.pSub(b, a), cc.pSub(c, b)) > 0) return false;
-      }
-      return true;
-    }
-    _ccsg.MotionStreak = _ccsg.Node.extend({
-      texture: null,
-      fastMode: false,
-      startingPositionInitialized: false,
-      _blendFunc: null,
-      _stroke: 0,
-      _fadeDelta: 0,
-      _minSeg: 0,
-      _maxPoints: 0,
-      _nuPoints: 0,
-      _previousNuPoints: 0,
-      _pointVertexes: null,
-      _pointState: null,
-      _vertices: null,
-      _colorPointer: null,
-      _texCoords: null,
-      _verticesBuffer: null,
-      _colorPointerBuffer: null,
-      _texCoordsBuffer: null,
-      _className: "MotionStreak",
-      ctor: function(fade, minSeg, stroke, color, texture) {
-        _ccsg.Node.prototype.ctor.call(this);
-        this._positionR = cc.p(0, 0);
-        this._blendFunc = new cc.BlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
-        this.fastMode = false;
-        this.startingPositionInitialized = false;
-        this.texture = null;
-        this._stroke = 0;
-        this._fadeDelta = 0;
-        this._minSeg = 0;
-        this._maxPoints = 0;
-        this._nuPoints = 0;
-        this._previousNuPoints = 0;
-        this._pointVertexes = null;
-        this._pointState = null;
-        this._vertices = null;
-        this._colorPointer = null;
-        this._texCoords = null;
-        this._verticesBuffer = null;
-        this._colorPointerBuffer = null;
-        this._texCoordsBuffer = null;
-        void 0 !== texture && this.initWithFade(fade, minSeg, stroke, color, texture);
-      },
-      initWithFade: function(fade, minSeg, stroke, color, texture) {
-        cc.js.isString(texture) && (texture = cc.textureCache.addImage(texture));
-        this.anchorX = 0;
-        this.anchorY = 0;
-        this.ignoreAnchor = true;
-        this.startingPositionInitialized = false;
-        this.fastMode = true;
-        this._stroke = stroke;
-        this.setMinSeg(minSeg);
-        this.setFadeTime(fade);
-        this._blendFunc.src = gl.SRC_ALPHA;
-        this._blendFunc.dst = gl.ONE_MINUS_SRC_ALPHA;
-        this.setTexture(texture);
-        this.color = color;
-        this.scheduleUpdate();
-        return true;
-      },
-      getTexture: function() {
-        return this.texture;
-      },
-      setTexture: function(texture) {
-        this.texture !== texture && (this.texture = texture);
-      },
-      getBlendFunc: function() {
-        return this._blendFunc;
-      },
-      setBlendFunc: function(src, dst) {
-        if (void 0 === dst) this._blendFunc = src; else {
-          this._blendFunc.src = src;
-          this._blendFunc.dst = dst;
-        }
-      },
-      getOpacity: function() {
-        cc.logID(5901);
-        return 0;
-      },
-      setOpacity: function(opacity) {
-        cc.logID(5902);
-      },
-      setOpacityModifyRGB: function(value) {},
-      isOpacityModifyRGB: function() {
-        return false;
-      },
-      getFadeTime: function() {
-        return 1 / this._fadeDelta;
-      },
-      setFadeTime: function(fade) {
-        this._fadeDelta = 1 / fade;
-        var locMaxPoints = 2 + (0 | 60 * fade);
-        this._maxPoints = locMaxPoints;
-        this._nuPoints = 0;
-        this._pointState = new Float32Array(locMaxPoints);
-        this._pointVertexes = new Float32Array(2 * locMaxPoints);
-        this._vertices = new Float32Array(4 * locMaxPoints);
-        this._texCoords = new Float32Array(4 * locMaxPoints);
-        this._colorPointer = new Uint8Array(8 * locMaxPoints);
-        this._verticesBuffer = gl.createBuffer();
-        this._texCoordsBuffer = gl.createBuffer();
-        this._colorPointerBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._verticesBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, this._vertices, gl.DYNAMIC_DRAW);
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._texCoordsBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, this._texCoords, gl.DYNAMIC_DRAW);
-        gl.bindBuffer(gl.ARRAY_BUFFER, this._colorPointerBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, this._colorPointer, gl.DYNAMIC_DRAW);
-      },
-      getMinSeg: function() {
-        return this._minSeg;
-      },
-      setMinSeg: function(minSeg) {
-        this._minSeg = -1 === minSeg ? this._stroke / 5 : minSeg;
-        this._minSeg *= this._minSeg;
-      },
-      isFastMode: function() {
-        return this.fastMode;
-      },
-      setFastMode: function(fastMode) {
-        this.fastMode = fastMode;
-      },
-      isStartingPositionInitialized: function() {
-        return this.startingPositionInitialized;
-      },
-      setStartingPositionInitialized: function(startingPositionInitialized) {
-        this.startingPositionInitialized = startingPositionInitialized;
-      },
-      getStroke: function() {
-        return this._stroke;
-      },
-      setStroke: function(stroke) {
-        this._stroke = stroke;
-      },
-      tintWithColor: function(color) {
-        this.color = color;
-        var locColorPointer = this._colorPointer;
-        for (var i = 0, len = 2 * this._nuPoints; i < len; i++) {
-          locColorPointer[4 * i] = color.r;
-          locColorPointer[4 * i + 1] = color.g;
-          locColorPointer[4 * i + 2] = color.b;
-        }
-      },
-      reset: function() {
-        this._nuPoints = 0;
-      },
-      setPosition: function(position, yValue) {
-        this.startingPositionInitialized = true;
-        if (void 0 === yValue) {
-          this._positionR.x = position.x;
-          this._positionR.y = position.y;
-        } else {
-          this._positionR.x = position;
-          this._positionR.y = yValue;
-        }
-      },
-      getPositionX: function() {
-        return this._positionR.x;
-      },
-      setPositionX: function(x) {
-        this._positionR.x = x;
-        this.startingPositionInitialized || (this.startingPositionInitialized = true);
-      },
-      getPositionY: function() {
-        return this._positionR.y;
-      },
-      setPositionY: function(y) {
-        this._positionR.y = y;
-        this.startingPositionInitialized || (this.startingPositionInitialized = true);
-      },
-      update: function(delta) {
-        if (!this.startingPositionInitialized) return;
-        delta *= this._fadeDelta;
-        var newIdx, newIdx2, i, i2;
-        var mov = 0;
-        var locNuPoints = this._nuPoints;
-        var locPointState = this._pointState, locPointVertexes = this._pointVertexes, locVertices = this._vertices;
-        var locColorPointer = this._colorPointer;
-        for (i = 0; i < locNuPoints; i++) {
-          locPointState[i] -= delta;
-          if (locPointState[i] <= 0) mov++; else {
-            newIdx = i - mov;
-            if (mov > 0) {
-              locPointState[newIdx] = locPointState[i];
-              locPointVertexes[2 * newIdx] = locPointVertexes[2 * i];
-              locPointVertexes[2 * newIdx + 1] = locPointVertexes[2 * i + 1];
-              i2 = 2 * i;
-              newIdx2 = 2 * newIdx;
-              locVertices[2 * newIdx2] = locVertices[2 * i2];
-              locVertices[2 * newIdx2 + 1] = locVertices[2 * i2 + 1];
-              locVertices[2 * (newIdx2 + 1)] = locVertices[2 * (i2 + 1)];
-              locVertices[2 * (newIdx2 + 1) + 1] = locVertices[2 * (i2 + 1) + 1];
-              i2 *= 4;
-              newIdx2 *= 4;
-              locColorPointer[newIdx2 + 0] = locColorPointer[i2 + 0];
-              locColorPointer[newIdx2 + 1] = locColorPointer[i2 + 1];
-              locColorPointer[newIdx2 + 2] = locColorPointer[i2 + 2];
-              locColorPointer[newIdx2 + 4] = locColorPointer[i2 + 4];
-              locColorPointer[newIdx2 + 5] = locColorPointer[i2 + 5];
-              locColorPointer[newIdx2 + 6] = locColorPointer[i2 + 6];
-            } else newIdx2 = 8 * newIdx;
-            var op = 255 * locPointState[newIdx];
-            locColorPointer[newIdx2 + 3] = op;
-            locColorPointer[newIdx2 + 7] = op;
-          }
-        }
-        locNuPoints -= mov;
-        var appendNewPoint = true;
-        if (locNuPoints >= this._maxPoints) appendNewPoint = false; else if (locNuPoints > 0) {
-          var locPoint1 = cc.p(locPointVertexes[2 * (locNuPoints - 1)], locPointVertexes[2 * (locNuPoints - 1) + 1]);
-          var a1 = cc.pDistanceSQ(locPoint1, this._positionR) < this._minSeg;
-          var locPoint2 = cc.p(locPointVertexes[2 * (locNuPoints - 2)], locPointVertexes[2 * (locNuPoints - 2) + 1]);
-          var a2 = 1 !== locNuPoints && cc.pDistanceSQ(locPoint2, this._positionR) < 2 * this._minSeg;
-          (a1 || a2) && (appendNewPoint = false);
-        }
-        if (appendNewPoint) {
-          locPointVertexes[2 * locNuPoints] = this._positionR.x;
-          locPointVertexes[2 * locNuPoints + 1] = this._positionR.y;
-          locPointState[locNuPoints] = 1;
-          var offset = 8 * locNuPoints;
-          var locDisplayedColor = this.getDisplayedColor();
-          locColorPointer[offset] = locDisplayedColor.r;
-          locColorPointer[offset + 1] = locDisplayedColor.g;
-          locColorPointer[offset + 2] = locDisplayedColor.b;
-          locColorPointer[offset + 4] = locDisplayedColor.r;
-          locColorPointer[offset + 5] = locDisplayedColor.g;
-          locColorPointer[offset + 6] = locDisplayedColor.b;
-          locColorPointer[offset + 3] = 255;
-          locColorPointer[offset + 7] = 255;
-          locNuPoints > 0 && this.fastMode && (locNuPoints > 1 ? vertexLineToPolygon(locPointVertexes, this._stroke, this._vertices, locNuPoints, 1) : vertexLineToPolygon(locPointVertexes, this._stroke, this._vertices, 0, 2));
-          locNuPoints++;
-        }
-        this.fastMode || vertexLineToPolygon(locPointVertexes, this._stroke, this._vertices, 0, locNuPoints);
-        if (locNuPoints && this._previousNuPoints !== locNuPoints) {
-          var texDelta = 1 / locNuPoints;
-          var locTexCoords = this._texCoords;
-          for (i = 0; i < locNuPoints; i++) {
-            locTexCoords[4 * i] = 0;
-            locTexCoords[4 * i + 1] = texDelta * i;
-            locTexCoords[2 * (2 * i + 1)] = 1;
-            locTexCoords[2 * (2 * i + 1) + 1] = texDelta * i;
-          }
-          this._previousNuPoints = locNuPoints;
-        }
-        this._nuPoints = locNuPoints;
-      },
-      _createRenderCmd: function() {
-        return cc._renderType === cc.game.RENDER_TYPE_WEBGL ? new _ccsg.MotionStreak.WebGLRenderCmd(this) : null;
-      }
-    });
-    var motionStreakPro = _ccsg.MotionStreak.prototype;
-    Object.defineProperty(motionStreakPro, "x", {
-      get: motionStreakPro.getPositionX,
-      set: motionStreakPro.setPositionX
-    });
-    Object.defineProperty(motionStreakPro, "y", {
-      get: motionStreakPro.getPositionY,
-      set: motionStreakPro.setPositionY
-    });
-  }), {} ],
-  260: [ (function(require, module, exports) {
-    _ccsg.MotionStreak.WebGLRenderCmd = function(renderableObject) {
-      this._rootCtor(renderableObject);
-      this._needDraw = true;
-      this._matrix = new cc.math.Matrix4();
-      this._matrix.identity();
-      this._shaderProgram = cc.shaderCache.programForKey(cc.macro.SHADER_POSITION_TEXTURECOLOR);
-    };
-    _ccsg.MotionStreak.WebGLRenderCmd.prototype = Object.create(_ccsg.Node.WebGLRenderCmd.prototype);
-    _ccsg.MotionStreak.WebGLRenderCmd.prototype.constructor = _ccsg.Sprite.WebGLRenderCmd;
-    _ccsg.MotionStreak.WebGLRenderCmd.prototype.rendering = function(ctx) {
-      var node = this._node;
-      if (node._nuPoints <= 1) return;
-      if (node.texture && node.texture.isLoaded()) {
-        ctx = ctx || cc._renderContext;
-        this._updateDisplayColor();
-        var wt = this._worldTransform, mat = this._matrix.mat;
-        mat[0] = wt.a;
-        mat[4] = wt.c;
-        mat[12] = wt.tx;
-        mat[1] = wt.b;
-        mat[5] = wt.d;
-        mat[13] = wt.ty;
-        this._shaderProgram.use();
-        this._shaderProgram._setUniformForMVPMatrixWithMat4(this._matrix);
-        cc.gl.blendFunc(node._blendFunc.src, node._blendFunc.dst);
-        cc.gl.bindTexture2DN(0, node.texture);
-        ctx.enableVertexAttribArray(cc.macro.VERTEX_ATTRIB_POSITION);
-        ctx.enableVertexAttribArray(cc.macro.VERTEX_ATTRIB_COLOR);
-        ctx.enableVertexAttribArray(cc.macro.VERTEX_ATTRIB_TEX_COORDS);
-        ctx.bindBuffer(ctx.ARRAY_BUFFER, node._verticesBuffer);
-        ctx.bufferData(ctx.ARRAY_BUFFER, node._vertices, ctx.DYNAMIC_DRAW);
-        ctx.vertexAttribPointer(cc.macro.VERTEX_ATTRIB_POSITION, 2, ctx.FLOAT, false, 0, 0);
-        ctx.bindBuffer(ctx.ARRAY_BUFFER, node._texCoordsBuffer);
-        ctx.bufferData(ctx.ARRAY_BUFFER, node._texCoords, ctx.DYNAMIC_DRAW);
-        ctx.vertexAttribPointer(cc.macro.VERTEX_ATTRIB_TEX_COORDS, 2, ctx.FLOAT, false, 0, 0);
-        ctx.bindBuffer(ctx.ARRAY_BUFFER, node._colorPointerBuffer);
-        ctx.bufferData(ctx.ARRAY_BUFFER, node._colorPointer, ctx.DYNAMIC_DRAW);
-        ctx.vertexAttribPointer(cc.macro.VERTEX_ATTRIB_COLOR, 4, ctx.UNSIGNED_BYTE, true, 0, 0);
-        ctx.drawArrays(ctx.TRIANGLE_STRIP, 0, 2 * node._nuPoints);
-        cc.g_NumberOfDraws++;
-      }
-    };
-  }), {} ],
-  261: [ (function(require, module, exports) {
+  249: [ (function(require, module, exports) {
     var Zlib = require("../compression/zlib.min");
     var PNGReader = cc._Class.extend({
       ctor: function(data) {
@@ -44280,14 +41407,14 @@
   }), {
     "../compression/zlib.min": 32
   } ],
-  262: [ (function(require, module, exports) {
+  250: [ (function(require, module, exports) {
     var ParticleAsset = cc.Class({
       name: "cc.ParticleAsset",
       extends: cc.RawAsset
     });
     cc.ParticleAsset = module.exports = ParticleAsset;
   }), {} ],
-  263: [ (function(require, module, exports) {
+  251: [ (function(require, module, exports) {
     require("./CCParticleAsset");
     require("./CCSGParticleSystem");
     require("./CCSGParticleSystemCanvasRenderCmd");
@@ -44623,12 +41750,12 @@
     });
     cc.ParticleSystem = module.exports = ParticleSystem;
   }), {
-    "./CCParticleAsset": 262,
-    "./CCSGParticleSystem": 264,
-    "./CCSGParticleSystemCanvasRenderCmd": 265,
-    "./CCSGParticleSystemWebGLRenderCmd": 266
+    "./CCParticleAsset": 250,
+    "./CCSGParticleSystem": 252,
+    "./CCSGParticleSystemCanvasRenderCmd": 253,
+    "./CCSGParticleSystemWebGLRenderCmd": 254
   } ],
-  264: [ (function(require, module, exports) {
+  252: [ (function(require, module, exports) {
     var PNGReader = require("./CCPNGReader");
     var tiffReader = require("./CCTIFFReader");
     require("../compression/ZipUtils");
@@ -44758,6 +41885,10 @@
       },
       _createRenderCmd: function() {
         return cc._renderType === cc.game.RENDER_TYPE_CANVAS ? new _ccsg.ParticleSystem.CanvasRenderCmd(this) : new _ccsg.ParticleSystem.WebGLRenderCmd(this);
+      },
+      onEnter: function() {
+        this.scheduleUpdateWithPriority(1);
+        _ccsg.Node.prototype.onEnter.call(this);
       },
       ignoreColor: function(ignore) {
         this._dontTint = ignore;
@@ -45203,7 +42334,6 @@
         this.positionType = _ccsg.ParticleSystem.Type.FREE;
         this.emitterMode = _ccsg.ParticleSystem.Mode.GRAVITY;
         this.autoRemoveOnFinish = false;
-        this.scheduleUpdateWithPriority(1);
         this._renderCmd._initWithTotalParticles(numberOfParticles);
         return true;
       },
@@ -45559,10 +42689,10 @@
     });
   }), {
     "../compression/ZipUtils": 29,
-    "./CCPNGReader": 261,
-    "./CCTIFFReader": 267
+    "./CCPNGReader": 249,
+    "./CCTIFFReader": 255
   } ],
-  265: [ (function(require, module, exports) {
+  253: [ (function(require, module, exports) {
     _ccsg.ParticleSystem.CanvasRenderCmd = function(renderable) {
       this._rootCtor(renderable);
       this._needDraw = true;
@@ -45685,7 +42815,7 @@
       }
     };
   }), {} ],
-  266: [ (function(require, module, exports) {
+  254: [ (function(require, module, exports) {
     _ccsg.ParticleSystem.WebGLRenderCmd = function(renderable) {
       this._rootCtor(renderable);
       this._needDraw = true;
@@ -45917,7 +43047,7 @@
       selParticle.isChangeColor = true;
     };
   }), {} ],
-  267: [ (function(require, module, exports) {
+  255: [ (function(require, module, exports) {
     var tiffReader = {
       _littleEndian: false,
       _tiffData: null,
@@ -46326,7 +43456,7 @@
     };
     module.exports = tiffReader;
   }), {} ],
-  268: [ (function(require, module, exports) {
+  256: [ (function(require, module, exports) {
     cc.RenderTexture = _ccsg.Node.extend({
       sprite: null,
       clearFlags: 0,
@@ -46463,7 +43593,7 @@
       return new cc.RenderTexture(width, height, format, depthStencilFormat);
     };
   }), {} ],
-  269: [ (function(require, module, exports) {
+  257: [ (function(require, module, exports) {
     cc.RenderTexture.CanvasRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
       this._needDraw = false;
@@ -46522,7 +43652,7 @@
       cc.log("clearDepth isn't supported on Cocos2d-Html5");
     };
   }), {} ],
-  270: [ (function(require, module, exports) {
+  258: [ (function(require, module, exports) {
     var misc = require("../core/utils/misc");
     cc.RenderTexture.WebGLRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
@@ -46728,9 +43858,9 @@
       node.end();
     };
   }), {
-    "../core/utils/misc": 227
+    "../core/utils/misc": 220
   } ],
-  271: [ (function(require, module, exports) {
+  259: [ (function(require, module, exports) {
     var macro = cc.macro;
     var math = cc.math;
     cc.GLProgram = cc._Class.extend({
@@ -47118,7 +44248,7 @@
       return cc.GLProgram._highpSupported;
     };
   }), {} ],
-  272: [ (function(require, module, exports) {
+  260: [ (function(require, module, exports) {
     var _currentProjectionMatrix = -1;
     var macro = cc.macro;
     var ENABLE_GL_STATE_CACHE = macro.ENABLE_GL_STATE_CACHE;
@@ -47213,7 +44343,7 @@
       ENABLE_GL_STATE_CACHE;
     };
   }), {} ],
-  273: [ (function(require, module, exports) {
+  261: [ (function(require, module, exports) {
     var shaders = cc.PresetShaders;
     var macro = cc.macro;
     cc.shaderCache = {
@@ -47347,7 +44477,7 @@
       }
     };
   }), {} ],
-  274: [ (function(require, module, exports) {
+  262: [ (function(require, module, exports) {
     cc.PresetShaders = {
       POSITION_UCOLOR_FRAG: "precision lowp float;\nvarying vec4 v_fragmentColor;\nvoid main()\n{\ngl_FragColor = v_fragmentColor;\n}",
       POSITION_UCOLOR_VERT: "attribute vec4 a_position;\nuniform vec4 u_color;\nuniform float u_pointSize;\nvarying lowp vec4 v_fragmentColor;\nvoid main(void)\n{\ngl_Position = (CC_PMatrix * CC_MVMatrix) * a_position;\ngl_PointSize = u_pointSize;\nv_fragmentColor = u_color;\n}",
@@ -47369,18 +44499,18 @@
       EX_SWITCHMASK_FRAG: "precision lowp float;\nvarying vec4 v_fragmentColor;\nvarying vec2 v_texCoord;\nuniform sampler2D u_texture;\nuniform sampler2D u_mask;\nvoid main()\n{\nvec4 texColorc=texture2D(u_texture, v_texCoord);\nvec4 maskColor=texture2D(u_mask, v_texCoord);\nvec4 finalColor=vec4(texColor.r, texColor.g, texColor.b, maskColor.a*texColor.a);\ngl_FragColor=v_fragmentColor*finalColor;\n}"
     };
   }), {} ],
-  275: [ (function(require, module, exports) {
+  263: [ (function(require, module, exports) {
     require("./CCShaders");
     require("./CCShaderCache");
     require("./CCGLProgram");
     require("./CCGLStateCache");
   }), {
-    "./CCGLProgram": 271,
-    "./CCGLStateCache": 272,
-    "./CCShaderCache": 273,
-    "./CCShaders": 274
+    "./CCGLProgram": 259,
+    "./CCGLStateCache": 260,
+    "./CCShaderCache": 261,
+    "./CCShaders": 262
   } ],
-  276: [ (function(require, module, exports) {
+  264: [ (function(require, module, exports) {
     var __t = function(v) {
       return {
         u: v.x,
@@ -48098,10 +45228,10 @@
       }
     }));
   }), {
-    "./CCDrawNodeCanvasRenderCmd": 277,
-    "./CCDrawNodeWebGLRenderCmd": 278
+    "./CCDrawNodeCanvasRenderCmd": 265,
+    "./CCDrawNodeWebGLRenderCmd": 266
   } ],
-  277: [ (function(require, module, exports) {
+  265: [ (function(require, module, exports) {
     cc.DrawNode.CanvasRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
       this._needDraw = true;
@@ -48177,7 +45307,7 @@
       locIsStroke && ctx.stroke();
     };
   }), {} ],
-  278: [ (function(require, module, exports) {
+  266: [ (function(require, module, exports) {
     cc.DrawNode.WebGLRenderCmd = function(renderableObject) {
       this._rootCtor(renderableObject);
       this._needDraw = true;
@@ -48203,2592 +45333,7 @@
       }
     };
   }), {} ],
-  279: [ (function(require, module, exports) {
-    _ccsg.TMXLayer = _ccsg.Node.extend({
-      tiles: null,
-      tileset: null,
-      layerOrientation: null,
-      properties: null,
-      layerName: "",
-      _texture: null,
-      _textures: null,
-      _texGrids: null,
-      _spriteTiles: null,
-      _layerSize: null,
-      _mapTileSize: null,
-      _opacity: 255,
-      _minGID: null,
-      _maxGID: null,
-      _vertexZvalue: null,
-      _useAutomaticVertexZ: null,
-      _reusedTile: null,
-      _contentScaleFactor: null,
-      _staggerAxis: null,
-      _staggerIndex: null,
-      _hexSideLength: 0,
-      _className: "TMXLayer",
-      ctor: function(tilesetInfo, layerInfo, mapInfo) {
-        cc.SpriteBatchNode.prototype.ctor.call(this);
-        this._layerSize = cc.size(0, 0);
-        this._mapTileSize = cc.size(0, 0);
-        this._spriteTiles = {};
-        this._staggerAxis = cc.TiledMap.StaggerAxis.STAGGERAXIS_Y;
-        this._staggerIndex = cc.TiledMap.StaggerIndex.STAGGERINDEX_EVEN;
-        void 0 !== mapInfo && this.initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo);
-      },
-      _createRenderCmd: function() {
-        return cc._renderType === cc.game.RENDER_TYPE_CANVAS ? new _ccsg.TMXLayer.CanvasRenderCmd(this) : new _ccsg.TMXLayer.WebGLRenderCmd(this);
-      },
-      _fillTextureGrids: function(tileset, texId) {
-        var tex = this._textures[texId];
-        if (!tex.isLoaded()) {
-          tex.once("load", (function() {
-            this._fillTextureGrids(tileset, texId);
-          }), this);
-          return;
-        }
-        if (!tileset.imageSize.width || !tileset.imageSize.height) {
-          tileset.imageSize.width = tex.width;
-          tileset.imageSize.height = tex.height;
-        }
-        var tw = tileset._tileSize.width, th = tileset._tileSize.height, imageW = tex.width, imageH = tex.height, spacing = tileset.spacing, margin = tileset.margin, cols = Math.floor((imageW - 2 * margin + spacing) / (tw + spacing)), rows = Math.floor((imageH - 2 * margin + spacing) / (th + spacing)), count = rows * cols, gid = tileset.firstGid, maxGid = tileset.firstGid + count, grids = this._texGrids, grid = null, override = !!grids[gid], texelCorrect = cc.macro.FIX_ARTIFACTS_BY_STRECHING_TEXEL_TMX ? .5 : 0;
-        for (;gid < maxGid; ++gid) {
-          override && !grids[gid] && (override = false);
-          if (!override && grids[gid]) break;
-          grid = {
-            texId: texId,
-            x: 0,
-            y: 0,
-            width: tw,
-            height: th,
-            t: 0,
-            l: 0,
-            r: 0,
-            b: 0
-          };
-          tileset.rectForGID(gid, grid);
-          grid.x += texelCorrect;
-          grid.y += texelCorrect;
-          grid.width -= 2 * texelCorrect;
-          grid.height -= 2 * texelCorrect;
-          grid.t = grid.y / imageH;
-          grid.l = grid.x / imageW;
-          grid.r = (grid.x + grid.width) / imageW;
-          grid.b = (grid.y + grid.height) / imageH;
-          grids[gid] = grid;
-        }
-      },
-      initWithTilesetInfo: function(tilesetInfo, layerInfo, mapInfo) {
-        var size = layerInfo._layerSize;
-        this.layerName = layerInfo.name;
-        this.tiles = layerInfo._tiles;
-        this.properties = layerInfo.properties;
-        this._layerSize = size;
-        this._minGID = layerInfo._minGID;
-        this._maxGID = layerInfo._maxGID;
-        this._opacity = layerInfo._opacity;
-        this._staggerAxis = mapInfo.getStaggerAxis();
-        this._staggerIndex = mapInfo.getStaggerIndex();
-        this._hexSideLength = mapInfo.getHexSideLength();
-        this.tileset = tilesetInfo;
-        this.layerOrientation = mapInfo.orientation;
-        this._mapTileSize = mapInfo.getTileSize();
-        var tilesets = mapInfo._tilesets;
-        if (tilesets) {
-          var i, len = tilesets.length, tileset, tex;
-          this._textures = new Array(len);
-          this._texGrids = [];
-          for (i = 0; i < len; ++i) {
-            tileset = tilesets[i];
-            tex = cc.textureCache.addImage(tileset.sourceImage, (function(tex) {
-              tex.setAliasTexParameters();
-            }));
-            this._textures[i] = tex;
-            this._fillTextureGrids(tileset, i);
-            tileset === tilesetInfo && (this._texture = tex);
-          }
-        }
-        var offset = this._calculateLayerOffset(layerInfo.offset);
-        this.setPosition(offset);
-        this._parseInternalProperties();
-        if (this.layerOrientation === cc.TiledMap.Orientation.HEX) {
-          var width = 0, height = 0;
-          if (this._staggerAxis === cc.TiledMap.StaggerAxis.STAGGERAXIS_X) {
-            height = mapInfo._tileSize.height * (this._layerSize.height + .5);
-            width = (mapInfo._tileSize.width + this._hexSideLength) * Math.floor(this._layerSize.width / 2) + mapInfo._tileSize.width * (this._layerSize.width % 2);
-          } else {
-            width = mapInfo._tileSize.width * (this._layerSize.width + .5);
-            height = (mapInfo._tileSize.height + this._hexSideLength) * Math.floor(this._layerSize.height / 2) + mapInfo._tileSize.height * (this._layerSize.height % 2);
-          }
-          this.setContentSize(width, height);
-        } else this.setContentSize(this._layerSize.width * this._mapTileSize.width, this._layerSize.height * this._mapTileSize.height);
-        this._useAutomaticVertexZ = false;
-        this._vertexZvalue = 0;
-        return true;
-      },
-      visit: function(parent) {
-        var cmd = this._renderCmd, parentCmd = parent ? parent._renderCmd : null;
-        if (!this._visible) {
-          cmd._propagateFlagsDown(parentCmd);
-          return;
-        }
-        var renderer = cc.renderer;
-        cmd.visit(parentCmd);
-        var i, children = this._children, len = children.length, child, isCanvas = cc._renderType === cc.game.RENDER_TYPE_CANVAS, spTiles = this._spriteTiles;
-        if (len > 0) {
-          this._reorderChildDirty && this.sortAllChildren();
-          for (i = 0; i < len; i++) {
-            child = children[i];
-            if (!(child._localZOrder < 0)) break;
-            child.visit(this);
-          }
-          renderer.pushRenderCommand(cmd);
-          for (;i < len; i++) {
-            child = children[i];
-            if (isCanvas && 0 === child._localZOrder && spTiles[child.tag]) {
-              if (isNaN(child._customZ)) {
-                child._vertexZ = renderer.assignedZ;
-                renderer.assignedZ += renderer.assignedZStep;
-              }
-              child._renderCmd.updateStatus();
-              continue;
-            }
-            child.visit(this);
-          }
-        } else renderer.pushRenderCommand(cmd);
-        cc._renderType === cc.game.RENDER_TYPE_WEBGL && renderer.pushRenderCommand(this._renderCmd._disableDepthTestCmd);
-        cmd._dirtyFlag = 0;
-      },
-      getLayerSize: function() {
-        return cc.size(this._layerSize.width, this._layerSize.height);
-      },
-      setLayerSize: function(Var) {
-        this._layerSize.width = Var.width;
-        this._layerSize.height = Var.height;
-      },
-      _getLayerWidth: function() {
-        return this._layerSize.width;
-      },
-      _setLayerWidth: function(width) {
-        this._layerSize.width = width;
-      },
-      _getLayerHeight: function() {
-        return this._layerSize.height;
-      },
-      _setLayerHeight: function(height) {
-        this._layerSize.height = height;
-      },
-      getMapTileSize: function() {
-        return cc.size(this._mapTileSize.width, this._mapTileSize.height);
-      },
-      setMapTileSize: function(Var) {
-        this._mapTileSize.width = Var.width;
-        this._mapTileSize.height = Var.height;
-      },
-      _getTileWidth: function() {
-        return this._mapTileSize.width;
-      },
-      _setTileWidth: function(width) {
-        this._mapTileSize.width = width;
-      },
-      _getTileHeight: function() {
-        return this._mapTileSize.height;
-      },
-      _setTileHeight: function(height) {
-        this._mapTileSize.height = height;
-      },
-      getTiles: function() {
-        return this.tiles;
-      },
-      setTiles: function(Var) {
-        this.tiles = Var;
-      },
-      getTileSet: function() {
-        return this.tileset;
-      },
-      setTileSet: function(Var) {
-        this.tileset = Var;
-      },
-      getLayerOrientation: function() {
-        return this.layerOrientation;
-      },
-      setLayerOrientation: function(Var) {
-        this.layerOrientation = Var;
-      },
-      getProperties: function() {
-        return this.properties;
-      },
-      setProperties: function(Var) {
-        this.properties = Var;
-      },
-      getProperty: function(propertyName) {
-        return this.properties[propertyName];
-      },
-      getLayerName: function() {
-        return this.layerName;
-      },
-      setLayerName: function(layerName) {
-        this.layerName = layerName;
-      },
-      releaseMap: function() {
-        this._spriteTiles = {};
-      },
-      getTileAt: function(pos, y) {
-        if (void 0 === pos) throw new Error("_ccsg.TMXLayer.getTileAt(): pos should be non-null");
-        var x = pos;
-        if (void 0 === y) {
-          x = pos.x;
-          y = pos.y;
-        }
-        if (x >= this._layerSize.width || y >= this._layerSize.height || x < 0 || y < 0) throw new Error("_ccsg.TMXLayer.getTileAt(): invalid position");
-        if (!this.tiles) {
-          cc.logID(7204);
-          return null;
-        }
-        var tile = null, gid = this.getTileGIDAt(x, y);
-        if (0 === gid) return tile;
-        var z = Math.floor(x) + Math.floor(y) * this._layerSize.width;
-        tile = this._spriteTiles[z];
-        if (!tile) {
-          var rect = this._texGrids[gid];
-          var tex = this._textures[rect.texId];
-          tile = new _ccsg.Sprite(tex, rect);
-          tile.setPosition(this.getPositionAt(x, y));
-          var vertexZ = this._vertexZForPos(x, y);
-          tile.setVertexZ(vertexZ);
-          tile.setAnchorPoint(0, 0);
-          tile.setOpacity(this._opacity);
-          this.addChild(tile, vertexZ, z);
-        }
-        return tile;
-      },
-      getTileGIDAt: function(pos, y) {
-        if (void 0 === pos) throw new Error("_ccsg.TMXLayer.getTileGIDAt(): pos should be non-null");
-        var x = pos;
-        if (void 0 === y) {
-          x = pos.x;
-          y = pos.y;
-        }
-        if (x >= this._layerSize.width || y >= this._layerSize.height || x < 0 || y < 0) throw new Error("_ccsg.TMXLayer.getTileGIDAt(): invalid position");
-        if (!this.tiles) {
-          cc.logID(7205);
-          return null;
-        }
-        var idx = Math.floor(x) + Math.floor(y) * this._layerSize.width;
-        var tile = this.tiles[idx];
-        return (tile & cc.TiledMap.TileFlag.FLIPPED_MASK) >>> 0;
-      },
-      setTileGID: function(gid, posOrX, flagsOrY, flags) {
-        if (void 0 === posOrX) throw new Error("_ccsg.TMXLayer.setTileGID(): pos should be non-null");
-        var pos;
-        if (void 0 === flags && posOrX instanceof cc.Vec2) {
-          pos = posOrX;
-          flags = flagsOrY;
-        } else pos = cc.p(posOrX, flagsOrY);
-        pos.x = Math.floor(pos.x);
-        pos.y = Math.floor(pos.y);
-        if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0) throw new Error("_ccsg.TMXLayer.setTileGID(): invalid position");
-        if (!this.tiles) {
-          cc.logID(7206);
-          return;
-        }
-        if (0 !== gid && gid < this.tileset.firstGid) {
-          cc.logID(7207, gid);
-          return;
-        }
-        flags = flags || 0;
-        var currentFlags = this.getTileFlagsAt(pos);
-        var currentGID = this.getTileGIDAt(pos);
-        if (currentGID !== gid || currentFlags !== flags) {
-          var gidAndFlags = (gid | flags) >>> 0;
-          if (0 === gid) this.removeTileAt(pos); else if (0 === currentGID) this._updateTileForGID(gidAndFlags, pos); else {
-            var z = pos.x + pos.y * this._layerSize.width;
-            var sprite = this.getChildByTag(z);
-            if (sprite) {
-              var rect = this._texGrids[gid];
-              var tex = this._textures[rect.texId];
-              sprite.setTexture(tex);
-              sprite.setTextureRect(rect, false);
-              null != flags && this._setupTileSprite(sprite, pos, gidAndFlags);
-              this.tiles[z] = gidAndFlags;
-            } else this._updateTileForGID(gidAndFlags, pos);
-          }
-        }
-      },
-      addChild: function(child, localZOrder, tag) {
-        _ccsg.Node.prototype.addChild.call(this, child, localZOrder, tag);
-        if (void 0 !== tag) {
-          this._spriteTiles[tag] = child;
-          child._vertexZ = this._vertexZ + cc.renderer.assignedZStep * tag / this.tiles.length;
-        }
-      },
-      removeChild: function(child, cleanup) {
-        this._spriteTiles[child.tag] && (this._spriteTiles[child.tag] = null);
-        _ccsg.Node.prototype.removeChild.call(this, child, cleanup);
-      },
-      getTileFlagsAt: function(pos, y) {
-        if (!pos) throw new Error("_ccsg.TMXLayer.getTileFlagsAt(): pos should be non-null");
-        void 0 !== y && (pos = cc.p(pos, y));
-        if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0) throw new Error("_ccsg.TMXLayer.getTileFlagsAt(): invalid position");
-        if (!this.tiles) {
-          cc.logID(7208);
-          return null;
-        }
-        var idx = Math.floor(pos.x) + Math.floor(pos.y) * this._layerSize.width;
-        var tile = this.tiles[idx];
-        return (tile & cc.TiledMap.TileFlag.FLIPPED_ALL) >>> 0;
-      },
-      removeTileAt: function(pos, y) {
-        if (!pos) throw new Error("_ccsg.TMXLayer.removeTileAt(): pos should be non-null");
-        void 0 !== y && (pos = cc.p(pos, y));
-        if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0) throw new Error("_ccsg.TMXLayer.removeTileAt(): invalid position");
-        if (!this.tiles) {
-          cc.logID(7209);
-          return;
-        }
-        var gid = this.getTileGIDAt(pos);
-        if (0 !== gid) {
-          var z = Math.floor(pos.x) + Math.floor(pos.y) * this._layerSize.width;
-          this.tiles[z] = 0;
-          var sprite = this._spriteTiles[z];
-          sprite && this.removeChild(sprite, true);
-        }
-      },
-      getPositionAt: function(pos, y) {
-        void 0 !== y && (pos = cc.p(pos, y));
-        pos.x = Math.floor(pos.x);
-        pos.y = Math.floor(pos.y);
-        var ret = cc.p(0, 0);
-        switch (this.layerOrientation) {
-         case cc.TiledMap.Orientation.ORTHO:
-          ret = this._positionForOrthoAt(pos);
-          break;
-
-         case cc.TiledMap.Orientation.ISO:
-          ret = this._positionForIsoAt(pos);
-          break;
-
-         case cc.TiledMap.Orientation.HEX:
-          ret = this._positionForHexAt(pos);
-        }
-        return ret;
-      },
-      _positionForIsoAt: function(pos) {
-        return cc.p(this._mapTileSize.width / 2 * (this._layerSize.width + pos.x - pos.y - 1), this._mapTileSize.height / 2 * (2 * this._layerSize.height - pos.x - pos.y - 2));
-      },
-      _positionForOrthoAt: function(pos) {
-        return cc.p(pos.x * this._mapTileSize.width, (this._layerSize.height - pos.y - 1) * this._mapTileSize.height);
-      },
-      _positionForHexAt: function(pos) {
-        var xy = cc.p(0, 0);
-        var offset = this.tileset.tileOffset;
-        var odd_even = this._staggerIndex === cc.TiledMap.StaggerIndex.STAGGERINDEX_ODD ? 1 : -1;
-        switch (this._staggerAxis) {
-         case cc.TiledMap.StaggerAxis.STAGGERAXIS_Y:
-          var diffX = 0;
-          pos.y % 2 === 1 && (diffX = this._mapTileSize.width / 2 * odd_even);
-          xy = cc.p(pos.x * this._mapTileSize.width + diffX + offset.x, (this._layerSize.height - pos.y - 1) * (this._mapTileSize.height - (this._mapTileSize.height - this._hexSideLength) / 2) - offset.y);
-          break;
-
-         case cc.TiledMap.StaggerAxis.STAGGERAXIS_X:
-          var diffY = 0;
-          pos.x % 2 === 1 && (diffY = this._mapTileSize.height / 2 * -odd_even);
-          xy = cc.p(pos.x * (this._mapTileSize.width - (this._mapTileSize.width - this._hexSideLength) / 2) + offset.x, (this._layerSize.height - pos.y - 1) * this._mapTileSize.height + diffY - offset.y);
-        }
-        return xy;
-      },
-      _calculateLayerOffset: function(pos) {
-        var ret = cc.p(0, 0);
-        switch (this.layerOrientation) {
-         case cc.TiledMap.Orientation.ORTHO:
-          ret = cc.p(pos.x * this._mapTileSize.width, -pos.y * this._mapTileSize.height);
-          break;
-
-         case cc.TiledMap.Orientation.ISO:
-          ret = cc.p(this._mapTileSize.width / 2 * (pos.x - pos.y), this._mapTileSize.height / 2 * (-pos.x - pos.y));
-          break;
-
-         case cc.TiledMap.Orientation.HEX:
-          if (this._staggerAxis === cc.TiledMap.StaggerAxis.STAGGERAXIS_Y) {
-            var diffX = this._staggerIndex === cc.TiledMap.StaggerIndex.STAGGERINDEX_EVEN ? this._mapTileSize.width / 2 : 0;
-            ret = cc.p(pos.x * this._mapTileSize.width + diffX, -pos.y * (this._mapTileSize.height - (this._mapTileSize.width - this._hexSideLength) / 2));
-          } else if (this._staggerAxis === cc.TiledMap.StaggerAxis.STAGGERAXIS_X) {
-            var diffY = this._staggerIndex === cc.TiledMap.StaggerIndex.STAGGERINDEX_ODD ? this._mapTileSize.height / 2 : 0;
-            ret = cc.p(pos.x * (this._mapTileSize.width - (this._mapTileSize.width - this._hexSideLength) / 2), -pos.y * this._mapTileSize.height + diffY);
-          }
-        }
-        return ret;
-      },
-      _updateTileForGID: function(gid, pos) {
-        if (!this._texGrids[gid]) return;
-        var idx = 0 | pos.x + pos.y * this._layerSize.width;
-        idx < this.tiles.length && (this.tiles[idx] = gid);
-      },
-      _parseInternalProperties: function() {
-        var vertexz = this.getProperty("cc_vertexz");
-        if (vertexz) if ("automatic" === vertexz) {
-          this._useAutomaticVertexZ = true;
-          var alphaFuncVal = this.getProperty("cc_alpha_func");
-          var alphaFuncValue = 0;
-          alphaFuncVal && (alphaFuncValue = parseFloat(alphaFuncVal));
-          if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-            this.shaderProgram = cc.shaderCache.programForKey(cc.macro.SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST);
-            this.shaderProgram.use();
-            this.shaderProgram.setUniformLocationWith1f(cc.UNIFORM_ALPHA_TEST_VALUE_S, alphaFuncValue);
-          }
-        } else this._vertexZvalue = parseInt(vertexz, 10);
-      },
-      _setupTileSprite: function(sprite, pos, gid) {
-        var posInPixel = this.getPositionAt(pos);
-        sprite.setPosition(posInPixel);
-        sprite.setVertexZ(this._vertexZForPos(pos));
-        sprite.setAnchorPoint(0, 0);
-        sprite.setOpacity(this._opacity);
-        sprite.setFlippedX(false);
-        sprite.setFlippedY(false);
-        sprite.setRotation(0);
-        if ((gid & cc.TiledMap.TileFlag.DIAGONAL) >>> 0) {
-          sprite.setAnchorPoint(.5, .5);
-          sprite.setPosition(posInPixel.x + sprite.width / 2, posInPixel.y + sprite.height / 2);
-          var flag = (gid & (cc.TiledMap.TileFlag.HORIZONTAL | cc.TiledMap.TileFlag.VERTICAL) >>> 0) >>> 0;
-          if (flag === cc.TiledMap.TileFlag.HORIZONTAL) sprite.setRotation(90); else if (flag === cc.TiledMap.TileFlag.VERTICAL) sprite.setRotation(270); else if (flag === (cc.TiledMap.TileFlag.VERTICAL | cc.TiledMap.TileFlag.HORIZONTAL) >>> 0) {
-            sprite.setRotation(90);
-            sprite.setFlippedX(true);
-          } else {
-            sprite.setRotation(270);
-            sprite.setFlippedX(true);
-          }
-        } else {
-          (gid & cc.TiledMap.TileFlag.HORIZONTAL) >>> 0 && sprite.setFlippedX(true);
-          (gid & cc.TiledMap.TileFlag.VERTICAL) >>> 0 && sprite.setFlippedY(true);
-        }
-      },
-      _vertexZForPos: function(x, y) {
-        if (void 0 === y) {
-          y = x.y;
-          x = x.x;
-        }
-        var ret = 0;
-        var maxVal = 0;
-        if (this._useAutomaticVertexZ) switch (this.layerOrientation) {
-         case cc.TiledMap.Orientation.ISO:
-          maxVal = this._layerSize.width + this._layerSize.height;
-          ret = -(maxVal - (x + y));
-          break;
-
-         case cc.TiledMap.Orientation.ORTHO:
-          ret = -(this._layerSize.height - y);
-          break;
-
-         case cc.TiledMap.Orientation.HEX:
-          cc.logID(7210);
-          break;
-
-         default:
-          cc.logID(7211);
-        } else ret = this._vertexZvalue;
-        return ret;
-      }
-    });
-  }), {} ],
-  280: [ (function(require, module, exports) {
-    require("../shape-nodes/CCDrawNode");
-    _ccsg.TMXObject = cc.Class({
-      properties: {
-        sgNode: null,
-        offset: cc.p(0, 0),
-        gid: 0,
-        name: "",
-        type: null,
-        id: 0,
-        objectVisible: true,
-        objectSize: cc.size(0, 0),
-        objectRotation: 0,
-        _properties: null,
-        _groupSize: cc.size(0, 0)
-      },
-      initWithInfo: function(objInfo, mapInfo, groupSize, color) {
-        this.setProperties(objInfo);
-        this.setObjectName(objInfo.name);
-        this.id = objInfo.id;
-        this.gid = objInfo.gid;
-        this.type = objInfo.type;
-        this.offset = cc.p(objInfo.x, objInfo.y);
-        this.objectSize = cc.size(objInfo.width, objInfo.height);
-        this.objectVisible = objInfo.visible;
-        this.objectRotation = objInfo.rotation;
-        this._groupSize = groupSize;
-        this.type === cc.TiledMap.TMXObjectType.IMAGE ? this.sgNode = new _ccsg.TMXObjectImage(this, mapInfo) : this.sgNode = new _ccsg.TMXObjectShape(this, mapInfo, color);
-      },
-      getObjectName: function() {
-        return this.name;
-      },
-      getProperty: function(propName) {
-        return this._properties[propName];
-      },
-      getProperties: function() {
-        return this._properties;
-      },
-      setObjectName: function(name) {
-        this.name = name;
-      },
-      setProperties: function(props) {
-        this._properties = props;
-      }
-    });
-    _ccsg.TMXObjectImage = _ccsg.Sprite.extend({
-      _container: null,
-      ctor: function(container, mapInfo) {
-        _ccsg.Sprite.prototype.ctor.call(this);
-        this._container = container;
-        this.initWithMapInfo(mapInfo);
-      },
-      initWithMapInfo: function(mapInfo) {
-        if (!this._container.gid) return false;
-        var useTileset;
-        var tilesets = mapInfo.getTilesets();
-        for (var i = tilesets.length - 1; i >= 0; i--) {
-          var tileset = tilesets[i];
-          if ((this._container.gid & cc.TiledMap.TileFlag.FLIPPED_MASK) >>> 0 >= tileset.firstGid) {
-            useTileset = tileset;
-            break;
-          }
-        }
-        if (!useTileset) return false;
-        this.setVisible(this._container.objectVisible);
-        var texture = cc.textureCache.addImage(cc.path._normalize(tileset.sourceImage));
-        this._initWithTileset(texture, useTileset);
-        this._initPosWithMapInfo(mapInfo);
-        this.setRotation(this._container.objectRotation);
-        (this._container.gid & cc.TiledMap.TileFlag.HORIZONTAL) >>> 0 && this.setFlippedX(true);
-        (this._container.gid & cc.TiledMap.TileFlag.VERTICAL) >>> 0 && this.setFlippedY(true);
-        return true;
-      },
-      _initWithTileset: function(texture, tileset) {
-        if (!texture.isLoaded()) {
-          texture.once("load", (function() {
-            this._initWithTileset(texture, tileset);
-          }), this);
-          return;
-        }
-        tileset.imageSize.width = texture.width;
-        tileset.imageSize.height = texture.height;
-        var rect = tileset.rectForGID(this._container.gid);
-        this.initWithTexture(texture, rect);
-        this.setScaleX(this._container.objectSize.width / rect.size.width);
-        this.setScaleY(this._container.objectSize.height / rect.size.height);
-      },
-      _initPosWithMapInfo: function(mapInfo) {
-        var mapOri = mapInfo.getOrientation();
-        switch (mapOri) {
-         case cc.TiledMap.Orientation.ORTHO:
-         case cc.TiledMap.Orientation.HEX:
-          this.setAnchorPoint(cc.p(0, 0));
-          this.setPosition(this._container.offset.x, this._container._groupSize.height - this._container.offset.y);
-          break;
-
-         case cc.TiledMap.Orientation.ISO:
-          this.setAnchorPoint(cc.p(.5, 0));
-          var posIdx = cc.p(this._container.offset.x / mapInfo._tileSize.height, this._container.offset.y / mapInfo._tileSize.height);
-          var pos = cc.p(mapInfo._tileSize.width / 2 * (mapInfo._mapSize.width + posIdx.x - posIdx.y), mapInfo._tileSize.height / 2 * (2 * mapInfo._mapSize.height - posIdx.x - posIdx.y));
-          this.setPosition(pos);
-        }
-      }
-    });
-    _ccsg.TMXObjectShape = cc.DrawNode.extend({
-      _container: null,
-      _color: cc.Color.WHITE,
-      _mapOrientation: 0,
-      _mapInfo: null,
-      ctor: function(container, mapInfo, color) {
-        cc.DrawNode.prototype.ctor.call(this);
-        this.setLineWidth(1);
-        this._container = container;
-        this._color = color;
-        this._mapInfo = mapInfo;
-        this._mapOrientation = mapInfo.getOrientation();
-        this._initShape();
-      },
-      _initShape: function() {
-        var originPos;
-        if (cc.TiledMap.Orientation.ISO !== this._mapOrientation) {
-          var startPos = cc.p(0, this._container._groupSize.height);
-          originPos = cc.p(startPos.x + this._container.offset.x, startPos.y - this._container.offset.y);
-        } else originPos = this._getPosByOffset(cc.p(0, 0));
-        this.setPosition(originPos);
-        this.setRotation(this._container.objectRotation);
-        switch (this._container.type) {
-         case cc.TiledMap.TMXObjectType.RECT:
-          this._drawRect();
-          break;
-
-         case cc.TiledMap.TMXObjectType.ELLIPSE:
-          this._drawEllipse();
-          break;
-
-         case cc.TiledMap.TMXObjectType.POLYGON:
-          this._drawPoly(originPos, true);
-          break;
-
-         case cc.TiledMap.TMXObjectType.POLYLINE:
-          this._drawPoly(originPos, false);
-        }
-        this.setVisible(this._container.objectVisible);
-      },
-      _getPosByOffset: function(offset) {
-        var mapSize = this._mapInfo.getMapSize();
-        var tileSize = this._mapInfo.getTileSize();
-        var posIdx = cc.p((this._container.offset.x + offset.x) / tileSize.width * 2, (this._container.offset.y + offset.y) / tileSize.height);
-        return cc.p(tileSize.width / 2 * (mapSize.width + posIdx.x - posIdx.y), tileSize.height / 2 * (2 * mapSize.height - posIdx.x - posIdx.y));
-      },
-      _drawRect: function() {
-        if (cc.TiledMap.Orientation.ISO !== this._mapOrientation) {
-          var objSize = this._container.objectSize;
-          if (objSize.equals(cc.Size.ZERO)) {
-            objSize = cc.size(20, 20);
-            this.setAnchorPoint(cc.p(.5, .5));
-          } else this.setAnchorPoint(cc.p(0, 1));
-          var bl = cc.p(0, 0);
-          var tr = cc.p(objSize.width, objSize.height);
-          this.drawRect(bl, tr, null, this.getLineWidth(), this._color);
-          this.setContentSize(objSize);
-        } else {
-          if (this._container.objectSize.equals(cc.Size.ZERO)) return;
-          var pos1 = this._getPosByOffset(cc.p(0, 0));
-          var pos2 = this._getPosByOffset(cc.p(this._container.objectSize.width, 0));
-          var pos3 = this._getPosByOffset(cc.p(this._container.objectSize.width, this._container.objectSize.height));
-          var pos4 = this._getPosByOffset(cc.p(0, this._container.objectSize.height));
-          var width = pos2.x - pos4.x, height = pos1.y - pos3.y;
-          this.setContentSize(cc.size(width, height));
-          this.setAnchorPoint(cc.p((pos1.x - pos4.x) / width, 1));
-          var origin = cc.p(pos4.x, pos3.y);
-          pos1.subSelf(origin);
-          pos2.subSelf(origin);
-          pos3.subSelf(origin);
-          pos4.subSelf(origin);
-          if (this._container.objectSize.width > 0) {
-            this.drawSegment(pos1, pos2, this.getLineWidth(), this._color);
-            this.drawSegment(pos3, pos4, this.getLineWidth(), this._color);
-          }
-          if (this._container.objectSize.height > 0) {
-            this.drawSegment(pos1, pos4, this.getLineWidth(), this._color);
-            this.drawSegment(pos3, pos2, this.getLineWidth(), this._color);
-          }
-        }
-      },
-      _drawEllipse: function() {
-        var scaleX = 1, scaleY = 1, radius = 0;
-        var center = cc.p(0, 0);
-        var ellipseNode = null;
-        if (cc.TiledMap.Orientation.ISO !== this._mapOrientation) {
-          var objSize = this._container.objectSize;
-          if (objSize.equals(cc.Size.ZERO)) {
-            objSize = cc.size(20, 20);
-            this.setAnchorPoint(cc.p(.5, .5));
-          } else this.setAnchorPoint(cc.p(0, 1));
-          center = cc.p(objSize.width / 2, objSize.height / 2);
-          if (objSize.width > objSize.height) {
-            scaleX = objSize.width / objSize.height;
-            radius = objSize.height / 2;
-          } else {
-            scaleY = objSize.height / objSize.width;
-            radius = objSize.width / 2;
-          }
-          ellipseNode = this;
-          this.setContentSize(objSize);
-        } else {
-          if (this._container.objectSize.equals(cc.Size.ZERO)) return;
-          var pos1 = this._getPosByOffset(cc.p(0, 0));
-          var pos2 = this._getPosByOffset(cc.p(this._container.objectSize.width, 0));
-          var pos3 = this._getPosByOffset(cc.p(this._container.objectSize.width, this._container.objectSize.height));
-          var pos4 = this._getPosByOffset(cc.p(0, this._container.objectSize.height));
-          var width = pos2.x - pos4.x, height = pos1.y - pos3.y;
-          this.setContentSize(cc.size(width, height));
-          this.setAnchorPoint(cc.p((pos1.x - pos4.x) / width, 1));
-          var origin = cc.p(pos4.x, pos3.y);
-          pos1.subSelf(origin);
-          pos2.subSelf(origin);
-          pos3.subSelf(origin);
-          pos4.subSelf(origin);
-          if (this._container.objectSize.width > 0) {
-            this.drawSegment(pos1, pos2, this.getLineWidth(), this._color);
-            this.drawSegment(pos3, pos4, this.getLineWidth(), this._color);
-          }
-          if (this._container.objectSize.height > 0) {
-            this.drawSegment(pos1, pos4, this.getLineWidth(), this._color);
-            this.drawSegment(pos3, pos2, this.getLineWidth(), this._color);
-          }
-          center = this._getPosByOffset(cc.p(this._container.objectSize.width / 2, this._container.objectSize.height / 2));
-          center.subSelf(origin);
-          ellipseNode = new cc.DrawNode();
-          ellipseNode.setLineWidth(this.getLineWidth());
-          ellipseNode.setContentSize(cc.size(width, height));
-          ellipseNode.setAnchorPoint(cc.p(.5, .5));
-          ellipseNode.setPosition(center);
-          this.addChild(ellipseNode);
-          if (this._container.objectSize.width > this._container.objectSize.height) {
-            scaleX = this._container.objectSize.width / this._container.objectSize.height;
-            radius = this._container.objectSize.height / 2;
-          } else {
-            scaleY = this._container.objectSize.height / this._container.objectSize.width;
-            radius = this._container.objectSize.width / 2;
-          }
-          var tileSize = this._mapInfo.getTileSize();
-          var rotateDegree = Math.atan(tileSize.width / tileSize.height);
-          radius /= Math.sin(rotateDegree);
-          ellipseNode.setRotationX(cc.radiansToDegrees(rotateDegree));
-          ellipseNode.setRotationY(90 - cc.radiansToDegrees(rotateDegree));
-        }
-        ellipseNode.drawCircle(center, radius, 0, 50, false, this.getLineWidth(), this._color);
-        ellipseNode.setScaleX(scaleX);
-        ellipseNode.setScaleY(scaleY);
-      },
-      _drawPoly: function(originPos, isPolygon) {
-        var pointsData;
-        var objectInfo = this._container.getProperties();
-        pointsData = isPolygon ? objectInfo.points : objectInfo.polylinePoints;
-        var points = [];
-        var minX = 0, minY = 0, maxX = 0, maxY = 0;
-        for (var i = 0, n = pointsData.length; i < n; i++) {
-          var pointData = pointsData[i];
-          points.push(cc.p(pointData.x, pointData.y));
-          minX = Math.min(minX, pointData.x);
-          minY = Math.min(minY, pointData.y);
-          maxX = Math.max(maxX, pointData.x);
-          maxY = Math.max(maxY, pointData.y);
-        }
-        var width = 0, height = 0;
-        if (cc.TiledMap.Orientation.ISO !== this._mapOrientation) {
-          width = maxX - minX, height = maxY - minY;
-          this.setAnchorPoint(cc.p(-minX / width, maxY / height));
-          for (var j = 0; j < points.length; j++) points[j] = cc.p(points[j].x - minX, -points[j].y + maxY);
-        } else {
-          var bl = this._getPosByOffset(cc.p(minX, maxY));
-          var tr = this._getPosByOffset(cc.p(maxX, minY));
-          var origin = this._getPosByOffset(cc.p(0, 0));
-          width = tr.x - bl.x, height = tr.y - bl.y;
-          this.setAnchorPoint(cc.p((origin.x - bl.x) / width, (origin.y - bl.y) / height));
-          for (var idx = 0; idx < points.length; idx++) {
-            var tempPoint = this._getPosByOffset(points[idx]);
-            points[idx] = cc.p(tempPoint.x - bl.x, tempPoint.y - bl.y);
-          }
-        }
-        this.setContentSize(cc.size(width, height));
-        this.drawPoly(points, null, this.getLineWidth(), this._color, !isPolygon);
-      }
-    });
-  }), {
-    "../shape-nodes/CCDrawNode": 276
-  } ],
-  281: [ (function(require, module, exports) {
-    _ccsg.TMXObjectGroup = _ccsg.Node.extend({
-      properties: null,
-      groupName: "",
-      _positionOffset: null,
-      _mapInfo: null,
-      _objects: [],
-      ctor: function(groupInfo, mapInfo) {
-        _ccsg.Node.prototype.ctor.call(this);
-        this._initGroup(groupInfo, mapInfo);
-      },
-      _initGroup: function(groupInfo, mapInfo) {
-        this.groupName = groupInfo.name;
-        this._positionOffset = groupInfo.offset;
-        this._mapInfo = mapInfo;
-        this.properties = groupInfo.getProperties();
-        var mapSize = mapInfo._mapSize;
-        var tileSize = mapInfo._tileSize;
-        if (mapInfo.orientation === cc.TiledMap.Orientation.HEX) {
-          var width = 0, height = 0;
-          if (mapInfo.getStaggerAxis() === cc.TiledMap.StaggerAxis.STAGGERAXIS_X) {
-            height = tileSize.height * (mapSize.height + .5);
-            width = (tileSize.width + mapInfo.getHexSideLength()) * Math.floor(mapSize.width / 2) + tileSize.width * (mapSize.width % 2);
-          } else {
-            width = tileSize.width * (mapSize.width + .5);
-            height = (tileSize.height + mapInfo.getHexSideLength()) * Math.floor(mapSize.height / 2) + tileSize.height * (mapSize.height % 2);
-          }
-          this.setContentSize(width, height);
-        } else this.setContentSize(mapSize.width * tileSize.width, mapSize.height * tileSize.height);
-        this.setAnchorPoint(cc.p(0, 0));
-        this.setPosition(this._positionOffset.x, -this._positionOffset.y);
-        this.setVisible(groupInfo.visible);
-        var objects = [];
-        groupInfo._objects instanceof Array && (objects = groupInfo._objects);
-        this._objects = [];
-        for (var i = 0, n = objects.length; i < n; i++) {
-          var objInfo = objects[i];
-          var object = new _ccsg.TMXObject();
-          object.initWithInfo(objInfo, mapInfo, this.getContentSize(), groupInfo._color);
-          this._objects.push(object);
-          if (object.sgNode) {
-            object.sgNode.setOpacity(groupInfo._opacity);
-            this.addChild(object.sgNode, i, i);
-          }
-        }
-      },
-      getPositionOffset: function() {
-        return cc.p(this._positionOffset);
-      },
-      setPositionOffset: function(offset) {
-        this._positionOffset.x = offset.x;
-        this._positionOffset.y = offset.y;
-      },
-      getProperties: function() {
-        return this.properties;
-      },
-      setProperties: function(Var) {
-        this.properties = Var;
-      },
-      getGroupName: function() {
-        return this.groupName;
-      },
-      setGroupName: function(groupName) {
-        this.groupName = groupName;
-      },
-      propertyNamed: function(propertyName) {
-        return this.properties[propertyName];
-      },
-      objectNamed: function(objectName) {
-        return this.getObject(objectName);
-      },
-      getObject: function(objectName) {
-        for (var i = 0, len = this._objects.length; i < len; i++) {
-          var obj = this._objects[i];
-          if (obj && obj.getObjectName() === objectName) return obj;
-        }
-        return null;
-      },
-      getObjects: function() {
-        return this._objects;
-      }
-    });
-  }), {} ],
-  282: [ (function(require, module, exports) {
-    require("./CCSGTMXObject");
-    require("./CCTMXXMLParser");
-    _ccsg.TMXTiledMap = _ccsg.Node.extend({
-      properties: null,
-      mapOrientation: null,
-      _mapSize: null,
-      _tileSize: null,
-      _tileProperties: null,
-      _className: "TMXTiledMap",
-      ctor: function(tmxFile, resourcePath) {
-        _ccsg.Node.prototype.ctor.call(this);
-        this._mapSize = cc.size(0, 0);
-        this._tileSize = cc.size(0, 0);
-        void 0 !== resourcePath ? this.initWithXML(tmxFile, resourcePath) : void 0 !== tmxFile && this.initWithTMXFile(tmxFile);
-      },
-      getMapSize: function() {
-        return cc.size(this._mapSize.width, this._mapSize.height);
-      },
-      setMapSize: function(Var) {
-        this._mapSize.width = Var.width;
-        this._mapSize.height = Var.height;
-      },
-      _getMapWidth: function() {
-        return this._mapSize.width;
-      },
-      _setMapWidth: function(width) {
-        this._mapSize.width = width;
-      },
-      _getMapHeight: function() {
-        return this._mapSize.height;
-      },
-      _setMapHeight: function(height) {
-        this._mapSize.height = height;
-      },
-      getTileSize: function() {
-        return cc.size(this._tileSize.width, this._tileSize.height);
-      },
-      setTileSize: function(Var) {
-        this._tileSize.width = Var.width;
-        this._tileSize.height = Var.height;
-      },
-      _getTileWidth: function() {
-        return this._tileSize.width;
-      },
-      _setTileWidth: function(width) {
-        this._tileSize.width = width;
-      },
-      _getTileHeight: function() {
-        return this._tileSize.height;
-      },
-      _setTileHeight: function(height) {
-        this._tileSize.height = height;
-      },
-      getMapOrientation: function() {
-        return this.mapOrientation;
-      },
-      setMapOrientation: function(Var) {
-        this.mapOrientation = Var;
-      },
-      getObjectGroups: function() {
-        var retArr = [], locChildren = this._children;
-        for (var i = 0, len = locChildren.length; i < len; i++) {
-          var group = locChildren[i];
-          group && group instanceof _ccsg.TMXObjectGroup && retArr.push(group);
-        }
-        return retArr;
-      },
-      getProperties: function() {
-        return this.properties;
-      },
-      setProperties: function(Var) {
-        this.properties = Var;
-      },
-      initWithTMXFile: function(tmxFile) {
-        if (!tmxFile || 0 === tmxFile.length) return false;
-        this.width = 0;
-        this.height = 0;
-        var mapInfo = new cc.TMXMapInfo(tmxFile);
-        if (!mapInfo) return false;
-        var locTilesets = mapInfo.getTilesets();
-        locTilesets && 0 !== locTilesets.length || cc.logID(7212);
-        this._buildWithMapInfo(mapInfo);
-        return true;
-      },
-      initWithXML: function(tmxString, resourcePath) {
-        this.width = 0;
-        this.height = 0;
-        var mapInfo = new cc.TMXMapInfo(tmxString, resourcePath);
-        var locTilesets = mapInfo.getTilesets();
-        locTilesets && 0 !== locTilesets.length || cc.logID(7213);
-        this._buildWithMapInfo(mapInfo);
-        return true;
-      },
-      _buildWithMapInfo: function(mapInfo) {
-        this._mapSize = mapInfo.getMapSize();
-        this._tileSize = mapInfo.getTileSize();
-        this.mapOrientation = mapInfo.orientation;
-        this.properties = mapInfo.properties;
-        this._tileProperties = mapInfo.getTileProperties();
-        var oldChildren = this._children;
-        var childCount = oldChildren.length;
-        for (var j = childCount - 1; j >= 0; j--) {
-          var childNode = oldChildren[j];
-          childNode && (childNode instanceof _ccsg.TMXLayer || childNode instanceof _ccsg.TMXObjectGroup) && this.removeChild(childNode);
-        }
-        var idx = 0;
-        var children = mapInfo.getAllChildren();
-        if (children && children.length > 0) for (var i = 0, len = children.length; i < len; i++) {
-          var childInfo = children[i];
-          var child;
-          if (childInfo instanceof cc.TMXLayerInfo && childInfo.visible) {
-            child = this._parseLayer(childInfo, mapInfo);
-            this.addChild(child, idx, idx);
-            this.width = Math.max(this.width, child.width);
-            this.height = Math.max(this.height, child.height);
-            idx++;
-          }
-          if (childInfo instanceof cc.TMXObjectGroupInfo) {
-            child = new _ccsg.TMXObjectGroup(childInfo, mapInfo);
-            this.addChild(child, idx, idx);
-            idx++;
-          }
-        }
-      },
-      allLayers: function() {
-        var retArr = [], locChildren = this._children;
-        for (var i = 0, len = locChildren.length; i < len; i++) {
-          var layer = locChildren[i];
-          layer && layer instanceof _ccsg.TMXLayer && retArr.push(layer);
-        }
-        return retArr;
-      },
-      getLayer: function(layerName) {
-        if (!layerName || 0 === layerName.length) throw new Error("_ccsg.TMXTiledMap.getLayer(): layerName should be non-null or non-empty string.");
-        var locChildren = this._children;
-        for (var i = 0; i < locChildren.length; i++) {
-          var layer = locChildren[i];
-          if (layer && layer instanceof _ccsg.TMXLayer && layer.layerName === layerName) return layer;
-        }
-        return null;
-      },
-      getObjectGroup: function(groupName) {
-        if (!groupName || 0 === groupName.length) throw new Error("_ccsg.TMXTiledMap.getObjectGroup(): groupName should be non-null or non-empty string.");
-        var locChildren = this._children;
-        for (var i = 0; i < locChildren.length; i++) {
-          var group = locChildren[i];
-          if (group && group instanceof _ccsg.TMXObjectGroup && group.groupName === groupName) return group;
-        }
-        return null;
-      },
-      getProperty: function(propertyName) {
-        return this.properties[propertyName.toString()];
-      },
-      propertiesForGID: function(GID) {
-        cc.logID(7214);
-        return this.getPropertiesForGID[GID];
-      },
-      getPropertiesForGID: function(GID) {
-        return this._tileProperties[GID];
-      },
-      _parseLayer: function(layerInfo, mapInfo) {
-        var tileset = this._tilesetForLayer(layerInfo, mapInfo);
-        var layer = new _ccsg.TMXLayer(tileset, layerInfo, mapInfo);
-        layerInfo.ownTiles = false;
-        return layer;
-      },
-      _tilesetForLayer: function(layerInfo, mapInfo) {
-        var size = layerInfo._layerSize;
-        var tilesets = mapInfo.getTilesets();
-        if (tilesets) for (var i = tilesets.length - 1; i >= 0; i--) {
-          var tileset = tilesets[i];
-          if (tileset) for (var y = 0; y < size.height; y++) for (var x = 0; x < size.width; x++) {
-            var pos = x + size.width * y;
-            var gid = layerInfo._tiles[pos];
-            if (0 !== gid && (gid & cc.TiledMap.TileFlag.FLIPPED_MASK) >>> 0 >= tileset.firstGid) return tileset;
-          }
-        }
-        cc.logID(7215, layerInfo.name);
-        return null;
-      }
-    });
-    var _p = _ccsg.TMXTiledMap.prototype;
-    _p.mapWidth;
-    cc.defineGetterSetter(_p, "mapWidth", _p._getMapWidth, _p._setMapWidth);
-    _p.mapHeight;
-    cc.defineGetterSetter(_p, "mapHeight", _p._getMapHeight, _p._setMapHeight);
-    _p.tileWidth;
-    cc.defineGetterSetter(_p, "tileWidth", _p._getTileWidth, _p._setTileWidth);
-    _p.tileHeight;
-    cc.defineGetterSetter(_p, "tileHeight", _p._getTileHeight, _p._setTileHeight);
-  }), {
-    "./CCSGTMXObject": 280,
-    "./CCTMXXMLParser": 285
-  } ],
-  283: [ (function(require, module, exports) {
-    var Orientation = null;
-    var TileFlag = null;
-    var FLIPPED_MASK = null;
-    var StaggerAxis = null;
-    var StaggerIndex = null;
-    _ccsg.TMXLayer.CanvasRenderCmd = function(renderable) {
-      this._rootCtor(renderable);
-      this._needDraw = true;
-      if (!Orientation) {
-        Orientation = cc.TiledMap.Orientation;
-        TileFlag = cc.TiledMap.TileFlag;
-        FLIPPED_MASK = TileFlag.FLIPPED_MASK;
-        StaggerAxis = cc.TiledMap.StaggerAxis;
-        StaggerIndex = cc.TiledMap.StaggerIndex;
-      }
-    };
-    var proto = _ccsg.TMXLayer.CanvasRenderCmd.prototype = Object.create(_ccsg.Node.CanvasRenderCmd.prototype);
-    proto.constructor = _ccsg.TMXLayer.CanvasRenderCmd;
-    proto.rendering = function(ctx, scaleX, scaleY) {
-      var node = this._node, layerOrientation = node.layerOrientation, tiles = node.tiles, alpha = node._opacity / 255;
-      if (!tiles || alpha <= 0 || !node.tileset) return;
-      var maptw = node._mapTileSize.width, mapth = node._mapTileSize.height, tilew = node.tileset._tileSize.width / cc.director._contentScaleFactor, tileh = node.tileset._tileSize.height / cc.director._contentScaleFactor, extw = tilew - maptw, exth = tileh - mapth, winw = cc.winSize.width, winh = cc.winSize.height, rows = node._layerSize.height, cols = node._layerSize.width, grids = node._texGrids, spTiles = node._spriteTiles, wt = this._worldTransform, ox = node._position.x, oy = node._position.y, a = wt.a, b = wt.b, c = wt.c, d = wt.d, mapx = ox * a + oy * c + wt.tx, mapy = ox * b + oy * d + wt.ty;
-      var wrapper = ctx || cc._renderContext, context = wrapper.getContext();
-      var startCol = 0, startRow = 0, maxCol = cols, maxRow = rows;
-      if (cc.macro.ENABLE_TILEDMAP_CULLING && layerOrientation === Orientation.ORTHO) {
-        startCol = Math.floor(-(mapx - extw * a) / (maptw * a));
-        startRow = Math.floor((mapy - exth * d + mapth * rows * d - winh) / (mapth * d));
-        maxCol = Math.ceil((winw - mapx + extw * a) / (maptw * a));
-        maxRow = rows - Math.floor(-(mapy + exth * d) / (mapth * d));
-        startCol < 0 && (startCol = 0);
-        startRow < 0 && (startRow = 0);
-        maxCol > cols && (maxCol = cols);
-        maxRow > rows && (maxRow = rows);
-      }
-      var i, row, col, colOffset = startRow * cols, z, gid, grid, tex, cmd, top, left, bottom, right, dw = tilew, dh = tileh, w = tilew * a, h = tileh * d, gt, gl, gb, gr, flippedX = false, flippedY = false;
-      z = colOffset + startCol;
-      for (i in spTiles) if (i < z && spTiles[i]) {
-        cmd = spTiles[i]._renderCmd;
-        0 === spTiles[i]._localZOrder && !!cmd.rendering && spTiles[i]._visible && cmd.rendering(ctx, scaleX, scaleY);
-      } else if (i >= z) break;
-      wrapper.setTransform(wt, scaleX, scaleY);
-      wrapper.setGlobalAlpha(alpha);
-      var axis, tileOffset, odd_even, diffX1, diffY1;
-      if (layerOrientation === Orientation.HEX) {
-        var index = node._staggerIndex, hexSideLength = node._hexSideLength;
-        axis = node._staggerAxis;
-        tileOffset = node.tileset.tileOffset;
-        odd_even = index === StaggerIndex.STAGGERINDEX_ODD ? 1 : -1;
-        diffX1 = axis === StaggerAxis.STAGGERAXIS_X ? (maptw - hexSideLength) / 2 : 0;
-        diffY1 = axis === StaggerAxis.STAGGERAXIS_Y ? (mapth - hexSideLength) / 2 : 0;
-      }
-      for (row = startRow; row < maxRow; ++row) {
-        for (col = startCol; col < maxCol; ++col) {
-          z = colOffset + col;
-          if (spTiles[z]) {
-            cmd = spTiles[z]._renderCmd;
-            if (0 === spTiles[z]._localZOrder && !!cmd.rendering && spTiles[z]._visible) {
-              cmd.rendering(ctx, scaleX, scaleY);
-              wrapper.setTransform(wt, scaleX, scaleY);
-              wrapper.setGlobalAlpha(alpha);
-            }
-            continue;
-          }
-          gid = node.tiles[z];
-          grid = grids[(gid & FLIPPED_MASK) >>> 0];
-          if (!grid) continue;
-          tex = node._textures[grid.texId];
-          if (!tex || !tex._image) continue;
-          switch (layerOrientation) {
-           case Orientation.ORTHO:
-            left = col * maptw;
-            bottom = -(rows - row - 1) * mapth;
-            break;
-
-           case Orientation.ISO:
-            left = maptw / 2 * (cols + col - row - 1);
-            bottom = -mapth / 2 * (2 * rows - col - row - 2);
-            break;
-
-           case Orientation.HEX:
-            var diffX2 = axis === StaggerAxis.STAGGERAXIS_Y && row % 2 === 1 ? maptw / 2 * odd_even : 0;
-            left = col * (maptw - diffX1) + diffX2 + tileOffset.x;
-            var diffY2 = axis === StaggerAxis.STAGGERAXIS_X && col % 2 === 1 ? mapth / 2 * -odd_even : 0;
-            bottom = -(rows - row - 1) * (mapth - diffY1) - diffY2 + tileOffset.y;
-          }
-          right = left + tilew;
-          top = bottom - tileh;
-          if (layerOrientation === Orientation.ISO) {
-            gb = bottom * d - mapy;
-            if (gb < -winh - h) {
-              col += Math.floor(2 * (-winh - gb) / h) - 1;
-              continue;
-            }
-            gr = mapx + right * a;
-            if (gr < -w) {
-              col += Math.floor(2 * -gr / w) - 1;
-              continue;
-            }
-            gl = mapx + left * a;
-            gt = top * d - mapy;
-            if (gl > winw || gt > 0) {
-              col = maxCol;
-              continue;
-            }
-          }
-          if (gid > TileFlag.DIAGONAL) {
-            flippedX = (gid & TileFlag.HORIZONTAL) >>> 0;
-            flippedY = (gid & TileFlag.VERTICAL) >>> 0;
-          }
-          if (flippedX) {
-            left = -right;
-            context.scale(-1, 1);
-          }
-          if (flippedY) {
-            top = -bottom;
-            context.scale(1, -1);
-          }
-          context.drawImage(tex._image, grid.x, grid.y, grid.width, grid.height, left, top, dw, dh);
-          flippedX && context.scale(-1, 1);
-          flippedY && context.scale(1, -1);
-          cc.g_NumberOfDraws++;
-        }
-        colOffset += cols;
-      }
-      for (i in spTiles) if (i > z && spTiles[i]) {
-        cmd = spTiles[i]._renderCmd;
-        0 === spTiles[i]._localZOrder && !!cmd.rendering && spTiles[i]._visible && cmd.rendering(ctx, scaleX, scaleY);
-      }
-    };
-  }), {} ],
-  284: [ (function(require, module, exports) {
-    var Orientation = null;
-    var TileFlag = null;
-    var FLIPPED_MASK = null;
-    var StaggerAxis = null;
-    var StaggerIndex = null;
-    _ccsg.TMXLayer.WebGLRenderCmd = function(renderableObject) {
-      this._rootCtor(renderableObject);
-      this._needDraw = true;
-      this._vertices = [ {
-        x: 0,
-        y: 0
-      }, {
-        x: 0,
-        y: 0
-      }, {
-        x: 0,
-        y: 0
-      }, {
-        x: 0,
-        y: 0
-      } ];
-      this._color = new Uint32Array(1);
-      this._shaderProgram = cc.shaderCache.programForKey(cc.macro.SHADER_SPRITE_POSITION_TEXTURECOLORALPHATEST);
-      var radian = 90 * Math.PI / 180;
-      this._sin90 = Math.sin(radian);
-      this._cos90 = Math.cos(radian);
-      radian *= 3;
-      this._sin270 = Math.sin(radian);
-      this._cos270 = Math.cos(radian);
-      if (!Orientation) {
-        Orientation = cc.TiledMap.Orientation;
-        TileFlag = cc.TiledMap.TileFlag;
-        FLIPPED_MASK = TileFlag.FLIPPED_MASK;
-        StaggerAxis = cc.TiledMap.StaggerAxis;
-        StaggerIndex = cc.TiledMap.StaggerIndex;
-      }
-      this._disableDepthTestCmd = new cc.CustomRenderCmd(this, _disableDepthTest);
-    };
-    function _disableDepthTest() {
-      cc.renderer.setDepthTest(false);
-    }
-    var proto = _ccsg.TMXLayer.WebGLRenderCmd.prototype = Object.create(_ccsg.Node.WebGLRenderCmd.prototype);
-    proto.constructor = _ccsg.TMXLayer.WebGLRenderCmd;
-    proto.uploadData = function(f32buffer, ui32buffer, vertexDataOffset) {
-      var node = this._node, layerOrientation = node.layerOrientation, tiles = node.tiles, alpha = node._opacity / 255;
-      cc.renderer.setDepthTest(node.layerOrientation === Orientation.ORTHO);
-      if (!tiles || alpha <= 0 || !node.tileset) return 0;
-      var maptw = node._mapTileSize.width, mapth = node._mapTileSize.height, tilew = node.tileset._tileSize.width / cc.director._contentScaleFactor, tileh = node.tileset._tileSize.height / cc.director._contentScaleFactor, extw = tilew - maptw, exth = tileh - mapth, winw = cc.winSize.width, winh = cc.winSize.height, rows = node._layerSize.height, cols = node._layerSize.width, grids = node._texGrids, spTiles = node._spriteTiles, wt = this._worldTransform, a = wt.a, b = wt.b, c = wt.c, d = wt.d, tx = wt.tx, ty = wt.ty, ox = node._position.x, oy = node._position.y, mapx = ox * a + oy * c + tx, mapy = ox * b + oy * d + ty, w = tilew * a, h = tileh * d;
-      var opacity = node._opacity, cr = this._displayedColor.r, cg = this._displayedColor.g, cb = this._displayedColor.b;
-      if (node._opacityModifyRGB) {
-        var ca = opacity / 255;
-        cr *= ca;
-        cg *= ca;
-        cb *= ca;
-      }
-      this._color[0] = opacity << 24 | cb << 16 | cg << 8 | cr;
-      var startCol = 0, startRow = 0, maxCol = cols, maxRow = rows;
-      var cullingA = a, cullingD = d, cullingMapx = mapx, cullingMapy = mapy, cullingW = w, cullingH = h;
-      var enabledCulling = cc.macro.ENABLE_TILEDMAP_CULLING;
-      if (enabledCulling) {
-        if (this._cameraFlag > 0) {
-          var tmpt = cc.affineTransformConcat(wt, cc.Camera.main.viewMatrix);
-          cullingA = tmpt.a;
-          cullingD = tmpt.d;
-          cullingMapx = ox * cullingA + oy * tmpt.c + tmpt.tx;
-          cullingMapy = ox * tmpt.b + oy * cullingD + tmpt.ty;
-          cullingW = tilew * cullingA;
-          cullingH = tileh * cullingD;
-        }
-        if (layerOrientation === Orientation.ORTHO) {
-          startCol = Math.floor(-(cullingMapx - extw * cullingA) / (maptw * cullingA));
-          startRow = Math.floor((cullingMapy - exth * cullingD + mapth * rows * cullingD - winh) / (mapth * cullingD));
-          maxCol = Math.ceil((winw - cullingMapx + extw * cullingA) / (maptw * cullingA));
-          maxRow = rows - Math.floor(-(cullingMapy + exth * cullingD) / (mapth * cullingD));
-          startCol < 0 && (startCol = 0);
-          startRow < 0 && (startRow = 0);
-          maxCol > cols && (maxCol = cols);
-          maxRow > rows && (maxRow = rows);
-        }
-      }
-      var row, col, offset = vertexDataOffset, colOffset = startRow * cols, z, gid, grid, i, top, left, bottom, right, gt, gl, gb, gr, wa = a, wb = b, wc = c, wd = d, wtx = tx, wty = ty, flagged = false, flippedX = false, flippedY = false, vertices = this._vertices, axis, tileOffset, diffX1, diffY1, odd_even;
-      if (layerOrientation === Orientation.HEX) {
-        var index = node._staggerIndex, hexSideLength = node._hexSideLength;
-        axis = node._staggerAxis;
-        tileOffset = node.tileset.tileOffset;
-        odd_even = index === StaggerIndex.STAGGERINDEX_ODD ? 1 : -1;
-        diffX1 = axis === StaggerAxis.STAGGERAXIS_X ? (maptw - hexSideLength) / 2 : 0;
-        diffY1 = axis === StaggerAxis.STAGGERAXIS_Y ? (mapth - hexSideLength) / 2 : 0;
-      }
-      for (row = startRow; row < maxRow; ++row) {
-        for (col = startCol; col < maxCol; ++col) {
-          if (offset + 24 > f32buffer.length) {
-            cc.renderer._increaseBatchingSize((offset - vertexDataOffset) / 6, cc.renderer.VertexType.QUAD);
-            cc.renderer._batchRendering();
-            vertexDataOffset = 0;
-            offset = 0;
-          }
-          z = colOffset + col;
-          if (spTiles[z]) {
-            spTiles[z]._vertexZ = node._vertexZ + cc.renderer.assignedZStep * z / tiles.length;
-            continue;
-          }
-          gid = node.tiles[z];
-          grid = grids[(gid & FLIPPED_MASK) >>> 0];
-          if (!grid) continue;
-          switch (layerOrientation) {
-           case Orientation.ORTHO:
-            left = col * maptw;
-            bottom = (rows - row - 1) * mapth;
-            z = node._vertexZ + cc.renderer.assignedZStep * z / tiles.length;
-            break;
-
-           case Orientation.ISO:
-            left = maptw / 2 * (cols + col - row - 1);
-            bottom = mapth / 2 * (2 * rows - col - row - 2);
-            z = node._vertexZ + cc.renderer.assignedZStep * (node.height - bottom) / node.height;
-            break;
-
-           case Orientation.HEX:
-            var diffX2 = axis === StaggerAxis.STAGGERAXIS_Y && row % 2 === 1 ? maptw / 2 * odd_even : 0;
-            left = col * (maptw - diffX1) + diffX2 + tileOffset.x;
-            var diffY2 = axis === StaggerAxis.STAGGERAXIS_X && col % 2 === 1 ? mapth / 2 * -odd_even : 0;
-            bottom = (rows - row - 1) * (mapth - diffY1) + diffY2 - tileOffset.y;
-            z = node._vertexZ + cc.renderer.assignedZStep * (node.height - bottom) / node.height;
-          }
-          right = left + tilew;
-          top = bottom + tileh;
-          if (enabledCulling && layerOrientation === Orientation.ISO) {
-            gb = cullingMapy + bottom * cullingD;
-            if (gb > winh + cullingH) {
-              col += Math.floor(2 * (gb - winh) / cullingH) - 1;
-              continue;
-            }
-            gr = cullingMapx + right * cullingA;
-            if (gr < -cullingW) {
-              col += Math.floor(2 * -gr / cullingW) - 1;
-              continue;
-            }
-            gl = cullingMapx + left * cullingA;
-            gt = cullingMapy + top * cullingD;
-            if (gl > winw || gt < 0) {
-              col = maxCol;
-              continue;
-            }
-          }
-          if (gid > TileFlag.DIAGONAL) {
-            flagged = true;
-            flippedX = (gid & TileFlag.HORIZONTAL) >>> 0;
-            flippedY = (gid & TileFlag.VERTICAL) >>> 0;
-          }
-          vertices[0].x = left * wa + top * wc + wtx;
-          vertices[0].y = left * wb + top * wd + wty;
-          vertices[1].x = left * wa + bottom * wc + wtx;
-          vertices[1].y = left * wb + bottom * wd + wty;
-          vertices[2].x = right * wa + top * wc + wtx;
-          vertices[2].y = right * wb + top * wd + wty;
-          vertices[3].x = right * wa + bottom * wc + wtx;
-          vertices[3].y = right * wb + bottom * wd + wty;
-          for (i = 0; i < 4; ++i) {
-            f32buffer[offset] = vertices[i].x;
-            f32buffer[offset + 1] = vertices[i].y;
-            f32buffer[offset + 2] = z;
-            ui32buffer[offset + 3] = this._color[0];
-            switch (i) {
-             case 0:
-              f32buffer[offset + 4] = flippedX ? grid.r : grid.l;
-              f32buffer[offset + 5] = flippedY ? grid.b : grid.t;
-              break;
-
-             case 1:
-              f32buffer[offset + 4] = flippedX ? grid.r : grid.l;
-              f32buffer[offset + 5] = flippedY ? grid.t : grid.b;
-              break;
-
-             case 2:
-              f32buffer[offset + 4] = flippedX ? grid.l : grid.r;
-              f32buffer[offset + 5] = flippedY ? grid.b : grid.t;
-              break;
-
-             case 3:
-              f32buffer[offset + 4] = flippedX ? grid.l : grid.r;
-              f32buffer[offset + 5] = flippedY ? grid.t : grid.b;
-            }
-            offset += 6;
-          }
-          if (flagged) {
-            wa = a;
-            wb = b;
-            wc = c;
-            wd = d;
-            wtx = tx;
-            wty = ty;
-            flippedX = false;
-            flippedY = false;
-            flagged = false;
-          }
-        }
-        colOffset += cols;
-      }
-      return (offset - vertexDataOffset) / 6;
-    };
-  }), {} ],
-  285: [ (function(require, module, exports) {
-    require("../compression/ZipUtils");
-    var Zlib = require("../compression/zlib.min");
-    function uint8ArrayToUint32Array(uint8Arr) {
-      if (uint8Arr.length % 4 !== 0) return null;
-      var arrLen = uint8Arr.length / 4;
-      var retArr = window.Uint32Array ? new Uint32Array(arrLen) : [];
-      for (var i = 0; i < arrLen; i++) {
-        var offset = 4 * i;
-        retArr[i] = uint8Arr[offset] + 256 * uint8Arr[offset + 1] + 65536 * uint8Arr[offset + 2] + uint8Arr[offset + 3] * (1 << 24);
-      }
-      return retArr;
-    }
-    cc.TMXLayerInfo = cc._Class.extend({
-      ctor: function() {
-        this.properties = {};
-        this.name = "";
-        this._layerSize = null;
-        this._tiles = [];
-        this.visible = true;
-        this._opacity = 0;
-        this.ownTiles = true;
-        this._minGID = 1e5;
-        this._maxGID = 0;
-        this.offset = cc.p(0, 0);
-      },
-      getProperties: function() {
-        return this.properties;
-      },
-      setProperties: function(value) {
-        this.properties = value;
-      }
-    });
-    cc.TMXObjectGroupInfo = cc._Class.extend({
-      ctor: function() {
-        this.properties = {};
-        this.name = "";
-        this._objects = [];
-        this.visible = true;
-        this._opacity = 0;
-        this._color = new cc.Color(255, 255, 255, 255);
-        this.offset = cc.p(0, 0);
-        this._draworder = "topdown";
-      },
-      getProperties: function() {
-        return this.properties;
-      },
-      setProperties: function(value) {
-        this.properties = value;
-      }
-    });
-    cc.TMXTilesetInfo = cc._Class.extend({
-      ctor: function() {
-        this.name = "";
-        this.firstGid = 0;
-        this.spacing = 0;
-        this.margin = 0;
-        this.sourceImage = "";
-        this.imageSize = cc.size(0, 0);
-        this.tileOffset = cc.p(0, 0);
-        this._tileSize = cc.size(0, 0);
-      },
-      rectForGID: function(gid, result) {
-        var rect = result || cc.rect(0, 0, 0, 0);
-        rect.width = this._tileSize.width;
-        rect.height = this._tileSize.height;
-        gid &= cc.TiledMap.TileFlag.FLIPPED_MASK;
-        gid -= parseInt(this.firstGid, 10);
-        var max_x = parseInt((this.imageSize.width - 2 * this.margin + this.spacing) / (this._tileSize.width + this.spacing), 10);
-        rect.x = parseInt(gid % max_x * (this._tileSize.width + this.spacing) + this.margin, 10);
-        rect.y = parseInt(parseInt(gid / max_x, 10) * (this._tileSize.height + this.spacing) + this.margin, 10);
-        return rect;
-      }
-    });
-    function getPropertyList(node) {
-      var res = [];
-      var properties = node.getElementsByTagName("properties");
-      for (var i = 0; i < properties.length; ++i) {
-        var property = properties[i].getElementsByTagName("property");
-        for (var j = 0; j < property.length; ++j) res.push(property[j]);
-      }
-      return res.length ? res : null;
-    }
-    cc.TMXMapInfo = cc.SAXParser.extend({
-      properties: null,
-      orientation: null,
-      parentElement: null,
-      parentGID: null,
-      layerAttrs: 0,
-      storingCharacters: false,
-      tmxFileName: null,
-      currentString: null,
-      _objectGroups: null,
-      _allChildren: null,
-      _mapSize: null,
-      _tileSize: null,
-      _layers: null,
-      _tilesets: null,
-      _tileProperties: null,
-      _resources: "",
-      _staggerAxis: null,
-      _staggerIndex: null,
-      _hexSideLength: 0,
-      ctor: function(tmxFile, resourcePath) {
-        cc.SAXParser.prototype.ctor.apply(this);
-        this._mapSize = cc.size(0, 0);
-        this._tileSize = cc.size(0, 0);
-        this._layers = [];
-        this._tilesets = [];
-        this._objectGroups = [];
-        this._allChildren = [];
-        this.properties = [];
-        this._tileProperties = {};
-        void 0 !== resourcePath ? this.initWithXML(tmxFile, resourcePath) : void 0 !== tmxFile && this.initWithTMXFile(tmxFile);
-      },
-      getOrientation: function() {
-        return this.orientation;
-      },
-      setOrientation: function(value) {
-        this.orientation = value;
-      },
-      getStaggerAxis: function() {
-        return this._staggerAxis;
-      },
-      setStaggerAxis: function(value) {
-        this._staggerAxis = value;
-      },
-      getStaggerIndex: function() {
-        return this._staggerIndex;
-      },
-      setStaggerIndex: function(value) {
-        this._staggerIndex = value;
-      },
-      getHexSideLength: function() {
-        return this._hexSideLength;
-      },
-      setHexSideLength: function(value) {
-        this._hexSideLength = value;
-      },
-      getMapSize: function() {
-        return cc.size(this._mapSize.width, this._mapSize.height);
-      },
-      setMapSize: function(value) {
-        this._mapSize.width = value.width;
-        this._mapSize.height = value.height;
-      },
-      _getMapWidth: function() {
-        return this._mapSize.width;
-      },
-      _setMapWidth: function(width) {
-        this._mapSize.width = width;
-      },
-      _getMapHeight: function() {
-        return this._mapSize.height;
-      },
-      _setMapHeight: function(height) {
-        this._mapSize.height = height;
-      },
-      getTileSize: function() {
-        return cc.size(this._tileSize.width, this._tileSize.height);
-      },
-      setTileSize: function(value) {
-        this._tileSize.width = value.width;
-        this._tileSize.height = value.height;
-      },
-      _getTileWidth: function() {
-        return this._tileSize.width;
-      },
-      _setTileWidth: function(width) {
-        this._tileSize.width = width;
-      },
-      _getTileHeight: function() {
-        return this._tileSize.height;
-      },
-      _setTileHeight: function(height) {
-        this._tileSize.height = height;
-      },
-      getLayers: function() {
-        return this._layers;
-      },
-      setLayers: function(value) {
-        this._allChildren.push(value);
-        this._layers.push(value);
-      },
-      getTilesets: function() {
-        return this._tilesets;
-      },
-      setTilesets: function(value) {
-        this._tilesets.push(value);
-      },
-      getObjectGroups: function() {
-        return this._objectGroups;
-      },
-      setObjectGroups: function(value) {
-        this._allChildren.push(value);
-        this._objectGroups.push(value);
-      },
-      getAllChildren: function() {
-        return this._allChildren;
-      },
-      getParentElement: function() {
-        return this.parentElement;
-      },
-      setParentElement: function(value) {
-        this.parentElement = value;
-      },
-      getParentGID: function() {
-        return this.parentGID;
-      },
-      setParentGID: function(value) {
-        this.parentGID = value;
-      },
-      getLayerAttribs: function() {
-        return this.layerAttrs;
-      },
-      setLayerAttribs: function(value) {
-        this.layerAttrs = value;
-      },
-      getStoringCharacters: function() {
-        return this.storingCharacters;
-      },
-      setStoringCharacters: function(value) {
-        this.storingCharacters = value;
-      },
-      getProperties: function() {
-        return this.properties;
-      },
-      setProperties: function(value) {
-        this.properties = value;
-      },
-      initWithTMXFile: function(tmxFile) {
-        this._internalInit(tmxFile, null);
-        return this.parseXMLFile(tmxFile);
-      },
-      initWithXML: function(tmxString, resourcePath) {
-        this._internalInit(null, resourcePath);
-        return this.parseXMLString(tmxString);
-      },
-      parseXMLFile: function(tmxFile, isXmlString, tilesetFirstGid) {
-        isXmlString = isXmlString || false;
-        var xmlStr = isXmlString ? tmxFile : cc.loader.getRes(tmxFile);
-        xmlStr || cc.errorID(7220, tmxFile);
-        var mapXML = this._parseXML(xmlStr);
-        var i, j;
-        var map = mapXML.documentElement;
-        var version = map.getAttribute("version");
-        var orientationStr = map.getAttribute("orientation");
-        var staggerAxisStr = map.getAttribute("staggeraxis");
-        var staggerIndexStr = map.getAttribute("staggerindex");
-        var hexSideLengthStr = map.getAttribute("hexsidelength");
-        if ("map" === map.nodeName) {
-          "1.0" !== version && null !== version && cc.logID(7216, version);
-          "orthogonal" === orientationStr ? this.orientation = cc.TiledMap.Orientation.ORTHO : "isometric" === orientationStr ? this.orientation = cc.TiledMap.Orientation.ISO : "hexagonal" === orientationStr ? this.orientation = cc.TiledMap.Orientation.HEX : null !== orientationStr && cc.logID(7217, orientationStr);
-          "x" === staggerAxisStr ? this.setStaggerAxis(cc.TiledMap.StaggerAxis.STAGGERAXIS_X) : "y" === staggerAxisStr && this.setStaggerAxis(cc.TiledMap.StaggerAxis.STAGGERAXIS_Y);
-          "odd" === staggerIndexStr ? this.setStaggerIndex(cc.TiledMap.StaggerIndex.STAGGERINDEX_ODD) : "even" === staggerIndexStr && this.setStaggerIndex(cc.TiledMap.StaggerIndex.STAGGERINDEX_EVEN);
-          hexSideLengthStr && this.setHexSideLength(parseFloat(hexSideLengthStr));
-          var mapSize = cc.size(0, 0);
-          mapSize.width = parseFloat(map.getAttribute("width"));
-          mapSize.height = parseFloat(map.getAttribute("height"));
-          this.setMapSize(mapSize);
-          mapSize = cc.size(0, 0);
-          mapSize.width = parseFloat(map.getAttribute("tilewidth"));
-          mapSize.height = parseFloat(map.getAttribute("tileheight"));
-          this.setTileSize(mapSize);
-          var propertyArr = getPropertyList(map);
-          if (propertyArr) {
-            var aPropertyDict = {};
-            for (i = 0; i < propertyArr.length; i++) aPropertyDict[propertyArr[i].getAttribute("name")] = propertyArr[i].getAttribute("value");
-            this.properties = aPropertyDict;
-          }
-        }
-        var tilesets = map.getElementsByTagName("tileset");
-        if ("map" !== map.nodeName) {
-          tilesets = [];
-          tilesets.push(map);
-        }
-        for (i = 0; i < tilesets.length; i++) {
-          var selTileset = tilesets[i];
-          var tsxName = selTileset.getAttribute("source");
-          if (tsxName) {
-            var currentFirstGID = parseInt(selTileset.getAttribute("firstgid"));
-            var tsxPath = isXmlString ? cc.path.join(this._resources, tsxName) : cc.path.changeBasename(tmxFile, tsxName);
-            this.parseXMLFile(tsxPath, false, currentFirstGID);
-          } else {
-            var tileset = new cc.TMXTilesetInfo();
-            tileset.name = selTileset.getAttribute("name") || "";
-            tileset.firstGid = tilesetFirstGid || (parseInt(selTileset.getAttribute("firstgid")) || 0);
-            tileset.spacing = parseInt(selTileset.getAttribute("spacing")) || 0;
-            tileset.margin = parseInt(selTileset.getAttribute("margin")) || 0;
-            var tilesetSize = cc.size(0, 0);
-            tilesetSize.width = parseFloat(selTileset.getAttribute("tilewidth"));
-            tilesetSize.height = parseFloat(selTileset.getAttribute("tileheight"));
-            tileset._tileSize = tilesetSize;
-            var image = selTileset.getElementsByTagName("image")[0];
-            var imagename = image.getAttribute("source");
-            var num = -1;
-            this.tmxFileName && (num = this.tmxFileName.lastIndexOf("/"));
-            if (-1 !== num) {
-              var dir = this.tmxFileName.substr(0, num + 1);
-              tileset.sourceImage = dir + imagename;
-            } else tileset.sourceImage = this._resources + (this._resources ? "/" : "") + imagename;
-            this.setTilesets(tileset);
-            var offset = selTileset.getElementsByTagName("tileoffset")[0];
-            if (offset) {
-              var offsetX = parseFloat(offset.getAttribute("x"));
-              var offsetY = parseFloat(offset.getAttribute("y"));
-              tileset.tileOffset = cc.p(offsetX, offsetY);
-            }
-            var tiles = selTileset.getElementsByTagName("tile");
-            if (tiles) for (var tIdx = 0; tIdx < tiles.length; tIdx++) {
-              var t = tiles[tIdx];
-              this.parentGID = parseInt(tileset.firstGid) + parseInt(t.getAttribute("id") || 0);
-              var tp = getPropertyList(t);
-              if (tp) {
-                var dict = {};
-                for (j = 0; j < tp.length; j++) {
-                  var name = tp[j].getAttribute("name");
-                  dict[name] = tp[j].getAttribute("value");
-                }
-                this._tileProperties[this.parentGID] = dict;
-              }
-            }
-          }
-        }
-        var childNodes = map.childNodes;
-        for (i = 0; i < childNodes.length; i++) {
-          var childNode = childNodes[i];
-          if (this._shouldIgnoreNode(childNode)) continue;
-          if ("layer" === childNode.nodeName) {
-            var layer = this._parseLayer(childNode);
-            this.setLayers(layer);
-          }
-          if ("objectgroup" === childNode.nodeName) {
-            var objectGroup = this._parseObjectGroup(childNode);
-            this.setObjectGroups(objectGroup);
-          }
-        }
-        return map;
-      },
-      _shouldIgnoreNode: function(node) {
-        return 3 === node.nodeType || 8 === node.nodeType || 4 === node.nodeType;
-      },
-      _parseLayer: function(selLayer) {
-        var data = selLayer.getElementsByTagName("data")[0];
-        var layer = new cc.TMXLayerInfo();
-        layer.name = selLayer.getAttribute("name");
-        var layerSize = cc.size(0, 0);
-        layerSize.width = parseFloat(selLayer.getAttribute("width"));
-        layerSize.height = parseFloat(selLayer.getAttribute("height"));
-        layer._layerSize = layerSize;
-        var visible = selLayer.getAttribute("visible");
-        layer.visible = !("0" == visible);
-        var opacity = selLayer.getAttribute("opacity") || 1;
-        layer._opacity = opacity ? parseInt(255 * parseFloat(opacity)) : 255;
-        layer.offset = cc.p(parseFloat(selLayer.getAttribute("x")) || 0, parseFloat(selLayer.getAttribute("y")) || 0);
-        var nodeValue = "";
-        for (var j = 0; j < data.childNodes.length; j++) nodeValue += data.childNodes[j].nodeValue;
-        nodeValue = nodeValue.trim();
-        var compression = data.getAttribute("compression");
-        var encoding = data.getAttribute("encoding");
-        if (compression && "gzip" !== compression && "zlib" !== compression) {
-          cc.logID(7218);
-          return null;
-        }
-        var tiles;
-        switch (compression) {
-         case "gzip":
-          tiles = cc.Codec.unzipBase64AsArray(nodeValue, 4);
-          break;
-
-         case "zlib":
-          var inflator = new Zlib.Inflate(cc.Codec.Base64.decodeAsArray(nodeValue, 1));
-          tiles = uint8ArrayToUint32Array(inflator.decompress());
-          break;
-
-         case null:
-         case "":
-          if ("base64" === encoding) tiles = cc.Codec.Base64.decodeAsArray(nodeValue, 4); else if ("csv" === encoding) {
-            tiles = [];
-            var csvTiles = nodeValue.split(",");
-            for (var csvIdx = 0; csvIdx < csvTiles.length; csvIdx++) tiles.push(parseInt(csvTiles[csvIdx]));
-          } else {
-            var selDataTiles = data.getElementsByTagName("tile");
-            tiles = [];
-            for (var xmlIdx = 0; xmlIdx < selDataTiles.length; xmlIdx++) tiles.push(parseInt(selDataTiles[xmlIdx].getAttribute("gid")));
-          }
-          break;
-
-         default:
-          this.layerAttrs === cc.TMXLayerInfo.ATTRIB_NONE && cc.logID(7219);
-        }
-        tiles && (layer._tiles = new Uint32Array(tiles));
-        var layerProps = getPropertyList(selLayer);
-        if (layerProps) {
-          var layerProp = {};
-          for (var _j = 0; _j < layerProps.length; _j++) layerProp[layerProps[_j].getAttribute("name")] = layerProps[_j].getAttribute("value");
-          layer.properties = layerProp;
-        }
-        return layer;
-      },
-      _parseObjectGroup: function(selGroup) {
-        var objectGroup = new cc.TMXObjectGroupInfo();
-        objectGroup.name = selGroup.getAttribute("name") || "";
-        objectGroup.offset = cc.p(parseFloat(selGroup.getAttribute("offsetx")), parseFloat(selGroup.getAttribute("offsety")));
-        var opacity = selGroup.getAttribute("opacity") || 1;
-        objectGroup._opacity = opacity ? parseInt(255 * parseFloat(opacity)) : 255;
-        var visible = selGroup.getAttribute("visible");
-        visible && 0 === parseInt(visible) && (objectGroup.visible = false);
-        var color = selGroup.getAttribute("color");
-        color && (objectGroup._color = cc.hexToColor(color));
-        var draworder = selGroup.getAttribute("draworder");
-        draworder && (objectGroup._draworder = draworder);
-        var groupProps = getPropertyList(selGroup);
-        if (groupProps) {
-          var parsedProps = {};
-          for (var j = 0; j < groupProps.length; j++) parsedProps[groupProps[j].getAttribute("name")] = groupProps[j].getAttribute("value");
-          objectGroup.setProperties(parsedProps);
-        }
-        var objects = selGroup.getElementsByTagName("object");
-        var getContentScaleFactor = cc.director.getContentScaleFactor();
-        if (objects) for (var _j2 = 0; _j2 < objects.length; _j2++) {
-          var selObj = objects[_j2];
-          var objectProp = {};
-          objectProp["id"] = selObj.getAttribute("id") || 0;
-          objectProp["name"] = selObj.getAttribute("name") || "";
-          objectProp["width"] = parseFloat(selObj.getAttribute("width")) || 0;
-          objectProp["height"] = parseFloat(selObj.getAttribute("height")) || 0;
-          objectProp["x"] = (selObj.getAttribute("x") || 0) / getContentScaleFactor;
-          objectProp["y"] = (selObj.getAttribute("y") || 0) / getContentScaleFactor;
-          objectProp["rotation"] = parseFloat(selObj.getAttribute("rotation")) || 0;
-          var docObjProps = getPropertyList(selObj);
-          if (docObjProps) for (var k = 0; k < docObjProps.length; k++) objectProp[docObjProps[k].getAttribute("name")] = docObjProps[k].getAttribute("value");
-          var visibleAttr = selObj.getAttribute("visible");
-          objectProp["visible"] = !(visibleAttr && 0 === parseInt(visibleAttr));
-          var gid = selObj.getAttribute("gid");
-          if (gid) {
-            objectProp["gid"] = parseInt(gid);
-            objectProp["type"] = cc.TiledMap.TMXObjectType.IMAGE;
-          }
-          var ellipse = selObj.getElementsByTagName("ellipse");
-          ellipse && ellipse.length > 0 && (objectProp["type"] = cc.TiledMap.TMXObjectType.ELLIPSE);
-          var polygonProps = selObj.getElementsByTagName("polygon");
-          if (polygonProps && polygonProps.length > 0) {
-            objectProp["type"] = cc.TiledMap.TMXObjectType.POLYGON;
-            var selPgPointStr = polygonProps[0].getAttribute("points");
-            selPgPointStr && (objectProp["points"] = this._parsePointsString(selPgPointStr));
-          }
-          var polylineProps = selObj.getElementsByTagName("polyline");
-          if (polylineProps && polylineProps.length > 0) {
-            objectProp["type"] = cc.TiledMap.TMXObjectType.POLYLINE;
-            var selPlPointStr = polylineProps[0].getAttribute("points");
-            selPlPointStr && (objectProp["polylinePoints"] = this._parsePointsString(selPlPointStr));
-          }
-          objectProp["type"] || (objectProp["type"] = cc.TiledMap.TMXObjectType.RECT);
-          objectGroup._objects.push(objectProp);
-        }
-        return objectGroup;
-      },
-      _parsePointsString: function(pointsString) {
-        if (!pointsString) return null;
-        var points = [];
-        var pointsStr = pointsString.split(" ");
-        for (var i = 0; i < pointsStr.length; i++) {
-          var selPointStr = pointsStr[i].split(",");
-          points.push({
-            x: parseFloat(selPointStr[0]),
-            y: parseFloat(selPointStr[1])
-          });
-        }
-        return points;
-      },
-      parseXMLString: function(xmlString) {
-        return this.parseXMLFile(xmlString, true);
-      },
-      getTileProperties: function() {
-        return this._tileProperties;
-      },
-      setTileProperties: function(tileProperties) {
-        this._tileProperties.push(tileProperties);
-      },
-      getCurrentString: function() {
-        return this.currentString;
-      },
-      setCurrentString: function(currentString) {
-        this.currentString = currentString;
-      },
-      getTMXFileName: function() {
-        return this.tmxFileName;
-      },
-      setTMXFileName: function(fileName) {
-        this.tmxFileName = fileName;
-      },
-      _internalInit: function(tmxFileName, resourcePath) {
-        this._tilesets.length = 0;
-        this._layers.length = 0;
-        this.tmxFileName = tmxFileName;
-        resourcePath && (this._resources = resourcePath);
-        this._objectGroups.length = 0;
-        this._allChildren.length = 0;
-        this.properties.length = 0;
-        this._tileProperties.length = 0;
-        this.currentString = "";
-        this.storingCharacters = false;
-        this.layerAttrs = cc.TMXLayerInfo.ATTRIB_NONE;
-        this.parentElement = cc.TiledMap.NONE;
-      }
-    });
-    var _p = cc.TMXMapInfo.prototype;
-    _p.mapWidth;
-    cc.defineGetterSetter(_p, "mapWidth", _p._getMapWidth, _p._setMapWidth);
-    _p.mapHeight;
-    cc.defineGetterSetter(_p, "mapHeight", _p._getMapHeight, _p._setMapHeight);
-    _p.tileWidth;
-    cc.defineGetterSetter(_p, "tileWidth", _p._getTileWidth, _p._setTileWidth);
-    _p.tileHeight;
-    cc.defineGetterSetter(_p, "tileHeight", _p._getTileHeight, _p._setTileHeight);
-    cc.TMXMapInfo.create = function(tmxFile, resourcePath) {
-      return new cc.TMXMapInfo(tmxFile, resourcePath);
-    };
-    cc.TMXLayerInfo.ATTRIB_NONE = 1;
-    cc.TMXLayerInfo.ATTRIB_BASE64 = 2;
-    cc.TMXLayerInfo.ATTRIB_GZIP = 4;
-    cc.TMXLayerInfo.ATTRIB_ZLIB = 8;
-  }), {
-    "../compression/ZipUtils": 29,
-    "../compression/zlib.min": 32
-  } ],
-  286: [ (function(require, module, exports) {
-    require("./CCSGTMXLayer");
-    require("./CCTMXLayerCanvasRenderCmd");
-    require("./CCTMXLayerWebGLRenderCmd");
-    var TiledLayer = cc.Class({
-      name: "cc.TiledLayer",
-      extends: cc._SGComponent,
-      onEnable: function() {
-        this._sgNode && this._sgNode.setVisible(true);
-      },
-      onDisable: function() {
-        this._sgNode && this._sgNode.setVisible(false);
-      },
-      onDestroy: function() {
-        this.node._sizeProvider === this._sgNode && (this.node._sizeProvider = null);
-      },
-      _initSgNode: function() {
-        var sgNode = this._sgNode;
-        if (!sgNode) return;
-        this.enabledInHierarchy || sgNode.setVisible(false);
-        this._registSizeProvider();
-        var node = this.node;
-        sgNode.setAnchorPoint(node.getAnchorPoint());
-      },
-      _replaceSgNode: function(sgNode) {
-        if (sgNode === this._sgNode) return;
-        this._removeSgNode();
-        this.node._sizeProvider === this._sgNode && (this.node._sizeProvider = null);
-        if (sgNode && sgNode instanceof _ccsg.TMXLayer) {
-          this._sgNode = sgNode;
-          false;
-          this._initSgNode();
-        } else this._sgNode = null;
-      },
-      getLayerName: function() {
-        if (this._sgNode) return this._sgNode.getLayerName();
-        return "";
-      },
-      setLayerName: function(layerName) {
-        this._sgNode && this._sgNode.setLayerName(layerName);
-      },
-      getProperty: function(propertyName) {
-        if (this._sgNode) return this._sgNode.getProperty(propertyName);
-        return null;
-      },
-      getPositionAt: function(pos, y) {
-        if (this._sgNode) {
-          void 0 !== y && (pos = cc.p(pos, y));
-          return this._sgNode.getPositionAt(pos);
-        }
-        return null;
-      },
-      removeTileAt: function(pos, y) {
-        if (this._sgNode) {
-          void 0 !== y && (pos = cc.p(pos, y));
-          this._sgNode.removeTileAt(pos);
-        }
-      },
-      setTileGID: function(gid, posOrX, flagsOrY, flags) {
-        if (this._sgNode) {
-          if (void 0 === posOrX) throw new Error("_ccsg.TMXLayer.setTileGID(): pos should be non-null");
-          var pos;
-          if (void 0 === flags && posOrX instanceof cc.Vec2) {
-            pos = posOrX;
-            flags = flagsOrY;
-          } else pos = cc.p(posOrX, flagsOrY);
-          this._sgNode.setTileGID(gid, pos, flags);
-        }
-      },
-      getTileGIDAt: function(pos, y) {
-        if (this._sgNode) {
-          void 0 !== y && (pos = cc.p(pos, y));
-          return this._sgNode.getTileGIDAt(pos);
-        }
-        return 0;
-      },
-      getTileAt: function(pos, y) {
-        if (this._sgNode) {
-          void 0 !== y && (pos = cc.p(pos, y));
-          return this._sgNode.getTileAt(pos);
-        }
-        return null;
-      },
-      releaseMap: function() {
-        this._sgNode && this._sgNode.releaseMap();
-      },
-      setContentSize: function(size, height) {
-        if (this._sgNode) {
-          void 0 !== height && (size = cc.size(size, height));
-          this._sgNode.setContentSize(size);
-        }
-      },
-      getTexture: function() {
-        if (this._sgNode) return this._sgNode.getTexture();
-        return null;
-      },
-      setTexture: function(texture) {
-        this._sgNode && this._sgNode.setTexture(texture);
-      },
-      setTileOpacity: function(opacity) {
-        if (this._sgNode) {
-          false;
-          this._sgNode._opacity = opacity;
-        }
-      },
-      getLayerSize: function() {
-        if (this._sgNode) return this._sgNode.getLayerSize();
-        return cc.size(0, 0);
-      },
-      setLayerSize: function(layerSize) {
-        this._sgNode && this._sgNode.setLayerSize(layerSize);
-      },
-      getMapTileSize: function() {
-        if (this._sgNode) return this._sgNode.getMapTileSize();
-        return cc.size(0, 0);
-      },
-      setMapTileSize: function(tileSize) {
-        this._sgNode && this._sgNode.setMapTileSize(tileSize);
-      },
-      getTiles: function() {
-        if (this._sgNode) return this._sgNode.getTiles();
-        return null;
-      },
-      setTiles: function(tiles) {
-        this._sgNode && this._sgNode.setTiles(tiles);
-      },
-      getTileSet: function() {
-        if (this._sgNode) return this._sgNode.getTileSet();
-        return null;
-      },
-      setTileSet: function(tileset) {
-        this._sgNode && this._sgNode.setTileSet(tileset);
-      },
-      getLayerOrientation: function() {
-        if (this._sgNode) return this._sgNode.getLayerOrientation();
-        return 0;
-      },
-      setLayerOrientation: function(orientation) {
-        this._sgNode && this._sgNode.setLayerOrientation(orientation);
-      },
-      getProperties: function() {
-        if (this._sgNode) return this._sgNode.getProperties();
-        return null;
-      },
-      setProperties: function(properties) {
-        this._sgNode && this._sgNode.setProperties(properties);
-      },
-      _tryRemoveNode: function() {
-        this.node.removeComponent(cc.TiledLayer);
-        1 === this.node._components.length && 0 === this.node.getChildren().length && this.node.removeFromParent();
-      }
-    });
-    cc.TiledLayer = module.exports = TiledLayer;
-  }), {
-    "./CCSGTMXLayer": 279,
-    "./CCTMXLayerCanvasRenderCmd": 283,
-    "./CCTMXLayerWebGLRenderCmd": 284
-  } ],
-  287: [ (function(require, module, exports) {
-    require("./CCTiledMapAsset");
-    require("./CCTiledLayer");
-    require("./CCTiledObjectGroup");
-    require("./CCSGTMXTiledMap");
-    var Orientation = cc.Enum({
-      ORTHO: 0,
-      HEX: 1,
-      ISO: 2
-    });
-    var Property = cc.Enum({
-      NONE: 0,
-      MAP: 1,
-      LAYER: 2,
-      OBJECTGROUP: 3,
-      OBJECT: 4,
-      TILE: 5
-    });
-    var TileFlag = cc.Enum({
-      HORIZONTAL: 2147483648,
-      VERTICAL: 1073741824,
-      DIAGONAL: 536870912,
-      FLIPPED_ALL: 3758096384,
-      FLIPPED_MASK: 536870911
-    });
-    var StaggerAxis = cc.Enum({
-      STAGGERAXIS_X: 0,
-      STAGGERAXIS_Y: 1
-    });
-    var StaggerIndex = cc.Enum({
-      STAGGERINDEX_ODD: 0,
-      STAGGERINDEX_EVEN: 1
-    });
-    var TMXObjectType = cc.Enum({
-      RECT: 0,
-      ELLIPSE: 1,
-      POLYGON: 2,
-      POLYLINE: 3,
-      IMAGE: 4
-    });
-    var TiledMap = cc.Class({
-      name: "cc.TiledMap",
-      extends: cc._RendererInSG,
-      editor: false,
-      statics: {
-        Orientation: Orientation,
-        Property: Property,
-        TileFlag: TileFlag,
-        StaggerAxis: StaggerAxis,
-        StaggerIndex: StaggerIndex,
-        TMXObjectType: TMXObjectType
-      },
-      properties: {
-        _detachedChildren: {
-          default: [],
-          serializable: false
-        },
-        _tmxFile: {
-          default: null,
-          type: cc.TiledMapAsset
-        },
-        tmxAsset: {
-          get: function() {
-            return this._tmxFile;
-          },
-          set: function(value, force) {
-            if (this._tmxFile !== value || false) {
-              this._tmxFile = value;
-              this._applyFile();
-            }
-          },
-          type: cc.TiledMapAsset
-        }
-      },
-      getMapSize: function() {
-        return this._sgNode.getMapSize();
-      },
-      setMapSize: function(mapSize) {
-        this._sgNode.setMapSize(mapSize);
-      },
-      getTileSize: function() {
-        return this._sgNode.getTileSize();
-      },
-      setTileSize: function(tileSize) {
-        this._sgNode.setTileSize(tileSize);
-      },
-      getMapOrientation: function() {
-        return this._sgNode.getMapOrientation();
-      },
-      setMapOrientation: function(orientation) {
-        this._sgNode.setMapOrientation(orientation);
-      },
-      getObjectGroups: function() {
-        var logicChildren = this.node.children;
-        var ret = [];
-        for (var i = 0, n = logicChildren.length; i < n; i++) {
-          var child = logicChildren[i];
-          var tmxGroup = child.getComponent(cc.TiledObjectGroup);
-          tmxGroup && ret.push(tmxGroup);
-        }
-        return ret;
-      },
-      getProperties: function() {
-        return this._sgNode.getProperties();
-      },
-      setProperties: function(properties) {
-        this._sgNode.setProperties(properties);
-      },
-      initWithTMXFile: function(tmxFile) {
-        cc.errorID(7200);
-      },
-      initWithXML: function(tmxString, resourcePath) {
-        cc.errorID(7201);
-      },
-      allLayers: function() {
-        var logicChildren = this.node.children;
-        var ret = [];
-        for (var i = 0, n = logicChildren.length; i < n; i++) {
-          var child = logicChildren[i];
-          var tmxLayer = child.getComponent(cc.TiledLayer);
-          tmxLayer && ret.push(tmxLayer);
-        }
-        return ret;
-      },
-      getLayer: function(layerName) {
-        var logicChildren = this.node.children;
-        for (var i = 0, n = logicChildren.length; i < n; i++) {
-          var child = logicChildren[i];
-          var tmxLayer = child.getComponent(cc.TiledLayer);
-          if (tmxLayer && tmxLayer.getLayerName() === layerName) return tmxLayer;
-        }
-        return null;
-      },
-      getObjectGroup: function(groupName) {
-        var logicChildren = this.node.children;
-        for (var i = 0, n = logicChildren.length; i < n; i++) {
-          var child = logicChildren[i];
-          var tmxGroup = child.getComponent(cc.TiledObjectGroup);
-          if (tmxGroup && tmxGroup.getGroupName() === groupName) return tmxGroup;
-        }
-        return null;
-      },
-      getProperty: function(propertyName) {
-        return this._sgNode.getProperty(propertyName);
-      },
-      getPropertiesForGID: function(GID) {
-        return this._sgNode.getPropertiesForGID(GID);
-      },
-      onEnable: function() {
-        0 === this._detachedChildren.length && this._moveLayersInSgNode(this._sgNode);
-        this._super();
-        this._tmxFile && this._refreshLayerEntities();
-        this.node.on("anchor-changed", this._anchorChanged, this);
-        this.node.on("child-added", this._childAdded, this);
-        this.node.on("child-reorder", this._syncChildrenOrder, this);
-      },
-      onDisable: function() {
-        this._super();
-        this._setLayersEnabled(false);
-        var restoredSgNode = this._plainNode;
-        this._moveLayersInSgNode(restoredSgNode);
-        this.node.off("anchor-changed", this._anchorChanged, this);
-        this.node.off("child-added", this._childAdded, this);
-        this.node.off("child-reorder", this._syncChildrenOrder, this);
-      },
-      onDestroy: function() {
-        this._super();
-        this._removeLayerEntities();
-      },
-      _createSgNode: function() {
-        return new _ccsg.TMXTiledMap();
-      },
-      _initSgNode: function() {
-        this._applyFile();
-      },
-      _resetSgSize: function() {
-        this.node.setContentSize(this._sgNode.getContentSize());
-        this._sgNode.setContentSize(0, 0);
-      },
-      _onMapLoaded: function() {
-        this._refreshLayerEntities();
-        this._enabled ? this._anchorChanged() : this._moveLayersInSgNode(this._sgNode);
-        this._setLayersEnabled(this._enabled);
-        this._resetSgSize();
-      },
-      _setLayersEnabled: function(enabled) {
-        var logicChildren = this.node.getChildren();
-        for (var i = logicChildren.length - 1; i >= 0; i--) {
-          var child = logicChildren[i];
-          var tmxLayer = child.getComponent(cc.TiledLayer);
-          tmxLayer && (tmxLayer.enabled = enabled);
-        }
-      },
-      _moveLayersInSgNode: function(sgNode) {
-        this._detachedChildren.length = 0;
-        var children = sgNode.getChildren();
-        for (var i = children.length - 1; i >= 0; i--) {
-          var child = children[i];
-          if (child instanceof _ccsg.TMXLayer || child instanceof _ccsg.TMXObjectGroup) {
-            sgNode.removeChild(child);
-            var order = child.getLocalZOrder();
-            this._detachedChildren.push({
-              sgNode: child,
-              zorder: order
-            });
-          }
-        }
-      },
-      _removeLayerEntities: function() {
-        var logicChildren = this.node.getChildren();
-        for (var i = logicChildren.length - 1; i >= 0; i--) {
-          var child = logicChildren[i];
-          if (!child.isValid) continue;
-          var tmxLayer = child.getComponent(cc.TiledLayer);
-          tmxLayer && tmxLayer._tryRemoveNode();
-          var tmxGroup = child.getComponent(cc.TiledObjectGroup);
-          tmxGroup && tmxGroup._tryRemoveNode();
-        }
-      },
-      _refreshLayerEntities: function() {
-        var logicChildren = this.node.getChildren();
-        var existedLayers = [];
-        var existedGroups = [];
-        var otherChildrenInfo = [];
-        var i, n;
-        for (i = 0; i < this._detachedChildren.length; i++) {
-          var info = this._detachedChildren[i];
-          this._sgNode.addChild(info.sgNode, info.zorder, info.zorder);
-        }
-        this._detachedChildren.length = 0;
-        var layerNames = this._sgNode.allLayers().map((function(layer) {
-          return layer.getLayerName();
-        }));
-        var groupNames = this._sgNode.getObjectGroups().map((function(group) {
-          return group.getGroupName();
-        }));
-        for (i = logicChildren.length - 1; i >= 0; i--) {
-          var child = logicChildren[i];
-          var tmxLayer = child.getComponent(cc.TiledLayer);
-          var tmxGroup = child.getComponent(cc.TiledObjectGroup);
-          if (tmxLayer) {
-            var layerName = tmxLayer.getLayerName();
-            layerName || (layerName = child._name);
-            if (layerNames.indexOf(layerName) < 0) tmxLayer._tryRemoveNode(); else {
-              existedLayers.push(child);
-              var newSGLayer = this._sgNode.getLayer(layerName);
-              tmxLayer._replaceSgNode(newSGLayer);
-              tmxLayer.enabled = true;
-            }
-          } else if (tmxGroup) {
-            var groupName = tmxGroup.getGroupName();
-            groupName || (groupName = child._name);
-            if (groupNames.indexOf(groupName) < 0) tmxGroup._tryRemoveNode(); else {
-              existedGroups.push(child);
-              var newSGGroup = this._sgNode.getObjectGroup(groupName);
-              tmxGroup._replaceSgNode(newSGGroup);
-              tmxGroup.enabled = newSGGroup.isVisible();
-            }
-          } else otherChildrenInfo.push({
-            child: child,
-            index: child.getSiblingIndex()
-          });
-        }
-        var existedNames = existedLayers.map((function(node) {
-          var tmxLayer = node.getComponent(cc.TiledLayer);
-          return tmxLayer.getLayerName();
-        }));
-        for (i = 0, n = layerNames.length; i < n; i++) {
-          var name = layerNames[i];
-          var sgLayer = this._sgNode.getLayer(name);
-          var theIndex = existedNames.indexOf(name);
-          if (theIndex < 0) {
-            var node = this.node.getChildByName(name);
-            var addedLayer = null;
-            if (node && !node.getComponent(cc._SGComponent)) addedLayer = node.addComponent(cc.TiledLayer); else {
-              node = new cc.Node(name);
-              this.node.addChild(node);
-              addedLayer = node.addComponent(cc.TiledLayer);
-            }
-            node && addedLayer || cc.errorID(7202);
-            addedLayer._replaceSgNode(sgLayer);
-            node.setSiblingIndex(sgLayer.getLocalZOrder());
-            node.setAnchorPoint(this.node.getAnchorPoint());
-          }
-        }
-        var existedGroupNames = existedGroups.map((function(node) {
-          var tmxGroup = node.getComponent(cc.TiledObjectGroup);
-          return tmxGroup.getGroupName();
-        }));
-        for (i = 0, n = groupNames.length; i < n; i++) {
-          name = groupNames[i];
-          var sgGroup = this._sgNode.getObjectGroup(name);
-          theIndex = existedGroupNames.indexOf(name);
-          if (theIndex < 0) {
-            node = this.node.getChildByName(name);
-            var addedGroup = null;
-            if (node && !node.getComponent(cc._SGComponent)) addedGroup = node.addComponent(cc.TiledObjectGroup); else {
-              node = new cc.Node(name);
-              this.node.addChild(node);
-              addedGroup = node.addComponent(cc.TiledObjectGroup);
-            }
-            node && addedGroup || cc.errorID(7202);
-            addedGroup._replaceSgNode(sgGroup);
-            node.setSiblingIndex(sgGroup.getLocalZOrder());
-            node.setAnchorPoint(this.node.getAnchorPoint());
-            addedGroup.enabled = sgGroup.isVisible();
-          }
-        }
-        var curChildren = this.node.getChildren();
-        var curLayerNames = [];
-        for (i = 0, n = curChildren.length; i < n; i++) {
-          child = curChildren[i];
-          tmxLayer = child.getComponent(cc.TiledLayer);
-          tmxGroup = child.getComponent(cc.TiledObjectGroup);
-          (tmxLayer || tmxGroup) && curLayerNames.push(child._name);
-        }
-        var sgLayerNames = [];
-        var sgLayers = [];
-        var sgChildren = this._sgNode.getChildren();
-        for (i = 0, n = sgChildren.length; i < n; i++) {
-          child = sgChildren[i];
-          if (child instanceof _ccsg.TMXLayer) {
-            sgLayerNames.push(child.getLayerName());
-            sgLayers.push(child);
-          } else if (child instanceof _ccsg.TMXObjectGroup) {
-            sgLayerNames.push(child.getGroupName());
-            sgLayers.push(child);
-          }
-        }
-        for (i = sgLayerNames.length - 1; i >= 0; i--) {
-          var curName = sgLayerNames[i];
-          var nodeIdx = curLayerNames.indexOf(curName);
-          if (i !== nodeIdx) {
-            var curNode = this.node.getChildByName(curName);
-            curNode.setSiblingIndex(sgLayers[i].getLocalZOrder());
-          }
-        }
-        for (i = 0, n = otherChildrenInfo.length; i < n; i++) {
-          info = otherChildrenInfo[i];
-          info.child.setSiblingIndex(info.index);
-        }
-        this._syncChildrenOrder();
-      },
-      _anchorChanged: function() {
-        var children = this.node.children;
-        var anchor = this.node.getAnchorPoint();
-        for (var i = 0, n = children.length; i < n; i++) {
-          var child = children[i];
-          var hasLayer = child.getComponent(cc.TiledLayer);
-          hasLayer && child.setAnchorPoint(anchor);
-        }
-      },
-      _childAdded: function(event) {
-        var node = event.detail;
-        if (node) {
-          var tmxLayer = node.getComponent(cc.TiledLayer);
-          var tmxGroup = node.getComponent(cc.TiledObjectGroup);
-          if (!tmxLayer && !tmxGroup) {
-            var childrenCount = this.node.getChildrenCount();
-            node.setSiblingIndex(childrenCount);
-            node._sgNode && node._sgNode.setLocalZOrder(childrenCount);
-          }
-        }
-      },
-      _syncChildrenOrder: function() {
-        var logicChildren = this.node.children;
-        for (var i = 0, n = logicChildren.length; i < n; i++) {
-          var child = logicChildren[i];
-          var tmxLayer = child.getComponent(cc.TiledLayer);
-          var tmxGroup = child.getComponent(cc.TiledObjectGroup);
-          var zOrderValue = child.getSiblingIndex();
-          tmxLayer && tmxLayer._sgNode && tmxLayer._sgNode.setLocalZOrder(zOrderValue);
-          tmxGroup && tmxGroup._sgNode && tmxGroup._sgNode.setLocalZOrder(zOrderValue);
-          child._sgNode && child._sgNode.setLocalZOrder(zOrderValue);
-        }
-      },
-      _applyFile: function() {
-        var sgNode = this._sgNode;
-        var file = this._tmxFile;
-        var self = this;
-        if (file) {
-          var resPath = cc.url._rawAssets + file.tmxFolderPath;
-          resPath = cc.path.stripSep(resPath);
-          false;
-          var ret = sgNode.initWithXML(file.tmxXmlStr, resPath);
-          if (ret) {
-            self._detachedChildren.length = 0;
-            self._onMapLoaded();
-          }
-        } else {
-          var layers = sgNode.allLayers();
-          for (var i = 0, n = layers.length; i < n; i++) sgNode.removeChild(layers[i]);
-          var groups = sgNode.getObjectGroups();
-          for (i = 0, n = groups.length; i < n; i++) sgNode.removeChild(groups[i]);
-          this._detachedChildren.length = 0;
-          self._removeLayerEntities();
-        }
-      }
-    });
-    cc.TiledMap = module.exports = TiledMap;
-    cc.js.obsolete(cc.TiledMap.prototype, "cc.TiledMap.tmxFile", "tmxAsset", true);
-    cc.js.get(cc.TiledMap.prototype, "mapLoaded", (function() {
-      cc.errorID(7203);
-      return [];
-    }), false);
-  }), {
-    "./CCSGTMXTiledMap": 282,
-    "./CCTiledLayer": 286,
-    "./CCTiledMapAsset": 288,
-    "./CCTiledObjectGroup": 289
-  } ],
-  288: [ (function(require, module, exports) {
-    var TiledMapAsset = cc.Class({
-      name: "cc.TiledMapAsset",
-      extends: cc.Asset,
-      properties: {
-        tmxXmlStr: {
-          default: ""
-        },
-        tmxFolderPath: {
-          default: ""
-        },
-        textures: {
-          default: [],
-          url: [ cc.Texture2D ]
-        },
-        tsxFiles: {
-          default: [],
-          url: [ cc.RawAsset ]
-        }
-      },
-      statics: {
-        preventDeferredLoadDependents: true
-      },
-      createNode: false
-    });
-    cc.TiledMapAsset = TiledMapAsset;
-    module.exports = TiledMapAsset;
-  }), {} ],
-  289: [ (function(require, module, exports) {
-    require("./CCSGTMXObjectGroup");
-    var TiledObjectGroup = cc.Class({
-      name: "cc.TiledObjectGroup",
-      extends: cc._SGComponent,
-      onEnable: function() {
-        this._sgNode && this._sgNode.setVisible(true);
-      },
-      onDisable: function() {
-        this._sgNode && this._sgNode.setVisible(false);
-      },
-      onDestroy: function() {
-        this.node._sizeProvider === this._sgNode && (this.node._sizeProvider = null);
-      },
-      _initSgNode: function() {
-        var sgNode = this._sgNode;
-        if (!sgNode) return;
-        this._registSizeProvider();
-        sgNode.setAnchorPoint(this.node.getAnchorPoint());
-      },
-      _replaceSgNode: function(sgNode) {
-        if (sgNode === this._sgNode) return;
-        this._removeSgNode();
-        this.node._sizeProvider === this._sgNode && (this.node._sizeProvider = null);
-        if (sgNode && sgNode instanceof _ccsg.TMXObjectGroup) {
-          this._sgNode = sgNode;
-          false;
-          this._initSgNode();
-        } else this._sgNode = null;
-      },
-      getPositionOffset: function() {
-        if (this._sgNode) return this._sgNode.getPositionOffset();
-        return cc.p(0, 0);
-      },
-      setPositionOffset: function(offset) {
-        this._sgNode && this._sgNode.setPositionOffset(offset);
-      },
-      getProperties: function() {
-        if (this._sgNode) return this._sgNode.getProperties();
-        return null;
-      },
-      setProperties: function(Var) {
-        this._sgNode && this._sgNode.setProperties(Var);
-      },
-      getGroupName: function() {
-        if (this._sgNode) return this._sgNode.getGroupName();
-        return "";
-      },
-      setGroupName: function(groupName) {
-        this._sgNode && this._sgNode.setGroupName(groupName);
-      },
-      getProperty: function(propertyName) {
-        if (this._sgNode) return this._sgNode.propertyNamed(propertyName);
-        return null;
-      },
-      getObject: function(objectName) {
-        if (this._sgNode) return this._sgNode.getObject(objectName);
-        return null;
-      },
-      getObjects: function() {
-        if (this._sgNode) return this._sgNode.getObjects();
-        return [];
-      },
-      _tryRemoveNode: function() {
-        this.node.removeComponent(cc.TiledObjectGroup);
-        1 === this.node._components.length && 0 === this.node.getChildren().length && this.node.removeFromParent();
-      }
-    });
-    cc.TiledObjectGroup = module.exports = TiledObjectGroup;
-  }), {
-    "./CCSGTMXObjectGroup": 281
-  } ],
-  290: [ (function(require, module, exports) {
+  267: [ (function(require, module, exports) {
     require("./cocos2d/core");
     require("./cocos2d/animation");
     false;
@@ -50808,21 +45353,21 @@
   }), {
     "./cocos2d/actions": 11,
     "./cocos2d/animation": 19,
-    "./cocos2d/core": 125,
-    "./cocos2d/core/components/CCStudioComponent": 96,
-    "./cocos2d/deprecated": 243,
-    "./cocos2d/motion-streak/CCMotionStreak": 258,
-    "./cocos2d/particle/CCParticleAsset": 262,
-    "./cocos2d/particle/CCParticleSystem": 263,
-    "./cocos2d/tilemap/CCTiledMap": 287,
-    "./cocos2d/tilemap/CCTiledMapAsset": 288,
-    "./extensions/ccpool/CCNodePool": 291,
-    "./extensions/ccpool/CCPool": 292,
+    "./cocos2d/core": 118,
+    "./cocos2d/core/components/CCStudioComponent": 1,
+    "./cocos2d/deprecated": 234,
+    "./cocos2d/motion-streak/CCMotionStreak": 1,
+    "./cocos2d/particle/CCParticleAsset": 250,
+    "./cocos2d/particle/CCParticleSystem": 251,
+    "./cocos2d/tilemap/CCTiledMap": 1,
+    "./cocos2d/tilemap/CCTiledMapAsset": 1,
+    "./extensions/ccpool/CCNodePool": 268,
+    "./extensions/ccpool/CCPool": 269,
     "./extensions/dragonbones": 1,
-    "./extensions/spine": 300,
-    "./external/chipmunk/chipmunk": 303
+    "./extensions/spine": 1,
+    "./external/chipmunk/chipmunk": 271
   } ],
-  291: [ (function(require, module, exports) {
+  268: [ (function(require, module, exports) {
     cc.NodePool = function(poolHandlerComp) {
       this.poolHandlerComp = poolHandlerComp;
       this._pool = [];
@@ -50857,7 +45402,7 @@
     };
     module.exports = cc.NodePool;
   }), {} ],
-  292: [ (function(require, module, exports) {
+  269: [ (function(require, module, exports) {
     var _args = [];
     cc.pool = {
       _pool: {},
@@ -50914,5958 +45459,7 @@
       }
     };
   }), {} ],
-  293: [ (function(require, module, exports) {
-    var spine = sp.spine;
-    sp._SGSkeleton = _ccsg.Node.extend({
-      _skeleton: null,
-      _rootBone: null,
-      _timeScale: 1,
-      _debugSlots: false,
-      _debugBones: false,
-      _premultipliedAlpha: false,
-      _ownsSkeletonData: null,
-      _atlas: null,
-      ctor: function(skeletonDataFile, atlasFile, scale) {
-        _ccsg.Node.prototype.ctor.call(this);
-        0 === arguments.length ? this.init() : this.initWithArgs(skeletonDataFile, atlasFile, scale);
-      },
-      _createRenderCmd: function() {
-        return cc._renderType === cc.game.RENDER_TYPE_CANVAS ? new sp._SGSkeleton.CanvasRenderCmd(this) : new sp._SGSkeleton.WebGLRenderCmd(this);
-      },
-      init: function() {
-        _ccsg.Node.prototype.init.call(this);
-        this._premultipliedAlpha = cc._renderType === cc.game.RENDER_TYPE_WEBGL && cc.OPTIMIZE_BLEND_FUNC_FOR_PREMULTIPLIED_ALPHA;
-        this.scheduleUpdate();
-      },
-      setDebugSlotsEnabled: function(enabled) {
-        this._debugSlots = enabled;
-      },
-      getDebugSlotsEnabled: function() {
-        return this._debugSlots;
-      },
-      setDebugBonesEnabled: function(enabled) {
-        this._debugBones = enabled;
-      },
-      getDebugBonesEnabled: function() {
-        return this._debugBones;
-      },
-      setTimeScale: function(scale) {
-        this._timeScale = scale;
-      },
-      getTimeScale: function() {
-        return this._timeScale;
-      },
-      initWithArgs: function(skeletonDataFile, atlasFile, scale) {
-        var argSkeletonFile = skeletonDataFile, argAtlasFile = atlasFile, skeletonData, atlas, ownsSkeletonData;
-        if (cc.js.isString(argSkeletonFile)) {
-          if (cc.js.isString(argAtlasFile)) {
-            var data = cc.loader.getRes(argAtlasFile);
-            sp._atlasLoader.setAtlasFile(argAtlasFile);
-            atlas = new spine.TextureAtlas(data, sp._atlasLoader.load.bind(sp._atlasLoader));
-          } else atlas = atlasFile;
-          scale = scale || 1 / cc.director.getContentScaleFactor();
-          var attachmentLoader = new spine.AtlasAttachmentLoader(atlas);
-          var skeletonJsonReader = new spine.SkeletonJson(attachmentLoader);
-          skeletonJsonReader.scale = scale;
-          var skeletonJson = cc.loader.getRes(argSkeletonFile);
-          skeletonData = skeletonJsonReader.readSkeletonData(skeletonJson);
-          atlas.dispose(skeletonJsonReader);
-          ownsSkeletonData = true;
-        } else {
-          skeletonData = skeletonDataFile;
-          ownsSkeletonData = atlasFile;
-        }
-        this.setSkeletonData(skeletonData, ownsSkeletonData);
-        this.init();
-      },
-      getBoundingBox: function() {
-        var minX = cc.macro.FLT_MAX, minY = cc.macro.FLT_MAX, maxX = cc.macro.FLT_MIN, maxY = cc.macro.FLT_MIN;
-        var scaleX = this.getScaleX(), scaleY = this.getScaleY(), vertices, slots = this._skeleton.slots, VERTEX = spine.RegionAttachment;
-        for (var i = 0, slotCount = slots.length; i < slotCount; ++i) {
-          var slot = slots[i];
-          var attachment = slot.attachment;
-          if (!attachment || !(attachment instanceof spine.RegionAttachment)) continue;
-          vertices = attachment.updateWorldVertices(slot, false);
-          minX = Math.min(minX, vertices[VERTEX.X1] * scaleX, vertices[VERTEX.X4] * scaleX, vertices[VERTEX.X2] * scaleX, vertices[VERTEX.X3] * scaleX);
-          minY = Math.min(minY, vertices[VERTEX.Y1] * scaleY, vertices[VERTEX.Y4] * scaleY, vertices[VERTEX.Y2] * scaleY, vertices[VERTEX.Y3] * scaleY);
-          maxX = Math.max(maxX, vertices[VERTEX.X1] * scaleX, vertices[VERTEX.X4] * scaleX, vertices[VERTEX.X2] * scaleX, vertices[VERTEX.X3] * scaleX);
-          maxY = Math.max(maxY, vertices[VERTEX.Y1] * scaleY, vertices[VERTEX.Y4] * scaleY, vertices[VERTEX.Y2] * scaleY, vertices[VERTEX.Y3] * scaleY);
-        }
-        var position = this.getPosition();
-        return cc.rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
-      },
-      updateWorldTransform: function() {
-        this._skeleton.updateWorldTransform();
-      },
-      setToSetupPose: function() {
-        this._skeleton.setToSetupPose();
-      },
-      setBonesToSetupPose: function() {
-        this._skeleton.setBonesToSetupPose();
-      },
-      setSlotsToSetupPose: function() {
-        this._skeleton.setSlotsToSetupPose();
-      },
-      findBone: function(boneName) {
-        return this._skeleton.findBone(boneName);
-      },
-      findSlot: function(slotName) {
-        return this._skeleton.findSlot(slotName);
-      },
-      setSkin: function(skinName) {
-        return this._skeleton.setSkinByName(skinName);
-      },
-      getAttachment: function(slotName, attachmentName) {
-        return this._skeleton.getAttachmentByName(slotName, attachmentName);
-      },
-      setAttachment: function(slotName, attachmentName) {
-        this._skeleton.setAttachment(slotName, attachmentName);
-      },
-      setPremultipliedAlpha: function(premultiplied) {
-        this._premultipliedAlpha = premultiplied;
-      },
-      isPremultipliedAlpha: function() {
-        return this._premultipliedAlpha;
-      },
-      setSkeletonData: function(skeletonData, ownsSkeletonData) {
-        null != skeletonData.width && null != skeletonData.height && this.setContentSize(skeletonData.width / cc.director.getContentScaleFactor(), skeletonData.height / cc.director.getContentScaleFactor());
-        this._skeleton = new spine.Skeleton(skeletonData);
-        this._skeleton.updateWorldTransform();
-        this._rootBone = this._skeleton.getRootBone();
-        this._ownsSkeletonData = ownsSkeletonData;
-        this._renderCmd._createChildFormSkeletonData();
-      },
-      getTextureAtlas: function(regionAttachment) {
-        return regionAttachment.region;
-      },
-      getBlendFunc: function() {
-        var slot = this._skeleton.drawOrder[0];
-        if (slot) {
-          var blend = this._renderCmd._getBlendFunc(slot.data.blendMode, this._premultipliedAlpha);
-          return blend;
-        }
-        return {};
-      },
-      setBlendFunc: function(src, dst) {
-        return;
-      },
-      update: function(dt) {
-        this._skeleton.update(dt);
-      }
-    });
-    var proto = sp._SGSkeleton.prototype;
-    Object.defineProperty(proto, "opacityModifyRGB", {
-      get: proto.isOpacityModifyRGB
-    });
-    Object.defineProperty(proto, "_blendFunc", {
-      get: proto.getBlendFunc
-    });
-    Object.defineProperty(proto, "_texture", {
-      get: function() {
-        return this._renderCmd._currTexture;
-      }
-    });
-  }), {} ],
-  294: [ (function(require, module, exports) {
-    var spine = sp.spine;
-    var animEventType = sp.AnimationEventType;
-    sp._atlasLoader = {
-      spAtlasFile: null,
-      setAtlasFile: function(spAtlasFile) {
-        this.spAtlasFile = spAtlasFile;
-      },
-      load: function(line) {
-        var texturePath = cc.path.join(cc.path.dirname(this.spAtlasFile), line);
-        var texture = cc.textureCache.addImage(texturePath);
-        var tex = new sp.SkeletonTexture({
-          width: texture.getPixelWidth(),
-          height: texture.getPixelHeight()
-        });
-        tex.setRealTexture(texture);
-        return tex;
-      },
-      unload: function(obj) {}
-    };
-    sp.TrackEntryListeners = function(startListener, endListener, completeListener, eventListener, interruptListener, disposeListener) {
-      this.startListener = startListener || null;
-      this.endListener = endListener || null;
-      this.completeListener = completeListener || null;
-      this.eventListener = eventListener || null;
-      this.interruptListener = interruptListener || null;
-      this.disposeListener = disposeListener || null;
-      this.callback = null;
-      this.callbackTarget = null;
-      this.skeletonNode = null;
-    };
-    var proto = sp.TrackEntryListeners.prototype;
-    proto.start = function(trackEntry) {
-      this.startListener && this.startListener(trackEntry);
-      this.callback && this.callback.call(this.callbackTarget, this.skeletonNode, trackEntry, animEventType.START, null, 0);
-    };
-    proto.interrupt = function(trackEntry) {
-      this.interruptListener && this.interruptListener(trackEntry);
-      this.callback && this.callback.call(this.callbackTarget, this.skeletonNode, trackEntry, animEventType.INTERRUPT, null, 0);
-    };
-    proto.end = function(trackEntry) {
-      this.endListener && this.endListener(trackEntry);
-      this.callback && this.callback.call(this.callbackTarget, this.skeletonNode, trackEntry, animEventType.END, null, 0);
-    };
-    proto.dispose = function(trackEntry) {
-      this.disposeListener && this.disposeListener(trackEntry);
-      this.callback && this.callback.call(this.callbackTarget, this.skeletonNode, trackEntry, animEventType.DISPOSE, null, 0);
-    };
-    proto.complete = function(trackEntry) {
-      var loopCount = Math.floor(trackEntry.trackTime / trackEntry.animationEnd);
-      this.completeListener && this.completeListener(trackEntry, loopCount);
-      this.callback && this.callback.call(this.callbackTarget, this.skeletonNode, trackEntry, animEventType.COMPLETE, null, loopCount);
-    };
-    proto.event = function(trackEntry, event) {
-      this.eventListener && this.eventListener(trackEntry, event);
-      this.callback && this.callback.call(this.callbackTarget, this.skeletonNode, trackEntry, animEventType.EVENT, event, 0);
-    };
-    sp.TrackEntryListeners.getListeners = function(entry) {
-      entry.listener || (entry.listener = new sp.TrackEntryListeners());
-      return entry.listener;
-    };
-    sp._SGSkeletonAnimation = sp._SGSkeleton.extend({
-      _state: null,
-      _ownsAnimationStateData: false,
-      _listener: null,
-      init: function() {
-        sp._SGSkeleton.prototype.init.call(this);
-        this._ownsAnimationStateData = true;
-        this.setAnimationStateData(new spine.AnimationStateData(this._skeleton.data));
-      },
-      setAnimationStateData: function(stateData) {
-        var state = new spine.AnimationState(stateData);
-        this._listener = new sp.TrackEntryListeners();
-        state.rendererObject = this;
-        state.addListener(this._listener);
-        this._state = state;
-      },
-      setMix: function(fromAnimation, toAnimation, duration) {
-        this._state.data.setMixWith(fromAnimation, toAnimation, duration);
-      },
-      setAnimationListener: function(target, callback) {
-        this._listener.callbackTarget = target;
-        this._listener.callback = callback;
-        this._listener.skeletonNode = this;
-      },
-      setAnimation: function(trackIndex, name, loop) {
-        var animation = this._skeleton.data.findAnimation(name);
-        if (!animation) {
-          cc.logID(7509, name);
-          return null;
-        }
-        return this._state.setAnimationWith(trackIndex, animation, loop);
-      },
-      addAnimation: function(trackIndex, name, loop, delay) {
-        delay = null == delay ? 0 : delay;
-        var animation = this._skeleton.data.findAnimation(name);
-        if (!animation) {
-          cc.logID(7510, name);
-          return null;
-        }
-        return this._state.addAnimationWith(trackIndex, animation, loop, delay);
-      },
-      findAnimation: function(name) {
-        return this._skeleton.data.findAnimation(name);
-      },
-      getCurrent: function(trackIndex) {
-        return this._state.getCurrent(trackIndex);
-      },
-      clearTracks: function() {
-        this._state.clearTracks();
-      },
-      clearTrack: function(trackIndex) {
-        this._state.clearTrack(trackIndex);
-      },
-      update: function(dt) {
-        this._super(dt);
-        dt *= this._timeScale;
-        this._renderCmd.setDirtyFlag(_ccsg.Node._dirtyFlags.contentDirty);
-        this._state.update(dt);
-        this._state.apply(this._skeleton);
-        this._skeleton.updateWorldTransform();
-        this._renderCmd._updateChild();
-      },
-      setStartListener: function(listener) {
-        this._listener.startListener = listener;
-      },
-      setInterruptListener: function(listener) {
-        this._listener.interruptListener = listener;
-      },
-      setEndListener: function(listener) {
-        this._listener.endListener = listener;
-      },
-      setDisposeListener: function(listener) {
-        this._listener.disposeListener = listener;
-      },
-      setCompleteListener: function(listener) {
-        this._listener.completeListener = listener;
-      },
-      setEventListener: function(listener) {
-        this._listener.eventListener = listener;
-      },
-      setTrackStartListener: function(entry, listener) {
-        sp.TrackEntryListeners.getListeners(entry).startListener = listener;
-      },
-      setTrackInterruptListener: function(entry, listener) {
-        sp.TrackEntryListeners.getListeners(entry).interruptListener = listener;
-      },
-      setTrackEndListener: function(entry, listener) {
-        sp.TrackEntryListeners.getListeners(entry).endListener = listener;
-      },
-      setTrackDisposeListener: function(entry, listener) {
-        sp.TrackEntryListeners.getListeners(entry).disposeListener = listener;
-      },
-      setTrackCompleteListener: function(entry, listener) {
-        sp.TrackEntryListeners.getListeners(entry).completeListener = listener;
-      },
-      setTrackEventListener: function(entry, listener) {
-        sp.TrackEntryListeners.getListeners(entry).eventListener = listener;
-      },
-      getState: function() {
-        return this._state;
-      }
-    });
-  }), {} ],
-  295: [ (function(require, module, exports) {
-    require("../../cocos2d/core/CCDrawingPrimitives");
-    var spine = sp.spine;
-    sp._SGSkeleton.CanvasRenderCmd = function(renderableObject) {
-      this._rootCtor(renderableObject);
-      this._needDraw = true;
-    };
-    var proto = sp._SGSkeleton.CanvasRenderCmd.prototype = Object.create(_ccsg.Node.CanvasRenderCmd.prototype);
-    proto.constructor = sp._SGSkeleton.CanvasRenderCmd;
-    proto.rendering = function(wrapper, scaleX, scaleY) {
-      var node = this._node, i, n, slot, slotNode;
-      wrapper = wrapper || cc._renderContext;
-      var locSkeleton = node._skeleton, drawOrder = locSkeleton.drawOrder;
-      for (i = 0, n = drawOrder.length; i < n; i++) {
-        slot = drawOrder[i];
-        slotNode = slot._slotNode;
-        if (slotNode._visible && slotNode._renderCmd && slot.currentSprite) {
-          slotNode._renderCmd.transform(this, true);
-          slot.currentSprite._renderCmd.rendering(wrapper, scaleX, scaleY);
-          slotNode._renderCmd._dirtyFlag = slot.currentSprite._renderCmd._dirtyFlag = 0;
-        }
-      }
-      if (!node._debugSlots && !node._debugBones) return;
-      wrapper.setTransform(this._worldTransform, scaleX, scaleY);
-      wrapper.setGlobalAlpha(1);
-      var attachment, drawingUtil = cc._drawingUtil;
-      if (node._debugSlots) {
-        drawingUtil.setDrawColor(0, 0, 255, 255);
-        drawingUtil.setLineWidth(1);
-        var points = [];
-        for (i = 0, n = locSkeleton.slots.length; i < n; i++) {
-          slot = locSkeleton.drawOrder[i];
-          if (!slot.attachment || !(slot.attachment instanceof spine.RegionAttachment)) continue;
-          attachment = slot.attachment;
-          this._updateRegionAttachmentSlot(attachment, slot, points);
-          drawingUtil.drawPoly(points, 4, true);
-        }
-      }
-      if (node._debugBones) {
-        var bone;
-        drawingUtil.setLineWidth(2);
-        drawingUtil.setDrawColor(255, 0, 0, 255);
-        for (i = 0, n = locSkeleton.bones.length; i < n; i++) {
-          bone = locSkeleton.bones[i];
-          var x = bone.data.length * bone.a + bone.worldX;
-          var y = bone.data.length * bone.c + bone.worldY;
-          drawingUtil.drawLine({
-            x: bone.worldX,
-            y: bone.worldY
-          }, {
-            x: x,
-            y: y
-          });
-        }
-        drawingUtil.setPointSize(4);
-        drawingUtil.setDrawColor(0, 0, 255, 255);
-        for (i = 0, n = locSkeleton.bones.length; i < n; i++) {
-          bone = locSkeleton.bones[i];
-          drawingUtil.drawPoint({
-            x: bone.worldX,
-            y: bone.worldY
-          });
-          0 === i && drawingUtil.setDrawColor(0, 255, 0, 255);
-        }
-      }
-    };
-    proto.updateStatus = function() {
-      this.originUpdateStatus();
-      this._updateCurrentRegions();
-      this._regionFlag = _ccsg.Node.CanvasRenderCmd.RegionStatus.DirtyDouble;
-      this._dirtyFlag &= ~_ccsg.Node._dirtyFlags.contentDirty;
-    };
-    proto.getLocalBB = function() {
-      return this._node.getBoundingBox();
-    };
-    proto._updateRegionAttachmentSlot = function(attachment, slot, points) {
-      if (!points) return;
-      var vertices = attachment.updateWorldVertices(slot, false);
-      var VERTEX = spine.RegionAttachment;
-      points.length = 0;
-      points.push(cc.p(vertices[VERTEX.X1], vertices[VERTEX.Y1]));
-      points.push(cc.p(vertices[VERTEX.X4], vertices[VERTEX.Y4]));
-      points.push(cc.p(vertices[VERTEX.X3], vertices[VERTEX.Y3]));
-      points.push(cc.p(vertices[VERTEX.X2], vertices[VERTEX.Y2]));
-    };
-    proto._createChildFormSkeletonData = function() {
-      var node = this._node;
-      var locSkeleton = node._skeleton, spriteName, sprite;
-      for (var i = 0, n = locSkeleton.slots.length; i < n; i++) {
-        var slot = locSkeleton.slots[i], attachment = slot.attachment;
-        var slotNode = new _ccsg.Node();
-        slot._slotNode = slotNode;
-        if (attachment instanceof spine.RegionAttachment) {
-          spriteName = attachment.region.name;
-          sprite = this._createSprite(slot, attachment);
-          slot.currentSprite = sprite;
-          slot.currentSpriteName = spriteName;
-          slotNode.addChild(sprite);
-        } else attachment instanceof spine.MeshAttachment;
-      }
-    };
-    proto._createSprite = function(slot, attachment) {
-      var rendererObject = attachment.region;
-      var texture = rendererObject.texture.getRealTexture();
-      var rect = new cc.Rect(rendererObject.x, rendererObject.y, rendererObject.width, rendererObject.height);
-      var sprite = new _ccsg.Sprite();
-      sprite.initWithTexture(texture, rect, rendererObject.rotate, false);
-      sprite._rect.width = attachment.width;
-      sprite._rect.height = attachment.height;
-      sprite.setContentSize(attachment.width, attachment.height);
-      sprite.setRotation(-attachment.rotation);
-      sprite.setScale(rendererObject.width / rendererObject.originalWidth * attachment.scaleX, rendererObject.height / rendererObject.originalHeight * attachment.scaleY);
-      slot.sprites = slot.sprites || {};
-      slot.sprites[rendererObject.name] = sprite;
-      return sprite;
-    };
-    proto._updateChild = function() {
-      var locSkeleton = this._node._skeleton, slots = locSkeleton.slots;
-      var color = this._displayedColor, opacity = this._displayedOpacity;
-      var i, n, selSprite, ax, ay;
-      var slot, attachment, slotNode;
-      for (i = 0, n = slots.length; i < n; i++) {
-        slot = slots[i];
-        attachment = slot.attachment;
-        slotNode = slot._slotNode;
-        if (!attachment) {
-          slotNode.setVisible(false);
-          continue;
-        }
-        if (attachment instanceof spine.RegionAttachment) {
-          if (attachment.region && (!slot.currentSpriteName || slot.currentSpriteName !== attachment.name)) {
-            var spriteName = attachment.region.name;
-            void 0 !== slot.currentSprite && slot.currentSprite.setVisible(false);
-            slot.sprites = slot.sprites || {};
-            if (void 0 !== slot.sprites[spriteName]) slot.sprites[spriteName].setVisible(true); else {
-              var sprite = this._createSprite(slot, attachment);
-              slotNode.addChild(sprite);
-            }
-            slot.currentSprite = slot.sprites[spriteName];
-            slot.currentSpriteName = spriteName;
-          }
-          var bone = slot.bone;
-          if (0 === attachment.region.offsetX && 0 === attachment.region.offsetY) {
-            ax = attachment.x;
-            ay = attachment.y;
-          } else {
-            ax = .5 * (attachment.offset[0] + attachment.offset[4]);
-            ay = .5 * (attachment.offset[1] + attachment.offset[5]);
-          }
-          slotNode.setPosition(bone.worldX + ax * bone.a + ay * bone.b, bone.worldY + ax * bone.c + ay * bone.d);
-          slotNode.setScale(bone.getWorldScaleX(), bone.getWorldScaleY());
-          selSprite = slot.currentSprite;
-          selSprite._flippedX = bone.skeleton.flipX;
-          selSprite._flippedY = bone.skeleton.flipY;
-          if (selSprite._flippedY || selSprite._flippedX) {
-            slotNode.setRotation(bone.getWorldRotationX());
-            selSprite.setRotation(attachment.rotation);
-          } else {
-            slotNode.setRotation(-bone.getWorldRotationX());
-            selSprite.setRotation(-attachment.rotation);
-          }
-          selSprite._renderCmd._displayedOpacity = 0 | opacity * slot.color.a;
-          var r = 0 | color.r * slot.color.r, g = 0 | color.g * slot.color.g, b = 0 | color.b * slot.color.b;
-          selSprite.setColor(cc.color(r, g, b));
-          selSprite._renderCmd._updateColor();
-        } else if (!(attachment instanceof spine.MeshAttachment)) {
-          slotNode.setVisible(false);
-          continue;
-        }
-        slotNode.setVisible(true);
-      }
-    };
-  }), {
-    "../../cocos2d/core/CCDrawingPrimitives": 37
-  } ],
-  296: [ (function(require, module, exports) {
-    sp.SkeletonTexture = cc.Class({
-      name: "sp.SkeletonTexture",
-      extends: sp.spine.Texture,
-      _texture: null,
-      setRealTexture: function(tex) {
-        this._texture = tex;
-      },
-      getRealTexture: function() {
-        return this._texture;
-      },
-      setFilters: function(minFilter, magFilter) {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-          var gl = cc._renderContext;
-          this.bind();
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, minFilter);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, magFilter);
-        }
-      },
-      setWraps: function(uWrap, vWrap) {
-        if (cc._renderType === cc.game.RENDER_TYPE_WEBGL) {
-          var gl = cc._renderContext;
-          this.bind();
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, uWrap);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, vWrap);
-        }
-      },
-      dispose: function() {},
-      bind: function() {
-        cc._renderType === cc.game.RENDER_TYPE_WEBGL && cc.gl.bindTexture2DN(0, this._texture);
-      }
-    });
-  }), {} ],
-  297: [ (function(require, module, exports) {
-    require("../../cocos2d/core/CCDrawingPrimitives");
-    var spine = sp.spine;
-    sp._SGSkeleton.WebGLRenderCmd = function(renderableObject) {
-      this._rootCtor(renderableObject);
-      this._needDraw = true;
-      this._matrix = new cc.math.Matrix4();
-      this._matrix.identity();
-      this._currTexture = null;
-      this._currBlendFunc = {};
-      this.vertexType = cc.renderer.VertexType.CUSTOM;
-      this.setShaderProgram(cc.shaderCache.programForKey(cc.macro.SHADER_SPRITE_POSITION_TEXTURECOLOR));
-    };
-    var proto = sp._SGSkeleton.WebGLRenderCmd.prototype = Object.create(_ccsg.Node.WebGLRenderCmd.prototype);
-    proto.constructor = sp._SGSkeleton.WebGLRenderCmd;
-    proto.uploadData = function(f32buffer, ui32buffer, vertexDataOffset) {
-      var node = this._node;
-      var color = this._displayedColor, locSkeleton = node._skeleton;
-      var attachment, slot, i, n;
-      var premultiAlpha = node._premultipliedAlpha;
-      locSkeleton.r = color.r / 255;
-      locSkeleton.g = color.g / 255;
-      locSkeleton.b = color.b / 255;
-      locSkeleton.a = this._displayedOpacity / 255;
-      if (premultiAlpha) {
-        locSkeleton.r *= locSkeleton.a;
-        locSkeleton.g *= locSkeleton.a;
-        locSkeleton.b *= locSkeleton.a;
-      }
-      var debugSlotsInfo = null;
-      this._node._debugSlots && (debugSlotsInfo = []);
-      for (i = 0, n = locSkeleton.drawOrder.length; i < n; i++) {
-        slot = locSkeleton.drawOrder[i];
-        if (!slot.attachment) continue;
-        attachment = slot.attachment;
-        var vertCount = 0;
-        if (attachment instanceof spine.RegionAttachment) vertCount = 6; else {
-          if (!(attachment instanceof spine.MeshAttachment)) continue;
-          vertCount = attachment.regionUVs.length / 2;
-        }
-        if (0 === vertCount) continue;
-        var regionTextureAtlas = node.getTextureAtlas(attachment);
-        this._currTexture = regionTextureAtlas.texture.getRealTexture();
-        var batchBroken = cc.renderer._updateBatchedInfo(this._currTexture, this._getBlendFunc(slot.data.blendMode, premultiAlpha), this._shaderProgram);
-        if (!batchBroken && vertexDataOffset + 6 * vertCount > f32buffer.length) {
-          cc.renderer._batchRendering();
-          batchBroken = true;
-        }
-        batchBroken && (vertexDataOffset = 0);
-        var slotDebugPoints = null;
-        if (attachment instanceof spine.RegionAttachment) slotDebugPoints = this._uploadRegionAttachmentData(attachment, slot, premultiAlpha, f32buffer, ui32buffer, vertexDataOffset); else {
-          if (!(attachment instanceof spine.MeshAttachment)) continue;
-          this._uploadMeshAttachmentData(attachment, slot, premultiAlpha, f32buffer, ui32buffer, vertexDataOffset);
-        }
-        this._node._debugSlots && (debugSlotsInfo[i] = slotDebugPoints);
-        attachment instanceof spine.RegionAttachment ? cc.renderer._increaseBatchingSize(vertCount, cc.renderer.VertexType.TRIANGLE) : cc.renderer._increaseBatchingSize(vertCount, cc.renderer.VertexType.CUSTOM, attachment.triangles);
-        vertexDataOffset += 6 * vertCount;
-      }
-      if (node._debugBones || node._debugSlots) {
-        cc.renderer._batchRendering();
-        var wt = this._worldTransform, mat = this._matrix.mat;
-        mat[0] = wt.a;
-        mat[4] = wt.c;
-        mat[12] = wt.tx;
-        mat[1] = wt.b;
-        mat[5] = wt.d;
-        mat[13] = wt.ty;
-        cc.math.glMatrixMode(cc.math.KM_GL_MODELVIEW);
-        cc.current_stack.stack.push(cc.current_stack.top);
-        cc.current_stack.top = this._matrix;
-        var drawingUtil = cc._drawingUtil;
-        if (node._debugSlots && debugSlotsInfo && debugSlotsInfo.length > 0) {
-          drawingUtil.setDrawColor(0, 0, 255, 255);
-          drawingUtil.setLineWidth(1);
-          for (i = 0, n = locSkeleton.slots.length; i < n; i++) {
-            var points = debugSlotsInfo[i];
-            points && drawingUtil.drawPoly(points, 4, true);
-          }
-        }
-        if (node._debugBones) {
-          var bone;
-          drawingUtil.setLineWidth(2);
-          drawingUtil.setDrawColor(255, 0, 0, 255);
-          for (i = 0, n = locSkeleton.bones.length; i < n; i++) {
-            bone = locSkeleton.bones[i];
-            var x = bone.data.length * bone.a + bone.worldX;
-            var y = bone.data.length * bone.c + bone.worldY;
-            drawingUtil.drawLine(cc.p(bone.worldX, bone.worldY), cc.p(x, y));
-          }
-          drawingUtil.setPointSize(4);
-          drawingUtil.setDrawColor(0, 0, 255, 255);
-          for (i = 0, n = locSkeleton.bones.length; i < n; i++) {
-            bone = locSkeleton.bones[i];
-            drawingUtil.drawPoint(cc.p(bone.worldX, bone.worldY));
-            0 == i && drawingUtil.setDrawColor(0, 255, 0, 255);
-          }
-        }
-        cc.math.glPopMatrix();
-      }
-      return 0;
-    };
-    proto._getBlendFunc = function(blendMode, premultiAlpha) {
-      var ret = this._currBlendFunc;
-      switch (blendMode) {
-       case spine.BlendMode.Normal:
-        ret.src = premultiAlpha ? cc.macro.ONE : cc.macro.SRC_ALPHA;
-        ret.dst = cc.macro.ONE_MINUS_SRC_ALPHA;
-        break;
-
-       case spine.BlendMode.Additive:
-        ret.src = premultiAlpha ? cc.macro.ONE : cc.macro.SRC_ALPHA;
-        ret.dst = cc.macro.ONE;
-        break;
-
-       case spine.BlendMode.Multiply:
-        ret.src = cc.macro.DST_COLOR;
-        ret.dst = cc.macro.ONE_MINUS_SRC_ALPHA;
-        break;
-
-       case spine.BlendMode.Screen:
-        ret.src = cc.macro.ONE;
-        ret.dst = cc.macro.ONE_MINUS_SRC_COLOR;
-        break;
-
-       default:
-        ret = this._node._blendFunc;
-      }
-      return ret;
-    };
-    proto._createChildFormSkeletonData = function() {};
-    proto._updateChild = function() {};
-    proto._uploadRegionAttachmentData = function(attachment, slot, premultipliedAlpha, f32buffer, ui32buffer, vertexDataOffset) {
-      var nodeColor = this._displayedColor;
-      var nodeR = nodeColor.r, nodeG = nodeColor.g, nodeB = nodeColor.b, nodeA = this._displayedOpacity;
-      var vertices = attachment.updateWorldVertices(slot, premultipliedAlpha);
-      var wt = this._worldTransform, wa = wt.a, wb = wt.b, wc = wt.c, wd = wt.d, wx = wt.tx, wy = wt.ty, z = this._node.vertexZ;
-      var offset = vertexDataOffset;
-      for (var i = 0; i < 6; i++) {
-        var srcIdx = i < 4 ? i % 3 : i - 2;
-        var vx = vertices[8 * srcIdx], vy = vertices[8 * srcIdx + 1];
-        var x = vx * wa + vy * wc + wx, y = vx * wb + vy * wd + wy;
-        var r = vertices[8 * srcIdx + 2] * nodeR, g = vertices[8 * srcIdx + 3] * nodeG, b = vertices[8 * srcIdx + 4] * nodeB, a = vertices[8 * srcIdx + 5] * nodeA;
-        var color = a << 24 | b << 16 | g << 8 | r;
-        f32buffer[offset] = x;
-        f32buffer[offset + 1] = y;
-        f32buffer[offset + 2] = z;
-        ui32buffer[offset + 3] = color;
-        f32buffer[offset + 4] = vertices[8 * srcIdx + 6];
-        f32buffer[offset + 5] = vertices[8 * srcIdx + 7];
-        offset += 6;
-      }
-      if (this._node._debugSlots) {
-        var VERTEX = spine.RegionAttachment;
-        return [ cc.p(vertices[VERTEX.X1], vertices[VERTEX.Y1]), cc.p(vertices[VERTEX.X2], vertices[VERTEX.Y2]), cc.p(vertices[VERTEX.X3], vertices[VERTEX.Y3]), cc.p(vertices[VERTEX.X4], vertices[VERTEX.Y4]) ];
-      }
-    };
-    proto._uploadMeshAttachmentData = function(attachment, slot, premultipliedAlpha, f32buffer, ui32buffer, vertexDataOffset) {
-      var wt = this._worldTransform, wa = wt.a, wb = wt.b, wc = wt.c, wd = wt.d, wx = wt.tx, wy = wt.ty, z = this._node.vertexZ;
-      var vertices = attachment.updateWorldVertices(slot, premultipliedAlpha);
-      var offset = vertexDataOffset;
-      var nodeColor = this._displayedColor;
-      var nodeR = nodeColor.r, nodeG = nodeColor.g, nodeB = nodeColor.b, nodeA = this._displayedOpacity;
-      for (var i = 0, n = vertices.length; i < n; i += 8) {
-        var vx = vertices[i], vy = vertices[i + 1];
-        var x = vx * wa + vy * wc + wx, y = vx * wb + vy * wd + wy;
-        var r = vertices[i + 2] * nodeR, g = vertices[i + 3] * nodeG, b = vertices[i + 4] * nodeB, a = vertices[i + 5] * nodeA;
-        var color = a << 24 | b << 16 | g << 8 | r;
-        f32buffer[offset] = x;
-        f32buffer[offset + 1] = y;
-        f32buffer[offset + 2] = z;
-        ui32buffer[offset + 3] = color;
-        f32buffer[offset + 4] = vertices[i + 6];
-        f32buffer[offset + 5] = vertices[i + 7];
-        offset += 6;
-      }
-    };
-  }), {
-    "../../cocos2d/core/CCDrawingPrimitives": 37
-  } ],
-  298: [ (function(require, module, exports) {
-    var DefaultSkinsEnum = cc.Enum({
-      default: -1
-    });
-    var DefaultAnimsEnum = cc.Enum({
-      "<None>": 0
-    });
-    function setEnumAttr(obj, propName, enumDef) {
-      cc.Class.attr(obj, propName, {
-        type: "Enum",
-        enumList: cc.Enum.getList(enumDef)
-      });
-    }
-    sp.Skeleton = cc.Class({
-      name: "sp.Skeleton",
-      extends: cc._RendererUnderSG,
-      editor: false,
-      properties: {
-        _startListener: {
-          default: null,
-          serializable: false
-        },
-        _endListener: {
-          default: null,
-          serializable: false
-        },
-        _completeListener: {
-          default: null,
-          serializable: false
-        },
-        _eventListener: {
-          default: null,
-          serializable: false
-        },
-        _disposeListener: {
-          default: null,
-          serializable: false
-        },
-        _interruptListener: {
-          default: null,
-          serializable: false
-        },
-        _paused: false,
-        paused: {
-          get: function() {
-            return this._paused;
-          },
-          set: function(value) {
-            this._paused = value;
-            if (!this._sgNode) return;
-            value ? this._sgNode.pause() : this._sgNode.resume();
-          },
-          visible: false
-        },
-        skeletonData: {
-          default: null,
-          type: sp.SkeletonData,
-          notify: function() {
-            this.defaultSkin = "";
-            this.defaultAnimation = "";
-            this._refresh();
-          },
-          tooltip: false
-        },
-        defaultSkin: {
-          default: "",
-          visible: false
-        },
-        defaultAnimation: {
-          default: "",
-          visible: false
-        },
-        animation: {
-          get: function() {
-            var entry = this.getCurrent(0);
-            return entry && entry.animation.name || "";
-          },
-          set: function(value) {
-            this.defaultAnimation = value;
-            if (value) this.setAnimation(0, value, this.loop); else {
-              this.clearTrack(0);
-              this.setToSetupPose();
-            }
-          },
-          visible: false
-        },
-        _defaultSkinIndex: {
-          get: function() {
-            if (this.skeletonData && this.defaultSkin) {
-              var skinsEnum = this.skeletonData.getSkinsEnum();
-              if (skinsEnum) {
-                var skinIndex = skinsEnum[this.defaultSkin];
-                if (void 0 !== skinIndex) return skinIndex;
-              }
-            }
-            return 0;
-          },
-          set: function(value) {
-            var skinsEnum;
-            this.skeletonData && (skinsEnum = this.skeletonData.getSkinsEnum());
-            if (!skinsEnum) return cc.errorID("", this.name);
-            var skinName = skinsEnum[value];
-            if (void 0 !== skinName) {
-              this.defaultSkin = skinName;
-              false;
-            } else cc.errorID(7501, this.name);
-          },
-          type: DefaultSkinsEnum,
-          visible: true,
-          displayName: "Default Skin",
-          tooltip: false
-        },
-        _animationIndex: {
-          get: function() {
-            var animationName = this.animation;
-            if (this.skeletonData && animationName) {
-              var animsEnum = this.skeletonData.getAnimsEnum();
-              if (animsEnum) {
-                var animIndex = animsEnum[animationName];
-                if (void 0 !== animIndex) return animIndex;
-              }
-            }
-            return 0;
-          },
-          set: function(value) {
-            if (0 === value) {
-              this.animation = "";
-              return;
-            }
-            var animsEnum;
-            this.skeletonData && (animsEnum = this.skeletonData.getAnimsEnum());
-            if (!animsEnum) return cc.errorID(7502, this.name);
-            var animName = animsEnum[value];
-            void 0 !== animName ? this.animation = animName : cc.errorID(7503, this.name);
-          },
-          type: DefaultAnimsEnum,
-          visible: true,
-          displayName: "Animation",
-          tooltip: false
-        },
-        loop: {
-          default: true,
-          tooltip: false
-        },
-        _premultipliedAlpha: true,
-        premultipliedAlpha: {
-          get: function() {
-            return this._premultipliedAlpha;
-          },
-          set: function(value) {
-            this._premultipliedAlpha = value;
-            this._sgNode && this._sgNode.setPremultipliedAlpha(value);
-          },
-          tooltip: false
-        },
-        timeScale: {
-          default: 1,
-          notify: function() {
-            this._sgNode && this._sgNode.setTimeScale(this.timeScale);
-          },
-          tooltip: false
-        },
-        debugSlots: {
-          default: false,
-          notify: function() {
-            this._sgNode && this._sgNode.setDebugSlotsEnabled(this.debugSlots);
-          },
-          editorOnly: true,
-          tooltip: false
-        },
-        debugBones: {
-          default: false,
-          notify: function() {
-            this._sgNode && this._sgNode.setDebugBonesEnabled(this.debugBones);
-          },
-          editorOnly: true,
-          tooltip: false
-        }
-      },
-      __preload: function() {
-        var Flags;
-        false;
-        this.node.setContentSize(0, 0);
-        this._refresh();
-      },
-      _createSgNode: function() {
-        if (this.skeletonData) {
-          var uuid;
-          var jsonFile;
-          var atlasFile;
-          false;
-          var data = this.skeletonData.getRuntimeData();
-          if (data) try {
-            return new sp._SGSkeletonAnimation(data, null, this.skeletonData.scale);
-          } catch (e) {
-            cc._throw(e);
-          }
-        }
-        return null;
-      },
-      _initSgNode: function() {
-        var sgNode = this._sgNode;
-        sgNode.setTimeScale(this.timeScale);
-        var self = this;
-        sgNode.onEnter = function() {
-          _ccsg.Node.prototype.onEnter.call(this);
-          self._paused && this.pause();
-        };
-        this._startListener && this.setStartListener(this._startListener);
-        this._endListener && this.setEndListener(this._endListener);
-        this._completeListener && this.setCompleteListener(this._completeListener);
-        this._eventListener && this.setEventListener(this._eventListener);
-        this._interruptListener && this.setInterruptListener(this._interruptListener);
-        this._disposeListener && this.setDisposeListener(this._disposeListener);
-        if (this.defaultSkin) try {
-          sgNode.setSkin(this.defaultSkin);
-        } catch (e) {
-          cc._throw(e);
-        }
-        sgNode.setPremultipliedAlpha(this._premultipliedAlpha);
-        this.animation = this.defaultAnimation;
-        false;
-      },
-      _getLocalBounds: false,
-      updateWorldTransform: function() {
-        this._sgNode && this._sgNode.updateWorldTransform();
-      },
-      setToSetupPose: function() {
-        this._sgNode && this._sgNode.setToSetupPose();
-      },
-      setBonesToSetupPose: function() {
-        this._sgNode && this._sgNode.setBonesToSetupPose();
-      },
-      setSlotsToSetupPose: function() {
-        this._sgNode && this._sgNode.setSlotsToSetupPose();
-      },
-      findBone: function(boneName) {
-        if (this._sgNode) return this._sgNode.findBone(boneName);
-        return null;
-      },
-      findSlot: function(slotName) {
-        if (this._sgNode) return this._sgNode.findSlot(slotName);
-        return null;
-      },
-      setSkin: function(skinName) {
-        if (this._sgNode) return this._sgNode.setSkin(skinName);
-        return null;
-      },
-      getAttachment: function(slotName, attachmentName) {
-        if (this._sgNode) return this._sgNode.getAttachment(slotName, attachmentName);
-        return null;
-      },
-      setAttachment: function(slotName, attachmentName) {
-        this._sgNode && this._sgNode.setAttachment(slotName, attachmentName);
-      },
-      setSkeletonData: function(skeletonData, ownsSkeletonData) {
-        this._sgNode && this._sgNode.setSkeletonData(skeletonData, ownsSkeletonData);
-      },
-      setAnimationStateData: function(stateData) {
-        if (this._sgNode) return this._sgNode.setAnimationStateData(stateData);
-      },
-      setMix: function(fromAnimation, toAnimation, duration) {
-        this._sgNode && this._sgNode.setMix(fromAnimation, toAnimation, duration);
-      },
-      setAnimationListener: function(target, callback) {
-        this._sgNode && this._sgNode.setAnimationListener(target, callback);
-      },
-      setAnimation: function(trackIndex, name, loop) {
-        if (this._sgNode) {
-          var res = this._sgNode.setAnimation(trackIndex, name, loop);
-          false;
-          return res;
-        }
-        return null;
-      },
-      _sample: function() {
-        this._sgNode && this._sgNode.update(0);
-      },
-      addAnimation: function(trackIndex, name, loop, delay) {
-        if (this._sgNode) return this._sgNode.addAnimation(trackIndex, name, loop, delay || 0);
-        return null;
-      },
-      findAnimation: function(name) {
-        if (this._sgNode) return this._sgNode.findAnimation(name);
-        return null;
-      },
-      getCurrent: function(trackIndex) {
-        if (this._sgNode) return this._sgNode.getCurrent(trackIndex);
-        return null;
-      },
-      clearTracks: function() {
-        this._sgNode && this._sgNode.clearTracks();
-      },
-      clearTrack: function(trackIndex) {
-        if (this._sgNode) {
-          this._sgNode.clearTrack(trackIndex);
-          false;
-        }
-      },
-      _updateAnimEnum: false,
-      _updateSkinEnum: false,
-      setStartListener: function(listener) {
-        this._startListener = listener;
-        this._sgNode && this._sgNode.setStartListener(listener);
-      },
-      setInterruptListener: function(listener) {
-        this._interruptListener = listener;
-        this._sgNode && this._sgNode.setInterruptListener(listener);
-      },
-      setEndListener: function(listener) {
-        this._endListener = listener;
-        this._sgNode && this._sgNode.setEndListener(listener);
-      },
-      setDisposeListener: function(listener) {
-        this._disposeListener = listener;
-        this._sgNode && this._sgNode.setDisposeListener(listener);
-      },
-      setCompleteListener: function(listener) {
-        this._completeListener = listener;
-        this._sgNode && this._sgNode.setCompleteListener(listener);
-      },
-      setEventListener: function(listener) {
-        this._eventListener = listener;
-        this._sgNode && this._sgNode.setEventListener(listener);
-      },
-      setTrackStartListener: function(entry, listener) {
-        this._sgNode && this._sgNode.setTrackStartListener(entry, listener);
-      },
-      setTrackInterruptListener: function(entry, listener) {
-        this._sgNode && this._sgNode.setTrackInterruptListener(entry, listener);
-      },
-      setTrackEndListener: function(entry, listener) {
-        this._sgNode && this._sgNode.setTrackEndListener(entry, listener);
-      },
-      setTrackDisposeListener: function(entry, listener) {
-        this._sgNode && this._sgNode.setTrackDisposeListener(entry, listener);
-      },
-      setTrackCompleteListener: function(entry, listener) {
-        this._sgNode && this._sgNode.setTrackCompleteListener(entry, listener);
-      },
-      setTrackEventListener: function(entry, listener) {
-        this._sgNode && this._sgNode.setTrackEventListener(entry, listener);
-      },
-      getState: function() {
-        if (this._sgNode) return this._sgNode.getState();
-      },
-      _refresh: function() {
-        var self = this;
-        if (self._sgNode) {
-          self.node._sizeProvider === self._sgNode && (self.node._sizeProvider = null);
-          self._removeSgNode();
-          self._sgNode = null;
-        }
-        var sgNode = self._sgNode = self._createSgNode();
-        if (sgNode) {
-          false;
-          self.enabledInHierarchy || sgNode.setVisible(false);
-          sgNode.setContentSize(0, 0);
-          self._initSgNode();
-          self._appendSgNode(sgNode);
-          self._registSizeProvider();
-        }
-        false;
-      }
-    });
-  }), {} ],
-  299: [ (function(require, module, exports) {
-    var TextureLoader = (true, cc.Class({
-      ctor: function() {
-        this.asset = arguments[0];
-      },
-      getTexture: function(line) {
-        var urls = this.asset.textures;
-        for (var i = 0; i < urls.length; i++) {
-          var url = urls[i];
-          if (url.endsWith(line)) {
-            var texture = cc.textureCache.addImage(url);
-            var tex = new sp.SkeletonTexture({
-              width: texture.getPixelWidth(),
-              height: texture.getPixelHeight()
-            });
-            tex.setRealTexture(texture);
-            return tex;
-          }
-        }
-        return null;
-      },
-      load: function(line) {
-        var texture = this.getTexture(line);
-        if (texture) return texture;
-        cc.errorID(7506, line);
-        return null;
-      },
-      unload: function(obj) {}
-    }));
-    var SkeletonData = cc.Class({
-      name: "sp.SkeletonData",
-      extends: cc.Asset,
-      ctor: function() {
-        this.reset();
-      },
-      properties: {
-        _skeletonJson: null,
-        skeletonJson: {
-          get: function() {
-            return this._skeletonJson;
-          },
-          set: function(value) {
-            this._skeletonJson = value;
-            this.reset();
-          }
-        },
-        _atlasText: "",
-        atlasText: {
-          get: function() {
-            return this._atlasText;
-          },
-          set: function(value) {
-            this._atlasText = value;
-            this.reset();
-          }
-        },
-        atlasUrl: {
-          default: "",
-          url: cc.RawAsset
-        },
-        textures: {
-          default: [],
-          url: [ cc.Texture2D ]
-        },
-        scale: 1
-      },
-      statics: {
-        preventDeferredLoadDependents: true
-      },
-      createNode: false,
-      reset: function() {
-        this._skeletonCache = null;
-        this._atlasCache = null;
-        false;
-      },
-      getRuntimeData: (true, function(quiet) {
-        if (this._skeletonCache) return this._skeletonCache;
-        if (!(this.textures && this.textures.length > 0)) {
-          quiet || cc.errorID(7507, this.name);
-          return null;
-        }
-        var atlas = this._getAtlas(quiet);
-        if (!atlas) return null;
-        var attachmentLoader = new sp.spine.AtlasAttachmentLoader(atlas);
-        var jsonReader = new sp.spine.SkeletonJson(attachmentLoader);
-        jsonReader.scale = this.scale;
-        var json = this.skeletonJson;
-        this._skeletonCache = jsonReader.readSkeletonData(json);
-        atlas.dispose(jsonReader);
-        return this._skeletonCache;
-      }),
-      getSkinsEnum: false,
-      getAnimsEnum: false,
-      _getAtlas: (true, function(quiet) {
-        if (this._atlasCache) return this._atlasCache;
-        if (!this.atlasText) {
-          quiet || cc.errorID(7508, this.name);
-          return null;
-        }
-        var loader = new TextureLoader(this);
-        return this._atlasCache = new sp.spine.TextureAtlas(this.atlasText, loader.load.bind(loader));
-      })
-    });
-    sp.SkeletonData = module.exports = SkeletonData;
-  }), {} ],
-  300: [ (function(require, module, exports) {
-    sp = {};
-    sp.VERTEX_INDEX = {
-      X1: 0,
-      Y1: 1,
-      X2: 2,
-      Y2: 3,
-      X3: 4,
-      Y3: 5,
-      X4: 6,
-      Y4: 7
-    };
-    sp.ATTACHMENT_TYPE = {
-      REGION: 0,
-      BOUNDING_BOX: 1,
-      MESH: 2,
-      SKINNED_MESH: 3
-    };
-    sp.AnimationEventType = cc.Enum({
-      START: 0,
-      INTERRUPT: 1,
-      END: 2,
-      DISPOSE: 3,
-      COMPLETE: 4,
-      EVENT: 5
-    });
-    true;
-    true;
-    sp.spine = require("./lib/spine");
-    require("./SGSkeletonTexture");
-    require("./SGSkeleton");
-    require("./SGSkeletonCanvasRenderCmd");
-    require("./SGSkeletonWebGLRenderCmd");
-    require("./SGSkeletonAnimation");
-    require("./SkeletonData");
-    require("./Skeleton");
-  }), {
-    "./SGSkeleton": 293,
-    "./SGSkeletonAnimation": 294,
-    "./SGSkeletonCanvasRenderCmd": 295,
-    "./SGSkeletonTexture": 296,
-    "./SGSkeletonWebGLRenderCmd": 297,
-    "./Skeleton": 298,
-    "./SkeletonData": 299,
-    "./lib/spine": 301
-  } ],
-  301: [ (function(require, module, exports) {
-    var __extends = this && this.__extends || function(d, b) {
-      for (var p in b) b.hasOwnProperty(p) && (d[p] = b[p]);
-      function __() {
-        this.constructor = d;
-      }
-      d.prototype = null === b ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-    var spine;
-    (function(spine) {
-      var Animation = (function() {
-        function Animation(name, timelines, duration) {
-          if (null == name) throw new Error("name cannot be null.");
-          if (null == timelines) throw new Error("timelines cannot be null.");
-          this.name = name;
-          this.timelines = timelines;
-          this.duration = duration;
-        }
-        Animation.prototype.apply = function(skeleton, lastTime, time, loop, events, alpha, setupPose, mixingOut) {
-          if (null == skeleton) throw new Error("skeleton cannot be null.");
-          if (loop && 0 != this.duration) {
-            time %= this.duration;
-            lastTime > 0 && (lastTime %= this.duration);
-          }
-          var timelines = this.timelines;
-          for (var i = 0, n = timelines.length; i < n; i++) timelines[i].apply(skeleton, lastTime, time, events, alpha, setupPose, mixingOut);
-        };
-        Animation.binarySearch = function(values, target, step) {
-          void 0 === step && (step = 1);
-          var low = 0;
-          var high = values.length / step - 2;
-          if (0 == high) return step;
-          var current = high >>> 1;
-          while (true) {
-            values[(current + 1) * step] <= target ? low = current + 1 : high = current;
-            if (low == high) return (low + 1) * step;
-            current = low + high >>> 1;
-          }
-        };
-        Animation.linearSearch = function(values, target, step) {
-          for (var i = 0, last = values.length - step; i <= last; i += step) if (values[i] > target) return i;
-          return -1;
-        };
-        return Animation;
-      })();
-      spine.Animation = Animation;
-      (function(TimelineType) {
-        TimelineType[TimelineType["rotate"] = 0] = "rotate";
-        TimelineType[TimelineType["translate"] = 1] = "translate";
-        TimelineType[TimelineType["scale"] = 2] = "scale";
-        TimelineType[TimelineType["shear"] = 3] = "shear";
-        TimelineType[TimelineType["attachment"] = 4] = "attachment";
-        TimelineType[TimelineType["color"] = 5] = "color";
-        TimelineType[TimelineType["deform"] = 6] = "deform";
-        TimelineType[TimelineType["event"] = 7] = "event";
-        TimelineType[TimelineType["drawOrder"] = 8] = "drawOrder";
-        TimelineType[TimelineType["ikConstraint"] = 9] = "ikConstraint";
-        TimelineType[TimelineType["transformConstraint"] = 10] = "transformConstraint";
-        TimelineType[TimelineType["pathConstraintPosition"] = 11] = "pathConstraintPosition";
-        TimelineType[TimelineType["pathConstraintSpacing"] = 12] = "pathConstraintSpacing";
-        TimelineType[TimelineType["pathConstraintMix"] = 13] = "pathConstraintMix";
-      })(spine.TimelineType || (spine.TimelineType = {}));
-      var TimelineType = spine.TimelineType;
-      var CurveTimeline = (function() {
-        function CurveTimeline(frameCount) {
-          if (frameCount <= 0) throw new Error("frameCount must be > 0: " + frameCount);
-          this.curves = spine.Utils.newFloatArray((frameCount - 1) * CurveTimeline.BEZIER_SIZE);
-        }
-        CurveTimeline.prototype.getFrameCount = function() {
-          return this.curves.length / CurveTimeline.BEZIER_SIZE + 1;
-        };
-        CurveTimeline.prototype.setLinear = function(frameIndex) {
-          this.curves[frameIndex * CurveTimeline.BEZIER_SIZE] = CurveTimeline.LINEAR;
-        };
-        CurveTimeline.prototype.setStepped = function(frameIndex) {
-          this.curves[frameIndex * CurveTimeline.BEZIER_SIZE] = CurveTimeline.STEPPED;
-        };
-        CurveTimeline.prototype.getCurveType = function(frameIndex) {
-          var index = frameIndex * CurveTimeline.BEZIER_SIZE;
-          if (index == this.curves.length) return CurveTimeline.LINEAR;
-          var type = this.curves[index];
-          if (type == CurveTimeline.LINEAR) return CurveTimeline.LINEAR;
-          if (type == CurveTimeline.STEPPED) return CurveTimeline.STEPPED;
-          return CurveTimeline.BEZIER;
-        };
-        CurveTimeline.prototype.setCurve = function(frameIndex, cx1, cy1, cx2, cy2) {
-          var tmpx = .03 * (2 * -cx1 + cx2), tmpy = .03 * (2 * -cy1 + cy2);
-          var dddfx = .006 * (3 * (cx1 - cx2) + 1), dddfy = .006 * (3 * (cy1 - cy2) + 1);
-          var ddfx = 2 * tmpx + dddfx, ddfy = 2 * tmpy + dddfy;
-          var dfx = .3 * cx1 + tmpx + .16666667 * dddfx, dfy = .3 * cy1 + tmpy + .16666667 * dddfy;
-          var i = frameIndex * CurveTimeline.BEZIER_SIZE;
-          var curves = this.curves;
-          curves[i++] = CurveTimeline.BEZIER;
-          var x = dfx, y = dfy;
-          for (var n = i + CurveTimeline.BEZIER_SIZE - 1; i < n; i += 2) {
-            curves[i] = x;
-            curves[i + 1] = y;
-            dfx += ddfx;
-            dfy += ddfy;
-            ddfx += dddfx;
-            ddfy += dddfy;
-            x += dfx;
-            y += dfy;
-          }
-        };
-        CurveTimeline.prototype.getCurvePercent = function(frameIndex, percent) {
-          percent = spine.MathUtils.clamp(percent, 0, 1);
-          var curves = this.curves;
-          var i = frameIndex * CurveTimeline.BEZIER_SIZE;
-          var type = curves[i];
-          if (type == CurveTimeline.LINEAR) return percent;
-          if (type == CurveTimeline.STEPPED) return 0;
-          i++;
-          var x = 0;
-          for (var start = i, n = i + CurveTimeline.BEZIER_SIZE - 1; i < n; i += 2) {
-            x = curves[i];
-            if (x >= percent) {
-              var prevX = void 0, prevY = void 0;
-              if (i == start) {
-                prevX = 0;
-                prevY = 0;
-              } else {
-                prevX = curves[i - 2];
-                prevY = curves[i - 1];
-              }
-              return prevY + (curves[i + 1] - prevY) * (percent - prevX) / (x - prevX);
-            }
-          }
-          var y = curves[i - 1];
-          return y + (1 - y) * (percent - x) / (1 - x);
-        };
-        CurveTimeline.LINEAR = 0;
-        CurveTimeline.STEPPED = 1;
-        CurveTimeline.BEZIER = 2;
-        CurveTimeline.BEZIER_SIZE = 19;
-        return CurveTimeline;
-      })();
-      spine.CurveTimeline = CurveTimeline;
-      var RotateTimeline = (function(_super) {
-        __extends(RotateTimeline, _super);
-        function RotateTimeline(frameCount) {
-          _super.call(this, frameCount);
-          this.frames = spine.Utils.newFloatArray(frameCount << 1);
-        }
-        RotateTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.rotate << 24) + this.boneIndex;
-        };
-        RotateTimeline.prototype.setFrame = function(frameIndex, time, degrees) {
-          frameIndex <<= 1;
-          this.frames[frameIndex] = time;
-          this.frames[frameIndex + RotateTimeline.ROTATION] = degrees;
-        };
-        RotateTimeline.prototype.apply = function(skeleton, lastTime, time, events, alpha, setupPose, mixingOut) {
-          var frames = this.frames;
-          var bone = skeleton.bones[this.boneIndex];
-          if (time < frames[0]) {
-            setupPose && (bone.rotation = bone.data.rotation);
-            return;
-          }
-          if (time >= frames[frames.length - RotateTimeline.ENTRIES]) {
-            if (setupPose) bone.rotation = bone.data.rotation + frames[frames.length + RotateTimeline.PREV_ROTATION] * alpha; else {
-              var r_1 = bone.data.rotation + frames[frames.length + RotateTimeline.PREV_ROTATION] - bone.rotation;
-              r_1 -= 360 * (16384 - (16384.499999999996 - r_1 / 360 | 0));
-              bone.rotation += r_1 * alpha;
-            }
-            return;
-          }
-          var frame = Animation.binarySearch(frames, time, RotateTimeline.ENTRIES);
-          var prevRotation = frames[frame + RotateTimeline.PREV_ROTATION];
-          var frameTime = frames[frame];
-          var percent = this.getCurvePercent((frame >> 1) - 1, 1 - (time - frameTime) / (frames[frame + RotateTimeline.PREV_TIME] - frameTime));
-          var r = frames[frame + RotateTimeline.ROTATION] - prevRotation;
-          r -= 360 * (16384 - (16384.499999999996 - r / 360 | 0));
-          r = prevRotation + r * percent;
-          if (setupPose) {
-            r -= 360 * (16384 - (16384.499999999996 - r / 360 | 0));
-            bone.rotation = bone.data.rotation + r * alpha;
-          } else {
-            r = bone.data.rotation + r - bone.rotation;
-            r -= 360 * (16384 - (16384.499999999996 - r / 360 | 0));
-            bone.rotation += r * alpha;
-          }
-        };
-        RotateTimeline.ENTRIES = 2;
-        RotateTimeline.PREV_TIME = -2;
-        RotateTimeline.PREV_ROTATION = -1;
-        RotateTimeline.ROTATION = 1;
-        return RotateTimeline;
-      })(CurveTimeline);
-      spine.RotateTimeline = RotateTimeline;
-      var TranslateTimeline = (function(_super) {
-        __extends(TranslateTimeline, _super);
-        function TranslateTimeline(frameCount) {
-          _super.call(this, frameCount);
-          this.frames = spine.Utils.newFloatArray(frameCount * TranslateTimeline.ENTRIES);
-        }
-        TranslateTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.translate << 24) + this.boneIndex;
-        };
-        TranslateTimeline.prototype.setFrame = function(frameIndex, time, x, y) {
-          frameIndex *= TranslateTimeline.ENTRIES;
-          this.frames[frameIndex] = time;
-          this.frames[frameIndex + TranslateTimeline.X] = x;
-          this.frames[frameIndex + TranslateTimeline.Y] = y;
-        };
-        TranslateTimeline.prototype.apply = function(skeleton, lastTime, time, events, alpha, setupPose, mixingOut) {
-          var frames = this.frames;
-          var bone = skeleton.bones[this.boneIndex];
-          if (time < frames[0]) {
-            if (setupPose) {
-              bone.x = bone.data.x;
-              bone.y = bone.data.y;
-            }
-            return;
-          }
-          var x = 0, y = 0;
-          if (time >= frames[frames.length - TranslateTimeline.ENTRIES]) {
-            x = frames[frames.length + TranslateTimeline.PREV_X];
-            y = frames[frames.length + TranslateTimeline.PREV_Y];
-          } else {
-            var frame = Animation.binarySearch(frames, time, TranslateTimeline.ENTRIES);
-            x = frames[frame + TranslateTimeline.PREV_X];
-            y = frames[frame + TranslateTimeline.PREV_Y];
-            var frameTime = frames[frame];
-            var percent = this.getCurvePercent(frame / TranslateTimeline.ENTRIES - 1, 1 - (time - frameTime) / (frames[frame + TranslateTimeline.PREV_TIME] - frameTime));
-            x += (frames[frame + TranslateTimeline.X] - x) * percent;
-            y += (frames[frame + TranslateTimeline.Y] - y) * percent;
-          }
-          if (setupPose) {
-            bone.x = bone.data.x + x * alpha;
-            bone.y = bone.data.y + y * alpha;
-          } else {
-            bone.x += (bone.data.x + x - bone.x) * alpha;
-            bone.y += (bone.data.y + y - bone.y) * alpha;
-          }
-        };
-        TranslateTimeline.ENTRIES = 3;
-        TranslateTimeline.PREV_TIME = -3;
-        TranslateTimeline.PREV_X = -2;
-        TranslateTimeline.PREV_Y = -1;
-        TranslateTimeline.X = 1;
-        TranslateTimeline.Y = 2;
-        return TranslateTimeline;
-      })(CurveTimeline);
-      spine.TranslateTimeline = TranslateTimeline;
-      var ScaleTimeline = (function(_super) {
-        __extends(ScaleTimeline, _super);
-        function ScaleTimeline(frameCount) {
-          _super.call(this, frameCount);
-        }
-        ScaleTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.scale << 24) + this.boneIndex;
-        };
-        ScaleTimeline.prototype.apply = function(skeleton, lastTime, time, events, alpha, setupPose, mixingOut) {
-          var frames = this.frames;
-          var bone = skeleton.bones[this.boneIndex];
-          if (time < frames[0]) {
-            if (setupPose) {
-              bone.scaleX = bone.data.scaleX;
-              bone.scaleY = bone.data.scaleY;
-            }
-            return;
-          }
-          var x = 0, y = 0;
-          if (time >= frames[frames.length - ScaleTimeline.ENTRIES]) {
-            x = frames[frames.length + ScaleTimeline.PREV_X] * bone.data.scaleX;
-            y = frames[frames.length + ScaleTimeline.PREV_Y] * bone.data.scaleY;
-          } else {
-            var frame = Animation.binarySearch(frames, time, ScaleTimeline.ENTRIES);
-            x = frames[frame + ScaleTimeline.PREV_X];
-            y = frames[frame + ScaleTimeline.PREV_Y];
-            var frameTime = frames[frame];
-            var percent = this.getCurvePercent(frame / ScaleTimeline.ENTRIES - 1, 1 - (time - frameTime) / (frames[frame + ScaleTimeline.PREV_TIME] - frameTime));
-            x = (x + (frames[frame + ScaleTimeline.X] - x) * percent) * bone.data.scaleX;
-            y = (y + (frames[frame + ScaleTimeline.Y] - y) * percent) * bone.data.scaleY;
-          }
-          if (1 == alpha) {
-            bone.scaleX = x;
-            bone.scaleY = y;
-          } else {
-            var bx = 0, by = 0;
-            if (setupPose) {
-              bx = bone.data.scaleX;
-              by = bone.data.scaleY;
-            } else {
-              bx = bone.scaleX;
-              by = bone.scaleY;
-            }
-            if (mixingOut) {
-              x = Math.abs(x) * spine.MathUtils.signum(bx);
-              y = Math.abs(y) * spine.MathUtils.signum(by);
-            } else {
-              bx = Math.abs(bx) * spine.MathUtils.signum(x);
-              by = Math.abs(by) * spine.MathUtils.signum(y);
-            }
-            bone.scaleX = bx + (x - bx) * alpha;
-            bone.scaleY = by + (y - by) * alpha;
-          }
-        };
-        return ScaleTimeline;
-      })(TranslateTimeline);
-      spine.ScaleTimeline = ScaleTimeline;
-      var ShearTimeline = (function(_super) {
-        __extends(ShearTimeline, _super);
-        function ShearTimeline(frameCount) {
-          _super.call(this, frameCount);
-        }
-        ShearTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.shear << 24) + this.boneIndex;
-        };
-        ShearTimeline.prototype.apply = function(skeleton, lastTime, time, events, alpha, setupPose, mixingOut) {
-          var frames = this.frames;
-          var bone = skeleton.bones[this.boneIndex];
-          if (time < frames[0]) {
-            if (setupPose) {
-              bone.shearX = bone.data.shearX;
-              bone.shearY = bone.data.shearY;
-            }
-            return;
-          }
-          var x = 0, y = 0;
-          if (time >= frames[frames.length - ShearTimeline.ENTRIES]) {
-            x = frames[frames.length + ShearTimeline.PREV_X];
-            y = frames[frames.length + ShearTimeline.PREV_Y];
-          } else {
-            var frame = Animation.binarySearch(frames, time, ShearTimeline.ENTRIES);
-            x = frames[frame + ShearTimeline.PREV_X];
-            y = frames[frame + ShearTimeline.PREV_Y];
-            var frameTime = frames[frame];
-            var percent = this.getCurvePercent(frame / ShearTimeline.ENTRIES - 1, 1 - (time - frameTime) / (frames[frame + ShearTimeline.PREV_TIME] - frameTime));
-            x += (frames[frame + ShearTimeline.X] - x) * percent;
-            y += (frames[frame + ShearTimeline.Y] - y) * percent;
-          }
-          if (setupPose) {
-            bone.shearX = bone.data.shearX + x * alpha;
-            bone.shearY = bone.data.shearY + y * alpha;
-          } else {
-            bone.shearX += (bone.data.shearX + x - bone.shearX) * alpha;
-            bone.shearY += (bone.data.shearY + y - bone.shearY) * alpha;
-          }
-        };
-        return ShearTimeline;
-      })(TranslateTimeline);
-      spine.ShearTimeline = ShearTimeline;
-      var ColorTimeline = (function(_super) {
-        __extends(ColorTimeline, _super);
-        function ColorTimeline(frameCount) {
-          _super.call(this, frameCount);
-          this.frames = spine.Utils.newFloatArray(frameCount * ColorTimeline.ENTRIES);
-        }
-        ColorTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.color << 24) + this.slotIndex;
-        };
-        ColorTimeline.prototype.setFrame = function(frameIndex, time, r, g, b, a) {
-          frameIndex *= ColorTimeline.ENTRIES;
-          this.frames[frameIndex] = time;
-          this.frames[frameIndex + ColorTimeline.R] = r;
-          this.frames[frameIndex + ColorTimeline.G] = g;
-          this.frames[frameIndex + ColorTimeline.B] = b;
-          this.frames[frameIndex + ColorTimeline.A] = a;
-        };
-        ColorTimeline.prototype.apply = function(skeleton, lastTime, time, events, alpha, setupPose, mixingOut) {
-          var slot = skeleton.slots[this.slotIndex];
-          var frames = this.frames;
-          if (time < frames[0]) {
-            setupPose && slot.color.setFromColor(slot.data.color);
-            return;
-          }
-          var r = 0, g = 0, b = 0, a = 0;
-          if (time >= frames[frames.length - ColorTimeline.ENTRIES]) {
-            var i = frames.length;
-            r = frames[i + ColorTimeline.PREV_R];
-            g = frames[i + ColorTimeline.PREV_G];
-            b = frames[i + ColorTimeline.PREV_B];
-            a = frames[i + ColorTimeline.PREV_A];
-          } else {
-            var frame = Animation.binarySearch(frames, time, ColorTimeline.ENTRIES);
-            r = frames[frame + ColorTimeline.PREV_R];
-            g = frames[frame + ColorTimeline.PREV_G];
-            b = frames[frame + ColorTimeline.PREV_B];
-            a = frames[frame + ColorTimeline.PREV_A];
-            var frameTime = frames[frame];
-            var percent = this.getCurvePercent(frame / ColorTimeline.ENTRIES - 1, 1 - (time - frameTime) / (frames[frame + ColorTimeline.PREV_TIME] - frameTime));
-            r += (frames[frame + ColorTimeline.R] - r) * percent;
-            g += (frames[frame + ColorTimeline.G] - g) * percent;
-            b += (frames[frame + ColorTimeline.B] - b) * percent;
-            a += (frames[frame + ColorTimeline.A] - a) * percent;
-          }
-          if (1 == alpha) slot.color.set(r, g, b, a); else {
-            var color = slot.color;
-            setupPose && color.setFromColor(slot.data.color);
-            color.add((r - color.r) * alpha, (g - color.g) * alpha, (b - color.b) * alpha, (a - color.a) * alpha);
-          }
-        };
-        ColorTimeline.ENTRIES = 5;
-        ColorTimeline.PREV_TIME = -5;
-        ColorTimeline.PREV_R = -4;
-        ColorTimeline.PREV_G = -3;
-        ColorTimeline.PREV_B = -2;
-        ColorTimeline.PREV_A = -1;
-        ColorTimeline.R = 1;
-        ColorTimeline.G = 2;
-        ColorTimeline.B = 3;
-        ColorTimeline.A = 4;
-        return ColorTimeline;
-      })(CurveTimeline);
-      spine.ColorTimeline = ColorTimeline;
-      var AttachmentTimeline = (function() {
-        function AttachmentTimeline(frameCount) {
-          this.frames = spine.Utils.newFloatArray(frameCount);
-          this.attachmentNames = new Array(frameCount);
-        }
-        AttachmentTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.attachment << 24) + this.slotIndex;
-        };
-        AttachmentTimeline.prototype.getFrameCount = function() {
-          return this.frames.length;
-        };
-        AttachmentTimeline.prototype.setFrame = function(frameIndex, time, attachmentName) {
-          this.frames[frameIndex] = time;
-          this.attachmentNames[frameIndex] = attachmentName;
-        };
-        AttachmentTimeline.prototype.apply = function(skeleton, lastTime, time, events, alpha, setupPose, mixingOut) {
-          var slot = skeleton.slots[this.slotIndex];
-          if (mixingOut && setupPose) {
-            var attachmentName_1 = slot.data.attachmentName;
-            slot.setAttachment(null == attachmentName_1 ? null : skeleton.getAttachment(this.slotIndex, attachmentName_1));
-            return;
-          }
-          var frames = this.frames;
-          if (time < frames[0]) {
-            if (setupPose) {
-              var attachmentName_2 = slot.data.attachmentName;
-              slot.setAttachment(null == attachmentName_2 ? null : skeleton.getAttachment(this.slotIndex, attachmentName_2));
-            }
-            return;
-          }
-          var frameIndex = 0;
-          frameIndex = time >= frames[frames.length - 1] ? frames.length - 1 : Animation.binarySearch(frames, time, 1) - 1;
-          var attachmentName = this.attachmentNames[frameIndex];
-          skeleton.slots[this.slotIndex].setAttachment(null == attachmentName ? null : skeleton.getAttachment(this.slotIndex, attachmentName));
-        };
-        return AttachmentTimeline;
-      })();
-      spine.AttachmentTimeline = AttachmentTimeline;
-      var DeformTimeline = (function(_super) {
-        __extends(DeformTimeline, _super);
-        function DeformTimeline(frameCount) {
-          _super.call(this, frameCount);
-          this.frames = spine.Utils.newFloatArray(frameCount);
-          this.frameVertices = new Array(frameCount);
-        }
-        DeformTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.deform << 24) + this.slotIndex;
-        };
-        DeformTimeline.prototype.setFrame = function(frameIndex, time, vertices) {
-          this.frames[frameIndex] = time;
-          this.frameVertices[frameIndex] = vertices;
-        };
-        DeformTimeline.prototype.apply = function(skeleton, lastTime, time, firedEvents, alpha, setupPose, mixingOut) {
-          var slot = skeleton.slots[this.slotIndex];
-          var slotAttachment = slot.getAttachment();
-          if (!(slotAttachment instanceof spine.VertexAttachment) || !slotAttachment.applyDeform(this.attachment)) return;
-          var frames = this.frames;
-          var verticesArray = slot.attachmentVertices;
-          if (time < frames[0]) {
-            setupPose && spine.Utils.setArraySize(verticesArray, 0);
-            return;
-          }
-          var frameVertices = this.frameVertices;
-          var vertexCount = frameVertices[0].length;
-          verticesArray.length != vertexCount && (alpha = 1);
-          var vertices = spine.Utils.setArraySize(verticesArray, vertexCount);
-          if (time >= frames[frames.length - 1]) {
-            var lastVertices = frameVertices[frames.length - 1];
-            if (1 == alpha) spine.Utils.arrayCopy(lastVertices, 0, vertices, 0, vertexCount); else if (setupPose) {
-              var vertexAttachment = slotAttachment;
-              if (null == vertexAttachment.bones) {
-                var setupVertices = vertexAttachment.vertices;
-                for (var i = 0; i < vertexCount; i++) {
-                  var setup = setupVertices[i];
-                  vertices[i] = setup + (lastVertices[i] - setup) * alpha;
-                }
-              } else for (var i = 0; i < vertexCount; i++) vertices[i] = lastVertices[i] * alpha;
-            } else for (var i = 0; i < vertexCount; i++) vertices[i] += (lastVertices[i] - vertices[i]) * alpha;
-            return;
-          }
-          var frame = Animation.binarySearch(frames, time);
-          var prevVertices = frameVertices[frame - 1];
-          var nextVertices = frameVertices[frame];
-          var frameTime = frames[frame];
-          var percent = this.getCurvePercent(frame - 1, 1 - (time - frameTime) / (frames[frame - 1] - frameTime));
-          if (1 == alpha) for (var i = 0; i < vertexCount; i++) {
-            var prev = prevVertices[i];
-            vertices[i] = prev + (nextVertices[i] - prev) * percent;
-          } else if (setupPose) {
-            var vertexAttachment = slotAttachment;
-            if (null == vertexAttachment.bones) {
-              var setupVertices = vertexAttachment.vertices;
-              for (var i = 0; i < vertexCount; i++) {
-                var prev = prevVertices[i], setup = setupVertices[i];
-                vertices[i] = setup + (prev + (nextVertices[i] - prev) * percent - setup) * alpha;
-              }
-            } else for (var i = 0; i < vertexCount; i++) {
-              var prev = prevVertices[i];
-              vertices[i] = (prev + (nextVertices[i] - prev) * percent) * alpha;
-            }
-          } else for (var i = 0; i < vertexCount; i++) {
-            var prev = prevVertices[i];
-            vertices[i] += (prev + (nextVertices[i] - prev) * percent - vertices[i]) * alpha;
-          }
-        };
-        return DeformTimeline;
-      })(CurveTimeline);
-      spine.DeformTimeline = DeformTimeline;
-      var EventTimeline = (function() {
-        function EventTimeline(frameCount) {
-          this.frames = spine.Utils.newFloatArray(frameCount);
-          this.events = new Array(frameCount);
-        }
-        EventTimeline.prototype.getPropertyId = function() {
-          return TimelineType.event << 24;
-        };
-        EventTimeline.prototype.getFrameCount = function() {
-          return this.frames.length;
-        };
-        EventTimeline.prototype.setFrame = function(frameIndex, event) {
-          this.frames[frameIndex] = event.time;
-          this.events[frameIndex] = event;
-        };
-        EventTimeline.prototype.apply = function(skeleton, lastTime, time, firedEvents, alpha, setupPose, mixingOut) {
-          if (null == firedEvents) return;
-          var frames = this.frames;
-          var frameCount = this.frames.length;
-          if (lastTime > time) {
-            this.apply(skeleton, lastTime, Number.MAX_VALUE, firedEvents, alpha, setupPose, mixingOut);
-            lastTime = -1;
-          } else if (lastTime >= frames[frameCount - 1]) return;
-          if (time < frames[0]) return;
-          var frame = 0;
-          if (lastTime < frames[0]) frame = 0; else {
-            frame = Animation.binarySearch(frames, lastTime);
-            var frameTime = frames[frame];
-            while (frame > 0) {
-              if (frames[frame - 1] != frameTime) break;
-              frame--;
-            }
-          }
-          for (;frame < frameCount && time >= frames[frame]; frame++) firedEvents.push(this.events[frame]);
-        };
-        return EventTimeline;
-      })();
-      spine.EventTimeline = EventTimeline;
-      var DrawOrderTimeline = (function() {
-        function DrawOrderTimeline(frameCount) {
-          this.frames = spine.Utils.newFloatArray(frameCount);
-          this.drawOrders = new Array(frameCount);
-        }
-        DrawOrderTimeline.prototype.getPropertyId = function() {
-          return TimelineType.drawOrder << 24;
-        };
-        DrawOrderTimeline.prototype.getFrameCount = function() {
-          return this.frames.length;
-        };
-        DrawOrderTimeline.prototype.setFrame = function(frameIndex, time, drawOrder) {
-          this.frames[frameIndex] = time;
-          this.drawOrders[frameIndex] = drawOrder;
-        };
-        DrawOrderTimeline.prototype.apply = function(skeleton, lastTime, time, firedEvents, alpha, setupPose, mixingOut) {
-          var drawOrder = skeleton.drawOrder;
-          var slots = skeleton.slots;
-          if (mixingOut && setupPose) {
-            spine.Utils.arrayCopy(skeleton.slots, 0, skeleton.drawOrder, 0, skeleton.slots.length);
-            return;
-          }
-          var frames = this.frames;
-          if (time < frames[0]) {
-            setupPose && spine.Utils.arrayCopy(skeleton.slots, 0, skeleton.drawOrder, 0, skeleton.slots.length);
-            return;
-          }
-          var frame = 0;
-          frame = time >= frames[frames.length - 1] ? frames.length - 1 : Animation.binarySearch(frames, time) - 1;
-          var drawOrderToSetupIndex = this.drawOrders[frame];
-          if (null == drawOrderToSetupIndex) spine.Utils.arrayCopy(slots, 0, drawOrder, 0, slots.length); else for (var i = 0, n = drawOrderToSetupIndex.length; i < n; i++) drawOrder[i] = slots[drawOrderToSetupIndex[i]];
-        };
-        return DrawOrderTimeline;
-      })();
-      spine.DrawOrderTimeline = DrawOrderTimeline;
-      var IkConstraintTimeline = (function(_super) {
-        __extends(IkConstraintTimeline, _super);
-        function IkConstraintTimeline(frameCount) {
-          _super.call(this, frameCount);
-          this.frames = spine.Utils.newFloatArray(frameCount * IkConstraintTimeline.ENTRIES);
-        }
-        IkConstraintTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.ikConstraint << 24) + this.ikConstraintIndex;
-        };
-        IkConstraintTimeline.prototype.setFrame = function(frameIndex, time, mix, bendDirection) {
-          frameIndex *= IkConstraintTimeline.ENTRIES;
-          this.frames[frameIndex] = time;
-          this.frames[frameIndex + IkConstraintTimeline.MIX] = mix;
-          this.frames[frameIndex + IkConstraintTimeline.BEND_DIRECTION] = bendDirection;
-        };
-        IkConstraintTimeline.prototype.apply = function(skeleton, lastTime, time, firedEvents, alpha, setupPose, mixingOut) {
-          var frames = this.frames;
-          var constraint = skeleton.ikConstraints[this.ikConstraintIndex];
-          if (time < frames[0]) {
-            if (setupPose) {
-              constraint.mix = constraint.data.mix;
-              constraint.bendDirection = constraint.data.bendDirection;
-            }
-            return;
-          }
-          if (time >= frames[frames.length - IkConstraintTimeline.ENTRIES]) {
-            if (setupPose) {
-              constraint.mix = constraint.data.mix + (frames[frames.length + IkConstraintTimeline.PREV_MIX] - constraint.data.mix) * alpha;
-              constraint.bendDirection = mixingOut ? constraint.data.bendDirection : frames[frames.length + IkConstraintTimeline.PREV_BEND_DIRECTION];
-            } else {
-              constraint.mix += (frames[frames.length + IkConstraintTimeline.PREV_MIX] - constraint.mix) * alpha;
-              mixingOut || (constraint.bendDirection = frames[frames.length + IkConstraintTimeline.PREV_BEND_DIRECTION]);
-            }
-            return;
-          }
-          var frame = Animation.binarySearch(frames, time, IkConstraintTimeline.ENTRIES);
-          var mix = frames[frame + IkConstraintTimeline.PREV_MIX];
-          var frameTime = frames[frame];
-          var percent = this.getCurvePercent(frame / IkConstraintTimeline.ENTRIES - 1, 1 - (time - frameTime) / (frames[frame + IkConstraintTimeline.PREV_TIME] - frameTime));
-          if (setupPose) {
-            constraint.mix = constraint.data.mix + (mix + (frames[frame + IkConstraintTimeline.MIX] - mix) * percent - constraint.data.mix) * alpha;
-            constraint.bendDirection = mixingOut ? constraint.data.bendDirection : frames[frame + IkConstraintTimeline.PREV_BEND_DIRECTION];
-          } else {
-            constraint.mix += (mix + (frames[frame + IkConstraintTimeline.MIX] - mix) * percent - constraint.mix) * alpha;
-            mixingOut || (constraint.bendDirection = frames[frame + IkConstraintTimeline.PREV_BEND_DIRECTION]);
-          }
-        };
-        IkConstraintTimeline.ENTRIES = 3;
-        IkConstraintTimeline.PREV_TIME = -3;
-        IkConstraintTimeline.PREV_MIX = -2;
-        IkConstraintTimeline.PREV_BEND_DIRECTION = -1;
-        IkConstraintTimeline.MIX = 1;
-        IkConstraintTimeline.BEND_DIRECTION = 2;
-        return IkConstraintTimeline;
-      })(CurveTimeline);
-      spine.IkConstraintTimeline = IkConstraintTimeline;
-      var TransformConstraintTimeline = (function(_super) {
-        __extends(TransformConstraintTimeline, _super);
-        function TransformConstraintTimeline(frameCount) {
-          _super.call(this, frameCount);
-          this.frames = spine.Utils.newFloatArray(frameCount * TransformConstraintTimeline.ENTRIES);
-        }
-        TransformConstraintTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.transformConstraint << 24) + this.transformConstraintIndex;
-        };
-        TransformConstraintTimeline.prototype.setFrame = function(frameIndex, time, rotateMix, translateMix, scaleMix, shearMix) {
-          frameIndex *= TransformConstraintTimeline.ENTRIES;
-          this.frames[frameIndex] = time;
-          this.frames[frameIndex + TransformConstraintTimeline.ROTATE] = rotateMix;
-          this.frames[frameIndex + TransformConstraintTimeline.TRANSLATE] = translateMix;
-          this.frames[frameIndex + TransformConstraintTimeline.SCALE] = scaleMix;
-          this.frames[frameIndex + TransformConstraintTimeline.SHEAR] = shearMix;
-        };
-        TransformConstraintTimeline.prototype.apply = function(skeleton, lastTime, time, firedEvents, alpha, setupPose, mixingOut) {
-          var frames = this.frames;
-          var constraint = skeleton.transformConstraints[this.transformConstraintIndex];
-          if (time < frames[0]) {
-            if (setupPose) {
-              var data = constraint.data;
-              constraint.rotateMix = data.rotateMix;
-              constraint.translateMix = data.rotateMix;
-              constraint.scaleMix = data.scaleMix;
-              constraint.shearMix = data.shearMix;
-            }
-            return;
-          }
-          var rotate = 0, translate = 0, scale = 0, shear = 0;
-          if (time >= frames[frames.length - TransformConstraintTimeline.ENTRIES]) {
-            var i = frames.length;
-            rotate = frames[i + TransformConstraintTimeline.PREV_ROTATE];
-            translate = frames[i + TransformConstraintTimeline.PREV_TRANSLATE];
-            scale = frames[i + TransformConstraintTimeline.PREV_SCALE];
-            shear = frames[i + TransformConstraintTimeline.PREV_SHEAR];
-          } else {
-            var frame = Animation.binarySearch(frames, time, TransformConstraintTimeline.ENTRIES);
-            rotate = frames[frame + TransformConstraintTimeline.PREV_ROTATE];
-            translate = frames[frame + TransformConstraintTimeline.PREV_TRANSLATE];
-            scale = frames[frame + TransformConstraintTimeline.PREV_SCALE];
-            shear = frames[frame + TransformConstraintTimeline.PREV_SHEAR];
-            var frameTime = frames[frame];
-            var percent = this.getCurvePercent(frame / TransformConstraintTimeline.ENTRIES - 1, 1 - (time - frameTime) / (frames[frame + TransformConstraintTimeline.PREV_TIME] - frameTime));
-            rotate += (frames[frame + TransformConstraintTimeline.ROTATE] - rotate) * percent;
-            translate += (frames[frame + TransformConstraintTimeline.TRANSLATE] - translate) * percent;
-            scale += (frames[frame + TransformConstraintTimeline.SCALE] - scale) * percent;
-            shear += (frames[frame + TransformConstraintTimeline.SHEAR] - shear) * percent;
-          }
-          if (setupPose) {
-            var data = constraint.data;
-            constraint.rotateMix = data.rotateMix + (rotate - data.rotateMix) * alpha;
-            constraint.translateMix = data.translateMix + (translate - data.translateMix) * alpha;
-            constraint.scaleMix = data.scaleMix + (scale - data.scaleMix) * alpha;
-            constraint.shearMix = data.shearMix + (shear - data.shearMix) * alpha;
-          } else {
-            constraint.rotateMix += (rotate - constraint.rotateMix) * alpha;
-            constraint.translateMix += (translate - constraint.translateMix) * alpha;
-            constraint.scaleMix += (scale - constraint.scaleMix) * alpha;
-            constraint.shearMix += (shear - constraint.shearMix) * alpha;
-          }
-        };
-        TransformConstraintTimeline.ENTRIES = 5;
-        TransformConstraintTimeline.PREV_TIME = -5;
-        TransformConstraintTimeline.PREV_ROTATE = -4;
-        TransformConstraintTimeline.PREV_TRANSLATE = -3;
-        TransformConstraintTimeline.PREV_SCALE = -2;
-        TransformConstraintTimeline.PREV_SHEAR = -1;
-        TransformConstraintTimeline.ROTATE = 1;
-        TransformConstraintTimeline.TRANSLATE = 2;
-        TransformConstraintTimeline.SCALE = 3;
-        TransformConstraintTimeline.SHEAR = 4;
-        return TransformConstraintTimeline;
-      })(CurveTimeline);
-      spine.TransformConstraintTimeline = TransformConstraintTimeline;
-      var PathConstraintPositionTimeline = (function(_super) {
-        __extends(PathConstraintPositionTimeline, _super);
-        function PathConstraintPositionTimeline(frameCount) {
-          _super.call(this, frameCount);
-          this.frames = spine.Utils.newFloatArray(frameCount * PathConstraintPositionTimeline.ENTRIES);
-        }
-        PathConstraintPositionTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.pathConstraintPosition << 24) + this.pathConstraintIndex;
-        };
-        PathConstraintPositionTimeline.prototype.setFrame = function(frameIndex, time, value) {
-          frameIndex *= PathConstraintPositionTimeline.ENTRIES;
-          this.frames[frameIndex] = time;
-          this.frames[frameIndex + PathConstraintPositionTimeline.VALUE] = value;
-        };
-        PathConstraintPositionTimeline.prototype.apply = function(skeleton, lastTime, time, firedEvents, alpha, setupPose, mixingOut) {
-          var frames = this.frames;
-          var constraint = skeleton.pathConstraints[this.pathConstraintIndex];
-          if (time < frames[0]) {
-            setupPose && (constraint.position = constraint.data.position);
-            return;
-          }
-          var position = 0;
-          if (time >= frames[frames.length - PathConstraintPositionTimeline.ENTRIES]) position = frames[frames.length + PathConstraintPositionTimeline.PREV_VALUE]; else {
-            var frame = Animation.binarySearch(frames, time, PathConstraintPositionTimeline.ENTRIES);
-            position = frames[frame + PathConstraintPositionTimeline.PREV_VALUE];
-            var frameTime = frames[frame];
-            var percent = this.getCurvePercent(frame / PathConstraintPositionTimeline.ENTRIES - 1, 1 - (time - frameTime) / (frames[frame + PathConstraintPositionTimeline.PREV_TIME] - frameTime));
-            position += (frames[frame + PathConstraintPositionTimeline.VALUE] - position) * percent;
-          }
-          setupPose ? constraint.position = constraint.data.position + (position - constraint.data.position) * alpha : constraint.position += (position - constraint.position) * alpha;
-        };
-        PathConstraintPositionTimeline.ENTRIES = 2;
-        PathConstraintPositionTimeline.PREV_TIME = -2;
-        PathConstraintPositionTimeline.PREV_VALUE = -1;
-        PathConstraintPositionTimeline.VALUE = 1;
-        return PathConstraintPositionTimeline;
-      })(CurveTimeline);
-      spine.PathConstraintPositionTimeline = PathConstraintPositionTimeline;
-      var PathConstraintSpacingTimeline = (function(_super) {
-        __extends(PathConstraintSpacingTimeline, _super);
-        function PathConstraintSpacingTimeline(frameCount) {
-          _super.call(this, frameCount);
-        }
-        PathConstraintSpacingTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.pathConstraintSpacing << 24) + this.pathConstraintIndex;
-        };
-        PathConstraintSpacingTimeline.prototype.apply = function(skeleton, lastTime, time, firedEvents, alpha, setupPose, mixingOut) {
-          var frames = this.frames;
-          var constraint = skeleton.pathConstraints[this.pathConstraintIndex];
-          if (time < frames[0]) {
-            setupPose && (constraint.spacing = constraint.data.spacing);
-            return;
-          }
-          var spacing = 0;
-          if (time >= frames[frames.length - PathConstraintSpacingTimeline.ENTRIES]) spacing = frames[frames.length + PathConstraintSpacingTimeline.PREV_VALUE]; else {
-            var frame = Animation.binarySearch(frames, time, PathConstraintSpacingTimeline.ENTRIES);
-            spacing = frames[frame + PathConstraintSpacingTimeline.PREV_VALUE];
-            var frameTime = frames[frame];
-            var percent = this.getCurvePercent(frame / PathConstraintSpacingTimeline.ENTRIES - 1, 1 - (time - frameTime) / (frames[frame + PathConstraintSpacingTimeline.PREV_TIME] - frameTime));
-            spacing += (frames[frame + PathConstraintSpacingTimeline.VALUE] - spacing) * percent;
-          }
-          setupPose ? constraint.spacing = constraint.data.spacing + (spacing - constraint.data.spacing) * alpha : constraint.spacing += (spacing - constraint.spacing) * alpha;
-        };
-        return PathConstraintSpacingTimeline;
-      })(PathConstraintPositionTimeline);
-      spine.PathConstraintSpacingTimeline = PathConstraintSpacingTimeline;
-      var PathConstraintMixTimeline = (function(_super) {
-        __extends(PathConstraintMixTimeline, _super);
-        function PathConstraintMixTimeline(frameCount) {
-          _super.call(this, frameCount);
-          this.frames = spine.Utils.newFloatArray(frameCount * PathConstraintMixTimeline.ENTRIES);
-        }
-        PathConstraintMixTimeline.prototype.getPropertyId = function() {
-          return (TimelineType.pathConstraintMix << 24) + this.pathConstraintIndex;
-        };
-        PathConstraintMixTimeline.prototype.setFrame = function(frameIndex, time, rotateMix, translateMix) {
-          frameIndex *= PathConstraintMixTimeline.ENTRIES;
-          this.frames[frameIndex] = time;
-          this.frames[frameIndex + PathConstraintMixTimeline.ROTATE] = rotateMix;
-          this.frames[frameIndex + PathConstraintMixTimeline.TRANSLATE] = translateMix;
-        };
-        PathConstraintMixTimeline.prototype.apply = function(skeleton, lastTime, time, firedEvents, alpha, setupPose, mixingOut) {
-          var frames = this.frames;
-          var constraint = skeleton.pathConstraints[this.pathConstraintIndex];
-          if (time < frames[0]) {
-            if (setupPose) {
-              constraint.rotateMix = constraint.data.rotateMix;
-              constraint.translateMix = constraint.data.translateMix;
-            }
-            return;
-          }
-          var rotate = 0, translate = 0;
-          if (time >= frames[frames.length - PathConstraintMixTimeline.ENTRIES]) {
-            rotate = frames[frames.length + PathConstraintMixTimeline.PREV_ROTATE];
-            translate = frames[frames.length + PathConstraintMixTimeline.PREV_TRANSLATE];
-          } else {
-            var frame = Animation.binarySearch(frames, time, PathConstraintMixTimeline.ENTRIES);
-            rotate = frames[frame + PathConstraintMixTimeline.PREV_ROTATE];
-            translate = frames[frame + PathConstraintMixTimeline.PREV_TRANSLATE];
-            var frameTime = frames[frame];
-            var percent = this.getCurvePercent(frame / PathConstraintMixTimeline.ENTRIES - 1, 1 - (time - frameTime) / (frames[frame + PathConstraintMixTimeline.PREV_TIME] - frameTime));
-            rotate += (frames[frame + PathConstraintMixTimeline.ROTATE] - rotate) * percent;
-            translate += (frames[frame + PathConstraintMixTimeline.TRANSLATE] - translate) * percent;
-          }
-          if (setupPose) {
-            constraint.rotateMix = constraint.data.rotateMix + (rotate - constraint.data.rotateMix) * alpha;
-            constraint.translateMix = constraint.data.translateMix + (translate - constraint.data.translateMix) * alpha;
-          } else {
-            constraint.rotateMix += (rotate - constraint.rotateMix) * alpha;
-            constraint.translateMix += (translate - constraint.translateMix) * alpha;
-          }
-        };
-        PathConstraintMixTimeline.ENTRIES = 3;
-        PathConstraintMixTimeline.PREV_TIME = -3;
-        PathConstraintMixTimeline.PREV_ROTATE = -2;
-        PathConstraintMixTimeline.PREV_TRANSLATE = -1;
-        PathConstraintMixTimeline.ROTATE = 1;
-        PathConstraintMixTimeline.TRANSLATE = 2;
-        return PathConstraintMixTimeline;
-      })(CurveTimeline);
-      spine.PathConstraintMixTimeline = PathConstraintMixTimeline;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var AnimationState = (function() {
-        function AnimationState(data) {
-          this.tracks = new Array();
-          this.events = new Array();
-          this.listeners = new Array();
-          this.queue = new EventQueue(this);
-          this.propertyIDs = new spine.IntSet();
-          this.animationsChanged = false;
-          this.timeScale = 1;
-          this.trackEntryPool = new spine.Pool(function() {
-            return new TrackEntry();
-          });
-          this.data = data;
-        }
-        AnimationState.prototype.update = function(delta) {
-          delta *= this.timeScale;
-          var tracks = this.tracks;
-          for (var i = 0, n = tracks.length; i < n; i++) {
-            var current = tracks[i];
-            if (null == current) continue;
-            current.animationLast = current.nextAnimationLast;
-            current.trackLast = current.nextTrackLast;
-            var currentDelta = delta * current.timeScale;
-            if (current.delay > 0) {
-              current.delay -= currentDelta;
-              if (current.delay > 0) continue;
-              currentDelta = -current.delay;
-              current.delay = 0;
-            }
-            var next = current.next;
-            if (null != next) {
-              var nextTime = current.trackLast - next.delay;
-              if (nextTime >= 0) {
-                next.delay = 0;
-                next.trackTime = nextTime + delta * next.timeScale;
-                current.trackTime += currentDelta;
-                this.setCurrent(i, next, true);
-                while (null != next.mixingFrom) {
-                  next.mixTime += currentDelta;
-                  next = next.mixingFrom;
-                }
-                continue;
-              }
-            } else if (current.trackLast >= current.trackEnd && null == current.mixingFrom) {
-              tracks[i] = null;
-              this.queue.end(current);
-              this.disposeNext(current);
-              continue;
-            }
-            this.updateMixingFrom(current, delta);
-            current.trackTime += currentDelta;
-          }
-          this.queue.drain();
-        };
-        AnimationState.prototype.updateMixingFrom = function(entry, delta) {
-          var from = entry.mixingFrom;
-          if (null == from) return;
-          this.updateMixingFrom(from, delta);
-          if (entry.mixTime >= entry.mixDuration && null != from.mixingFrom && entry.mixTime > 0) {
-            entry.mixingFrom = null;
-            this.queue.end(from);
-            return;
-          }
-          from.animationLast = from.nextAnimationLast;
-          from.trackLast = from.nextTrackLast;
-          from.trackTime += delta * from.timeScale;
-          entry.mixTime += delta * from.timeScale;
-        };
-        AnimationState.prototype.apply = function(skeleton) {
-          if (null == skeleton) throw new Error("skeleton cannot be null.");
-          this.animationsChanged && this._animationsChanged();
-          var events = this.events;
-          var tracks = this.tracks;
-          for (var i = 0, n = tracks.length; i < n; i++) {
-            var current = tracks[i];
-            if (null == current || current.delay > 0) continue;
-            var mix = current.alpha;
-            null != current.mixingFrom ? mix *= this.applyMixingFrom(current, skeleton) : current.trackTime >= current.trackEnd && (mix = 0);
-            var animationLast = current.animationLast, animationTime = current.getAnimationTime();
-            var timelineCount = current.animation.timelines.length;
-            var timelines = current.animation.timelines;
-            if (1 == mix) for (var ii = 0; ii < timelineCount; ii++) timelines[ii].apply(skeleton, animationLast, animationTime, events, 1, true, false); else {
-              var firstFrame = 0 == current.timelinesRotation.length;
-              firstFrame && spine.Utils.setArraySize(current.timelinesRotation, timelineCount << 1, null);
-              var timelinesRotation = current.timelinesRotation;
-              var timelinesFirst = current.timelinesFirst;
-              for (var ii = 0; ii < timelineCount; ii++) {
-                var timeline = timelines[ii];
-                timeline instanceof spine.RotateTimeline ? this.applyRotateTimeline(timeline, skeleton, animationTime, mix, timelinesFirst[ii], timelinesRotation, ii << 1, firstFrame) : timeline.apply(skeleton, animationLast, animationTime, events, mix, timelinesFirst[ii], false);
-              }
-            }
-            this.queueEvents(current, animationTime);
-            events.length = 0;
-            current.nextAnimationLast = animationTime;
-            current.nextTrackLast = current.trackTime;
-          }
-          this.queue.drain();
-        };
-        AnimationState.prototype.applyMixingFrom = function(entry, skeleton) {
-          var from = entry.mixingFrom;
-          null != from.mixingFrom && this.applyMixingFrom(from, skeleton);
-          var mix = 0;
-          if (0 == entry.mixDuration) mix = 1; else {
-            mix = entry.mixTime / entry.mixDuration;
-            mix > 1 && (mix = 1);
-          }
-          var events = mix < from.eventThreshold ? this.events : null;
-          var attachments = mix < from.attachmentThreshold, drawOrder = mix < from.drawOrderThreshold;
-          var animationLast = from.animationLast, animationTime = from.getAnimationTime();
-          var timelineCount = from.animation.timelines.length;
-          var timelines = from.animation.timelines;
-          var timelinesFirst = from.timelinesFirst;
-          var alpha = from.alpha * entry.mixAlpha * (1 - mix);
-          var firstFrame = 0 == from.timelinesRotation.length;
-          firstFrame && spine.Utils.setArraySize(from.timelinesRotation, timelineCount << 1, null);
-          var timelinesRotation = from.timelinesRotation;
-          for (var i = 0; i < timelineCount; i++) {
-            var timeline = timelines[i];
-            var setupPose = timelinesFirst[i];
-            if (timeline instanceof spine.RotateTimeline) this.applyRotateTimeline(timeline, skeleton, animationTime, alpha, setupPose, timelinesRotation, i << 1, firstFrame); else {
-              if (!setupPose) {
-                if (!attachments && timeline instanceof spine.AttachmentTimeline) continue;
-                if (!drawOrder && timeline instanceof spine.DrawOrderTimeline) continue;
-              }
-              timeline.apply(skeleton, animationLast, animationTime, events, alpha, setupPose, true);
-            }
-          }
-          entry.mixDuration > 0 && this.queueEvents(from, animationTime);
-          this.events.length = 0;
-          from.nextAnimationLast = animationTime;
-          from.nextTrackLast = from.trackTime;
-          return mix;
-        };
-        AnimationState.prototype.applyRotateTimeline = function(timeline, skeleton, time, alpha, setupPose, timelinesRotation, i, firstFrame) {
-          firstFrame && (timelinesRotation[i] = 0);
-          if (1 == alpha) {
-            timeline.apply(skeleton, 0, time, null, 1, setupPose, false);
-            return;
-          }
-          var rotateTimeline = timeline;
-          var frames = rotateTimeline.frames;
-          var bone = skeleton.bones[rotateTimeline.boneIndex];
-          if (time < frames[0]) {
-            setupPose && (bone.rotation = bone.data.rotation);
-            return;
-          }
-          var r2 = 0;
-          if (time >= frames[frames.length - spine.RotateTimeline.ENTRIES]) r2 = bone.data.rotation + frames[frames.length + spine.RotateTimeline.PREV_ROTATION]; else {
-            var frame = spine.Animation.binarySearch(frames, time, spine.RotateTimeline.ENTRIES);
-            var prevRotation = frames[frame + spine.RotateTimeline.PREV_ROTATION];
-            var frameTime = frames[frame];
-            var percent = rotateTimeline.getCurvePercent((frame >> 1) - 1, 1 - (time - frameTime) / (frames[frame + spine.RotateTimeline.PREV_TIME] - frameTime));
-            r2 = frames[frame + spine.RotateTimeline.ROTATION] - prevRotation;
-            r2 -= 360 * (16384 - (16384.499999999996 - r2 / 360 | 0));
-            r2 = prevRotation + r2 * percent + bone.data.rotation;
-            r2 -= 360 * (16384 - (16384.499999999996 - r2 / 360 | 0));
-          }
-          var r1 = setupPose ? bone.data.rotation : bone.rotation;
-          var total = 0, diff = r2 - r1;
-          if (0 == diff) total = timelinesRotation[i]; else {
-            diff -= 360 * (16384 - (16384.499999999996 - diff / 360 | 0));
-            var lastTotal = 0, lastDiff = 0;
-            if (firstFrame) {
-              lastTotal = 0;
-              lastDiff = diff;
-            } else {
-              lastTotal = timelinesRotation[i];
-              lastDiff = timelinesRotation[i + 1];
-            }
-            var current = diff > 0, dir = lastTotal >= 0;
-            if (spine.MathUtils.signum(lastDiff) != spine.MathUtils.signum(diff) && Math.abs(lastDiff) <= 90) {
-              Math.abs(lastTotal) > 180 && (lastTotal += 360 * spine.MathUtils.signum(lastTotal));
-              dir = current;
-            }
-            total = diff + lastTotal - lastTotal % 360;
-            dir != current && (total += 360 * spine.MathUtils.signum(lastTotal));
-            timelinesRotation[i] = total;
-          }
-          timelinesRotation[i + 1] = diff;
-          r1 += total * alpha;
-          bone.rotation = r1 - 360 * (16384 - (16384.499999999996 - r1 / 360 | 0));
-        };
-        AnimationState.prototype.queueEvents = function(entry, animationTime) {
-          var animationStart = entry.animationStart, animationEnd = entry.animationEnd;
-          var duration = animationEnd - animationStart;
-          var trackLastWrapped = entry.trackLast % duration;
-          var events = this.events;
-          var i = 0, n = events.length;
-          for (;i < n; i++) {
-            var event_1 = events[i];
-            if (event_1.time < trackLastWrapped) break;
-            if (event_1.time > animationEnd) continue;
-            this.queue.event(entry, event_1);
-          }
-          (entry.loop ? trackLastWrapped > entry.trackTime % duration : animationTime >= animationEnd && entry.animationLast < animationEnd) && this.queue.complete(entry);
-          for (;i < n; i++) {
-            var event_2 = events[i];
-            if (event_2.time < animationStart) continue;
-            this.queue.event(entry, events[i]);
-          }
-        };
-        AnimationState.prototype.clearTracks = function() {
-          this.queue.drainDisabled = true;
-          for (var i = 0, n = this.tracks.length; i < n; i++) this.clearTrack(i);
-          this.tracks.length = 0;
-          this.queue.drainDisabled = false;
-          this.queue.drain();
-        };
-        AnimationState.prototype.clearTrack = function(trackIndex) {
-          if (trackIndex >= this.tracks.length) return;
-          var current = this.tracks[trackIndex];
-          if (null == current) return;
-          this.queue.end(current);
-          this.disposeNext(current);
-          var entry = current;
-          while (true) {
-            var from = entry.mixingFrom;
-            if (null == from) break;
-            this.queue.end(from);
-            entry.mixingFrom = null;
-            entry = from;
-          }
-          this.tracks[current.trackIndex] = null;
-          this.queue.drain();
-        };
-        AnimationState.prototype.setCurrent = function(index, current, interrupt) {
-          var from = this.expandToIndex(index);
-          this.tracks[index] = current;
-          if (null != from) {
-            interrupt && this.queue.interrupt(from);
-            current.mixingFrom = from;
-            current.mixTime = 0;
-            from.timelinesRotation.length = 0;
-            null != from.mixingFrom && from.mixDuration > 0 && (current.mixAlpha *= Math.min(from.mixTime / from.mixDuration, 1));
-          }
-          this.queue.start(current);
-        };
-        AnimationState.prototype.setAnimation = function(trackIndex, animationName, loop) {
-          var animation = this.data.skeletonData.findAnimation(animationName);
-          if (null == animation) throw new Error("Animation not found: " + animationName);
-          return this.setAnimationWith(trackIndex, animation, loop);
-        };
-        AnimationState.prototype.setAnimationWith = function(trackIndex, animation, loop) {
-          if (null == animation) throw new Error("animation cannot be null.");
-          var interrupt = true;
-          var current = this.expandToIndex(trackIndex);
-          if (null != current) if (-1 == current.nextTrackLast) {
-            this.tracks[trackIndex] = current.mixingFrom;
-            this.queue.interrupt(current);
-            this.queue.end(current);
-            this.disposeNext(current);
-            current = current.mixingFrom;
-            interrupt = false;
-          } else this.disposeNext(current);
-          var entry = this.trackEntry(trackIndex, animation, loop, current);
-          this.setCurrent(trackIndex, entry, interrupt);
-          this.queue.drain();
-          return entry;
-        };
-        AnimationState.prototype.addAnimation = function(trackIndex, animationName, loop, delay) {
-          var animation = this.data.skeletonData.findAnimation(animationName);
-          if (null == animation) throw new Error("Animation not found: " + animationName);
-          return this.addAnimationWith(trackIndex, animation, loop, delay);
-        };
-        AnimationState.prototype.addAnimationWith = function(trackIndex, animation, loop, delay) {
-          if (null == animation) throw new Error("animation cannot be null.");
-          var last = this.expandToIndex(trackIndex);
-          if (null != last) while (null != last.next) last = last.next;
-          var entry = this.trackEntry(trackIndex, animation, loop, last);
-          if (null == last) {
-            this.setCurrent(trackIndex, entry, true);
-            this.queue.drain();
-          } else {
-            last.next = entry;
-            if (delay <= 0) {
-              var duration = last.animationEnd - last.animationStart;
-              0 != duration ? delay += duration * (1 + (last.trackTime / duration | 0)) - this.data.getMix(last.animation, animation) : delay = 0;
-            }
-          }
-          entry.delay = delay;
-          return entry;
-        };
-        AnimationState.prototype.setEmptyAnimation = function(trackIndex, mixDuration) {
-          var entry = this.setAnimationWith(trackIndex, AnimationState.emptyAnimation, false);
-          entry.mixDuration = mixDuration;
-          entry.trackEnd = mixDuration;
-          return entry;
-        };
-        AnimationState.prototype.addEmptyAnimation = function(trackIndex, mixDuration, delay) {
-          delay <= 0 && (delay -= mixDuration);
-          var entry = this.addAnimationWith(trackIndex, AnimationState.emptyAnimation, false, delay);
-          entry.mixDuration = mixDuration;
-          entry.trackEnd = mixDuration;
-          return entry;
-        };
-        AnimationState.prototype.setEmptyAnimations = function(mixDuration) {
-          this.queue.drainDisabled = true;
-          for (var i = 0, n = this.tracks.length; i < n; i++) {
-            var current = this.tracks[i];
-            null != current && this.setEmptyAnimation(current.trackIndex, mixDuration);
-          }
-          this.queue.drainDisabled = false;
-          this.queue.drain();
-        };
-        AnimationState.prototype.expandToIndex = function(index) {
-          if (index < this.tracks.length) return this.tracks[index];
-          spine.Utils.ensureArrayCapacity(this.tracks, index - this.tracks.length + 1, null);
-          this.tracks.length = index + 1;
-          return null;
-        };
-        AnimationState.prototype.trackEntry = function(trackIndex, animation, loop, last) {
-          var entry = this.trackEntryPool.obtain();
-          entry.trackIndex = trackIndex;
-          entry.animation = animation;
-          entry.loop = loop;
-          entry.eventThreshold = 0;
-          entry.attachmentThreshold = 0;
-          entry.drawOrderThreshold = 0;
-          entry.animationStart = 0;
-          entry.animationEnd = animation.duration;
-          entry.animationLast = -1;
-          entry.nextAnimationLast = -1;
-          entry.delay = 0;
-          entry.trackTime = 0;
-          entry.trackLast = -1;
-          entry.nextTrackLast = -1;
-          entry.trackEnd = Number.MAX_VALUE;
-          entry.timeScale = 1;
-          entry.alpha = 1;
-          entry.mixAlpha = 1;
-          entry.mixTime = 0;
-          entry.mixDuration = null == last ? 0 : this.data.getMix(last.animation, animation);
-          return entry;
-        };
-        AnimationState.prototype.disposeNext = function(entry) {
-          var next = entry.next;
-          while (null != next) {
-            this.queue.dispose(next);
-            next = next.next;
-          }
-          entry.next = null;
-        };
-        AnimationState.prototype._animationsChanged = function() {
-          this.animationsChanged = false;
-          var propertyIDs = this.propertyIDs;
-          var i = 0, n = this.tracks.length;
-          propertyIDs.clear();
-          for (;i < n; i++) {
-            var entry = this.tracks[i];
-            if (null == entry) continue;
-            this.setTimelinesFirst(entry);
-            i++;
-            break;
-          }
-          for (;i < n; i++) {
-            var entry = this.tracks[i];
-            null != entry && this.checkTimelinesFirst(entry);
-          }
-        };
-        AnimationState.prototype.setTimelinesFirst = function(entry) {
-          if (null != entry.mixingFrom) {
-            this.setTimelinesFirst(entry.mixingFrom);
-            this.checkTimelinesUsage(entry, entry.timelinesFirst);
-            return;
-          }
-          var propertyIDs = this.propertyIDs;
-          var timelines = entry.animation.timelines;
-          var n = timelines.length;
-          var usage = spine.Utils.setArraySize(entry.timelinesFirst, n, false);
-          for (var i = 0; i < n; i++) {
-            propertyIDs.add(timelines[i].getPropertyId());
-            usage[i] = true;
-          }
-        };
-        AnimationState.prototype.checkTimelinesFirst = function(entry) {
-          null != entry.mixingFrom && this.checkTimelinesFirst(entry.mixingFrom);
-          this.checkTimelinesUsage(entry, entry.timelinesFirst);
-        };
-        AnimationState.prototype.checkTimelinesUsage = function(entry, usageArray) {
-          var propertyIDs = this.propertyIDs;
-          var timelines = entry.animation.timelines;
-          var n = timelines.length;
-          var usage = spine.Utils.setArraySize(usageArray, n);
-          for (var i = 0; i < n; i++) usage[i] = propertyIDs.add(timelines[i].getPropertyId());
-        };
-        AnimationState.prototype.getCurrent = function(trackIndex) {
-          if (trackIndex >= this.tracks.length) return null;
-          return this.tracks[trackIndex];
-        };
-        AnimationState.prototype.addListener = function(listener) {
-          if (null == listener) throw new Error("listener cannot be null.");
-          this.listeners.push(listener);
-        };
-        AnimationState.prototype.removeListener = function(listener) {
-          var index = this.listeners.indexOf(listener);
-          index >= 0 && this.listeners.splice(index, 1);
-        };
-        AnimationState.prototype.clearListeners = function() {
-          this.listeners.length = 0;
-        };
-        AnimationState.prototype.clearListenerNotifications = function() {
-          this.queue.clear();
-        };
-        AnimationState.emptyAnimation = new spine.Animation("<empty>", [], 0);
-        return AnimationState;
-      })();
-      spine.AnimationState = AnimationState;
-      var TrackEntry = (function() {
-        function TrackEntry() {
-          this.timelinesFirst = new Array();
-          this.timelinesRotation = new Array();
-        }
-        TrackEntry.prototype.reset = function() {
-          this.next = null;
-          this.mixingFrom = null;
-          this.animation = null;
-          this.listener = null;
-          this.timelinesFirst.length = 0;
-          this.timelinesRotation.length = 0;
-        };
-        TrackEntry.prototype.getAnimationTime = function() {
-          if (this.loop) {
-            var duration = this.animationEnd - this.animationStart;
-            if (0 == duration) return this.animationStart;
-            return this.trackTime % duration + this.animationStart;
-          }
-          return Math.min(this.trackTime + this.animationStart, this.animationEnd);
-        };
-        TrackEntry.prototype.setAnimationLast = function(animationLast) {
-          this.animationLast = animationLast;
-          this.nextAnimationLast = animationLast;
-        };
-        TrackEntry.prototype.isComplete = function() {
-          return this.trackTime >= this.animationEnd - this.animationStart;
-        };
-        TrackEntry.prototype.resetRotationDirections = function() {
-          this.timelinesRotation.length = 0;
-        };
-        return TrackEntry;
-      })();
-      spine.TrackEntry = TrackEntry;
-      var EventQueue = (function() {
-        function EventQueue(animState) {
-          this.objects = [];
-          this.drainDisabled = false;
-          this.animState = animState;
-        }
-        EventQueue.prototype.start = function(entry) {
-          this.objects.push(EventType.start);
-          this.objects.push(entry);
-          this.animState.animationsChanged = true;
-        };
-        EventQueue.prototype.interrupt = function(entry) {
-          this.objects.push(EventType.interrupt);
-          this.objects.push(entry);
-        };
-        EventQueue.prototype.end = function(entry) {
-          this.objects.push(EventType.end);
-          this.objects.push(entry);
-          this.animState.animationsChanged = true;
-        };
-        EventQueue.prototype.dispose = function(entry) {
-          this.objects.push(EventType.dispose);
-          this.objects.push(entry);
-        };
-        EventQueue.prototype.complete = function(entry) {
-          this.objects.push(EventType.complete);
-          this.objects.push(entry);
-        };
-        EventQueue.prototype.event = function(entry, event) {
-          this.objects.push(EventType.event);
-          this.objects.push(entry);
-          this.objects.push(event);
-        };
-        EventQueue.prototype.drain = function() {
-          if (this.drainDisabled) return;
-          this.drainDisabled = true;
-          var objects = this.objects;
-          var listeners = this.animState.listeners;
-          for (var i = 0; i < objects.length; i += 2) {
-            var type = objects[i];
-            var entry = objects[i + 1];
-            switch (type) {
-             case EventType.start:
-              null != entry.listener && entry.listener.start && entry.listener.start(entry);
-              for (var ii = 0; ii < listeners.length; ii++) listeners[ii].start && listeners[ii].start(entry);
-              break;
-
-             case EventType.interrupt:
-              null != entry.listener && entry.listener.interrupt && entry.listener.interrupt(entry);
-              for (var ii = 0; ii < listeners.length; ii++) listeners[ii].interrupt && listeners[ii].interrupt(entry);
-              break;
-
-             case EventType.end:
-              null != entry.listener && entry.listener.end && entry.listener.end(entry);
-              for (var ii = 0; ii < listeners.length; ii++) listeners[ii].end && listeners[ii].end(entry);
-
-             case EventType.dispose:
-              null != entry.listener && entry.listener.dispose && entry.listener.dispose(entry);
-              for (var ii = 0; ii < listeners.length; ii++) listeners[ii].dispose && listeners[ii].dispose(entry);
-              this.animState.trackEntryPool.free(entry);
-              break;
-
-             case EventType.complete:
-              null != entry.listener && entry.listener.complete && entry.listener.complete(entry);
-              for (var ii = 0; ii < listeners.length; ii++) listeners[ii].complete && listeners[ii].complete(entry);
-              break;
-
-             case EventType.event:
-              var event_3 = objects[2 + i++];
-              null != entry.listener && entry.listener.event && entry.listener.event(entry, event_3);
-              for (var ii = 0; ii < listeners.length; ii++) listeners[ii].event && listeners[ii].event(entry, event_3);
-            }
-          }
-          this.clear();
-          this.drainDisabled = false;
-        };
-        EventQueue.prototype.clear = function() {
-          this.objects.length = 0;
-        };
-        return EventQueue;
-      })();
-      spine.EventQueue = EventQueue;
-      (function(EventType) {
-        EventType[EventType["start"] = 0] = "start";
-        EventType[EventType["interrupt"] = 1] = "interrupt";
-        EventType[EventType["end"] = 2] = "end";
-        EventType[EventType["dispose"] = 3] = "dispose";
-        EventType[EventType["complete"] = 4] = "complete";
-        EventType[EventType["event"] = 5] = "event";
-      })(spine.EventType || (spine.EventType = {}));
-      var EventType = spine.EventType;
-      var AnimationStateAdapter2 = (function() {
-        function AnimationStateAdapter2() {}
-        AnimationStateAdapter2.prototype.start = function(entry) {};
-        AnimationStateAdapter2.prototype.interrupt = function(entry) {};
-        AnimationStateAdapter2.prototype.end = function(entry) {};
-        AnimationStateAdapter2.prototype.dispose = function(entry) {};
-        AnimationStateAdapter2.prototype.complete = function(entry) {};
-        AnimationStateAdapter2.prototype.event = function(entry, event) {};
-        return AnimationStateAdapter2;
-      })();
-      spine.AnimationStateAdapter2 = AnimationStateAdapter2;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var AnimationStateData = (function() {
-        function AnimationStateData(skeletonData) {
-          this.animationToMixTime = {};
-          this.defaultMix = 0;
-          if (null == skeletonData) throw new Error("skeletonData cannot be null.");
-          this.skeletonData = skeletonData;
-        }
-        AnimationStateData.prototype.setMix = function(fromName, toName, duration) {
-          var from = this.skeletonData.findAnimation(fromName);
-          if (null == from) throw new Error("Animation not found: " + fromName);
-          var to = this.skeletonData.findAnimation(toName);
-          if (null == to) throw new Error("Animation not found: " + toName);
-          this.setMixWith(from, to, duration);
-        };
-        AnimationStateData.prototype.setMixWith = function(from, to, duration) {
-          if (null == from) throw new Error("from cannot be null.");
-          if (null == to) throw new Error("to cannot be null.");
-          var key = from.name + to.name;
-          this.animationToMixTime[key] = duration;
-        };
-        AnimationStateData.prototype.getMix = function(from, to) {
-          var key = from.name + to.name;
-          var value = this.animationToMixTime[key];
-          return void 0 === value ? this.defaultMix : value;
-        };
-        return AnimationStateData;
-      })();
-      spine.AnimationStateData = AnimationStateData;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var AssetManager = (function() {
-        function AssetManager(textureLoader, pathPrefix) {
-          void 0 === pathPrefix && (pathPrefix = "");
-          this.assets = {};
-          this.errors = {};
-          this.toLoad = 0;
-          this.loaded = 0;
-          this.textureLoader = textureLoader;
-          this.pathPrefix = pathPrefix;
-        }
-        AssetManager.prototype.loadText = function(path, success, error) {
-          var _this = this;
-          void 0 === success && (success = null);
-          void 0 === error && (error = null);
-          path = this.pathPrefix + path;
-          this.toLoad++;
-          var request = new XMLHttpRequest();
-          request.onreadystatechange = function() {
-            if (request.readyState == XMLHttpRequest.DONE) {
-              if (request.status >= 200 && request.status < 300) {
-                _this.assets[path] = request.responseText;
-                success && success(path, request.responseText);
-              } else {
-                _this.errors[path] = "Couldn't load text " + path + ": status " + request.status + ", " + request.responseText;
-                error && error(path, "Couldn't load text " + path + ": status " + request.status + ", " + request.responseText);
-              }
-              _this.toLoad--;
-              _this.loaded++;
-            }
-          };
-          request.open("GET", path, true);
-          request.send();
-        };
-        AssetManager.prototype.loadTexture = function(path, success, error) {
-          var _this = this;
-          void 0 === success && (success = null);
-          void 0 === error && (error = null);
-          path = this.pathPrefix + path;
-          this.toLoad++;
-          var img = new Image();
-          img.crossOrigin = "anonymous";
-          img.src = path;
-          img.onload = function(ev) {
-            var texture = _this.textureLoader(img);
-            _this.assets[path] = texture;
-            _this.toLoad--;
-            _this.loaded++;
-            success && success(path, img);
-          };
-          img.onerror = function(ev) {
-            _this.errors[path] = "Couldn't load image " + path;
-            _this.toLoad--;
-            _this.loaded++;
-            error && error(path, "Couldn't load image " + path);
-          };
-        };
-        AssetManager.prototype.get = function(path) {
-          path = this.pathPrefix + path;
-          return this.assets[path];
-        };
-        AssetManager.prototype.remove = function(path) {
-          path = this.pathPrefix + path;
-          var asset = this.assets[path];
-          asset.dispose && asset.dispose();
-          this.assets[path] = null;
-        };
-        AssetManager.prototype.removeAll = function() {
-          for (var key in this.assets) {
-            var asset = this.assets[key];
-            asset.dispose && asset.dispose();
-          }
-          this.assets = {};
-        };
-        AssetManager.prototype.isLoadingComplete = function() {
-          return 0 == this.toLoad;
-        };
-        AssetManager.prototype.getToLoad = function() {
-          return this.toLoad;
-        };
-        AssetManager.prototype.getLoaded = function() {
-          return this.loaded;
-        };
-        AssetManager.prototype.dispose = function() {
-          this.removeAll();
-        };
-        AssetManager.prototype.hasErrors = function() {
-          return Object.keys(this.errors).length > 0;
-        };
-        AssetManager.prototype.getErrors = function() {
-          return this.errors;
-        };
-        return AssetManager;
-      })();
-      spine.AssetManager = AssetManager;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var AtlasAttachmentLoader = (function() {
-        function AtlasAttachmentLoader(atlas) {
-          this.atlas = atlas;
-        }
-        AtlasAttachmentLoader.prototype.newRegionAttachment = function(skin, name, path) {
-          var region = this.atlas.findRegion(path);
-          if (null == region) throw new Error("Region not found in atlas: " + path + " (region attachment: " + name + ")");
-          region.renderObject = region;
-          var attachment = new spine.RegionAttachment(name);
-          attachment.setRegion(region);
-          return attachment;
-        };
-        AtlasAttachmentLoader.prototype.newMeshAttachment = function(skin, name, path) {
-          var region = this.atlas.findRegion(path);
-          if (null == region) throw new Error("Region not found in atlas: " + path + " (mesh attachment: " + name + ")");
-          region.renderObject = region;
-          var attachment = new spine.MeshAttachment(name);
-          attachment.region = region;
-          return attachment;
-        };
-        AtlasAttachmentLoader.prototype.newBoundingBoxAttachment = function(skin, name) {
-          return new spine.BoundingBoxAttachment(name);
-        };
-        AtlasAttachmentLoader.prototype.newPathAttachment = function(skin, name) {
-          return new spine.PathAttachment(name);
-        };
-        return AtlasAttachmentLoader;
-      })();
-      spine.AtlasAttachmentLoader = AtlasAttachmentLoader;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var Attachment = (function() {
-        function Attachment(name) {
-          if (null == name) throw new Error("name cannot be null.");
-          this.name = name;
-        }
-        return Attachment;
-      })();
-      spine.Attachment = Attachment;
-      var VertexAttachment = (function(_super) {
-        __extends(VertexAttachment, _super);
-        function VertexAttachment(name) {
-          _super.call(this, name);
-          this.worldVerticesLength = 0;
-        }
-        VertexAttachment.prototype.computeWorldVertices = function(slot, worldVertices) {
-          this.computeWorldVerticesWith(slot, 0, this.worldVerticesLength, worldVertices, 0);
-        };
-        VertexAttachment.prototype.computeWorldVerticesWith = function(slot, start, count, worldVertices, offset) {
-          count += offset;
-          var skeleton = slot.bone.skeleton;
-          var deformArray = slot.attachmentVertices;
-          var vertices = this.vertices;
-          var bones = this.bones;
-          if (null == bones) {
-            deformArray.length > 0 && (vertices = deformArray);
-            var bone = slot.bone;
-            var x = bone.worldX;
-            var y = bone.worldY;
-            var a = bone.a, b = bone.b, c = bone.c, d = bone.d;
-            for (var v_1 = start, w = offset; w < count; v_1 += 2, w += 2) {
-              var vx = vertices[v_1], vy = vertices[v_1 + 1];
-              worldVertices[w] = vx * a + vy * b + x;
-              worldVertices[w + 1] = vx * c + vy * d + y;
-            }
-            return;
-          }
-          var v = 0, skip = 0;
-          for (var i = 0; i < start; i += 2) {
-            var n = bones[v];
-            v += n + 1;
-            skip += n;
-          }
-          var skeletonBones = skeleton.bones;
-          if (0 == deformArray.length) for (var w = offset, b = 3 * skip; w < count; w += 2) {
-            var wx = 0, wy = 0;
-            var n = bones[v++];
-            n += v;
-            for (;v < n; v++, b += 3) {
-              var bone = skeletonBones[bones[v]];
-              var vx = vertices[b], vy = vertices[b + 1], weight = vertices[b + 2];
-              wx += (vx * bone.a + vy * bone.b + bone.worldX) * weight;
-              wy += (vx * bone.c + vy * bone.d + bone.worldY) * weight;
-            }
-            worldVertices[w] = wx;
-            worldVertices[w + 1] = wy;
-          } else {
-            var deform = deformArray;
-            for (var w = offset, b = 3 * skip, f = skip << 1; w < count; w += 2) {
-              var wx = 0, wy = 0;
-              var n = bones[v++];
-              n += v;
-              for (;v < n; v++, b += 3, f += 2) {
-                var bone = skeletonBones[bones[v]];
-                var vx = vertices[b] + deform[f], vy = vertices[b + 1] + deform[f + 1], weight = vertices[b + 2];
-                wx += (vx * bone.a + vy * bone.b + bone.worldX) * weight;
-                wy += (vx * bone.c + vy * bone.d + bone.worldY) * weight;
-              }
-              worldVertices[w] = wx;
-              worldVertices[w + 1] = wy;
-            }
-          }
-        };
-        VertexAttachment.prototype.applyDeform = function(sourceAttachment) {
-          return this == sourceAttachment;
-        };
-        return VertexAttachment;
-      })(Attachment);
-      spine.VertexAttachment = VertexAttachment;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      (function(AttachmentType) {
-        AttachmentType[AttachmentType["Region"] = 0] = "Region";
-        AttachmentType[AttachmentType["BoundingBox"] = 1] = "BoundingBox";
-        AttachmentType[AttachmentType["Mesh"] = 2] = "Mesh";
-        AttachmentType[AttachmentType["LinkedMesh"] = 3] = "LinkedMesh";
-        AttachmentType[AttachmentType["Path"] = 4] = "Path";
-      })(spine.AttachmentType || (spine.AttachmentType = {}));
-      var AttachmentType = spine.AttachmentType;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var BoundingBoxAttachment = (function(_super) {
-        __extends(BoundingBoxAttachment, _super);
-        function BoundingBoxAttachment(name) {
-          _super.call(this, name);
-          this.color = new spine.Color(1, 1, 1, 1);
-        }
-        return BoundingBoxAttachment;
-      })(spine.VertexAttachment);
-      spine.BoundingBoxAttachment = BoundingBoxAttachment;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var MeshAttachment = (function(_super) {
-        __extends(MeshAttachment, _super);
-        function MeshAttachment(name) {
-          _super.call(this, name);
-          this.color = new spine.Color(1, 1, 1, 1);
-          this.inheritDeform = false;
-          this.tempColor = new spine.Color(0, 0, 0, 0);
-        }
-        MeshAttachment.prototype.updateUVs = function() {
-          var regionUVs = this.regionUVs;
-          var verticesLength = regionUVs.length;
-          var worldVerticesLength = 8 * (verticesLength >> 1);
-          null != this.worldVertices && this.worldVertices.length == worldVerticesLength || (this.worldVertices = spine.Utils.newFloatArray(worldVerticesLength));
-          var u = 0, v = 0, width = 0, height = 0;
-          if (null == this.region) {
-            u = v = 0;
-            width = height = 1;
-          } else {
-            u = this.region.u;
-            v = this.region.v;
-            width = this.region.u2 - u;
-            height = this.region.v2 - v;
-          }
-          if (this.region.rotate) for (var i = 0, w = 6; i < verticesLength; i += 2, w += 8) {
-            this.worldVertices[w] = u + regionUVs[i + 1] * width;
-            this.worldVertices[w + 1] = v + height - regionUVs[i] * height;
-          } else for (var i = 0, w = 6; i < verticesLength; i += 2, w += 8) {
-            this.worldVertices[w] = u + regionUVs[i] * width;
-            this.worldVertices[w + 1] = v + regionUVs[i + 1] * height;
-          }
-        };
-        MeshAttachment.prototype.updateWorldVertices = function(slot, premultipliedAlpha) {
-          var skeleton = slot.bone.skeleton;
-          var skeletonColor = skeleton.color, slotColor = slot.color, meshColor = this.color;
-          var alpha = skeletonColor.a * slotColor.a * meshColor.a;
-          var multiplier = premultipliedAlpha ? alpha : 1;
-          var color = this.tempColor;
-          color.set(skeletonColor.r * slotColor.r * meshColor.r * multiplier, skeletonColor.g * slotColor.g * meshColor.g * multiplier, skeletonColor.b * slotColor.b * meshColor.b * multiplier, alpha);
-          var deformArray = slot.attachmentVertices;
-          var vertices = this.vertices, worldVertices = this.worldVertices;
-          var bones = this.bones;
-          if (null == bones) {
-            var verticesLength = vertices.length;
-            deformArray.length > 0 && (vertices = deformArray);
-            var bone = slot.bone;
-            var x = bone.worldX;
-            var y = bone.worldY;
-            var a = bone.a, b = bone.b, c = bone.c, d = bone.d;
-            for (var v = 0, w = 0; v < verticesLength; v += 2, w += 8) {
-              var vx = vertices[v], vy = vertices[v + 1];
-              worldVertices[w] = vx * a + vy * b + x;
-              worldVertices[w + 1] = vx * c + vy * d + y;
-              worldVertices[w + 2] = color.r;
-              worldVertices[w + 3] = color.g;
-              worldVertices[w + 4] = color.b;
-              worldVertices[w + 5] = color.a;
-            }
-            return worldVertices;
-          }
-          var skeletonBones = skeleton.bones;
-          if (0 == deformArray.length) for (var w = 0, v = 0, b = 0, n = bones.length; v < n; w += 8) {
-            var wx = 0, wy = 0;
-            var nn = bones[v++] + v;
-            for (;v < nn; v++, b += 3) {
-              var bone = skeletonBones[bones[v]];
-              var vx = vertices[b], vy = vertices[b + 1], weight = vertices[b + 2];
-              wx += (vx * bone.a + vy * bone.b + bone.worldX) * weight;
-              wy += (vx * bone.c + vy * bone.d + bone.worldY) * weight;
-            }
-            worldVertices[w] = wx;
-            worldVertices[w + 1] = wy;
-            worldVertices[w + 2] = color.r;
-            worldVertices[w + 3] = color.g;
-            worldVertices[w + 4] = color.b;
-            worldVertices[w + 5] = color.a;
-          } else {
-            var deform = deformArray;
-            for (var w = 0, v = 0, b = 0, f = 0, n = bones.length; v < n; w += 8) {
-              var wx = 0, wy = 0;
-              var nn = bones[v++] + v;
-              for (;v < nn; v++, b += 3, f += 2) {
-                var bone = skeletonBones[bones[v]];
-                var vx = vertices[b] + deform[f], vy = vertices[b + 1] + deform[f + 1], weight = vertices[b + 2];
-                wx += (vx * bone.a + vy * bone.b + bone.worldX) * weight;
-                wy += (vx * bone.c + vy * bone.d + bone.worldY) * weight;
-              }
-              worldVertices[w] = wx;
-              worldVertices[w + 1] = wy;
-              worldVertices[w + 2] = color.r;
-              worldVertices[w + 3] = color.g;
-              worldVertices[w + 4] = color.b;
-              worldVertices[w + 5] = color.a;
-            }
-          }
-          return worldVertices;
-        };
-        MeshAttachment.prototype.applyDeform = function(sourceAttachment) {
-          return this == sourceAttachment || this.inheritDeform && this.parentMesh == sourceAttachment;
-        };
-        MeshAttachment.prototype.getParentMesh = function() {
-          return this.parentMesh;
-        };
-        MeshAttachment.prototype.setParentMesh = function(parentMesh) {
-          this.parentMesh = parentMesh;
-          if (null != parentMesh) {
-            this.bones = parentMesh.bones;
-            this.vertices = parentMesh.vertices;
-            this.regionUVs = parentMesh.regionUVs;
-            this.triangles = parentMesh.triangles;
-            this.hullLength = parentMesh.hullLength;
-          }
-        };
-        return MeshAttachment;
-      })(spine.VertexAttachment);
-      spine.MeshAttachment = MeshAttachment;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var PathAttachment = (function(_super) {
-        __extends(PathAttachment, _super);
-        function PathAttachment(name) {
-          _super.call(this, name);
-          this.closed = false;
-          this.constantSpeed = false;
-          this.color = new spine.Color(1, 1, 1, 1);
-        }
-        return PathAttachment;
-      })(spine.VertexAttachment);
-      spine.PathAttachment = PathAttachment;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var RegionAttachment = (function(_super) {
-        __extends(RegionAttachment, _super);
-        function RegionAttachment(name) {
-          _super.call(this, name);
-          this.x = 0;
-          this.y = 0;
-          this.scaleX = 1;
-          this.scaleY = 1;
-          this.rotation = 0;
-          this.width = 0;
-          this.height = 0;
-          this.color = new spine.Color(1, 1, 1, 1);
-          this.offset = spine.Utils.newFloatArray(8);
-          this.vertices = spine.Utils.newFloatArray(32);
-          this.tempColor = new spine.Color(1, 1, 1, 1);
-        }
-        RegionAttachment.prototype.setRegion = function(region) {
-          var vertices = this.vertices;
-          if (region.rotate) {
-            vertices[RegionAttachment.U2] = region.u;
-            vertices[RegionAttachment.V2] = region.v2;
-            vertices[RegionAttachment.U3] = region.u;
-            vertices[RegionAttachment.V3] = region.v;
-            vertices[RegionAttachment.U4] = region.u2;
-            vertices[RegionAttachment.V4] = region.v;
-            vertices[RegionAttachment.U1] = region.u2;
-            vertices[RegionAttachment.V1] = region.v2;
-          } else {
-            vertices[RegionAttachment.U1] = region.u;
-            vertices[RegionAttachment.V1] = region.v2;
-            vertices[RegionAttachment.U2] = region.u;
-            vertices[RegionAttachment.V2] = region.v;
-            vertices[RegionAttachment.U3] = region.u2;
-            vertices[RegionAttachment.V3] = region.v;
-            vertices[RegionAttachment.U4] = region.u2;
-            vertices[RegionAttachment.V4] = region.v2;
-          }
-          this.region = region;
-        };
-        RegionAttachment.prototype.updateOffset = function() {
-          var regionScaleX = this.width / this.region.originalWidth * this.scaleX;
-          var regionScaleY = this.height / this.region.originalHeight * this.scaleY;
-          var localX = -this.width / 2 * this.scaleX + this.region.offsetX * regionScaleX;
-          var localY = -this.height / 2 * this.scaleY + this.region.offsetY * regionScaleY;
-          var localX2 = localX + this.region.width * regionScaleX;
-          var localY2 = localY + this.region.height * regionScaleY;
-          var radians = this.rotation * Math.PI / 180;
-          var cos = Math.cos(radians);
-          var sin = Math.sin(radians);
-          var localXCos = localX * cos + this.x;
-          var localXSin = localX * sin;
-          var localYCos = localY * cos + this.y;
-          var localYSin = localY * sin;
-          var localX2Cos = localX2 * cos + this.x;
-          var localX2Sin = localX2 * sin;
-          var localY2Cos = localY2 * cos + this.y;
-          var localY2Sin = localY2 * sin;
-          var offset = this.offset;
-          offset[RegionAttachment.OX1] = localXCos - localYSin;
-          offset[RegionAttachment.OY1] = localYCos + localXSin;
-          offset[RegionAttachment.OX2] = localXCos - localY2Sin;
-          offset[RegionAttachment.OY2] = localY2Cos + localXSin;
-          offset[RegionAttachment.OX3] = localX2Cos - localY2Sin;
-          offset[RegionAttachment.OY3] = localY2Cos + localX2Sin;
-          offset[RegionAttachment.OX4] = localX2Cos - localYSin;
-          offset[RegionAttachment.OY4] = localYCos + localX2Sin;
-        };
-        RegionAttachment.prototype.updateWorldVertices = function(slot, premultipliedAlpha) {
-          var skeleton = slot.bone.skeleton;
-          var skeletonColor = skeleton.color;
-          var slotColor = slot.color;
-          var regionColor = this.color;
-          var alpha = skeletonColor.a * slotColor.a * regionColor.a;
-          var multiplier = premultipliedAlpha ? alpha : 1;
-          var color = this.tempColor;
-          color.set(skeletonColor.r * slotColor.r * regionColor.r * multiplier, skeletonColor.g * slotColor.g * regionColor.g * multiplier, skeletonColor.b * slotColor.b * regionColor.b * multiplier, alpha);
-          var vertices = this.vertices;
-          var offset = this.offset;
-          var bone = slot.bone;
-          var x = bone.worldX, y = bone.worldY;
-          var a = bone.a, b = bone.b, c = bone.c, d = bone.d;
-          var offsetX = 0, offsetY = 0;
-          offsetX = offset[RegionAttachment.OX1];
-          offsetY = offset[RegionAttachment.OY1];
-          vertices[RegionAttachment.X1] = offsetX * a + offsetY * b + x;
-          vertices[RegionAttachment.Y1] = offsetX * c + offsetY * d + y;
-          vertices[RegionAttachment.C1R] = color.r;
-          vertices[RegionAttachment.C1G] = color.g;
-          vertices[RegionAttachment.C1B] = color.b;
-          vertices[RegionAttachment.C1A] = color.a;
-          offsetX = offset[RegionAttachment.OX2];
-          offsetY = offset[RegionAttachment.OY2];
-          vertices[RegionAttachment.X2] = offsetX * a + offsetY * b + x;
-          vertices[RegionAttachment.Y2] = offsetX * c + offsetY * d + y;
-          vertices[RegionAttachment.C2R] = color.r;
-          vertices[RegionAttachment.C2G] = color.g;
-          vertices[RegionAttachment.C2B] = color.b;
-          vertices[RegionAttachment.C2A] = color.a;
-          offsetX = offset[RegionAttachment.OX3];
-          offsetY = offset[RegionAttachment.OY3];
-          vertices[RegionAttachment.X3] = offsetX * a + offsetY * b + x;
-          vertices[RegionAttachment.Y3] = offsetX * c + offsetY * d + y;
-          vertices[RegionAttachment.C3R] = color.r;
-          vertices[RegionAttachment.C3G] = color.g;
-          vertices[RegionAttachment.C3B] = color.b;
-          vertices[RegionAttachment.C3A] = color.a;
-          offsetX = offset[RegionAttachment.OX4];
-          offsetY = offset[RegionAttachment.OY4];
-          vertices[RegionAttachment.X4] = offsetX * a + offsetY * b + x;
-          vertices[RegionAttachment.Y4] = offsetX * c + offsetY * d + y;
-          vertices[RegionAttachment.C4R] = color.r;
-          vertices[RegionAttachment.C4G] = color.g;
-          vertices[RegionAttachment.C4B] = color.b;
-          vertices[RegionAttachment.C4A] = color.a;
-          return vertices;
-        };
-        RegionAttachment.OX1 = 0;
-        RegionAttachment.OY1 = 1;
-        RegionAttachment.OX2 = 2;
-        RegionAttachment.OY2 = 3;
-        RegionAttachment.OX3 = 4;
-        RegionAttachment.OY3 = 5;
-        RegionAttachment.OX4 = 6;
-        RegionAttachment.OY4 = 7;
-        RegionAttachment.X1 = 0;
-        RegionAttachment.Y1 = 1;
-        RegionAttachment.C1R = 2;
-        RegionAttachment.C1G = 3;
-        RegionAttachment.C1B = 4;
-        RegionAttachment.C1A = 5;
-        RegionAttachment.U1 = 6;
-        RegionAttachment.V1 = 7;
-        RegionAttachment.X2 = 8;
-        RegionAttachment.Y2 = 9;
-        RegionAttachment.C2R = 10;
-        RegionAttachment.C2G = 11;
-        RegionAttachment.C2B = 12;
-        RegionAttachment.C2A = 13;
-        RegionAttachment.U2 = 14;
-        RegionAttachment.V2 = 15;
-        RegionAttachment.X3 = 16;
-        RegionAttachment.Y3 = 17;
-        RegionAttachment.C3R = 18;
-        RegionAttachment.C3G = 19;
-        RegionAttachment.C3B = 20;
-        RegionAttachment.C3A = 21;
-        RegionAttachment.U3 = 22;
-        RegionAttachment.V3 = 23;
-        RegionAttachment.X4 = 24;
-        RegionAttachment.Y4 = 25;
-        RegionAttachment.C4R = 26;
-        RegionAttachment.C4G = 27;
-        RegionAttachment.C4B = 28;
-        RegionAttachment.C4A = 29;
-        RegionAttachment.U4 = 30;
-        RegionAttachment.V4 = 31;
-        return RegionAttachment;
-      })(spine.Attachment);
-      spine.RegionAttachment = RegionAttachment;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      (function(BlendMode) {
-        BlendMode[BlendMode["Normal"] = 0] = "Normal";
-        BlendMode[BlendMode["Additive"] = 1] = "Additive";
-        BlendMode[BlendMode["Multiply"] = 2] = "Multiply";
-        BlendMode[BlendMode["Screen"] = 3] = "Screen";
-      })(spine.BlendMode || (spine.BlendMode = {}));
-      var BlendMode = spine.BlendMode;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var Bone = (function() {
-        function Bone(data, skeleton, parent) {
-          this.children = new Array();
-          this.x = 0;
-          this.y = 0;
-          this.rotation = 0;
-          this.scaleX = 0;
-          this.scaleY = 0;
-          this.shearX = 0;
-          this.shearY = 0;
-          this.ax = 0;
-          this.ay = 0;
-          this.arotation = 0;
-          this.ascaleX = 0;
-          this.ascaleY = 0;
-          this.ashearX = 0;
-          this.ashearY = 0;
-          this.appliedValid = false;
-          this.a = 0;
-          this.b = 0;
-          this.worldX = 0;
-          this.c = 0;
-          this.d = 0;
-          this.worldY = 0;
-          this.sorted = false;
-          if (null == data) throw new Error("data cannot be null.");
-          if (null == skeleton) throw new Error("skeleton cannot be null.");
-          this.data = data;
-          this.skeleton = skeleton;
-          this.parent = parent;
-          this.setToSetupPose();
-        }
-        Bone.prototype.update = function() {
-          this.updateWorldTransformWith(this.x, this.y, this.rotation, this.scaleX, this.scaleY, this.shearX, this.shearY);
-        };
-        Bone.prototype.updateWorldTransform = function() {
-          this.updateWorldTransformWith(this.x, this.y, this.rotation, this.scaleX, this.scaleY, this.shearX, this.shearY);
-        };
-        Bone.prototype.updateWorldTransformWith = function(x, y, rotation, scaleX, scaleY, shearX, shearY) {
-          this.ax = x;
-          this.ay = y;
-          this.arotation = rotation;
-          this.ascaleX = scaleX;
-          this.ascaleY = scaleY;
-          this.ashearX = shearX;
-          this.ashearY = shearY;
-          this.appliedValid = true;
-          var parent = this.parent;
-          if (null == parent) {
-            var rotationY = rotation + 90 + shearY;
-            var la = spine.MathUtils.cosDeg(rotation + shearX) * scaleX;
-            var lb = spine.MathUtils.cosDeg(rotationY) * scaleY;
-            var lc = spine.MathUtils.sinDeg(rotation + shearX) * scaleX;
-            var ld = spine.MathUtils.sinDeg(rotationY) * scaleY;
-            var skeleton = this.skeleton;
-            if (skeleton.flipX) {
-              x = -x;
-              la = -la;
-              lb = -lb;
-            }
-            if (skeleton.flipY) {
-              y = -y;
-              lc = -lc;
-              ld = -ld;
-            }
-            this.a = la;
-            this.b = lb;
-            this.c = lc;
-            this.d = ld;
-            this.worldX = x + skeleton.x;
-            this.worldY = y + skeleton.y;
-            return;
-          }
-          var pa = parent.a, pb = parent.b, pc = parent.c, pd = parent.d;
-          this.worldX = pa * x + pb * y + parent.worldX;
-          this.worldY = pc * x + pd * y + parent.worldY;
-          switch (this.data.transformMode) {
-           case spine.TransformMode.Normal:
-            var rotationY = rotation + 90 + shearY;
-            var la = spine.MathUtils.cosDeg(rotation + shearX) * scaleX;
-            var lb = spine.MathUtils.cosDeg(rotationY) * scaleY;
-            var lc = spine.MathUtils.sinDeg(rotation + shearX) * scaleX;
-            var ld = spine.MathUtils.sinDeg(rotationY) * scaleY;
-            this.a = pa * la + pb * lc;
-            this.b = pa * lb + pb * ld;
-            this.c = pc * la + pd * lc;
-            this.d = pc * lb + pd * ld;
-            return;
-
-           case spine.TransformMode.OnlyTranslation:
-            var rotationY = rotation + 90 + shearY;
-            this.a = spine.MathUtils.cosDeg(rotation + shearX) * scaleX;
-            this.b = spine.MathUtils.cosDeg(rotationY) * scaleY;
-            this.c = spine.MathUtils.sinDeg(rotation + shearX) * scaleX;
-            this.d = spine.MathUtils.sinDeg(rotationY) * scaleY;
-            break;
-
-           case spine.TransformMode.NoRotationOrReflection:
-            var s = pa * pa + pc * pc;
-            var prx = 0;
-            if (s > 1e-4) {
-              s = Math.abs(pa * pd - pb * pc) / s;
-              pb = pc * s;
-              pd = pa * s;
-              prx = Math.atan2(pc, pa) * spine.MathUtils.radDeg;
-            } else {
-              pa = 0;
-              pc = 0;
-              prx = 90 - Math.atan2(pd, pb) * spine.MathUtils.radDeg;
-            }
-            var rx = rotation + shearX - prx;
-            var ry = rotation + shearY - prx + 90;
-            var la = spine.MathUtils.cosDeg(rx) * scaleX;
-            var lb = spine.MathUtils.cosDeg(ry) * scaleY;
-            var lc = spine.MathUtils.sinDeg(rx) * scaleX;
-            var ld = spine.MathUtils.sinDeg(ry) * scaleY;
-            this.a = pa * la - pb * lc;
-            this.b = pa * lb - pb * ld;
-            this.c = pc * la + pd * lc;
-            this.d = pc * lb + pd * ld;
-            break;
-
-           case spine.TransformMode.NoScale:
-           case spine.TransformMode.NoScaleOrReflection:
-            var cos = spine.MathUtils.cosDeg(rotation);
-            var sin = spine.MathUtils.sinDeg(rotation);
-            var za = pa * cos + pb * sin;
-            var zc = pc * cos + pd * sin;
-            var s = Math.sqrt(za * za + zc * zc);
-            s > 1e-5 && (s = 1 / s);
-            za *= s;
-            zc *= s;
-            s = Math.sqrt(za * za + zc * zc);
-            var r = Math.PI / 2 + Math.atan2(zc, za);
-            var zb = Math.cos(r) * s;
-            var zd = Math.sin(r) * s;
-            var la = spine.MathUtils.cosDeg(shearX) * scaleX;
-            var lb = spine.MathUtils.cosDeg(90 + shearY) * scaleY;
-            var lc = spine.MathUtils.sinDeg(shearX) * scaleX;
-            var ld = spine.MathUtils.sinDeg(90 + shearY) * scaleY;
-            this.a = za * la + zb * lc;
-            this.b = za * lb + zb * ld;
-            this.c = zc * la + zd * lc;
-            this.d = zc * lb + zd * ld;
-            if (this.data.transformMode != spine.TransformMode.NoScaleOrReflection ? pa * pd - pb * pc < 0 : this.skeleton.flipX != this.skeleton.flipY) {
-              this.b = -this.b;
-              this.d = -this.d;
-            }
-            return;
-          }
-          if (this.skeleton.flipX) {
-            this.a = -this.a;
-            this.b = -this.b;
-          }
-          if (this.skeleton.flipY) {
-            this.c = -this.c;
-            this.d = -this.d;
-          }
-        };
-        Bone.prototype.setToSetupPose = function() {
-          var data = this.data;
-          this.x = data.x;
-          this.y = data.y;
-          this.rotation = data.rotation;
-          this.scaleX = data.scaleX;
-          this.scaleY = data.scaleY;
-          this.shearX = data.shearX;
-          this.shearY = data.shearY;
-        };
-        Bone.prototype.getWorldRotationX = function() {
-          return Math.atan2(this.c, this.a) * spine.MathUtils.radDeg;
-        };
-        Bone.prototype.getWorldRotationY = function() {
-          return Math.atan2(this.d, this.b) * spine.MathUtils.radDeg;
-        };
-        Bone.prototype.getWorldScaleX = function() {
-          return Math.sqrt(this.a * this.a + this.c * this.c);
-        };
-        Bone.prototype.getWorldScaleY = function() {
-          return Math.sqrt(this.b * this.b + this.d * this.d);
-        };
-        Bone.prototype.worldToLocalRotationX = function() {
-          var parent = this.parent;
-          if (null == parent) return this.arotation;
-          var pa = parent.a, pb = parent.b, pc = parent.c, pd = parent.d, a = this.a, c = this.c;
-          return Math.atan2(pa * c - pc * a, pd * a - pb * c) * spine.MathUtils.radDeg;
-        };
-        Bone.prototype.worldToLocalRotationY = function() {
-          var parent = this.parent;
-          if (null == parent) return this.arotation;
-          var pa = parent.a, pb = parent.b, pc = parent.c, pd = parent.d, b = this.b, d = this.d;
-          return Math.atan2(pa * d - pc * b, pd * b - pb * d) * spine.MathUtils.radDeg;
-        };
-        Bone.prototype.rotateWorld = function(degrees) {
-          var a = this.a, b = this.b, c = this.c, d = this.d;
-          var cos = spine.MathUtils.cosDeg(degrees), sin = spine.MathUtils.sinDeg(degrees);
-          this.a = cos * a - sin * c;
-          this.b = cos * b - sin * d;
-          this.c = sin * a + cos * c;
-          this.d = sin * b + cos * d;
-          this.appliedValid = false;
-        };
-        Bone.prototype.updateAppliedTransform = function() {
-          this.appliedValid = true;
-          var parent = this.parent;
-          if (null == parent) {
-            this.ax = this.worldX;
-            this.ay = this.worldY;
-            this.arotation = Math.atan2(this.c, this.a) * spine.MathUtils.radDeg;
-            this.ascaleX = Math.sqrt(this.a * this.a + this.c * this.c);
-            this.ascaleY = Math.sqrt(this.b * this.b + this.d * this.d);
-            this.ashearX = 0;
-            this.ashearY = Math.atan2(this.a * this.b + this.c * this.d, this.a * this.d - this.b * this.c) * spine.MathUtils.radDeg;
-            return;
-          }
-          var pa = parent.a, pb = parent.b, pc = parent.c, pd = parent.d;
-          var pid = 1 / (pa * pd - pb * pc);
-          var dx = this.worldX - parent.worldX, dy = this.worldY - parent.worldY;
-          this.ax = dx * pd * pid - dy * pb * pid;
-          this.ay = dy * pa * pid - dx * pc * pid;
-          var ia = pid * pd;
-          var id = pid * pa;
-          var ib = pid * pb;
-          var ic = pid * pc;
-          var ra = ia * this.a - ib * this.c;
-          var rb = ia * this.b - ib * this.d;
-          var rc = id * this.c - ic * this.a;
-          var rd = id * this.d - ic * this.b;
-          this.ashearX = 0;
-          this.ascaleX = Math.sqrt(ra * ra + rc * rc);
-          if (this.ascaleX > 1e-4) {
-            var det = ra * rd - rb * rc;
-            this.ascaleY = det / this.ascaleX;
-            this.ashearY = Math.atan2(ra * rb + rc * rd, det) * spine.MathUtils.radDeg;
-            this.arotation = Math.atan2(rc, ra) * spine.MathUtils.radDeg;
-          } else {
-            this.ascaleX = 0;
-            this.ascaleY = Math.sqrt(rb * rb + rd * rd);
-            this.ashearY = 0;
-            this.arotation = 90 - Math.atan2(rd, rb) * spine.MathUtils.radDeg;
-          }
-        };
-        Bone.prototype.worldToLocal = function(world) {
-          var a = this.a, b = this.b, c = this.c, d = this.d;
-          var invDet = 1 / (a * d - b * c);
-          var x = world.x - this.worldX, y = world.y - this.worldY;
-          world.x = x * d * invDet - y * b * invDet;
-          world.y = y * a * invDet - x * c * invDet;
-          return world;
-        };
-        Bone.prototype.localToWorld = function(local) {
-          var x = local.x, y = local.y;
-          local.x = x * this.a + y * this.b + this.worldX;
-          local.y = x * this.c + y * this.d + this.worldY;
-          return local;
-        };
-        return Bone;
-      })();
-      spine.Bone = Bone;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var BoneData = (function() {
-        function BoneData(index, name, parent) {
-          this.x = 0;
-          this.y = 0;
-          this.rotation = 0;
-          this.scaleX = 1;
-          this.scaleY = 1;
-          this.shearX = 0;
-          this.shearY = 0;
-          this.transformMode = TransformMode.Normal;
-          if (index < 0) throw new Error("index must be >= 0.");
-          if (null == name) throw new Error("name cannot be null.");
-          this.index = index;
-          this.name = name;
-          this.parent = parent;
-        }
-        return BoneData;
-      })();
-      spine.BoneData = BoneData;
-      (function(TransformMode) {
-        TransformMode[TransformMode["Normal"] = 0] = "Normal";
-        TransformMode[TransformMode["OnlyTranslation"] = 1] = "OnlyTranslation";
-        TransformMode[TransformMode["NoRotationOrReflection"] = 2] = "NoRotationOrReflection";
-        TransformMode[TransformMode["NoScale"] = 3] = "NoScale";
-        TransformMode[TransformMode["NoScaleOrReflection"] = 4] = "NoScaleOrReflection";
-      })(spine.TransformMode || (spine.TransformMode = {}));
-      var TransformMode = spine.TransformMode;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var Event = (function() {
-        function Event(time, data) {
-          if (null == data) throw new Error("data cannot be null.");
-          this.time = time;
-          this.data = data;
-        }
-        return Event;
-      })();
-      spine.Event = Event;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var EventData = (function() {
-        function EventData(name) {
-          this.name = name;
-        }
-        return EventData;
-      })();
-      spine.EventData = EventData;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var IkConstraint = (function() {
-        function IkConstraint(data, skeleton) {
-          this.mix = 1;
-          this.bendDirection = 0;
-          if (null == data) throw new Error("data cannot be null.");
-          if (null == skeleton) throw new Error("skeleton cannot be null.");
-          this.data = data;
-          this.mix = data.mix;
-          this.bendDirection = data.bendDirection;
-          this.bones = new Array();
-          for (var i = 0; i < data.bones.length; i++) this.bones.push(skeleton.findBone(data.bones[i].name));
-          this.target = skeleton.findBone(data.target.name);
-        }
-        IkConstraint.prototype.getOrder = function() {
-          return this.data.order;
-        };
-        IkConstraint.prototype.apply = function() {
-          this.update();
-        };
-        IkConstraint.prototype.update = function() {
-          var target = this.target;
-          var bones = this.bones;
-          switch (bones.length) {
-           case 1:
-            this.apply1(bones[0], target.worldX, target.worldY, this.mix);
-            break;
-
-           case 2:
-            this.apply2(bones[0], bones[1], target.worldX, target.worldY, this.bendDirection, this.mix);
-          }
-        };
-        IkConstraint.prototype.apply1 = function(bone, targetX, targetY, alpha) {
-          bone.appliedValid || bone.updateAppliedTransform();
-          var p = bone.parent;
-          var id = 1 / (p.a * p.d - p.b * p.c);
-          var x = targetX - p.worldX, y = targetY - p.worldY;
-          var tx = (x * p.d - y * p.b) * id - bone.ax, ty = (y * p.a - x * p.c) * id - bone.ay;
-          var rotationIK = Math.atan2(ty, tx) * spine.MathUtils.radDeg - bone.ashearX - bone.arotation;
-          bone.ascaleX < 0 && (rotationIK += 180);
-          rotationIK > 180 ? rotationIK -= 360 : rotationIK < -180 && (rotationIK += 360);
-          bone.updateWorldTransformWith(bone.ax, bone.ay, bone.arotation + rotationIK * alpha, bone.ascaleX, bone.ascaleY, bone.ashearX, bone.ashearY);
-        };
-        IkConstraint.prototype.apply2 = function(parent, child, targetX, targetY, bendDir, alpha) {
-          if (0 == alpha) {
-            child.updateWorldTransform();
-            return;
-          }
-          parent.appliedValid || parent.updateAppliedTransform();
-          child.appliedValid || child.updateAppliedTransform();
-          var px = parent.ax, py = parent.ay, psx = parent.ascaleX, psy = parent.ascaleY, csx = child.ascaleX;
-          var os1 = 0, os2 = 0, s2 = 0;
-          if (psx < 0) {
-            psx = -psx;
-            os1 = 180;
-            s2 = -1;
-          } else {
-            os1 = 0;
-            s2 = 1;
-          }
-          if (psy < 0) {
-            psy = -psy;
-            s2 = -s2;
-          }
-          if (csx < 0) {
-            csx = -csx;
-            os2 = 180;
-          } else os2 = 0;
-          var cx = child.ax, cy = 0, cwx = 0, cwy = 0, a = parent.a, b = parent.b, c = parent.c, d = parent.d;
-          var u = Math.abs(psx - psy) <= 1e-4;
-          if (u) {
-            cy = child.ay;
-            cwx = a * cx + b * cy + parent.worldX;
-            cwy = c * cx + d * cy + parent.worldY;
-          } else {
-            cy = 0;
-            cwx = a * cx + parent.worldX;
-            cwy = c * cx + parent.worldY;
-          }
-          var pp = parent.parent;
-          a = pp.a;
-          b = pp.b;
-          c = pp.c;
-          d = pp.d;
-          var id = 1 / (a * d - b * c), x = targetX - pp.worldX, y = targetY - pp.worldY;
-          var tx = (x * d - y * b) * id - px, ty = (y * a - x * c) * id - py;
-          x = cwx - pp.worldX;
-          y = cwy - pp.worldY;
-          var dx = (x * d - y * b) * id - px, dy = (y * a - x * c) * id - py;
-          var l1 = Math.sqrt(dx * dx + dy * dy), l2 = child.data.length * csx, a1 = 0, a2 = 0;
-          outer: if (u) {
-            l2 *= psx;
-            var cos = (tx * tx + ty * ty - l1 * l1 - l2 * l2) / (2 * l1 * l2);
-            cos < -1 ? cos = -1 : cos > 1 && (cos = 1);
-            a2 = Math.acos(cos) * bendDir;
-            a = l1 + l2 * cos;
-            b = l2 * Math.sin(a2);
-            a1 = Math.atan2(ty * a - tx * b, tx * a + ty * b);
-          } else {
-            a = psx * l2;
-            b = psy * l2;
-            var aa = a * a, bb = b * b, dd = tx * tx + ty * ty, ta = Math.atan2(ty, tx);
-            c = bb * l1 * l1 + aa * dd - aa * bb;
-            var c1 = -2 * bb * l1, c2 = bb - aa;
-            d = c1 * c1 - 4 * c2 * c;
-            if (d >= 0) {
-              var q = Math.sqrt(d);
-              c1 < 0 && (q = -q);
-              q = -(c1 + q) / 2;
-              var r0 = q / c2, r1 = c / q;
-              var r = Math.abs(r0) < Math.abs(r1) ? r0 : r1;
-              if (r * r <= dd) {
-                y = Math.sqrt(dd - r * r) * bendDir;
-                a1 = ta - Math.atan2(y, r);
-                a2 = Math.atan2(y / psy, (r - l1) / psx);
-                break outer;
-              }
-            }
-            var minAngle = 0, minDist = Number.MAX_VALUE, minX = 0, minY = 0;
-            var maxAngle = 0, maxDist = 0, maxX = 0, maxY = 0;
-            x = l1 + a;
-            d = x * x;
-            if (d > maxDist) {
-              maxAngle = 0;
-              maxDist = d;
-              maxX = x;
-            }
-            x = l1 - a;
-            d = x * x;
-            if (d < minDist) {
-              minAngle = spine.MathUtils.PI;
-              minDist = d;
-              minX = x;
-            }
-            var angle = Math.acos(-a * l1 / (aa - bb));
-            x = a * Math.cos(angle) + l1;
-            y = b * Math.sin(angle);
-            d = x * x + y * y;
-            if (d < minDist) {
-              minAngle = angle;
-              minDist = d;
-              minX = x;
-              minY = y;
-            }
-            if (d > maxDist) {
-              maxAngle = angle;
-              maxDist = d;
-              maxX = x;
-              maxY = y;
-            }
-            if (dd <= (minDist + maxDist) / 2) {
-              a1 = ta - Math.atan2(minY * bendDir, minX);
-              a2 = minAngle * bendDir;
-            } else {
-              a1 = ta - Math.atan2(maxY * bendDir, maxX);
-              a2 = maxAngle * bendDir;
-            }
-          }
-          var os = Math.atan2(cy, cx) * s2;
-          var rotation = parent.arotation;
-          a1 = (a1 - os) * spine.MathUtils.radDeg + os1 - rotation;
-          a1 > 180 ? a1 -= 360 : a1 < -180 && (a1 += 360);
-          parent.updateWorldTransformWith(px, py, rotation + a1 * alpha, parent.ascaleX, parent.ascaleY, 0, 0);
-          rotation = child.arotation;
-          a2 = ((a2 + os) * spine.MathUtils.radDeg - child.ashearX) * s2 + os2 - rotation;
-          a2 > 180 ? a2 -= 360 : a2 < -180 && (a2 += 360);
-          child.updateWorldTransformWith(cx, cy, rotation + a2 * alpha, child.ascaleX, child.ascaleY, child.ashearX, child.ashearY);
-        };
-        return IkConstraint;
-      })();
-      spine.IkConstraint = IkConstraint;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var IkConstraintData = (function() {
-        function IkConstraintData(name) {
-          this.order = 0;
-          this.bones = new Array();
-          this.bendDirection = 1;
-          this.mix = 1;
-          this.name = name;
-        }
-        return IkConstraintData;
-      })();
-      spine.IkConstraintData = IkConstraintData;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var PathConstraint = (function() {
-        function PathConstraint(data, skeleton) {
-          this.position = 0;
-          this.spacing = 0;
-          this.rotateMix = 0;
-          this.translateMix = 0;
-          this.spaces = new Array();
-          this.positions = new Array();
-          this.world = new Array();
-          this.curves = new Array();
-          this.lengths = new Array();
-          this.segments = new Array();
-          if (null == data) throw new Error("data cannot be null.");
-          if (null == skeleton) throw new Error("skeleton cannot be null.");
-          this.data = data;
-          this.bones = new Array();
-          for (var i = 0, n = data.bones.length; i < n; i++) this.bones.push(skeleton.findBone(data.bones[i].name));
-          this.target = skeleton.findSlot(data.target.name);
-          this.position = data.position;
-          this.spacing = data.spacing;
-          this.rotateMix = data.rotateMix;
-          this.translateMix = data.translateMix;
-        }
-        PathConstraint.prototype.apply = function() {
-          this.update();
-        };
-        PathConstraint.prototype.update = function() {
-          var attachment = this.target.getAttachment();
-          if (!(attachment instanceof spine.PathAttachment)) return;
-          var rotateMix = this.rotateMix, translateMix = this.translateMix;
-          var translate = translateMix > 0, rotate = rotateMix > 0;
-          if (!translate && !rotate) return;
-          var data = this.data;
-          var spacingMode = data.spacingMode;
-          var lengthSpacing = spacingMode == spine.SpacingMode.Length;
-          var rotateMode = data.rotateMode;
-          var tangents = rotateMode == spine.RotateMode.Tangent, scale = rotateMode == spine.RotateMode.ChainScale;
-          var boneCount = this.bones.length, spacesCount = tangents ? boneCount : boneCount + 1;
-          var bones = this.bones;
-          var spaces = spine.Utils.setArraySize(this.spaces, spacesCount), lengths = null;
-          var spacing = this.spacing;
-          if (scale || lengthSpacing) {
-            scale && (lengths = spine.Utils.setArraySize(this.lengths, boneCount));
-            for (var i = 0, n = spacesCount - 1; i < n; ) {
-              var bone = bones[i];
-              var length_1 = bone.data.length, x = length_1 * bone.a, y = length_1 * bone.c;
-              length_1 = Math.sqrt(x * x + y * y);
-              scale && (lengths[i] = length_1);
-              spaces[++i] = lengthSpacing ? Math.max(0, length_1 + spacing) : spacing;
-            }
-          } else for (var i = 1; i < spacesCount; i++) spaces[i] = spacing;
-          var positions = this.computeWorldPositions(attachment, spacesCount, tangents, data.positionMode == spine.PositionMode.Percent, spacingMode == spine.SpacingMode.Percent);
-          var boneX = positions[0], boneY = positions[1], offsetRotation = data.offsetRotation;
-          var tip = false;
-          if (0 == offsetRotation) tip = rotateMode == spine.RotateMode.Chain; else {
-            tip = false;
-            var p = this.target.bone;
-            offsetRotation *= p.a * p.d - p.b * p.c > 0 ? spine.MathUtils.degRad : -spine.MathUtils.degRad;
-          }
-          for (var i = 0, p = 3; i < boneCount; i++, p += 3) {
-            var bone = bones[i];
-            bone.worldX += (boneX - bone.worldX) * translateMix;
-            bone.worldY += (boneY - bone.worldY) * translateMix;
-            var x = positions[p], y = positions[p + 1], dx = x - boneX, dy = y - boneY;
-            if (scale) {
-              var length_2 = lengths[i];
-              if (0 != length_2) {
-                var s = (Math.sqrt(dx * dx + dy * dy) / length_2 - 1) * rotateMix + 1;
-                bone.a *= s;
-                bone.c *= s;
-              }
-            }
-            boneX = x;
-            boneY = y;
-            if (rotate) {
-              var a = bone.a, b = bone.b, c = bone.c, d = bone.d, r = 0, cos = 0, sin = 0;
-              r = tangents ? positions[p - 1] : 0 == spaces[i + 1] ? positions[p + 2] : Math.atan2(dy, dx);
-              r -= Math.atan2(c, a);
-              if (tip) {
-                cos = Math.cos(r);
-                sin = Math.sin(r);
-                var length_3 = bone.data.length;
-                boneX += (length_3 * (cos * a - sin * c) - dx) * rotateMix;
-                boneY += (length_3 * (sin * a + cos * c) - dy) * rotateMix;
-              } else r += offsetRotation;
-              r > spine.MathUtils.PI ? r -= spine.MathUtils.PI2 : r < -spine.MathUtils.PI && (r += spine.MathUtils.PI2);
-              r *= rotateMix;
-              cos = Math.cos(r);
-              sin = Math.sin(r);
-              bone.a = cos * a - sin * c;
-              bone.b = cos * b - sin * d;
-              bone.c = sin * a + cos * c;
-              bone.d = sin * b + cos * d;
-            }
-            bone.appliedValid = false;
-          }
-        };
-        PathConstraint.prototype.computeWorldPositions = function(path, spacesCount, tangents, percentPosition, percentSpacing) {
-          var target = this.target;
-          var position = this.position;
-          var spaces = this.spaces, out = spine.Utils.setArraySize(this.positions, 3 * spacesCount + 2), world = null;
-          var closed = path.closed;
-          var verticesLength = path.worldVerticesLength, curveCount = verticesLength / 6, prevCurve = PathConstraint.NONE;
-          if (!path.constantSpeed) {
-            var lengths = path.lengths;
-            curveCount -= closed ? 1 : 2;
-            var pathLength_1 = lengths[curveCount];
-            percentPosition && (position *= pathLength_1);
-            if (percentSpacing) for (var i = 0; i < spacesCount; i++) spaces[i] *= pathLength_1;
-            world = spine.Utils.setArraySize(this.world, 8);
-            for (var i = 0, o = 0, curve = 0; i < spacesCount; i++, o += 3) {
-              var space = spaces[i];
-              position += space;
-              var p = position;
-              if (closed) {
-                p %= pathLength_1;
-                p < 0 && (p += pathLength_1);
-                curve = 0;
-              } else {
-                if (p < 0) {
-                  if (prevCurve != PathConstraint.BEFORE) {
-                    prevCurve = PathConstraint.BEFORE;
-                    path.computeWorldVerticesWith(target, 2, 4, world, 0);
-                  }
-                  this.addBeforePosition(p, world, 0, out, o);
-                  continue;
-                }
-                if (p > pathLength_1) {
-                  if (prevCurve != PathConstraint.AFTER) {
-                    prevCurve = PathConstraint.AFTER;
-                    path.computeWorldVerticesWith(target, verticesLength - 6, 4, world, 0);
-                  }
-                  this.addAfterPosition(p - pathLength_1, world, 0, out, o);
-                  continue;
-                }
-              }
-              for (;;curve++) {
-                var length_4 = lengths[curve];
-                if (p > length_4) continue;
-                if (0 == curve) p /= length_4; else {
-                  var prev = lengths[curve - 1];
-                  p = (p - prev) / (length_4 - prev);
-                }
-                break;
-              }
-              if (curve != prevCurve) {
-                prevCurve = curve;
-                if (closed && curve == curveCount) {
-                  path.computeWorldVerticesWith(target, verticesLength - 4, 4, world, 0);
-                  path.computeWorldVerticesWith(target, 0, 4, world, 4);
-                } else path.computeWorldVerticesWith(target, 6 * curve + 2, 8, world, 0);
-              }
-              this.addCurvePosition(p, world[0], world[1], world[2], world[3], world[4], world[5], world[6], world[7], out, o, tangents || i > 0 && 0 == space);
-            }
-            return out;
-          }
-          if (closed) {
-            verticesLength += 2;
-            world = spine.Utils.setArraySize(this.world, verticesLength);
-            path.computeWorldVerticesWith(target, 2, verticesLength - 4, world, 0);
-            path.computeWorldVerticesWith(target, 0, 2, world, verticesLength - 4);
-            world[verticesLength - 2] = world[0];
-            world[verticesLength - 1] = world[1];
-          } else {
-            curveCount--;
-            verticesLength -= 4;
-            world = spine.Utils.setArraySize(this.world, verticesLength);
-            path.computeWorldVerticesWith(target, 2, verticesLength, world, 0);
-          }
-          var curves = spine.Utils.setArraySize(this.curves, curveCount);
-          var pathLength = 0;
-          var x1 = world[0], y1 = world[1], cx1 = 0, cy1 = 0, cx2 = 0, cy2 = 0, x2 = 0, y2 = 0;
-          var tmpx = 0, tmpy = 0, dddfx = 0, dddfy = 0, ddfx = 0, ddfy = 0, dfx = 0, dfy = 0;
-          for (var i = 0, w = 2; i < curveCount; i++, w += 6) {
-            cx1 = world[w];
-            cy1 = world[w + 1];
-            cx2 = world[w + 2];
-            cy2 = world[w + 3];
-            x2 = world[w + 4];
-            y2 = world[w + 5];
-            tmpx = .1875 * (x1 - 2 * cx1 + cx2);
-            tmpy = .1875 * (y1 - 2 * cy1 + cy2);
-            dddfx = .09375 * (3 * (cx1 - cx2) - x1 + x2);
-            dddfy = .09375 * (3 * (cy1 - cy2) - y1 + y2);
-            ddfx = 2 * tmpx + dddfx;
-            ddfy = 2 * tmpy + dddfy;
-            dfx = .75 * (cx1 - x1) + tmpx + .16666667 * dddfx;
-            dfy = .75 * (cy1 - y1) + tmpy + .16666667 * dddfy;
-            pathLength += Math.sqrt(dfx * dfx + dfy * dfy);
-            dfx += ddfx;
-            dfy += ddfy;
-            ddfx += dddfx;
-            ddfy += dddfy;
-            pathLength += Math.sqrt(dfx * dfx + dfy * dfy);
-            dfx += ddfx;
-            dfy += ddfy;
-            pathLength += Math.sqrt(dfx * dfx + dfy * dfy);
-            dfx += ddfx + dddfx;
-            dfy += ddfy + dddfy;
-            pathLength += Math.sqrt(dfx * dfx + dfy * dfy);
-            curves[i] = pathLength;
-            x1 = x2;
-            y1 = y2;
-          }
-          percentPosition && (position *= pathLength);
-          if (percentSpacing) for (var i = 0; i < spacesCount; i++) spaces[i] *= pathLength;
-          var segments = this.segments;
-          var curveLength = 0;
-          for (var i = 0, o = 0, curve = 0, segment = 0; i < spacesCount; i++, o += 3) {
-            var space = spaces[i];
-            position += space;
-            var p = position;
-            if (closed) {
-              p %= pathLength;
-              p < 0 && (p += pathLength);
-              curve = 0;
-            } else {
-              if (p < 0) {
-                this.addBeforePosition(p, world, 0, out, o);
-                continue;
-              }
-              if (p > pathLength) {
-                this.addAfterPosition(p - pathLength, world, verticesLength - 4, out, o);
-                continue;
-              }
-            }
-            for (;;curve++) {
-              var length_5 = curves[curve];
-              if (p > length_5) continue;
-              if (0 == curve) p /= length_5; else {
-                var prev = curves[curve - 1];
-                p = (p - prev) / (length_5 - prev);
-              }
-              break;
-            }
-            if (curve != prevCurve) {
-              prevCurve = curve;
-              var ii = 6 * curve;
-              x1 = world[ii];
-              y1 = world[ii + 1];
-              cx1 = world[ii + 2];
-              cy1 = world[ii + 3];
-              cx2 = world[ii + 4];
-              cy2 = world[ii + 5];
-              x2 = world[ii + 6];
-              y2 = world[ii + 7];
-              tmpx = .03 * (x1 - 2 * cx1 + cx2);
-              tmpy = .03 * (y1 - 2 * cy1 + cy2);
-              dddfx = .006 * (3 * (cx1 - cx2) - x1 + x2);
-              dddfy = .006 * (3 * (cy1 - cy2) - y1 + y2);
-              ddfx = 2 * tmpx + dddfx;
-              ddfy = 2 * tmpy + dddfy;
-              dfx = .3 * (cx1 - x1) + tmpx + .16666667 * dddfx;
-              dfy = .3 * (cy1 - y1) + tmpy + .16666667 * dddfy;
-              curveLength = Math.sqrt(dfx * dfx + dfy * dfy);
-              segments[0] = curveLength;
-              for (ii = 1; ii < 8; ii++) {
-                dfx += ddfx;
-                dfy += ddfy;
-                ddfx += dddfx;
-                ddfy += dddfy;
-                curveLength += Math.sqrt(dfx * dfx + dfy * dfy);
-                segments[ii] = curveLength;
-              }
-              dfx += ddfx;
-              dfy += ddfy;
-              curveLength += Math.sqrt(dfx * dfx + dfy * dfy);
-              segments[8] = curveLength;
-              dfx += ddfx + dddfx;
-              dfy += ddfy + dddfy;
-              curveLength += Math.sqrt(dfx * dfx + dfy * dfy);
-              segments[9] = curveLength;
-              segment = 0;
-            }
-            p *= curveLength;
-            for (;;segment++) {
-              var length_6 = segments[segment];
-              if (p > length_6) continue;
-              if (0 == segment) p /= length_6; else {
-                var prev = segments[segment - 1];
-                p = segment + (p - prev) / (length_6 - prev);
-              }
-              break;
-            }
-            this.addCurvePosition(.1 * p, x1, y1, cx1, cy1, cx2, cy2, x2, y2, out, o, tangents || i > 0 && 0 == space);
-          }
-          return out;
-        };
-        PathConstraint.prototype.addBeforePosition = function(p, temp, i, out, o) {
-          var x1 = temp[i], y1 = temp[i + 1], dx = temp[i + 2] - x1, dy = temp[i + 3] - y1, r = Math.atan2(dy, dx);
-          out[o] = x1 + p * Math.cos(r);
-          out[o + 1] = y1 + p * Math.sin(r);
-          out[o + 2] = r;
-        };
-        PathConstraint.prototype.addAfterPosition = function(p, temp, i, out, o) {
-          var x1 = temp[i + 2], y1 = temp[i + 3], dx = x1 - temp[i], dy = y1 - temp[i + 1], r = Math.atan2(dy, dx);
-          out[o] = x1 + p * Math.cos(r);
-          out[o + 1] = y1 + p * Math.sin(r);
-          out[o + 2] = r;
-        };
-        PathConstraint.prototype.addCurvePosition = function(p, x1, y1, cx1, cy1, cx2, cy2, x2, y2, out, o, tangents) {
-          (0 == p || isNaN(p)) && (p = 1e-4);
-          var tt = p * p, ttt = tt * p, u = 1 - p, uu = u * u, uuu = uu * u;
-          var ut = u * p, ut3 = 3 * ut, uut3 = u * ut3, utt3 = ut3 * p;
-          var x = x1 * uuu + cx1 * uut3 + cx2 * utt3 + x2 * ttt, y = y1 * uuu + cy1 * uut3 + cy2 * utt3 + y2 * ttt;
-          out[o] = x;
-          out[o + 1] = y;
-          tangents && (out[o + 2] = Math.atan2(y - (y1 * uu + cy1 * ut * 2 + cy2 * tt), x - (x1 * uu + cx1 * ut * 2 + cx2 * tt)));
-        };
-        PathConstraint.prototype.getOrder = function() {
-          return this.data.order;
-        };
-        PathConstraint.NONE = -1;
-        PathConstraint.BEFORE = -2;
-        PathConstraint.AFTER = -3;
-        return PathConstraint;
-      })();
-      spine.PathConstraint = PathConstraint;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var PathConstraintData = (function() {
-        function PathConstraintData(name) {
-          this.order = 0;
-          this.bones = new Array();
-          this.name = name;
-        }
-        return PathConstraintData;
-      })();
-      spine.PathConstraintData = PathConstraintData;
-      (function(PositionMode) {
-        PositionMode[PositionMode["Fixed"] = 0] = "Fixed";
-        PositionMode[PositionMode["Percent"] = 1] = "Percent";
-      })(spine.PositionMode || (spine.PositionMode = {}));
-      var PositionMode = spine.PositionMode;
-      (function(SpacingMode) {
-        SpacingMode[SpacingMode["Length"] = 0] = "Length";
-        SpacingMode[SpacingMode["Fixed"] = 1] = "Fixed";
-        SpacingMode[SpacingMode["Percent"] = 2] = "Percent";
-      })(spine.SpacingMode || (spine.SpacingMode = {}));
-      var SpacingMode = spine.SpacingMode;
-      (function(RotateMode) {
-        RotateMode[RotateMode["Tangent"] = 0] = "Tangent";
-        RotateMode[RotateMode["Chain"] = 1] = "Chain";
-        RotateMode[RotateMode["ChainScale"] = 2] = "ChainScale";
-      })(spine.RotateMode || (spine.RotateMode = {}));
-      var RotateMode = spine.RotateMode;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var Assets = (function() {
-        function Assets(clientId) {
-          this.toLoad = new Array();
-          this.assets = {};
-          this.clientId = clientId;
-        }
-        Assets.prototype.loaded = function() {
-          var i = 0;
-          for (var v in this.assets) i++;
-          return i;
-        };
-        return Assets;
-      })();
-      var SharedAssetManager = (function() {
-        function SharedAssetManager(pathPrefix) {
-          void 0 === pathPrefix && (pathPrefix = "");
-          this.clientAssets = {};
-          this.queuedAssets = {};
-          this.rawAssets = {};
-          this.errors = {};
-          this.pathPrefix = pathPrefix;
-        }
-        SharedAssetManager.prototype.queueAsset = function(clientId, textureLoader, path) {
-          var clientAssets = this.clientAssets[clientId];
-          if (null === clientAssets || void 0 === clientAssets) {
-            clientAssets = new Assets(clientId);
-            this.clientAssets[clientId] = clientAssets;
-          }
-          null !== textureLoader && (clientAssets.textureLoader = textureLoader);
-          clientAssets.toLoad.push(path);
-          if (this.queuedAssets[path] === path) return false;
-          this.queuedAssets[path] = path;
-          return true;
-        };
-        SharedAssetManager.prototype.loadText = function(clientId, path) {
-          var _this = this;
-          path = this.pathPrefix + path;
-          if (!this.queueAsset(clientId, null, path)) return;
-          var request = new XMLHttpRequest();
-          request.onreadystatechange = function() {
-            request.readyState == XMLHttpRequest.DONE && (request.status >= 200 && request.status < 300 ? _this.rawAssets[path] = request.responseText : _this.errors[path] = "Couldn't load text " + path + ": status " + request.status + ", " + request.responseText);
-          };
-          request.open("GET", path, true);
-          request.send();
-        };
-        SharedAssetManager.prototype.loadJson = function(clientId, path) {
-          var _this = this;
-          path = this.pathPrefix + path;
-          if (!this.queueAsset(clientId, null, path)) return;
-          var request = new XMLHttpRequest();
-          request.onreadystatechange = function() {
-            request.readyState == XMLHttpRequest.DONE && (request.status >= 200 && request.status < 300 ? _this.rawAssets[path] = JSON.parse(request.responseText) : _this.errors[path] = "Couldn't load text " + path + ": status " + request.status + ", " + request.responseText);
-          };
-          request.open("GET", path, true);
-          request.send();
-        };
-        SharedAssetManager.prototype.loadTexture = function(clientId, textureLoader, path) {
-          var _this = this;
-          path = this.pathPrefix + path;
-          if (!this.queueAsset(clientId, textureLoader, path)) return;
-          var img = new Image();
-          img.src = path;
-          img.crossOrigin = "anonymous";
-          img.onload = function(ev) {
-            _this.rawAssets[path] = img;
-          };
-          img.onerror = function(ev) {
-            _this.errors[path] = "Couldn't load image " + path;
-          };
-        };
-        SharedAssetManager.prototype.get = function(clientId, path) {
-          path = this.pathPrefix + path;
-          var clientAssets = this.clientAssets[clientId];
-          if (null === clientAssets || void 0 === clientAssets) return true;
-          return clientAssets.assets[path];
-        };
-        SharedAssetManager.prototype.updateClientAssets = function(clientAssets) {
-          for (var i = 0; i < clientAssets.toLoad.length; i++) {
-            var path = clientAssets.toLoad[i];
-            var asset = clientAssets.assets[path];
-            if (null === asset || void 0 === asset) {
-              var rawAsset = this.rawAssets[path];
-              if (null === rawAsset || void 0 === rawAsset) continue;
-              rawAsset instanceof HTMLImageElement ? clientAssets.assets[path] = clientAssets.textureLoader(rawAsset) : clientAssets.assets[path] = rawAsset;
-            }
-          }
-        };
-        SharedAssetManager.prototype.isLoadingComplete = function(clientId) {
-          var clientAssets = this.clientAssets[clientId];
-          if (null === clientAssets || void 0 === clientAssets) return true;
-          this.updateClientAssets(clientAssets);
-          return clientAssets.toLoad.length == clientAssets.loaded();
-        };
-        SharedAssetManager.prototype.dispose = function() {};
-        SharedAssetManager.prototype.hasErrors = function() {
-          return Object.keys(this.errors).length > 0;
-        };
-        SharedAssetManager.prototype.getErrors = function() {
-          return this.errors;
-        };
-        return SharedAssetManager;
-      })();
-      spine.SharedAssetManager = SharedAssetManager;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var Skeleton = (function() {
-        function Skeleton(data) {
-          this._updateCache = new Array();
-          this.updateCacheReset = new Array();
-          this.time = 0;
-          this.flipX = false;
-          this.flipY = false;
-          this.x = 0;
-          this.y = 0;
-          if (null == data) throw new Error("data cannot be null.");
-          this.data = data;
-          this.bones = new Array();
-          for (var i = 0; i < data.bones.length; i++) {
-            var boneData = data.bones[i];
-            var bone = void 0;
-            if (null == boneData.parent) bone = new spine.Bone(boneData, this, null); else {
-              var parent_1 = this.bones[boneData.parent.index];
-              bone = new spine.Bone(boneData, this, parent_1);
-              parent_1.children.push(bone);
-            }
-            this.bones.push(bone);
-          }
-          this.slots = new Array();
-          this.drawOrder = new Array();
-          for (var i = 0; i < data.slots.length; i++) {
-            var slotData = data.slots[i];
-            var bone = this.bones[slotData.boneData.index];
-            var slot = new spine.Slot(slotData, bone);
-            this.slots.push(slot);
-            this.drawOrder.push(slot);
-          }
-          this.ikConstraints = new Array();
-          for (var i = 0; i < data.ikConstraints.length; i++) {
-            var ikConstraintData = data.ikConstraints[i];
-            this.ikConstraints.push(new spine.IkConstraint(ikConstraintData, this));
-          }
-          this.transformConstraints = new Array();
-          for (var i = 0; i < data.transformConstraints.length; i++) {
-            var transformConstraintData = data.transformConstraints[i];
-            this.transformConstraints.push(new spine.TransformConstraint(transformConstraintData, this));
-          }
-          this.pathConstraints = new Array();
-          for (var i = 0; i < data.pathConstraints.length; i++) {
-            var pathConstraintData = data.pathConstraints[i];
-            this.pathConstraints.push(new spine.PathConstraint(pathConstraintData, this));
-          }
-          this.color = new spine.Color(1, 1, 1, 1);
-          this.updateCache();
-        }
-        Skeleton.prototype.updateCache = function() {
-          var updateCache = this._updateCache;
-          updateCache.length = 0;
-          var bones = this.bones;
-          for (var i = 0, n = bones.length; i < n; i++) bones[i].sorted = false;
-          var ikConstraints = this.ikConstraints;
-          var transformConstraints = this.transformConstraints;
-          var pathConstraints = this.pathConstraints;
-          var ikCount = ikConstraints.length, transformCount = transformConstraints.length, pathCount = pathConstraints.length;
-          var constraintCount = ikCount + transformCount + pathCount;
-          outer: for (var i = 0; i < constraintCount; i++) {
-            for (var ii = 0; ii < ikCount; ii++) {
-              var constraint = ikConstraints[ii];
-              if (constraint.data.order == i) {
-                this.sortIkConstraint(constraint);
-                continue outer;
-              }
-            }
-            for (var ii = 0; ii < transformCount; ii++) {
-              var constraint = transformConstraints[ii];
-              if (constraint.data.order == i) {
-                this.sortTransformConstraint(constraint);
-                continue outer;
-              }
-            }
-            for (var ii = 0; ii < pathCount; ii++) {
-              var constraint = pathConstraints[ii];
-              if (constraint.data.order == i) {
-                this.sortPathConstraint(constraint);
-                continue outer;
-              }
-            }
-          }
-          for (var i = 0, n = bones.length; i < n; i++) this.sortBone(bones[i]);
-        };
-        Skeleton.prototype.sortIkConstraint = function(constraint) {
-          var target = constraint.target;
-          this.sortBone(target);
-          var constrained = constraint.bones;
-          var parent = constrained[0];
-          this.sortBone(parent);
-          if (constrained.length > 1) {
-            var child = constrained[constrained.length - 1];
-            this._updateCache.indexOf(child) > -1 || this.updateCacheReset.push(child);
-          }
-          this._updateCache.push(constraint);
-          this.sortReset(parent.children);
-          constrained[constrained.length - 1].sorted = true;
-        };
-        Skeleton.prototype.sortPathConstraint = function(constraint) {
-          var slot = constraint.target;
-          var slotIndex = slot.data.index;
-          var slotBone = slot.bone;
-          null != this.skin && this.sortPathConstraintAttachment(this.skin, slotIndex, slotBone);
-          null != this.data.defaultSkin && this.data.defaultSkin != this.skin && this.sortPathConstraintAttachment(this.data.defaultSkin, slotIndex, slotBone);
-          for (var ii = 0, nn = this.data.skins.length; ii < nn; ii++) this.sortPathConstraintAttachment(this.data.skins[ii], slotIndex, slotBone);
-          var attachment = slot.getAttachment();
-          attachment instanceof spine.PathAttachment && this.sortPathConstraintAttachmentWith(attachment, slotBone);
-          var constrained = constraint.bones;
-          var boneCount = constrained.length;
-          for (var ii = 0; ii < boneCount; ii++) this.sortBone(constrained[ii]);
-          this._updateCache.push(constraint);
-          for (var ii = 0; ii < boneCount; ii++) this.sortReset(constrained[ii].children);
-          for (var ii = 0; ii < boneCount; ii++) constrained[ii].sorted = true;
-        };
-        Skeleton.prototype.sortTransformConstraint = function(constraint) {
-          this.sortBone(constraint.target);
-          var constrained = constraint.bones;
-          var boneCount = constrained.length;
-          for (var ii = 0; ii < boneCount; ii++) this.sortBone(constrained[ii]);
-          this._updateCache.push(constraint);
-          for (var ii = 0; ii < boneCount; ii++) this.sortReset(constrained[ii].children);
-          for (var ii = 0; ii < boneCount; ii++) constrained[ii].sorted = true;
-        };
-        Skeleton.prototype.sortPathConstraintAttachment = function(skin, slotIndex, slotBone) {
-          var attachments = skin.attachments[slotIndex];
-          if (!attachments) return;
-          for (var key in attachments) this.sortPathConstraintAttachmentWith(attachments[key], slotBone);
-        };
-        Skeleton.prototype.sortPathConstraintAttachmentWith = function(attachment, slotBone) {
-          if (!(attachment instanceof spine.PathAttachment)) return;
-          var pathBones = attachment.bones;
-          if (null == pathBones) this.sortBone(slotBone); else {
-            var bones = this.bones;
-            var i = 0;
-            while (i < pathBones.length) {
-              var boneCount = pathBones[i++];
-              for (var n = i + boneCount; i < n; i++) {
-                var boneIndex = pathBones[i];
-                this.sortBone(bones[boneIndex]);
-              }
-            }
-          }
-        };
-        Skeleton.prototype.sortBone = function(bone) {
-          if (bone.sorted) return;
-          var parent = bone.parent;
-          null != parent && this.sortBone(parent);
-          bone.sorted = true;
-          this._updateCache.push(bone);
-        };
-        Skeleton.prototype.sortReset = function(bones) {
-          for (var i = 0, n = bones.length; i < n; i++) {
-            var bone = bones[i];
-            bone.sorted && this.sortReset(bone.children);
-            bone.sorted = false;
-          }
-        };
-        Skeleton.prototype.updateWorldTransform = function() {
-          var updateCacheReset = this.updateCacheReset;
-          for (var i = 0, n = updateCacheReset.length; i < n; i++) {
-            var bone = updateCacheReset[i];
-            bone.ax = bone.x;
-            bone.ay = bone.y;
-            bone.arotation = bone.rotation;
-            bone.ascaleX = bone.scaleX;
-            bone.ascaleY = bone.scaleY;
-            bone.ashearX = bone.shearX;
-            bone.ashearY = bone.shearY;
-            bone.appliedValid = true;
-          }
-          var updateCache = this._updateCache;
-          for (var i = 0, n = updateCache.length; i < n; i++) updateCache[i].update();
-        };
-        Skeleton.prototype.setToSetupPose = function() {
-          this.setBonesToSetupPose();
-          this.setSlotsToSetupPose();
-        };
-        Skeleton.prototype.setBonesToSetupPose = function() {
-          var bones = this.bones;
-          for (var i = 0, n = bones.length; i < n; i++) bones[i].setToSetupPose();
-          var ikConstraints = this.ikConstraints;
-          for (var i = 0, n = ikConstraints.length; i < n; i++) {
-            var constraint = ikConstraints[i];
-            constraint.bendDirection = constraint.data.bendDirection;
-            constraint.mix = constraint.data.mix;
-          }
-          var transformConstraints = this.transformConstraints;
-          for (var i = 0, n = transformConstraints.length; i < n; i++) {
-            var constraint = transformConstraints[i];
-            var data = constraint.data;
-            constraint.rotateMix = data.rotateMix;
-            constraint.translateMix = data.translateMix;
-            constraint.scaleMix = data.scaleMix;
-            constraint.shearMix = data.shearMix;
-          }
-          var pathConstraints = this.pathConstraints;
-          for (var i = 0, n = pathConstraints.length; i < n; i++) {
-            var constraint = pathConstraints[i];
-            var data = constraint.data;
-            constraint.position = data.position;
-            constraint.spacing = data.spacing;
-            constraint.rotateMix = data.rotateMix;
-            constraint.translateMix = data.translateMix;
-          }
-        };
-        Skeleton.prototype.setSlotsToSetupPose = function() {
-          var slots = this.slots;
-          spine.Utils.arrayCopy(slots, 0, this.drawOrder, 0, slots.length);
-          for (var i = 0, n = slots.length; i < n; i++) slots[i].setToSetupPose();
-        };
-        Skeleton.prototype.getRootBone = function() {
-          if (0 == this.bones.length) return null;
-          return this.bones[0];
-        };
-        Skeleton.prototype.findBone = function(boneName) {
-          if (null == boneName) throw new Error("boneName cannot be null.");
-          var bones = this.bones;
-          for (var i = 0, n = bones.length; i < n; i++) {
-            var bone = bones[i];
-            if (bone.data.name == boneName) return bone;
-          }
-          return null;
-        };
-        Skeleton.prototype.findBoneIndex = function(boneName) {
-          if (null == boneName) throw new Error("boneName cannot be null.");
-          var bones = this.bones;
-          for (var i = 0, n = bones.length; i < n; i++) if (bones[i].data.name == boneName) return i;
-          return -1;
-        };
-        Skeleton.prototype.findSlot = function(slotName) {
-          if (null == slotName) throw new Error("slotName cannot be null.");
-          var slots = this.slots;
-          for (var i = 0, n = slots.length; i < n; i++) {
-            var slot = slots[i];
-            if (slot.data.name == slotName) return slot;
-          }
-          return null;
-        };
-        Skeleton.prototype.findSlotIndex = function(slotName) {
-          if (null == slotName) throw new Error("slotName cannot be null.");
-          var slots = this.slots;
-          for (var i = 0, n = slots.length; i < n; i++) if (slots[i].data.name == slotName) return i;
-          return -1;
-        };
-        Skeleton.prototype.setSkinByName = function(skinName) {
-          var skin = this.data.findSkin(skinName);
-          if (null == skin) throw new Error("Skin not found: " + skinName);
-          this.setSkin(skin);
-        };
-        Skeleton.prototype.setSkin = function(newSkin) {
-          if (null != newSkin) if (null != this.skin) newSkin.attachAll(this, this.skin); else {
-            var slots = this.slots;
-            for (var i = 0, n = slots.length; i < n; i++) {
-              var slot = slots[i];
-              var name_1 = slot.data.attachmentName;
-              if (null != name_1) {
-                var attachment = newSkin.getAttachment(i, name_1);
-                null != attachment && slot.setAttachment(attachment);
-              }
-            }
-          }
-          this.skin = newSkin;
-        };
-        Skeleton.prototype.getAttachmentByName = function(slotName, attachmentName) {
-          return this.getAttachment(this.data.findSlotIndex(slotName), attachmentName);
-        };
-        Skeleton.prototype.getAttachment = function(slotIndex, attachmentName) {
-          if (null == attachmentName) throw new Error("attachmentName cannot be null.");
-          if (null != this.skin) {
-            var attachment = this.skin.getAttachment(slotIndex, attachmentName);
-            if (null != attachment) return attachment;
-          }
-          if (null != this.data.defaultSkin) return this.data.defaultSkin.getAttachment(slotIndex, attachmentName);
-          return null;
-        };
-        Skeleton.prototype.setAttachment = function(slotName, attachmentName) {
-          if (null == slotName) throw new Error("slotName cannot be null.");
-          var slots = this.slots;
-          for (var i = 0, n = slots.length; i < n; i++) {
-            var slot = slots[i];
-            if (slot.data.name == slotName) {
-              var attachment = null;
-              if (null != attachmentName) {
-                attachment = this.getAttachment(i, attachmentName);
-                if (null == attachment) throw new Error("Attachment not found: " + attachmentName + ", for slot: " + slotName);
-              }
-              slot.setAttachment(attachment);
-              return;
-            }
-          }
-          throw new Error("Slot not found: " + slotName);
-        };
-        Skeleton.prototype.findIkConstraint = function(constraintName) {
-          if (null == constraintName) throw new Error("constraintName cannot be null.");
-          var ikConstraints = this.ikConstraints;
-          for (var i = 0, n = ikConstraints.length; i < n; i++) {
-            var ikConstraint = ikConstraints[i];
-            if (ikConstraint.data.name == constraintName) return ikConstraint;
-          }
-          return null;
-        };
-        Skeleton.prototype.findTransformConstraint = function(constraintName) {
-          if (null == constraintName) throw new Error("constraintName cannot be null.");
-          var transformConstraints = this.transformConstraints;
-          for (var i = 0, n = transformConstraints.length; i < n; i++) {
-            var constraint = transformConstraints[i];
-            if (constraint.data.name == constraintName) return constraint;
-          }
-          return null;
-        };
-        Skeleton.prototype.findPathConstraint = function(constraintName) {
-          if (null == constraintName) throw new Error("constraintName cannot be null.");
-          var pathConstraints = this.pathConstraints;
-          for (var i = 0, n = pathConstraints.length; i < n; i++) {
-            var constraint = pathConstraints[i];
-            if (constraint.data.name == constraintName) return constraint;
-          }
-          return null;
-        };
-        Skeleton.prototype.getBounds = function(offset, size) {
-          if (null == offset) throw new Error("offset cannot be null.");
-          if (null == size) throw new Error("size cannot be null.");
-          var drawOrder = this.drawOrder;
-          var minX = Number.POSITIVE_INFINITY, minY = Number.POSITIVE_INFINITY, maxX = Number.NEGATIVE_INFINITY, maxY = Number.NEGATIVE_INFINITY;
-          for (var i = 0, n = drawOrder.length; i < n; i++) {
-            var slot = drawOrder[i];
-            var vertices = null;
-            var attachment = slot.getAttachment();
-            attachment instanceof spine.RegionAttachment ? vertices = attachment.updateWorldVertices(slot, false) : attachment instanceof spine.MeshAttachment && (vertices = attachment.updateWorldVertices(slot, true));
-            if (null != vertices) for (var ii = 0, nn = vertices.length; ii < nn; ii += 8) {
-              var x = vertices[ii], y = vertices[ii + 1];
-              minX = Math.min(minX, x);
-              minY = Math.min(minY, y);
-              maxX = Math.max(maxX, x);
-              maxY = Math.max(maxY, y);
-            }
-          }
-          offset.set(minX, minY);
-          size.set(maxX - minX, maxY - minY);
-        };
-        Skeleton.prototype.update = function(delta) {
-          this.time += delta;
-        };
-        return Skeleton;
-      })();
-      spine.Skeleton = Skeleton;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var SkeletonBounds = (function() {
-        function SkeletonBounds() {
-          this.minX = 0;
-          this.minY = 0;
-          this.maxX = 0;
-          this.maxY = 0;
-          this.boundingBoxes = new Array();
-          this.polygons = new Array();
-          this.polygonPool = new spine.Pool(function() {
-            return spine.Utils.newFloatArray(16);
-          });
-        }
-        SkeletonBounds.prototype.update = function(skeleton, updateAabb) {
-          if (null == skeleton) throw new Error("skeleton cannot be null.");
-          var boundingBoxes = this.boundingBoxes;
-          var polygons = this.polygons;
-          var polygonPool = this.polygonPool;
-          var slots = skeleton.slots;
-          var slotCount = slots.length;
-          boundingBoxes.length = 0;
-          polygonPool.freeAll(polygons);
-          polygons.length = 0;
-          for (var i = 0; i < slotCount; i++) {
-            var slot = slots[i];
-            var attachment = slot.getAttachment();
-            if (attachment instanceof spine.BoundingBoxAttachment) {
-              var boundingBox = attachment;
-              boundingBoxes.push(boundingBox);
-              var polygon = polygonPool.obtain();
-              polygon.length != boundingBox.worldVerticesLength && (polygon = spine.Utils.newFloatArray(boundingBox.worldVerticesLength));
-              polygons.push(polygon);
-              boundingBox.computeWorldVertices(slot, polygon);
-            }
-          }
-          if (updateAabb) this.aabbCompute(); else {
-            this.minX = Number.POSITIVE_INFINITY;
-            this.minY = Number.POSITIVE_INFINITY;
-            this.maxX = Number.NEGATIVE_INFINITY;
-            this.maxY = Number.NEGATIVE_INFINITY;
-          }
-        };
-        SkeletonBounds.prototype.aabbCompute = function() {
-          var minX = Number.POSITIVE_INFINITY, minY = Number.POSITIVE_INFINITY, maxX = Number.NEGATIVE_INFINITY, maxY = Number.NEGATIVE_INFINITY;
-          var polygons = this.polygons;
-          for (var i = 0, n = polygons.length; i < n; i++) {
-            var polygon = polygons[i];
-            var vertices = polygon;
-            for (var ii = 0, nn = polygon.length; ii < nn; ii += 2) {
-              var x = vertices[ii];
-              var y = vertices[ii + 1];
-              minX = Math.min(minX, x);
-              minY = Math.min(minY, y);
-              maxX = Math.max(maxX, x);
-              maxY = Math.max(maxY, y);
-            }
-          }
-          this.minX = minX;
-          this.minY = minY;
-          this.maxX = maxX;
-          this.maxY = maxY;
-        };
-        SkeletonBounds.prototype.aabbContainsPoint = function(x, y) {
-          return x >= this.minX && x <= this.maxX && y >= this.minY && y <= this.maxY;
-        };
-        SkeletonBounds.prototype.aabbIntersectsSegment = function(x1, y1, x2, y2) {
-          var minX = this.minX;
-          var minY = this.minY;
-          var maxX = this.maxX;
-          var maxY = this.maxY;
-          if (x1 <= minX && x2 <= minX || y1 <= minY && y2 <= minY || x1 >= maxX && x2 >= maxX || y1 >= maxY && y2 >= maxY) return false;
-          var m = (y2 - y1) / (x2 - x1);
-          var y = m * (minX - x1) + y1;
-          if (y > minY && y < maxY) return true;
-          y = m * (maxX - x1) + y1;
-          if (y > minY && y < maxY) return true;
-          var x = (minY - y1) / m + x1;
-          if (x > minX && x < maxX) return true;
-          x = (maxY - y1) / m + x1;
-          if (x > minX && x < maxX) return true;
-          return false;
-        };
-        SkeletonBounds.prototype.aabbIntersectsSkeleton = function(bounds) {
-          return this.minX < bounds.maxX && this.maxX > bounds.minX && this.minY < bounds.maxY && this.maxY > bounds.minY;
-        };
-        SkeletonBounds.prototype.containsPoint = function(x, y) {
-          var polygons = this.polygons;
-          for (var i = 0, n = polygons.length; i < n; i++) if (this.containsPointPolygon(polygons[i], x, y)) return this.boundingBoxes[i];
-          return null;
-        };
-        SkeletonBounds.prototype.containsPointPolygon = function(polygon, x, y) {
-          var vertices = polygon;
-          var nn = polygon.length;
-          var prevIndex = nn - 2;
-          var inside = false;
-          for (var ii = 0; ii < nn; ii += 2) {
-            var vertexY = vertices[ii + 1];
-            var prevY = vertices[prevIndex + 1];
-            if (vertexY < y && prevY >= y || prevY < y && vertexY >= y) {
-              var vertexX = vertices[ii];
-              vertexX + (y - vertexY) / (prevY - vertexY) * (vertices[prevIndex] - vertexX) < x && (inside = !inside);
-            }
-            prevIndex = ii;
-          }
-          return inside;
-        };
-        SkeletonBounds.prototype.intersectsSegment = function(x1, y1, x2, y2) {
-          var polygons = this.polygons;
-          for (var i = 0, n = polygons.length; i < n; i++) if (this.intersectsSegmentPolygon(polygons[i], x1, y1, x2, y2)) return this.boundingBoxes[i];
-          return null;
-        };
-        SkeletonBounds.prototype.intersectsSegmentPolygon = function(polygon, x1, y1, x2, y2) {
-          var vertices = polygon;
-          var nn = polygon.length;
-          var width12 = x1 - x2, height12 = y1 - y2;
-          var det1 = x1 * y2 - y1 * x2;
-          var x3 = vertices[nn - 2], y3 = vertices[nn - 1];
-          for (var ii = 0; ii < nn; ii += 2) {
-            var x4 = vertices[ii], y4 = vertices[ii + 1];
-            var det2 = x3 * y4 - y3 * x4;
-            var width34 = x3 - x4, height34 = y3 - y4;
-            var det3 = width12 * height34 - height12 * width34;
-            var x = (det1 * width34 - width12 * det2) / det3;
-            if ((x >= x3 && x <= x4 || x >= x4 && x <= x3) && (x >= x1 && x <= x2 || x >= x2 && x <= x1)) {
-              var y = (det1 * height34 - height12 * det2) / det3;
-              if ((y >= y3 && y <= y4 || y >= y4 && y <= y3) && (y >= y1 && y <= y2 || y >= y2 && y <= y1)) return true;
-            }
-            x3 = x4;
-            y3 = y4;
-          }
-          return false;
-        };
-        SkeletonBounds.prototype.getPolygon = function(boundingBox) {
-          if (null == boundingBox) throw new Error("boundingBox cannot be null.");
-          var index = this.boundingBoxes.indexOf(boundingBox);
-          return -1 == index ? null : this.polygons[index];
-        };
-        SkeletonBounds.prototype.getWidth = function() {
-          return this.maxX - this.minX;
-        };
-        SkeletonBounds.prototype.getHeight = function() {
-          return this.maxY - this.minY;
-        };
-        return SkeletonBounds;
-      })();
-      spine.SkeletonBounds = SkeletonBounds;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var SkeletonData = (function() {
-        function SkeletonData() {
-          this.bones = new Array();
-          this.slots = new Array();
-          this.skins = new Array();
-          this.events = new Array();
-          this.animations = new Array();
-          this.ikConstraints = new Array();
-          this.transformConstraints = new Array();
-          this.pathConstraints = new Array();
-          this.fps = 0;
-        }
-        SkeletonData.prototype.findBone = function(boneName) {
-          if (null == boneName) throw new Error("boneName cannot be null.");
-          var bones = this.bones;
-          for (var i = 0, n = bones.length; i < n; i++) {
-            var bone = bones[i];
-            if (bone.name == boneName) return bone;
-          }
-          return null;
-        };
-        SkeletonData.prototype.findBoneIndex = function(boneName) {
-          if (null == boneName) throw new Error("boneName cannot be null.");
-          var bones = this.bones;
-          for (var i = 0, n = bones.length; i < n; i++) if (bones[i].name == boneName) return i;
-          return -1;
-        };
-        SkeletonData.prototype.findSlot = function(slotName) {
-          if (null == slotName) throw new Error("slotName cannot be null.");
-          var slots = this.slots;
-          for (var i = 0, n = slots.length; i < n; i++) {
-            var slot = slots[i];
-            if (slot.name == slotName) return slot;
-          }
-          return null;
-        };
-        SkeletonData.prototype.findSlotIndex = function(slotName) {
-          if (null == slotName) throw new Error("slotName cannot be null.");
-          var slots = this.slots;
-          for (var i = 0, n = slots.length; i < n; i++) if (slots[i].name == slotName) return i;
-          return -1;
-        };
-        SkeletonData.prototype.findSkin = function(skinName) {
-          if (null == skinName) throw new Error("skinName cannot be null.");
-          var skins = this.skins;
-          for (var i = 0, n = skins.length; i < n; i++) {
-            var skin = skins[i];
-            if (skin.name == skinName) return skin;
-          }
-          return null;
-        };
-        SkeletonData.prototype.findEvent = function(eventDataName) {
-          if (null == eventDataName) throw new Error("eventDataName cannot be null.");
-          var events = this.events;
-          for (var i = 0, n = events.length; i < n; i++) {
-            var event_4 = events[i];
-            if (event_4.name == eventDataName) return event_4;
-          }
-          return null;
-        };
-        SkeletonData.prototype.findAnimation = function(animationName) {
-          if (null == animationName) throw new Error("animationName cannot be null.");
-          var animations = this.animations;
-          for (var i = 0, n = animations.length; i < n; i++) {
-            var animation = animations[i];
-            if (animation.name == animationName) return animation;
-          }
-          return null;
-        };
-        SkeletonData.prototype.findIkConstraint = function(constraintName) {
-          if (null == constraintName) throw new Error("constraintName cannot be null.");
-          var ikConstraints = this.ikConstraints;
-          for (var i = 0, n = ikConstraints.length; i < n; i++) {
-            var constraint = ikConstraints[i];
-            if (constraint.name == constraintName) return constraint;
-          }
-          return null;
-        };
-        SkeletonData.prototype.findTransformConstraint = function(constraintName) {
-          if (null == constraintName) throw new Error("constraintName cannot be null.");
-          var transformConstraints = this.transformConstraints;
-          for (var i = 0, n = transformConstraints.length; i < n; i++) {
-            var constraint = transformConstraints[i];
-            if (constraint.name == constraintName) return constraint;
-          }
-          return null;
-        };
-        SkeletonData.prototype.findPathConstraint = function(constraintName) {
-          if (null == constraintName) throw new Error("constraintName cannot be null.");
-          var pathConstraints = this.pathConstraints;
-          for (var i = 0, n = pathConstraints.length; i < n; i++) {
-            var constraint = pathConstraints[i];
-            if (constraint.name == constraintName) return constraint;
-          }
-          return null;
-        };
-        SkeletonData.prototype.findPathConstraintIndex = function(pathConstraintName) {
-          if (null == pathConstraintName) throw new Error("pathConstraintName cannot be null.");
-          var pathConstraints = this.pathConstraints;
-          for (var i = 0, n = pathConstraints.length; i < n; i++) if (pathConstraints[i].name == pathConstraintName) return i;
-          return -1;
-        };
-        return SkeletonData;
-      })();
-      spine.SkeletonData = SkeletonData;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var SkeletonJson = (function() {
-        function SkeletonJson(attachmentLoader) {
-          this.scale = 1;
-          this.linkedMeshes = new Array();
-          this.attachmentLoader = attachmentLoader;
-        }
-        SkeletonJson.prototype.readSkeletonData = function(json) {
-          var scale = this.scale;
-          var skeletonData = new spine.SkeletonData();
-          var root = "string" === typeof json ? JSON.parse(json) : json;
-          var skeletonMap = root.skeleton;
-          if (null != skeletonMap) {
-            skeletonData.hash = skeletonMap.hash;
-            skeletonData.version = skeletonMap.spine;
-            skeletonData.width = skeletonMap.width;
-            skeletonData.height = skeletonMap.height;
-            skeletonData.fps = skeletonMap.fps;
-            skeletonData.imagesPath = skeletonMap.images;
-          }
-          if (root.bones) for (var i = 0; i < root.bones.length; i++) {
-            var boneMap = root.bones[i];
-            var parent_2 = null;
-            var parentName = this.getValue(boneMap, "parent", null);
-            if (null != parentName) {
-              parent_2 = skeletonData.findBone(parentName);
-              if (null == parent_2) throw new Error("Parent bone not found: " + parentName);
-            }
-            var data = new spine.BoneData(skeletonData.bones.length, boneMap.name, parent_2);
-            data.length = this.getValue(boneMap, "length", 0) * scale;
-            data.x = this.getValue(boneMap, "x", 0) * scale;
-            data.y = this.getValue(boneMap, "y", 0) * scale;
-            data.rotation = this.getValue(boneMap, "rotation", 0);
-            data.scaleX = this.getValue(boneMap, "scaleX", 1);
-            data.scaleY = this.getValue(boneMap, "scaleY", 1);
-            data.shearX = this.getValue(boneMap, "shearX", 0);
-            data.shearY = this.getValue(boneMap, "shearY", 0);
-            data.transformMode = SkeletonJson.transformModeFromString(this.getValue(boneMap, "transform", "normal"));
-            skeletonData.bones.push(data);
-          }
-          if (root.slots) for (var i = 0; i < root.slots.length; i++) {
-            var slotMap = root.slots[i];
-            var slotName = slotMap.name;
-            var boneName = slotMap.bone;
-            var boneData = skeletonData.findBone(boneName);
-            if (null == boneData) throw new Error("Slot bone not found: " + boneName);
-            var data = new spine.SlotData(skeletonData.slots.length, slotName, boneData);
-            var color = this.getValue(slotMap, "color", null);
-            null != color && data.color.setFromString(color);
-            data.attachmentName = this.getValue(slotMap, "attachment", null);
-            data.blendMode = SkeletonJson.blendModeFromString(this.getValue(slotMap, "blend", "normal"));
-            skeletonData.slots.push(data);
-          }
-          if (root.ik) for (var i = 0; i < root.ik.length; i++) {
-            var constraintMap = root.ik[i];
-            var data = new spine.IkConstraintData(constraintMap.name);
-            data.order = this.getValue(constraintMap, "order", 0);
-            for (var j = 0; j < constraintMap.bones.length; j++) {
-              var boneName = constraintMap.bones[j];
-              var bone = skeletonData.findBone(boneName);
-              if (null == bone) throw new Error("IK bone not found: " + boneName);
-              data.bones.push(bone);
-            }
-            var targetName = constraintMap.target;
-            data.target = skeletonData.findBone(targetName);
-            if (null == data.target) throw new Error("IK target bone not found: " + targetName);
-            data.bendDirection = this.getValue(constraintMap, "bendPositive", true) ? 1 : -1;
-            data.mix = this.getValue(constraintMap, "mix", 1);
-            skeletonData.ikConstraints.push(data);
-          }
-          if (root.transform) for (var i = 0; i < root.transform.length; i++) {
-            var constraintMap = root.transform[i];
-            var data = new spine.TransformConstraintData(constraintMap.name);
-            data.order = this.getValue(constraintMap, "order", 0);
-            for (var j = 0; j < constraintMap.bones.length; j++) {
-              var boneName = constraintMap.bones[j];
-              var bone = skeletonData.findBone(boneName);
-              if (null == bone) throw new Error("Transform constraint bone not found: " + boneName);
-              data.bones.push(bone);
-            }
-            var targetName = constraintMap.target;
-            data.target = skeletonData.findBone(targetName);
-            if (null == data.target) throw new Error("Transform constraint target bone not found: " + targetName);
-            data.offsetRotation = this.getValue(constraintMap, "rotation", 0);
-            data.offsetX = this.getValue(constraintMap, "x", 0) * scale;
-            data.offsetY = this.getValue(constraintMap, "y", 0) * scale;
-            data.offsetScaleX = this.getValue(constraintMap, "scaleX", 0);
-            data.offsetScaleY = this.getValue(constraintMap, "scaleY", 0);
-            data.offsetShearY = this.getValue(constraintMap, "shearY", 0);
-            data.rotateMix = this.getValue(constraintMap, "rotateMix", 1);
-            data.translateMix = this.getValue(constraintMap, "translateMix", 1);
-            data.scaleMix = this.getValue(constraintMap, "scaleMix", 1);
-            data.shearMix = this.getValue(constraintMap, "shearMix", 1);
-            skeletonData.transformConstraints.push(data);
-          }
-          if (root.path) for (var i = 0; i < root.path.length; i++) {
-            var constraintMap = root.path[i];
-            var data = new spine.PathConstraintData(constraintMap.name);
-            data.order = this.getValue(constraintMap, "order", 0);
-            for (var j = 0; j < constraintMap.bones.length; j++) {
-              var boneName = constraintMap.bones[j];
-              var bone = skeletonData.findBone(boneName);
-              if (null == bone) throw new Error("Transform constraint bone not found: " + boneName);
-              data.bones.push(bone);
-            }
-            var targetName = constraintMap.target;
-            data.target = skeletonData.findSlot(targetName);
-            if (null == data.target) throw new Error("Path target slot not found: " + targetName);
-            data.positionMode = SkeletonJson.positionModeFromString(this.getValue(constraintMap, "positionMode", "percent"));
-            data.spacingMode = SkeletonJson.spacingModeFromString(this.getValue(constraintMap, "spacingMode", "length"));
-            data.rotateMode = SkeletonJson.rotateModeFromString(this.getValue(constraintMap, "rotateMode", "tangent"));
-            data.offsetRotation = this.getValue(constraintMap, "rotation", 0);
-            data.position = this.getValue(constraintMap, "position", 0);
-            data.positionMode == spine.PositionMode.Fixed && (data.position *= scale);
-            data.spacing = this.getValue(constraintMap, "spacing", 0);
-            data.spacingMode != spine.SpacingMode.Length && data.spacingMode != spine.SpacingMode.Fixed || (data.spacing *= scale);
-            data.rotateMix = this.getValue(constraintMap, "rotateMix", 1);
-            data.translateMix = this.getValue(constraintMap, "translateMix", 1);
-            skeletonData.pathConstraints.push(data);
-          }
-          if (root.skins) for (var skinName in root.skins) {
-            var skinMap = root.skins[skinName];
-            var skin = new spine.Skin(skinName);
-            for (var slotName in skinMap) {
-              var slotIndex = skeletonData.findSlotIndex(slotName);
-              if (-1 == slotIndex) throw new Error("Slot not found: " + slotName);
-              var slotMap = skinMap[slotName];
-              for (var entryName in slotMap) {
-                var attachment = this.readAttachment(slotMap[entryName], skin, slotIndex, entryName);
-                null != attachment && skin.addAttachment(slotIndex, entryName, attachment);
-              }
-            }
-            skeletonData.skins.push(skin);
-            "default" == skin.name && (skeletonData.defaultSkin = skin);
-          }
-          for (var i = 0, n = this.linkedMeshes.length; i < n; i++) {
-            var linkedMesh = this.linkedMeshes[i];
-            var skin = null == linkedMesh.skin ? skeletonData.defaultSkin : skeletonData.findSkin(linkedMesh.skin);
-            if (null == skin) throw new Error("Skin not found: " + linkedMesh.skin);
-            var parent_3 = skin.getAttachment(linkedMesh.slotIndex, linkedMesh.parent);
-            if (null == parent_3) throw new Error("Parent mesh not found: " + linkedMesh.parent);
-            linkedMesh.mesh.setParentMesh(parent_3);
-            linkedMesh.mesh.updateUVs();
-          }
-          this.linkedMeshes.length = 0;
-          if (root.events) for (var eventName in root.events) {
-            var eventMap = root.events[eventName];
-            var data = new spine.EventData(eventName);
-            data.intValue = this.getValue(eventMap, "int", 0);
-            data.floatValue = this.getValue(eventMap, "float", 0);
-            data.stringValue = this.getValue(eventMap, "string", "");
-            skeletonData.events.push(data);
-          }
-          if (root.animations) for (var animationName in root.animations) {
-            var animationMap = root.animations[animationName];
-            this.readAnimation(animationMap, animationName, skeletonData);
-          }
-          return skeletonData;
-        };
-        SkeletonJson.prototype.readAttachment = function(map, skin, slotIndex, name) {
-          var scale = this.scale;
-          name = this.getValue(map, "name", name);
-          var type = this.getValue(map, "type", "region");
-          switch (type) {
-           case "region":
-            var path = this.getValue(map, "path", name);
-            var region = this.attachmentLoader.newRegionAttachment(skin, name, path);
-            if (null == region) return null;
-            region.path = path;
-            region.x = this.getValue(map, "x", 0) * scale;
-            region.y = this.getValue(map, "y", 0) * scale;
-            region.scaleX = this.getValue(map, "scaleX", 1);
-            region.scaleY = this.getValue(map, "scaleY", 1);
-            region.rotation = this.getValue(map, "rotation", 0);
-            region.width = map.width * scale;
-            region.height = map.height * scale;
-            var color = this.getValue(map, "color", null);
-            null != color && region.color.setFromString(color);
-            region.updateOffset();
-            return region;
-
-           case "boundingbox":
-            var box = this.attachmentLoader.newBoundingBoxAttachment(skin, name);
-            if (null == box) return null;
-            this.readVertices(map, box, map.vertexCount << 1);
-            var color = this.getValue(map, "color", null);
-            null != color && box.color.setFromString(color);
-            return box;
-
-           case "mesh":
-           case "linkedmesh":
-            var path = this.getValue(map, "path", name);
-            var mesh = this.attachmentLoader.newMeshAttachment(skin, name, path);
-            if (null == mesh) return null;
-            mesh.path = path;
-            var color = this.getValue(map, "color", null);
-            null != color && mesh.color.setFromString(color);
-            var parent_4 = this.getValue(map, "parent", null);
-            if (null != parent_4) {
-              mesh.inheritDeform = this.getValue(map, "deform", true);
-              this.linkedMeshes.push(new LinkedMesh(mesh, this.getValue(map, "skin", null), slotIndex, parent_4));
-              return mesh;
-            }
-            var uvs = map.uvs;
-            this.readVertices(map, mesh, uvs.length);
-            mesh.triangles = map.triangles;
-            mesh.regionUVs = uvs;
-            mesh.updateUVs();
-            mesh.hullLength = 2 * this.getValue(map, "hull", 0);
-            return mesh;
-
-           case "path":
-            var path = this.attachmentLoader.newPathAttachment(skin, name);
-            if (null == path) return null;
-            path.closed = this.getValue(map, "closed", false);
-            path.constantSpeed = this.getValue(map, "constantSpeed", true);
-            var vertexCount = map.vertexCount;
-            this.readVertices(map, path, vertexCount << 1);
-            var lengths = spine.Utils.newArray(vertexCount / 3, 0);
-            for (var i = 0; i < map.lengths.length; i++) lengths[i++] = map.lengths[i] * scale;
-            path.lengths = lengths;
-            var color = this.getValue(map, "color", null);
-            null != color && path.color.setFromString(color);
-            return path;
-          }
-          return null;
-        };
-        SkeletonJson.prototype.readVertices = function(map, attachment, verticesLength) {
-          var scale = this.scale;
-          attachment.worldVerticesLength = verticesLength;
-          var vertices = map.vertices;
-          if (verticesLength == vertices.length) {
-            if (1 != scale) for (var i = 0, n = vertices.length; i < n; i++) vertices[i] *= scale;
-            attachment.vertices = spine.Utils.toFloatArray(vertices);
-            return;
-          }
-          var weights = new Array();
-          var bones = new Array();
-          for (var i = 0, n = vertices.length; i < n; ) {
-            var boneCount = vertices[i++];
-            bones.push(boneCount);
-            for (var nn = i + 4 * boneCount; i < nn; i += 4) {
-              bones.push(vertices[i]);
-              weights.push(vertices[i + 1] * scale);
-              weights.push(vertices[i + 2] * scale);
-              weights.push(vertices[i + 3]);
-            }
-          }
-          attachment.bones = bones;
-          attachment.vertices = spine.Utils.toFloatArray(weights);
-        };
-        SkeletonJson.prototype.readAnimation = function(map, name, skeletonData) {
-          var scale = this.scale;
-          var timelines = new Array();
-          var duration = 0;
-          if (map.slots) for (var slotName in map.slots) {
-            var slotMap = map.slots[slotName];
-            var slotIndex = skeletonData.findSlotIndex(slotName);
-            if (-1 == slotIndex) throw new Error("Slot not found: " + slotName);
-            for (var timelineName in slotMap) {
-              var timelineMap = slotMap[timelineName];
-              if ("color" == timelineName) {
-                var timeline = new spine.ColorTimeline(timelineMap.length);
-                timeline.slotIndex = slotIndex;
-                var frameIndex = 0;
-                for (var i = 0; i < timelineMap.length; i++) {
-                  var valueMap = timelineMap[i];
-                  var color = new spine.Color();
-                  color.setFromString(valueMap.color);
-                  timeline.setFrame(frameIndex, valueMap.time, color.r, color.g, color.b, color.a);
-                  this.readCurve(valueMap, timeline, frameIndex);
-                  frameIndex++;
-                }
-                timelines.push(timeline);
-                duration = Math.max(duration, timeline.frames[(timeline.getFrameCount() - 1) * spine.ColorTimeline.ENTRIES]);
-              } else {
-                if (!(timelineName = "attachment")) throw new Error("Invalid timeline type for a slot: " + timelineName + " (" + slotName + ")");
-                var timeline = new spine.AttachmentTimeline(timelineMap.length);
-                timeline.slotIndex = slotIndex;
-                var frameIndex = 0;
-                for (var i = 0; i < timelineMap.length; i++) {
-                  var valueMap = timelineMap[i];
-                  timeline.setFrame(frameIndex++, valueMap.time, valueMap.name);
-                }
-                timelines.push(timeline);
-                duration = Math.max(duration, timeline.frames[timeline.getFrameCount() - 1]);
-              }
-            }
-          }
-          if (map.bones) for (var boneName in map.bones) {
-            var boneMap = map.bones[boneName];
-            var boneIndex = skeletonData.findBoneIndex(boneName);
-            if (-1 == boneIndex) throw new Error("Bone not found: " + boneName);
-            for (var timelineName in boneMap) {
-              var timelineMap = boneMap[timelineName];
-              if ("rotate" === timelineName) {
-                var timeline = new spine.RotateTimeline(timelineMap.length);
-                timeline.boneIndex = boneIndex;
-                var frameIndex = 0;
-                for (var i = 0; i < timelineMap.length; i++) {
-                  var valueMap = timelineMap[i];
-                  timeline.setFrame(frameIndex, valueMap.time, valueMap.angle);
-                  this.readCurve(valueMap, timeline, frameIndex);
-                  frameIndex++;
-                }
-                timelines.push(timeline);
-                duration = Math.max(duration, timeline.frames[(timeline.getFrameCount() - 1) * spine.RotateTimeline.ENTRIES]);
-              } else {
-                if ("translate" !== timelineName && "scale" !== timelineName && "shear" !== timelineName) throw new Error("Invalid timeline type for a bone: " + timelineName + " (" + boneName + ")");
-                var timeline = null;
-                var timelineScale = 1;
-                if ("scale" === timelineName) timeline = new spine.ScaleTimeline(timelineMap.length); else if ("shear" === timelineName) timeline = new spine.ShearTimeline(timelineMap.length); else {
-                  timeline = new spine.TranslateTimeline(timelineMap.length);
-                  timelineScale = scale;
-                }
-                timeline.boneIndex = boneIndex;
-                var frameIndex = 0;
-                for (var i = 0; i < timelineMap.length; i++) {
-                  var valueMap = timelineMap[i];
-                  var x = this.getValue(valueMap, "x", 0), y = this.getValue(valueMap, "y", 0);
-                  timeline.setFrame(frameIndex, valueMap.time, x * timelineScale, y * timelineScale);
-                  this.readCurve(valueMap, timeline, frameIndex);
-                  frameIndex++;
-                }
-                timelines.push(timeline);
-                duration = Math.max(duration, timeline.frames[(timeline.getFrameCount() - 1) * spine.TranslateTimeline.ENTRIES]);
-              }
-            }
-          }
-          if (map.ik) for (var constraintName in map.ik) {
-            var constraintMap = map.ik[constraintName];
-            var constraint = skeletonData.findIkConstraint(constraintName);
-            var timeline = new spine.IkConstraintTimeline(constraintMap.length);
-            timeline.ikConstraintIndex = skeletonData.ikConstraints.indexOf(constraint);
-            var frameIndex = 0;
-            for (var i = 0; i < constraintMap.length; i++) {
-              var valueMap = constraintMap[i];
-              timeline.setFrame(frameIndex, valueMap.time, this.getValue(valueMap, "mix", 1), this.getValue(valueMap, "bendPositive", true) ? 1 : -1);
-              this.readCurve(valueMap, timeline, frameIndex);
-              frameIndex++;
-            }
-            timelines.push(timeline);
-            duration = Math.max(duration, timeline.frames[(timeline.getFrameCount() - 1) * spine.IkConstraintTimeline.ENTRIES]);
-          }
-          if (map.transform) for (var constraintName in map.transform) {
-            var constraintMap = map.transform[constraintName];
-            var constraint = skeletonData.findTransformConstraint(constraintName);
-            var timeline = new spine.TransformConstraintTimeline(constraintMap.length);
-            timeline.transformConstraintIndex = skeletonData.transformConstraints.indexOf(constraint);
-            var frameIndex = 0;
-            for (var i = 0; i < constraintMap.length; i++) {
-              var valueMap = constraintMap[i];
-              timeline.setFrame(frameIndex, valueMap.time, this.getValue(valueMap, "rotateMix", 1), this.getValue(valueMap, "translateMix", 1), this.getValue(valueMap, "scaleMix", 1), this.getValue(valueMap, "shearMix", 1));
-              this.readCurve(valueMap, timeline, frameIndex);
-              frameIndex++;
-            }
-            timelines.push(timeline);
-            duration = Math.max(duration, timeline.frames[(timeline.getFrameCount() - 1) * spine.TransformConstraintTimeline.ENTRIES]);
-          }
-          if (map.paths) for (var constraintName in map.paths) {
-            var constraintMap = map.paths[constraintName];
-            var index = skeletonData.findPathConstraintIndex(constraintName);
-            if (-1 == index) throw new Error("Path constraint not found: " + constraintName);
-            var data = skeletonData.pathConstraints[index];
-            for (var timelineName in constraintMap) {
-              var timelineMap = constraintMap[timelineName];
-              if ("position" === timelineName || "spacing" === timelineName) {
-                var timeline = null;
-                var timelineScale = 1;
-                if ("spacing" === timelineName) {
-                  timeline = new spine.PathConstraintSpacingTimeline(timelineMap.length);
-                  data.spacingMode != spine.SpacingMode.Length && data.spacingMode != spine.SpacingMode.Fixed || (timelineScale = scale);
-                } else {
-                  timeline = new spine.PathConstraintPositionTimeline(timelineMap.length);
-                  data.positionMode == spine.PositionMode.Fixed && (timelineScale = scale);
-                }
-                timeline.pathConstraintIndex = index;
-                var frameIndex = 0;
-                for (var i = 0; i < timelineMap.length; i++) {
-                  var valueMap = timelineMap[i];
-                  timeline.setFrame(frameIndex, valueMap.time, this.getValue(valueMap, timelineName, 0) * timelineScale);
-                  this.readCurve(valueMap, timeline, frameIndex);
-                  frameIndex++;
-                }
-                timelines.push(timeline);
-                duration = Math.max(duration, timeline.frames[(timeline.getFrameCount() - 1) * spine.PathConstraintPositionTimeline.ENTRIES]);
-              } else if ("mix" === timelineName) {
-                var timeline = new spine.PathConstraintMixTimeline(timelineMap.length);
-                timeline.pathConstraintIndex = index;
-                var frameIndex = 0;
-                for (var i = 0; i < timelineMap.length; i++) {
-                  var valueMap = timelineMap[i];
-                  timeline.setFrame(frameIndex, valueMap.time, this.getValue(valueMap, "rotateMix", 1), this.getValue(valueMap, "translateMix", 1));
-                  this.readCurve(valueMap, timeline, frameIndex);
-                  frameIndex++;
-                }
-                timelines.push(timeline);
-                duration = Math.max(duration, timeline.frames[(timeline.getFrameCount() - 1) * spine.PathConstraintMixTimeline.ENTRIES]);
-              }
-            }
-          }
-          if (map.deform) for (var deformName in map.deform) {
-            var deformMap = map.deform[deformName];
-            var skin = skeletonData.findSkin(deformName);
-            if (null == skin) throw new Error("Skin not found: " + deformName);
-            for (var slotName in deformMap) {
-              var slotMap = deformMap[slotName];
-              var slotIndex = skeletonData.findSlotIndex(slotName);
-              if (-1 == slotIndex) throw new Error("Slot not found: " + slotMap.name);
-              for (var timelineName in slotMap) {
-                var timelineMap = slotMap[timelineName];
-                var attachment = skin.getAttachment(slotIndex, timelineName);
-                if (null == attachment) throw new Error("Deform attachment not found: " + timelineMap.name);
-                var weighted = null != attachment.bones;
-                var vertices = attachment.vertices;
-                var deformLength = weighted ? vertices.length / 3 * 2 : vertices.length;
-                var timeline = new spine.DeformTimeline(timelineMap.length);
-                timeline.slotIndex = slotIndex;
-                timeline.attachment = attachment;
-                var frameIndex = 0;
-                for (var j = 0; j < timelineMap.length; j++) {
-                  var valueMap = timelineMap[j];
-                  var deform = void 0;
-                  var verticesValue = this.getValue(valueMap, "vertices", null);
-                  if (null == verticesValue) deform = weighted ? spine.Utils.newFloatArray(deformLength) : vertices; else {
-                    deform = spine.Utils.newFloatArray(deformLength);
-                    var start = this.getValue(valueMap, "offset", 0);
-                    spine.Utils.arrayCopy(verticesValue, 0, deform, start, verticesValue.length);
-                    if (1 != scale) for (var i = start, n = i + verticesValue.length; i < n; i++) deform[i] *= scale;
-                    if (!weighted) for (var i = 0; i < deformLength; i++) deform[i] += vertices[i];
-                  }
-                  timeline.setFrame(frameIndex, valueMap.time, deform);
-                  this.readCurve(valueMap, timeline, frameIndex);
-                  frameIndex++;
-                }
-                timelines.push(timeline);
-                duration = Math.max(duration, timeline.frames[timeline.getFrameCount() - 1]);
-              }
-            }
-          }
-          var drawOrderNode = map.drawOrder;
-          null == drawOrderNode && (drawOrderNode = map.draworder);
-          if (null != drawOrderNode) {
-            var timeline = new spine.DrawOrderTimeline(drawOrderNode.length);
-            var slotCount = skeletonData.slots.length;
-            var frameIndex = 0;
-            for (var j = 0; j < drawOrderNode.length; j++) {
-              var drawOrderMap = drawOrderNode[j];
-              var drawOrder = null;
-              var offsets = this.getValue(drawOrderMap, "offsets", null);
-              if (null != offsets) {
-                drawOrder = spine.Utils.newArray(slotCount, -1);
-                var unchanged = spine.Utils.newArray(slotCount - offsets.length, 0);
-                var originalIndex = 0, unchangedIndex = 0;
-                for (var i = 0; i < offsets.length; i++) {
-                  var offsetMap = offsets[i];
-                  var slotIndex = skeletonData.findSlotIndex(offsetMap.slot);
-                  if (-1 == slotIndex) throw new Error("Slot not found: " + offsetMap.slot);
-                  while (originalIndex != slotIndex) unchanged[unchangedIndex++] = originalIndex++;
-                  drawOrder[originalIndex + offsetMap.offset] = originalIndex++;
-                }
-                while (originalIndex < slotCount) unchanged[unchangedIndex++] = originalIndex++;
-                for (var i = slotCount - 1; i >= 0; i--) -1 == drawOrder[i] && (drawOrder[i] = unchanged[--unchangedIndex]);
-              }
-              timeline.setFrame(frameIndex++, drawOrderMap.time, drawOrder);
-            }
-            timelines.push(timeline);
-            duration = Math.max(duration, timeline.frames[timeline.getFrameCount() - 1]);
-          }
-          if (map.events) {
-            var timeline = new spine.EventTimeline(map.events.length);
-            var frameIndex = 0;
-            for (var i = 0; i < map.events.length; i++) {
-              var eventMap = map.events[i];
-              var eventData = skeletonData.findEvent(eventMap.name);
-              if (null == eventData) throw new Error("Event not found: " + eventMap.name);
-              var event_5 = new spine.Event(eventMap.time, eventData);
-              event_5.intValue = this.getValue(eventMap, "int", eventData.intValue);
-              event_5.floatValue = this.getValue(eventMap, "float", eventData.floatValue);
-              event_5.stringValue = this.getValue(eventMap, "string", eventData.stringValue);
-              timeline.setFrame(frameIndex++, event_5);
-            }
-            timelines.push(timeline);
-            duration = Math.max(duration, timeline.frames[timeline.getFrameCount() - 1]);
-          }
-          if (isNaN(duration)) throw new Error("Error while parsing animation, duration is NaN");
-          skeletonData.animations.push(new spine.Animation(name, timelines, duration));
-        };
-        SkeletonJson.prototype.readCurve = function(map, timeline, frameIndex) {
-          if (!map.curve) return;
-          if ("stepped" === map.curve) timeline.setStepped(frameIndex); else if ("[object Array]" === Object.prototype.toString.call(map.curve)) {
-            var curve = map.curve;
-            timeline.setCurve(frameIndex, curve[0], curve[1], curve[2], curve[3]);
-          }
-        };
-        SkeletonJson.prototype.getValue = function(map, prop, defaultValue) {
-          return void 0 !== map[prop] ? map[prop] : defaultValue;
-        };
-        SkeletonJson.blendModeFromString = function(str) {
-          str = str.toLowerCase();
-          if ("normal" == str) return spine.BlendMode.Normal;
-          if ("additive" == str) return spine.BlendMode.Additive;
-          if ("multiply" == str) return spine.BlendMode.Multiply;
-          if ("screen" == str) return spine.BlendMode.Screen;
-          throw new Error("Unknown blend mode: " + str);
-        };
-        SkeletonJson.positionModeFromString = function(str) {
-          str = str.toLowerCase();
-          if ("fixed" == str) return spine.PositionMode.Fixed;
-          if ("percent" == str) return spine.PositionMode.Percent;
-          throw new Error("Unknown position mode: " + str);
-        };
-        SkeletonJson.spacingModeFromString = function(str) {
-          str = str.toLowerCase();
-          if ("length" == str) return spine.SpacingMode.Length;
-          if ("fixed" == str) return spine.SpacingMode.Fixed;
-          if ("percent" == str) return spine.SpacingMode.Percent;
-          throw new Error("Unknown position mode: " + str);
-        };
-        SkeletonJson.rotateModeFromString = function(str) {
-          str = str.toLowerCase();
-          if ("tangent" == str) return spine.RotateMode.Tangent;
-          if ("chain" == str) return spine.RotateMode.Chain;
-          if ("chainscale" == str) return spine.RotateMode.ChainScale;
-          throw new Error("Unknown rotate mode: " + str);
-        };
-        SkeletonJson.transformModeFromString = function(str) {
-          str = str.toLowerCase();
-          if ("normal" == str) return spine.TransformMode.Normal;
-          if ("onlytranslation" == str) return spine.TransformMode.OnlyTranslation;
-          if ("norotationorreflection" == str) return spine.TransformMode.NoRotationOrReflection;
-          if ("noscale" == str) return spine.TransformMode.NoScale;
-          if ("noscaleorreflection" == str) return spine.TransformMode.NoScaleOrReflection;
-          throw new Error("Unknown transform mode: " + str);
-        };
-        return SkeletonJson;
-      })();
-      spine.SkeletonJson = SkeletonJson;
-      var LinkedMesh = (function() {
-        function LinkedMesh(mesh, skin, slotIndex, parent) {
-          this.mesh = mesh;
-          this.skin = skin;
-          this.slotIndex = slotIndex;
-          this.parent = parent;
-        }
-        return LinkedMesh;
-      })();
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var Skin = (function() {
-        function Skin(name) {
-          this.attachments = new Array();
-          if (null == name) throw new Error("name cannot be null.");
-          this.name = name;
-        }
-        Skin.prototype.addAttachment = function(slotIndex, name, attachment) {
-          if (null == attachment) throw new Error("attachment cannot be null.");
-          var attachments = this.attachments;
-          slotIndex >= attachments.length && (attachments.length = slotIndex + 1);
-          attachments[slotIndex] || (attachments[slotIndex] = {});
-          attachments[slotIndex][name] = attachment;
-        };
-        Skin.prototype.getAttachment = function(slotIndex, name) {
-          var dictionary = this.attachments[slotIndex];
-          return dictionary ? dictionary[name] : null;
-        };
-        Skin.prototype.attachAll = function(skeleton, oldSkin) {
-          var slotIndex = 0;
-          for (var i = 0; i < skeleton.slots.length; i++) {
-            var slot = skeleton.slots[i];
-            var slotAttachment = slot.getAttachment();
-            if (slotAttachment && slotIndex < oldSkin.attachments.length) {
-              var dictionary = oldSkin.attachments[slotIndex];
-              for (var key in dictionary) {
-                var skinAttachment = dictionary[key];
-                if (slotAttachment == skinAttachment) {
-                  var attachment = this.getAttachment(slotIndex, key);
-                  null != attachment && slot.setAttachment(attachment);
-                  break;
-                }
-              }
-            }
-            slotIndex++;
-          }
-        };
-        return Skin;
-      })();
-      spine.Skin = Skin;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var Slot = (function() {
-        function Slot(data, bone) {
-          this.attachmentVertices = new Array();
-          if (null == data) throw new Error("data cannot be null.");
-          if (null == bone) throw new Error("bone cannot be null.");
-          this.data = data;
-          this.bone = bone;
-          this.color = new spine.Color();
-          this.setToSetupPose();
-        }
-        Slot.prototype.getAttachment = function() {
-          return this.attachment;
-        };
-        Slot.prototype.setAttachment = function(attachment) {
-          if (this.attachment == attachment) return;
-          this.attachment = attachment;
-          this.attachmentTime = this.bone.skeleton.time;
-          this.attachmentVertices.length = 0;
-        };
-        Slot.prototype.setAttachmentTime = function(time) {
-          this.attachmentTime = this.bone.skeleton.time - time;
-        };
-        Slot.prototype.getAttachmentTime = function() {
-          return this.bone.skeleton.time - this.attachmentTime;
-        };
-        Slot.prototype.setToSetupPose = function() {
-          this.color.setFromColor(this.data.color);
-          if (null == this.data.attachmentName) this.attachment = null; else {
-            this.attachment = null;
-            this.setAttachment(this.bone.skeleton.getAttachment(this.data.index, this.data.attachmentName));
-          }
-        };
-        return Slot;
-      })();
-      spine.Slot = Slot;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var SlotData = (function() {
-        function SlotData(index, name, boneData) {
-          this.color = new spine.Color(1, 1, 1, 1);
-          if (index < 0) throw new Error("index must be >= 0.");
-          if (null == name) throw new Error("name cannot be null.");
-          if (null == boneData) throw new Error("boneData cannot be null.");
-          this.index = index;
-          this.name = name;
-          this.boneData = boneData;
-        }
-        return SlotData;
-      })();
-      spine.SlotData = SlotData;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var Texture = (function() {
-        function Texture(image) {
-          this._image = image;
-        }
-        Texture.prototype.getImage = function() {
-          return this._image;
-        };
-        Texture.filterFromString = function(text) {
-          switch (text.toLowerCase()) {
-           case "nearest":
-            return TextureFilter.Nearest;
-
-           case "linear":
-            return TextureFilter.Linear;
-
-           case "mipmap":
-            return TextureFilter.MipMap;
-
-           case "mipmapnearestnearest":
-            return TextureFilter.MipMapNearestNearest;
-
-           case "mipmaplinearnearest":
-            return TextureFilter.MipMapLinearNearest;
-
-           case "mipmapnearestlinear":
-            return TextureFilter.MipMapNearestLinear;
-
-           case "mipmaplinearlinear":
-            return TextureFilter.MipMapLinearLinear;
-
-           default:
-            throw new Error("Unknown texture filter " + text);
-          }
-        };
-        Texture.wrapFromString = function(text) {
-          switch (text.toLowerCase()) {
-           case "mirroredtepeat":
-            return TextureWrap.MirroredRepeat;
-
-           case "clamptoedge":
-            return TextureWrap.ClampToEdge;
-
-           case "repeat":
-            return TextureWrap.Repeat;
-
-           default:
-            throw new Error("Unknown texture wrap " + text);
-          }
-        };
-        return Texture;
-      })();
-      spine.Texture = Texture;
-      (function(TextureFilter) {
-        TextureFilter[TextureFilter["Nearest"] = 9728] = "Nearest";
-        TextureFilter[TextureFilter["Linear"] = 9729] = "Linear";
-        TextureFilter[TextureFilter["MipMap"] = 9987] = "MipMap";
-        TextureFilter[TextureFilter["MipMapNearestNearest"] = 9984] = "MipMapNearestNearest";
-        TextureFilter[TextureFilter["MipMapLinearNearest"] = 9985] = "MipMapLinearNearest";
-        TextureFilter[TextureFilter["MipMapNearestLinear"] = 9986] = "MipMapNearestLinear";
-        TextureFilter[TextureFilter["MipMapLinearLinear"] = 9987] = "MipMapLinearLinear";
-      })(spine.TextureFilter || (spine.TextureFilter = {}));
-      var TextureFilter = spine.TextureFilter;
-      (function(TextureWrap) {
-        TextureWrap[TextureWrap["MirroredRepeat"] = 33648] = "MirroredRepeat";
-        TextureWrap[TextureWrap["ClampToEdge"] = 33071] = "ClampToEdge";
-        TextureWrap[TextureWrap["Repeat"] = 10497] = "Repeat";
-      })(spine.TextureWrap || (spine.TextureWrap = {}));
-      var TextureWrap = spine.TextureWrap;
-      var TextureRegion = (function() {
-        function TextureRegion() {
-          this.u = 0;
-          this.v = 0;
-          this.u2 = 0;
-          this.v2 = 0;
-          this.width = 0;
-          this.height = 0;
-          this.rotate = false;
-          this.offsetX = 0;
-          this.offsetY = 0;
-          this.originalWidth = 0;
-          this.originalHeight = 0;
-        }
-        return TextureRegion;
-      })();
-      spine.TextureRegion = TextureRegion;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var TextureAtlas = (function() {
-        function TextureAtlas(atlasText, textureLoader) {
-          this.pages = new Array();
-          this.regions = new Array();
-          this.load(atlasText, textureLoader);
-        }
-        TextureAtlas.prototype.load = function(atlasText, textureLoader) {
-          if (null == textureLoader) throw new Error("textureLoader cannot be null.");
-          var reader = new TextureAtlasReader(atlasText);
-          var tuple = new Array(4);
-          var page = null;
-          while (true) {
-            var line = reader.readLine();
-            if (null == line) break;
-            line = line.trim();
-            if (0 == line.length) page = null; else if (page) {
-              var region = new TextureAtlasRegion();
-              region.name = line;
-              region.page = page;
-              region.rotate = "true" == reader.readValue();
-              reader.readTuple(tuple);
-              var x = parseInt(tuple[0]);
-              var y = parseInt(tuple[1]);
-              reader.readTuple(tuple);
-              var width = parseInt(tuple[0]);
-              var height = parseInt(tuple[1]);
-              region.u = x / page.width;
-              region.v = y / page.height;
-              if (region.rotate) {
-                region.u2 = (x + height) / page.width;
-                region.v2 = (y + width) / page.height;
-              } else {
-                region.u2 = (x + width) / page.width;
-                region.v2 = (y + height) / page.height;
-              }
-              region.x = x;
-              region.y = y;
-              region.width = Math.abs(width);
-              region.height = Math.abs(height);
-              4 == reader.readTuple(tuple) && 4 == reader.readTuple(tuple) && reader.readTuple(tuple);
-              region.originalWidth = parseInt(tuple[0]);
-              region.originalHeight = parseInt(tuple[1]);
-              reader.readTuple(tuple);
-              region.offsetX = parseInt(tuple[0]);
-              region.offsetY = parseInt(tuple[1]);
-              region.index = parseInt(reader.readValue());
-              region.texture = page.texture;
-              this.regions.push(region);
-            } else {
-              page = new TextureAtlasPage();
-              page.name = line;
-              if (2 == reader.readTuple(tuple)) {
-                page.width = parseInt(tuple[0]);
-                page.height = parseInt(tuple[1]);
-                reader.readTuple(tuple);
-              }
-              reader.readTuple(tuple);
-              page.minFilter = spine.Texture.filterFromString(tuple[0]);
-              page.magFilter = spine.Texture.filterFromString(tuple[1]);
-              var direction = reader.readValue();
-              page.uWrap = spine.TextureWrap.ClampToEdge;
-              page.vWrap = spine.TextureWrap.ClampToEdge;
-              "x" == direction ? page.uWrap = spine.TextureWrap.Repeat : "y" == direction ? page.vWrap = spine.TextureWrap.Repeat : "xy" == direction && (page.uWrap = page.vWrap = spine.TextureWrap.Repeat);
-              page.texture = textureLoader(line);
-              page.texture.setFilters(page.minFilter, page.magFilter);
-              page.texture.setWraps(page.uWrap, page.vWrap);
-              page.width = page.texture.getImage().width;
-              page.height = page.texture.getImage().height;
-              this.pages.push(page);
-            }
-          }
-        };
-        TextureAtlas.prototype.findRegion = function(name) {
-          for (var i = 0; i < this.regions.length; i++) if (this.regions[i].name == name) return this.regions[i];
-          return null;
-        };
-        TextureAtlas.prototype.dispose = function() {
-          for (var i = 0; i < this.pages.length; i++) this.pages[i].texture.dispose();
-        };
-        return TextureAtlas;
-      })();
-      spine.TextureAtlas = TextureAtlas;
-      var TextureAtlasReader = (function() {
-        function TextureAtlasReader(text) {
-          this.index = 0;
-          this.lines = text.split(/\r\n|\r|\n/);
-        }
-        TextureAtlasReader.prototype.readLine = function() {
-          if (this.index >= this.lines.length) return null;
-          return this.lines[this.index++];
-        };
-        TextureAtlasReader.prototype.readValue = function() {
-          var line = this.readLine();
-          var colon = line.indexOf(":");
-          if (-1 == colon) throw new Error("Invalid line: " + line);
-          return line.substring(colon + 1).trim();
-        };
-        TextureAtlasReader.prototype.readTuple = function(tuple) {
-          var line = this.readLine();
-          var colon = line.indexOf(":");
-          if (-1 == colon) throw new Error("Invalid line: " + line);
-          var i = 0, lastMatch = colon + 1;
-          for (;i < 3; i++) {
-            var comma = line.indexOf(",", lastMatch);
-            if (-1 == comma) break;
-            tuple[i] = line.substr(lastMatch, comma - lastMatch).trim();
-            lastMatch = comma + 1;
-          }
-          tuple[i] = line.substring(lastMatch).trim();
-          return i + 1;
-        };
-        return TextureAtlasReader;
-      })();
-      var TextureAtlasPage = (function() {
-        function TextureAtlasPage() {}
-        return TextureAtlasPage;
-      })();
-      spine.TextureAtlasPage = TextureAtlasPage;
-      var TextureAtlasRegion = (function(_super) {
-        __extends(TextureAtlasRegion, _super);
-        function TextureAtlasRegion() {
-          _super.apply(this, arguments);
-        }
-        return TextureAtlasRegion;
-      })(spine.TextureRegion);
-      spine.TextureAtlasRegion = TextureAtlasRegion;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var TransformConstraint = (function() {
-        function TransformConstraint(data, skeleton) {
-          this.rotateMix = 0;
-          this.translateMix = 0;
-          this.scaleMix = 0;
-          this.shearMix = 0;
-          this.temp = new spine.Vector2();
-          if (null == data) throw new Error("data cannot be null.");
-          if (null == skeleton) throw new Error("skeleton cannot be null.");
-          this.data = data;
-          this.rotateMix = data.rotateMix;
-          this.translateMix = data.translateMix;
-          this.scaleMix = data.scaleMix;
-          this.shearMix = data.shearMix;
-          this.bones = new Array();
-          for (var i = 0; i < data.bones.length; i++) this.bones.push(skeleton.findBone(data.bones[i].name));
-          this.target = skeleton.findBone(data.target.name);
-        }
-        TransformConstraint.prototype.apply = function() {
-          this.update();
-        };
-        TransformConstraint.prototype.update = function() {
-          var rotateMix = this.rotateMix, translateMix = this.translateMix, scaleMix = this.scaleMix, shearMix = this.shearMix;
-          var target = this.target;
-          var ta = target.a, tb = target.b, tc = target.c, td = target.d;
-          var degRadReflect = ta * td - tb * tc > 0 ? spine.MathUtils.degRad : -spine.MathUtils.degRad;
-          var offsetRotation = this.data.offsetRotation * degRadReflect;
-          var offsetShearY = this.data.offsetShearY * degRadReflect;
-          var bones = this.bones;
-          for (var i = 0, n = bones.length; i < n; i++) {
-            var bone = bones[i];
-            var modified = false;
-            if (0 != rotateMix) {
-              var a = bone.a, b = bone.b, c = bone.c, d = bone.d;
-              var r = Math.atan2(tc, ta) - Math.atan2(c, a) + offsetRotation;
-              r > spine.MathUtils.PI ? r -= spine.MathUtils.PI2 : r < -spine.MathUtils.PI && (r += spine.MathUtils.PI2);
-              r *= rotateMix;
-              var cos = Math.cos(r), sin = Math.sin(r);
-              bone.a = cos * a - sin * c;
-              bone.b = cos * b - sin * d;
-              bone.c = sin * a + cos * c;
-              bone.d = sin * b + cos * d;
-              modified = true;
-            }
-            if (0 != translateMix) {
-              var temp = this.temp;
-              target.localToWorld(temp.set(this.data.offsetX, this.data.offsetY));
-              bone.worldX += (temp.x - bone.worldX) * translateMix;
-              bone.worldY += (temp.y - bone.worldY) * translateMix;
-              modified = true;
-            }
-            if (scaleMix > 0) {
-              var s = Math.sqrt(bone.a * bone.a + bone.c * bone.c);
-              var ts = Math.sqrt(ta * ta + tc * tc);
-              s > 1e-5 && (s = (s + (ts - s + this.data.offsetScaleX) * scaleMix) / s);
-              bone.a *= s;
-              bone.c *= s;
-              s = Math.sqrt(bone.b * bone.b + bone.d * bone.d);
-              ts = Math.sqrt(tb * tb + td * td);
-              s > 1e-5 && (s = (s + (ts - s + this.data.offsetScaleY) * scaleMix) / s);
-              bone.b *= s;
-              bone.d *= s;
-              modified = true;
-            }
-            if (shearMix > 0) {
-              var b = bone.b, d = bone.d;
-              var by = Math.atan2(d, b);
-              var r = Math.atan2(td, tb) - Math.atan2(tc, ta) - (by - Math.atan2(bone.c, bone.a));
-              r > spine.MathUtils.PI ? r -= spine.MathUtils.PI2 : r < -spine.MathUtils.PI && (r += spine.MathUtils.PI2);
-              r = by + (r + offsetShearY) * shearMix;
-              var s = Math.sqrt(b * b + d * d);
-              bone.b = Math.cos(r) * s;
-              bone.d = Math.sin(r) * s;
-              modified = true;
-            }
-            modified && (bone.appliedValid = false);
-          }
-        };
-        TransformConstraint.prototype.getOrder = function() {
-          return this.data.order;
-        };
-        return TransformConstraint;
-      })();
-      spine.TransformConstraint = TransformConstraint;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var TransformConstraintData = (function() {
-        function TransformConstraintData(name) {
-          this.order = 0;
-          this.bones = new Array();
-          this.rotateMix = 0;
-          this.translateMix = 0;
-          this.scaleMix = 0;
-          this.shearMix = 0;
-          this.offsetRotation = 0;
-          this.offsetX = 0;
-          this.offsetY = 0;
-          this.offsetScaleX = 0;
-          this.offsetScaleY = 0;
-          this.offsetShearY = 0;
-          if (null == name) throw new Error("name cannot be null.");
-          this.name = name;
-        }
-        return TransformConstraintData;
-      })();
-      spine.TransformConstraintData = TransformConstraintData;
-    })(spine || (spine = {}));
-    var spine;
-    (function(spine) {
-      var IntSet = (function() {
-        function IntSet() {
-          this.array = new Array();
-        }
-        IntSet.prototype.add = function(value) {
-          var contains = this.contains(value);
-          this.array[0 | value] = 0 | value;
-          return !contains;
-        };
-        IntSet.prototype.contains = function(value) {
-          return void 0 != this.array[0 | value];
-        };
-        IntSet.prototype.remove = function(value) {
-          this.array[0 | value] = void 0;
-        };
-        IntSet.prototype.clear = function() {
-          this.array.length = 0;
-        };
-        return IntSet;
-      })();
-      spine.IntSet = IntSet;
-      var Color = (function() {
-        function Color(r, g, b, a) {
-          void 0 === r && (r = 0);
-          void 0 === g && (g = 0);
-          void 0 === b && (b = 0);
-          void 0 === a && (a = 0);
-          this.r = r;
-          this.g = g;
-          this.b = b;
-          this.a = a;
-        }
-        Color.prototype.set = function(r, g, b, a) {
-          this.r = r;
-          this.g = g;
-          this.b = b;
-          this.a = a;
-          this.clamp();
-          return this;
-        };
-        Color.prototype.setFromColor = function(c) {
-          this.r = c.r;
-          this.g = c.g;
-          this.b = c.b;
-          this.a = c.a;
-          return this;
-        };
-        Color.prototype.setFromString = function(hex) {
-          hex = "#" == hex.charAt(0) ? hex.substr(1) : hex;
-          this.r = parseInt(hex.substr(0, 2), 16) / 255;
-          this.g = parseInt(hex.substr(2, 2), 16) / 255;
-          this.b = parseInt(hex.substr(4, 2), 16) / 255;
-          this.a = (8 != hex.length ? 255 : parseInt(hex.substr(6, 2), 16)) / 255;
-          return this;
-        };
-        Color.prototype.add = function(r, g, b, a) {
-          this.r += r;
-          this.g += g;
-          this.b += b;
-          this.a += a;
-          this.clamp();
-          return this;
-        };
-        Color.prototype.clamp = function() {
-          this.r < 0 ? this.r = 0 : this.r > 1 && (this.r = 1);
-          this.g < 0 ? this.g = 0 : this.g > 1 && (this.g = 1);
-          this.b < 0 ? this.b = 0 : this.b > 1 && (this.b = 1);
-          this.a < 0 ? this.a = 0 : this.a > 1 && (this.a = 1);
-          return this;
-        };
-        Color.WHITE = new Color(1, 1, 1, 1);
-        Color.RED = new Color(1, 0, 0, 1);
-        Color.GREEN = new Color(0, 1, 0, 1);
-        Color.BLUE = new Color(0, 0, 1, 1);
-        Color.MAGENTA = new Color(1, 0, 1, 1);
-        return Color;
-      })();
-      spine.Color = Color;
-      var MathUtils = (function() {
-        function MathUtils() {}
-        MathUtils.clamp = function(value, min, max) {
-          if (value < min) return min;
-          if (value > max) return max;
-          return value;
-        };
-        MathUtils.cosDeg = function(degrees) {
-          return Math.cos(degrees * MathUtils.degRad);
-        };
-        MathUtils.sinDeg = function(degrees) {
-          return Math.sin(degrees * MathUtils.degRad);
-        };
-        MathUtils.signum = function(value) {
-          return value > 0 ? 1 : value < 0 ? -1 : 0;
-        };
-        MathUtils.toInt = function(x) {
-          return x > 0 ? Math.floor(x) : Math.ceil(x);
-        };
-        MathUtils.cbrt = function(x) {
-          var y = Math.pow(Math.abs(x), 1 / 3);
-          return x < 0 ? -y : y;
-        };
-        MathUtils.PI = 3.1415927;
-        MathUtils.PI2 = 2 * MathUtils.PI;
-        MathUtils.radiansToDegrees = 180 / MathUtils.PI;
-        MathUtils.radDeg = MathUtils.radiansToDegrees;
-        MathUtils.degreesToRadians = MathUtils.PI / 180;
-        MathUtils.degRad = MathUtils.degreesToRadians;
-        return MathUtils;
-      })();
-      spine.MathUtils = MathUtils;
-      var Utils = (function() {
-        function Utils() {}
-        Utils.arrayCopy = function(source, sourceStart, dest, destStart, numElements) {
-          for (var i = sourceStart, j = destStart; i < sourceStart + numElements; i++, j++) dest[j] = source[i];
-        };
-        Utils.setArraySize = function(array, size, value) {
-          void 0 === value && (value = 0);
-          var oldSize = array.length;
-          if (oldSize == size) return array;
-          array.length = size;
-          if (oldSize < size) for (var i = oldSize; i < size; i++) array[i] = value;
-          return array;
-        };
-        Utils.ensureArrayCapacity = function(array, size, value) {
-          void 0 === value && (value = 0);
-          if (array.length >= size) return array;
-          return Utils.setArraySize(array, size, value);
-        };
-        Utils.newArray = function(size, defaultValue) {
-          var array = new Array(size);
-          for (var i = 0; i < size; i++) array[i] = defaultValue;
-          return array;
-        };
-        Utils.newFloatArray = function(size) {
-          if (Utils.SUPPORTS_TYPED_ARRAYS) return new Float32Array(size);
-          var array = new Array(size);
-          for (var i = 0; i < array.length; i++) array[i] = 0;
-          return array;
-        };
-        Utils.toFloatArray = function(array) {
-          return Utils.SUPPORTS_TYPED_ARRAYS ? new Float32Array(array) : array;
-        };
-        Utils.SUPPORTS_TYPED_ARRAYS = "undefined" !== typeof Float32Array;
-        return Utils;
-      })();
-      spine.Utils = Utils;
-      var DebugUtils = (function() {
-        function DebugUtils() {}
-        DebugUtils.logBones = function(skeleton) {
-          for (var i = 0; i < skeleton.bones.length; i++) {
-            var bone = skeleton.bones[i];
-            console.log(bone.data.name + ", " + bone.a + ", " + bone.b + ", " + bone.c + ", " + bone.d + ", " + bone.worldX + ", " + bone.worldY);
-          }
-        };
-        return DebugUtils;
-      })();
-      spine.DebugUtils = DebugUtils;
-      var Pool = (function() {
-        function Pool(instantiator) {
-          this.items = new Array();
-          this.instantiator = instantiator;
-        }
-        Pool.prototype.obtain = function() {
-          return this.items.length > 0 ? this.items.pop() : this.instantiator();
-        };
-        Pool.prototype.free = function(item) {
-          item.reset && item.reset();
-          this.items.push(item);
-        };
-        Pool.prototype.freeAll = function(items) {
-          for (var i = 0; i < items.length; i++) {
-            items[i].reset && items[i].reset();
-            this.items[i] = items[i];
-          }
-        };
-        Pool.prototype.clear = function() {
-          this.items.length = 0;
-        };
-        return Pool;
-      })();
-      spine.Pool = Pool;
-      var Vector2 = (function() {
-        function Vector2(x, y) {
-          void 0 === x && (x = 0);
-          void 0 === y && (y = 0);
-          this.x = x;
-          this.y = y;
-        }
-        Vector2.prototype.set = function(x, y) {
-          this.x = x;
-          this.y = y;
-          return this;
-        };
-        Vector2.prototype.length = function() {
-          var x = this.x;
-          var y = this.y;
-          return Math.sqrt(x * x + y * y);
-        };
-        Vector2.prototype.normalize = function() {
-          var len = this.length();
-          if (0 != len) {
-            this.x /= len;
-            this.y /= len;
-          }
-          return this;
-        };
-        return Vector2;
-      })();
-      spine.Vector2 = Vector2;
-      var TimeKeeper = (function() {
-        function TimeKeeper() {
-          this.maxDelta = .064;
-          this.framesPerSecond = 0;
-          this.delta = 0;
-          this.totalTime = 0;
-          this.lastTime = Date.now() / 1e3;
-          this.frameCount = 0;
-          this.frameTime = 0;
-        }
-        TimeKeeper.prototype.update = function() {
-          var now = Date.now() / 1e3;
-          this.delta = now - this.lastTime;
-          this.frameTime += this.delta;
-          this.totalTime += this.delta;
-          this.delta > this.maxDelta && (this.delta = this.maxDelta);
-          this.lastTime = now;
-          this.frameCount++;
-          if (this.frameTime > 1) {
-            this.framesPerSecond = this.frameCount / this.frameTime;
-            this.frameTime = 0;
-            this.frameCount = 0;
-          }
-        };
-        return TimeKeeper;
-      })();
-      spine.TimeKeeper = TimeKeeper;
-    })(spine || (spine = {}));
-    module.exports = spine;
-  }), {} ],
-  302: [ (function(require, module, exports) {
+  270: [ (function(require, module, exports) {
     (function() {
       "use strict";
       Function.prototype._extend = function(parent) {
@@ -67547,7 +56141,7 @@
       }
     })();
   }), {} ],
-  303: [ (function(require, module, exports) {
+  271: [ (function(require, module, exports) {
     Object.create = Object.create || function(o) {
       function F() {}
       F.prototype = o;
@@ -70549,7 +59143,7 @@
       return Math.abs(this.jAcc);
     };
   }), {} ],
-  304: [ (function(require, module, exports) {
+  272: [ (function(require, module, exports) {
     module.exports = (function() {
       "use strict";
       function t() {
@@ -71064,7 +59658,7 @@
       return M;
     })();
   }), {} ],
-  305: [ (function(require, module, exports) {
+  273: [ (function(require, module, exports) {
     var _global = "undefined" === typeof window ? global : window;
     function defineMacro(name, defaultValue) {
       "undefined" === typeof _global[name] && (_global[name] = defaultValue);
@@ -71109,30 +59703,30 @@
     "./CCBoot": 2,
     "./CCDebugger": 3,
     "./DebugInfos": 4,
-    "./cocos2d": 244,
-    "./cocos2d/core/predefine": 203,
-    "./cocos2d/kazmath": 248,
-    "./cocos2d/shaders": 275,
-    "./extends": 290,
+    "./cocos2d": 235,
+    "./cocos2d/core/predefine": 196,
+    "./cocos2d/kazmath": 239,
+    "./cocos2d/shaders": 263,
+    "./extends": 267,
     "./package.json": void 0,
-    "./polyfill/array": 306,
-    "./polyfill/misc": 307,
-    "./polyfill/string": 308,
-    "./polyfill/typescript": 309
+    "./polyfill/array": 274,
+    "./polyfill/misc": 275,
+    "./polyfill/string": 276,
+    "./polyfill/typescript": 277
   } ],
-  306: [ (function(require, module, exports) {
+  274: [ (function(require, module, exports) {
     Array.isArray || (Array.isArray = function(arg) {
       return "[object Array]" === Object.prototype.toString.call(arg);
     });
   }), {} ],
-  307: [ (function(require, module, exports) {
+  275: [ (function(require, module, exports) {
     Math.sign || (Math.sign = function(x) {
       x = +x;
       if (0 === x || isNaN(x)) return x;
       return x > 0 ? 1 : -1;
     });
     Number.isInteger || (Number.isInteger = function(value) {
-      return "number" === typeof value && (0 | value) === value;
+      return "number" === typeof value && isFinite(value) && Math.floor(value) === value;
     });
     if (false, !console.time) {
       var Timer = window.performance || Date;
@@ -71147,7 +59741,7 @@
       };
     }
   }), {} ],
-  308: [ (function(require, module, exports) {
+  276: [ (function(require, module, exports) {
     String.prototype.startsWith || (String.prototype.startsWith = function(searchString, position) {
       position = position || 0;
       return this.lastIndexOf(searchString, position) === position;
@@ -71159,7 +59753,7 @@
       return -1 !== lastIndex && lastIndex === position;
     });
   }), {} ],
-  309: [ (function(require, module, exports) {
+  277: [ (function(require, module, exports) {
     var extendStatics = Object.setPrototypeOf || {
       __proto__: []
     } instanceof Array && function(d, b) {
@@ -71409,5 +60003,5 @@
       return m ? m.call(o) : "function" === typeof __values ? __values(o) : o[Symbol.iterator]();
     };
   }), {} ]
-}, {}, [ 305 ]);
+}, {}, [ 273 ]);
 //# sourceMappingURL=cocos2d-js.js.map

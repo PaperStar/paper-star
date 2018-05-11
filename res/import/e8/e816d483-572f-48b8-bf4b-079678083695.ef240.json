@@ -4,23 +4,14 @@
     "back": {
       "__uuid__": "62OEyIozVIV5TdtzStc8om"
     },
+    "user": {
+      "__uuid__": "d7/oOopoBHBaIGwxmeL8AR"
+    },
     "rangking": {
       "__uuid__": "d1XaQxcrNGBaKW4eNWVdiF"
     },
     "set": {
       "__uuid__": "9aAzSM2atNzJCvuppyR3aw"
-    },
-    "double-arrow-bottom": {
-      "__uuid__": "13peA/duZAxLZI4wqgldIt"
-    },
-    "double-arrow-top": {
-      "__uuid__": "5eDBsAOG1G0JK3UFWs+fjJ"
-    },
-    "line": {
-      "__uuid__": "14h70bx4RLRpd5w9wkYa5h"
-    },
-    "planet": {
-      "__uuid__": "f4217NZahDaLGC9FMudZgy"
     },
     "clock": {
       "__uuid__": "22Msy2SE9My4M8SAsme4wV"
@@ -28,14 +19,14 @@
     "fire": {
       "__uuid__": "d02gXtXndG5a27gpJyv4MZ"
     },
-    "triangle": {
-      "__uuid__": "26AxJXIc9JKatRYe3AI86d"
-    },
-    "two": {
-      "__uuid__": "86YOfiwExJ0rIABK6IBuoW"
+    "line": {
+      "__uuid__": "14h70bx4RLRpd5w9wkYa5h"
     },
     "drop": {
       "__uuid__": "63tCFllJ5AaY/2SGixyB5h"
+    },
+    "triangle": {
+      "__uuid__": "26AxJXIc9JKatRYe3AI86d"
     },
     "star-empty": {
       "__uuid__": "a9+JSUgJJGPIha4BxOiztC"
@@ -43,29 +34,32 @@
     "star-full": {
       "__uuid__": "d8L0y3xhZBQ42RK2Mh6omY"
     },
+    "trophy": {
+      "__uuid__": "4dMK+HfBdDpYtq8RvYqYJx"
+    },
     "share": {
       "__uuid__": "07MoA6edZGIaajO+WmoHvA"
     },
     "play": {
       "__uuid__": "adGroavBdFOoHyPEXVzvbo"
     },
-    "trophy": {
-      "__uuid__": "4dMK+HfBdDpYtq8RvYqYJx"
-    },
     "info": {
       "__uuid__": "22n4mQDQBOqa1BpaWvplix"
-    },
-    "FullScreen": {
-      "__uuid__": "803/ynb6ZGqJhsQS9d+ZzW"
     },
     "shoot": {
       "__uuid__": "ad0k0HF7hJEqjSGF+fAgqR"
     },
-    "exitFullScreen": {
-      "__uuid__": "8amKwqATBB8Z4msSPcc/K0"
+    "replay": {
+      "__uuid__": "cfPops2c5LFKssKDl/4Z5M"
+    },
+    "FullScreen": {
+      "__uuid__": "803/ynb6ZGqJhsQS9d+ZzW"
     },
     "wave-o": {
       "__uuid__": "29hlkpahdBpKqM6oOuUEHP"
+    },
+    "exitFullScreen": {
+      "__uuid__": "8amKwqATBB8Z4msSPcc/K0"
     }
   }
 }

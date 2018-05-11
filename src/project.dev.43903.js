@@ -1,29 +1,28 @@
 require = function() {
-  function e(t, n, r) {
-    function s(o, u) {
-      if (!n[o]) {
-        if (!t[o]) {
-          var a = "function" == typeof require && require;
-          if (!u && a) return a(o, !0);
-          if (i) return i(o, !0);
-          var f = new Error("Cannot find module '" + o + "'");
-          throw f.code = "MODULE_NOT_FOUND", f;
+  function r(e, n, t) {
+    function o(i, f) {
+      if (!n[i]) {
+        if (!e[i]) {
+          var c = "function" == typeof require && require;
+          if (!f && c) return c(i, !0);
+          if (u) return u(i, !0);
+          var a = new Error("Cannot find module '" + i + "'");
+          throw a.code = "MODULE_NOT_FOUND", a;
         }
-        var l = n[o] = {
+        var p = n[i] = {
           exports: {}
         };
-        t[o][0].call(l.exports, function(e) {
-          var n = t[o][1][e];
-          return s(n || e);
-        }, l, l.exports, e, t, n, r);
+        e[i][0].call(p.exports, function(r) {
+          var n = e[i][1][r];
+          return o(n || r);
+        }, p, p.exports, r, e, n, t);
       }
-      return n[o].exports;
+      return n[i].exports;
     }
-    var i = "function" == typeof require && require;
-    for (var o = 0; o < r.length; o++) s(r[o]);
-    return s;
+    for (var u = "function" == typeof require && require, i = 0; i < t.length; i++) o(t[i]);
+    return o;
   }
-  return e;
+  return r;
 }()({
   AnimHelper: [ function(require, module, exports) {
     "use strict";
@@ -519,7 +518,11 @@ require = function() {
       revive: function revive() {
         this.game.revive();
       },
-      gameover: function gameover() {
+      cancel: function cancel() {
+        this.gameOver();
+      },
+      gameOver: function gameOver() {
+        this.game.resume();
         this.game.gameOver();
       }
     });
@@ -655,8 +658,26 @@ require = function() {
         var records = JSON.parse(cc.sys.localStorage.getItem(app + "-records"));
         this.score.string = curRecord.score;
       },
+      init: function init(game) {
+        this.game = game;
+        this.hide();
+      },
+      hide: function hide() {
+        this.node.active = false;
+      },
+      show: function show() {
+        this.node.active = true;
+      },
       backToStartMenu: function backToStartMenu() {
         cc.director.loadScene("StartMenu");
+      },
+      restart: function restart() {
+        this.game.restart();
+      },
+      share: function share() {
+        cc.sys.platform === cc.sys.WECHAT_GAME && wx.shareAppMessage({
+          title: "快来进行你的冒险吧！"
+        });
       }
     });
     cc._RF.pop();
@@ -684,6 +705,7 @@ require = function() {
         poolMng: cc.Node,
         foeGroup: cc.Node,
         deathUI: cc.Node,
+        gameOverUI: cc.Node,
         cameraRoot: cc.Animation
       },
       onLoad: function onLoad() {
@@ -710,6 +732,8 @@ require = function() {
         this.inGameUI.init(this);
         this.deathUI = this.deathUI.getComponent("DeathUI");
         this.deathUI.init(this);
+        this.gameOverUI = this.gameOverUI.getComponent("GameOverUI");
+        this.gameOverUI.init(this);
       },
       pause: function pause() {
         cc.director.pause();
@@ -747,10 +771,13 @@ require = function() {
         this.player.ready();
       },
       gameOver: function gameOver() {
+        this.deathUI.hide();
+        this.gameOverUI.show();
         var app = "paper-star";
         var curRecord = {
           score: this.player.score,
-          time: new Date()
+          time: new Date(),
+          life: this.player.life
         };
         var records = cc.sys.localStorage.getItem(app + "-records");
         if (records) {
@@ -760,10 +787,9 @@ require = function() {
         }
         cc.sys.localStorage.setItem(app + "-curRecord", JSON.stringify(curRecord));
         cc.sys.localStorage.setItem(app + "-records", JSON.stringify(records));
-        cc.director.loadScene("GameOver");
       },
       restart: function restart() {
-        cc.director.loadScene("ModeMenu");
+        cc.director.loadScene("FreeMode");
       }
     });
     cc._RF.pop();
@@ -820,7 +846,7 @@ require = function() {
         exitFullScreenIcon: cc.SpriteFrame
       },
       start: function start() {
-        this.scheduleOnce(this.togglePanel, 5);
+        this.scheduleOnce(this.togglePanel, 3);
       },
       init: function init(game) {
         this.waveUI = this.waveUI.getComponent("WaveUI");
@@ -1145,7 +1171,6 @@ require = function() {
       properties: {},
       onLoad: function onLoad() {
         cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
-        cc.view.enableAutoFullScreen(true);
         cc.director.setDisplayStats(false);
       },
       start: function start() {
@@ -1156,6 +1181,31 @@ require = function() {
         cc.director.preloadScene("StartMenu", function() {
           cc.log("Start scene preloaded");
         });
+        cc.sys.platform === cc.sys.WECHAT_GAME && this.initWechat();
+      },
+      initWechat: function initWechat() {
+        var self = this;
+        wx.showShareMenu({
+          success: function success(res) {
+            wx.onShareAppMessage(function() {
+              return {
+                title: "快来进行你的冒险吧~"
+              };
+            });
+          },
+          fail: function fail(res) {
+            console.log("fail");
+            console.log(res);
+          }
+        });
+        wx.setMenuStyle({
+          style: "light"
+        });
+        wx.login({
+          success: function success() {
+            self.createUserInfoButton();
+          }
+        });
       },
       displayEgg: function displayEgg() {
         console.log("%c Paper Star - @YunYouJun ", "background:#000;color:#fff;padding:2px;border-radius:2px");
@@ -1165,6 +1215,57 @@ require = function() {
       },
       loadStartMenu: function loadStartMenu() {
         cc.director.loadScene("StartMenu");
+      },
+      createUserInfoButton: function createUserInfoButton() {
+        var self = this;
+        var userInfoButton = wx.createUserInfoButton({
+          type: "text",
+          text: "授权个人信息",
+          style: {
+            left: 66,
+            top: 10,
+            width: 140,
+            height: 40,
+            lineHeight: 40,
+            borderColor: "#000000",
+            borderWidth: 1,
+            backgroundColor: "#ffffff",
+            color: "#000000",
+            textAlign: "center",
+            fontSize: 16,
+            borderRadius: 4
+          }
+        });
+        userInfoButton.onTap(function(res) {
+          console.log(res.userInfo);
+          self.userInfo = res.userInfo;
+          self.storeUserInfo();
+          userInfoButton.text = self.userInfo.nickName;
+          userInfoButton.hide();
+        });
+      },
+      showGameClub: function showGameClub() {
+        var gameClubButton = wx.createGameClubButton({
+          icon: "dark",
+          style: {
+            left: 10,
+            top: 76,
+            width: 40,
+            height: 40
+          }
+        });
+        gameClubButton.onTap(function(res) {
+          console.log(res);
+        });
+      },
+      storeUserInfo: function storeUserInfo() {
+        var self = this;
+        var avatarSize = "46";
+        var avatarUrl = this.userInfo.avatarUrl.split("/");
+        avatarUrl[avatarUrl.length - 1] = avatarSize;
+        avatarUrl = avatarUrl.join("/");
+        this.userInfo.avatarUrl = avatarUrl;
+        cc.sys.localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
       }
     });
     cc._RF.pop();
@@ -1373,9 +1474,7 @@ require = function() {
         });
       },
       loadModeMenu: function loadModeMenu() {
-        cc.director.loadScene("ModeMenu", function() {
-          console.log("ModeMenu is loaded.");
-        });
+        this.loadFreeMode();
       },
       loadSetMenu: function loadSetMenu() {
         cc.director.loadScene("SetMenu", function() {
@@ -1937,19 +2036,24 @@ require = function() {
     "use strict";
     cc.Class({
       extends: cc.Component,
-      properties: {},
+      properties: {
+        bgCanvas: cc.Graphics,
+        avatar: cc.Sprite,
+        nickName: cc.Label
+      },
       onLoad: function onLoad() {
         cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
-        cc.view.enableAutoFullScreen(true);
         cc.director.setDisplayStats(false);
       },
       start: function start() {
-        this.ctx = this.getComponent(cc.Graphics);
-        var canvas = cc.director.getScene().getChildByName("Canvas");
-        this.center = cc.p(200, canvas.height / 2);
+        this.ctx = this.bgCanvas;
+        this.avatarSprite = this.avatar.spriteFrame;
+        this.height = this.bgCanvas.node.height;
+        this.center = cc.p(200, this.height / 2);
         this.init();
         this.drawOrbitPlanet();
         this.drawStarLine();
+        this.loadWechatUserInfo();
       },
       init: function init() {
         this.generateRandomOrbitPlanet(8);
@@ -2033,6 +2137,20 @@ require = function() {
         this.ctx.clear();
         this.drawOrbitPlanet();
         this.drawStarLine();
+      },
+      loadWechatUserInfo: function loadWechatUserInfo() {
+        var self = this;
+        if (cc.sys.localStorage.getItem("userInfo")) {
+          this.userInfo = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
+          this.nickName.string = this.userInfo.nickName;
+          var WechatAvatar = {
+            url: this.userInfo.avatarUrl,
+            type: "jpg"
+          };
+          cc.loader.load(WechatAvatar, function(err, texture) {
+            self.avatarSprite.setTexture(texture, null, null, null, cc.size(46, 46));
+          });
+        }
       }
     });
     cc._RF.pop();
@@ -2591,4 +2709,4 @@ require = function() {
     };
     cc._RF.pop();
   }, {} ]
-}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "AnimHelper", "BossMng", "Foe", "Spawn", "Game", "MapControl", "Bullet", "gravity-radial", "gravity", "planet", "PlayerFX", "SortMng", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "ComboDisplay", "DeathUI", "InGameUI", "KillDisplay", "WaveUI", "Joystick", "JoystickCommon", "StartMenuUI", "Helpers", "common", "global", "Launch", "Menu", "SetMenu", "NodePool", "Player", "SkillProgress", "PoolMng", "Types", "en", "zh", "BossProgress", "ButtonScaler", "WaveProgress" ]);
+}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "BossMng", "Foe", "Spawn", "Game", "MapControl", "Bullet", "gravity-radial", "gravity", "planet", "PlayerFX", "SortMng", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "ComboDisplay", "DeathUI", "InGameUI", "KillDisplay", "WaveUI", "Joystick", "JoystickCommon", "StartMenuUI", "AnimHelper", "Helpers", "common", "global", "Launch", "Menu", "SetMenu", "NodePool", "Player", "SkillProgress", "PoolMng", "Types", "en", "zh", "BossProgress", "ButtonScaler", "WaveProgress" ]);
