@@ -1,11 +1,17 @@
 {
   "__type__": "cc.SpriteAtlas",
   "_spriteFrames": {
+    "GitHub": {
+      "__uuid__": "0fk3EHHvFNFprD3Qdb0t+2"
+    },
     "back": {
       "__uuid__": "62OEyIozVIV5TdtzStc8om"
     },
-    "user": {
-      "__uuid__": "d7/oOopoBHBaIGwxmeL8AR"
+    "email": {
+      "__uuid__": "d3X5g1985D6KoxbmYeyMNA"
+    },
+    "board": {
+      "__uuid__": "33WapKyZNKpZuBzb7+PM/8"
     },
     "rangking": {
       "__uuid__": "d1XaQxcrNGBaKW4eNWVdiF"
@@ -13,23 +19,29 @@
     "set": {
       "__uuid__": "9aAzSM2atNzJCvuppyR3aw"
     },
-    "clock": {
-      "__uuid__": "22Msy2SE9My4M8SAsme4wV"
+    "user": {
+      "__uuid__": "d7/oOopoBHBaIGwxmeL8AR"
     },
-    "fire": {
-      "__uuid__": "d02gXtXndG5a27gpJyv4MZ"
-    },
-    "line": {
-      "__uuid__": "14h70bx4RLRpd5w9wkYa5h"
-    },
-    "drop": {
-      "__uuid__": "63tCFllJ5AaY/2SGixyB5h"
+    "weibo": {
+      "__uuid__": "0bFSA9mq1LOa31avhkfzQs"
     },
     "triangle": {
       "__uuid__": "26AxJXIc9JKatRYe3AI86d"
     },
+    "web": {
+      "__uuid__": "990EufTUdCRbqeFPKcdFL4"
+    },
+    "clock": {
+      "__uuid__": "22Msy2SE9My4M8SAsme4wV"
+    },
     "star-empty": {
       "__uuid__": "a9+JSUgJJGPIha4BxOiztC"
+    },
+    "line": {
+      "__uuid__": "14h70bx4RLRpd5w9wkYa5h"
+    },
+    "fire": {
+      "__uuid__": "d02gXtXndG5a27gpJyv4MZ"
     },
     "star-full": {
       "__uuid__": "d8L0y3xhZBQ42RK2Mh6omY"
@@ -37,11 +49,14 @@
     "trophy": {
       "__uuid__": "4dMK+HfBdDpYtq8RvYqYJx"
     },
+    "drop": {
+      "__uuid__": "63tCFllJ5AaY/2SGixyB5h"
+    },
+    "about": {
+      "__uuid__": "f7iy1tusJEA4/EeJ/LnFSK"
+    },
     "share": {
       "__uuid__": "07MoA6edZGIaajO+WmoHvA"
-    },
-    "play": {
-      "__uuid__": "adGroavBdFOoHyPEXVzvbo"
     },
     "info": {
       "__uuid__": "22n4mQDQBOqa1BpaWvplix"
@@ -49,17 +64,14 @@
     "shoot": {
       "__uuid__": "ad0k0HF7hJEqjSGF+fAgqR"
     },
+    "play": {
+      "__uuid__": "adGroavBdFOoHyPEXVzvbo"
+    },
     "replay": {
       "__uuid__": "cfPops2c5LFKssKDl/4Z5M"
     },
-    "FullScreen": {
-      "__uuid__": "803/ynb6ZGqJhsQS9d+ZzW"
-    },
     "wave-o": {
       "__uuid__": "29hlkpahdBpKqM6oOuUEHP"
-    },
-    "exitFullScreen": {
-      "__uuid__": "8amKwqATBB8Z4msSPcc/K0"
     }
   }
 }

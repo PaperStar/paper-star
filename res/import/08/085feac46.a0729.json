@@ -2,35 +2,23 @@
   {
     "__type__": "cc.AnimationClip",
     "_name": "bgFadeIn",
-    "_duration": 6,
+    "_duration": 2.9833333333333334,
     "curveData": {
       "props": {
         "opacity": [
           {
-            "frame": 1.9833333333333334,
+            "frame": 0,
             "value": 0,
-            "curve": "cubicIn"
+            "curve": "expoIn"
           },
           {
-            "frame": 6,
+            "frame": 2.9833333333333334,
             "value": 255,
             "curve": "linear"
           }
         ]
       }
-    },
-    "events": [
-      {
-        "frame": 6,
-        "func": "loadStartMenu",
-        "params": []
-      },
-      {
-        "frame": 6,
-        "func": "",
-        "params": []
-      }
-    ]
+    }
   },
   {
     "__type__": "cc.AnimationClip",
@@ -81,7 +69,7 @@
   [
     {
       "__type__": "cc.SceneAsset",
-      "_name": "Story",
+      "_name": "StoryBoard",
       "scene": {
         "__id__": 1
       },
@@ -111,7 +99,7 @@
           "__id__": 3
         },
         {
-          "__id__": 4
+          "__id__": 5
         }
       ],
       "_components": [
@@ -124,6 +112,18 @@
             "__type__": "cc.Size",
             "width": 960,
             "height": 540
+          }
+        },
+        {
+          "__type__": "d2b98ScZvFL2J1NmuEOC2EE",
+          "node": {
+            "__id__": 2
+          },
+          "bgAnim": {
+            "__id__": 4
+          },
+          "storyBoardAnim": {
+            "__id__": 6
           }
         }
       ],
@@ -157,19 +157,7 @@
           "_sizeMode": 0
         },
         {
-          "__type__": "cc.Animation",
-          "node": {
-            "__id__": 3
-          },
-          "_defaultClip": {
-            "__uuid__": "2bxakVJFJBm5a0y4tmrOSM"
-          },
-          "_clips": [
-            {
-              "__uuid__": "2bxakVJFJBm5a0y4tmrOSM"
-            }
-          ],
-          "playOnLoad": true
+          "__id__": 4
         },
         {
           "__type__": "cc.Widget",
@@ -182,14 +170,9 @@
           "_alignFlags": 45,
           "_originalWidth": 100,
           "_originalHeight": 100
-        },
-        {
-          "__type__": "e86f7h7/ThBVJoTB44r2G7D",
-          "node": {
-            "__id__": 3
-          }
         }
       ],
+      "_opacity": 0,
       "_contentSize": {
         "__type__": "cc.Size",
         "width": 960,
@@ -197,35 +180,24 @@
       }
     },
     {
-      "__type__": "cc.Node",
-      "_name": "Mask",
-      "_parent": {
-        "__id__": 2
+      "__type__": "cc.Animation",
+      "node": {
+        "__id__": 3
       },
-      "_children": [
+      "_defaultClip": {
+        "__uuid__": "2bxakVJFJBm5a0y4tmrOSM"
+      },
+      "_clips": [
         {
-          "__id__": 5
+          "__uuid__": "2bxakVJFJBm5a0y4tmrOSM"
         }
-      ],
-      "_components": [
-        {
-          "__type__": "cc.Mask",
-          "node": {
-            "__id__": 4
-          }
-        }
-      ],
-      "_contentSize": {
-        "__type__": "cc.Size",
-        "width": 960,
-        "height": 540
-      }
+      ]
     },
     {
       "__type__": "cc.Node",
       "_name": "StoryLabel",
       "_parent": {
-        "__id__": 4
+        "__id__": 2
       },
       "_components": [
         {
@@ -241,19 +213,7 @@
           "_N$overflow": 1
         },
         {
-          "__type__": "cc.Animation",
-          "node": {
-            "__id__": 5
-          },
-          "_defaultClip": {
-            "__uuid__": "69Xe3kQjlPGYLPe9yWRYFy"
-          },
-          "_clips": [
-            {
-              "__uuid__": "69Xe3kQjlPGYLPe9yWRYFy"
-            }
-          ],
-          "playOnLoad": true
+          "__id__": 6
         }
       ],
       "_contentSize": {
@@ -261,6 +221,21 @@
         "width": 800,
         "height": 540
       }
+    },
+    {
+      "__type__": "cc.Animation",
+      "node": {
+        "__id__": 5
+      },
+      "_defaultClip": {
+        "__uuid__": "69Xe3kQjlPGYLPe9yWRYFy"
+      },
+      "_clips": [
+        {
+          "__uuid__": "69Xe3kQjlPGYLPe9yWRYFy"
+        }
+      ],
+      "playOnLoad": true
     }
   ]
 ]

@@ -24,6 +24,65 @@ require = function() {
   }
   return r;
 }()({
+  About: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "396a4yO9/tOUaxE1hWIsU2E", "About");
+    "use strict";
+    cc.Class({
+      extends: cc.Component,
+      properties: {},
+      start: function start() {
+        cc.director.setClearColor(cc.Color.BLACK);
+      },
+      show: function show(title, content) {
+        switch (cc.sys.platform) {
+         case cc.sys.WECHAT_GAME:
+          var info = {
+            title: title,
+            content: content,
+            showCancel: false,
+            cancelText: "我知道啦"
+          };
+          wx.showModal(info);
+          break;
+
+         default:
+          window.open(url);
+        }
+      },
+      openProjectShow: function openProjectShow() {
+        var title = "游戏演示";
+        var projectShowUrl = "https://yunle.fun/show/";
+        this.show(title, projectShowUrl);
+      },
+      openProjectGitHub: function openProjectGitHub() {
+        var title = "GitHub 项目地址";
+        var projectGitHubUrl = "https://github.com/PaperStar/";
+        this.show(title, projectGitHubUrl);
+      },
+      openAuthorGitHub: function openAuthorGitHub() {
+        var title = "作者 GitHub 地址";
+        var myGitHubUrl = "https://github.com/YunYouJun/";
+        this.show(title, myGitHubUrl);
+      },
+      openAuthorWeibo: function openAuthorWeibo() {
+        var title = "作者微博";
+        var myWeiboUrl = "https://weibo.com/jizhideyunyoujun";
+        this.show(title, myWeiboUrl);
+      },
+      openGameWeb: function openGameWeb() {
+        var title = "游戏官网";
+        var gameWebUrl = "https://yunle.fun/";
+        this.show(title, gameWebUrl);
+      },
+      sendEmail: function sendEmail() {
+        var title = "作者邮箱";
+        var EmailUrl = "me@yunyoujun.cn";
+        this.show(title, EmailUrl);
+      }
+    });
+    cc._RF.pop();
+  }, {} ],
   AnimHelper: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "d6ff4kVMSdOh7u6WwhErR6E", "AnimHelper");
@@ -43,6 +102,39 @@ require = function() {
       },
       finish: function finish() {
         cc.Component.EventHandler.emitEvents([ this.finishHandler ]);
+      }
+    });
+    cc._RF.pop();
+  }, {} ],
+  Back: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "bb190g9Ec9LGbupRFl1xyQR", "Back");
+    "use strict";
+    var menu = [ {
+      parent: "StartMenu",
+      children: [ "StartMenu", "ModeMenu", "ConfigMenu", "AchieveSystem" ]
+    }, {
+      parent: "ModeMenu",
+      children: [ "FreeMode", "GravityMode" ]
+    }, {
+      parent: "ConfigMenu",
+      children: [ "About" ]
+    } ];
+    function getParentMenu(SceneName) {
+      for (var i = 0; i < menu.length; i++) if (menu[i].children) for (var j = 0; j < menu[i].children.length; j++) if (SceneName == menu[i].children[j]) return menu[i].parent;
+      return "StartMenu";
+    }
+    cc.Class({
+      extends: cc.Component,
+      properties: {},
+      onLoad: function onLoad() {},
+      start: function start() {
+        Global.curSceneName = cc.director.getScene().name;
+      },
+      back: function back() {
+        cc.director.loadScene(getParentMenu(Global.curSceneName), function() {
+          console.log("Back To " + getParentMenu(Global.curSceneName));
+        });
       }
     });
     cc._RF.pop();
@@ -202,37 +294,6 @@ require = function() {
   }, {
     Types: "Types"
   } ],
-  ButtonScaler: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "d7564Cn9+NOM6YfHHX7zsyO", "ButtonScaler");
-    "use strict";
-    cc.Class({
-      extends: cc.Component,
-      properties: {
-        pressedScale: 1,
-        transDuration: 0
-      },
-      onLoad: function onLoad() {
-        var self = this;
-        self.initScale = this.node.scale;
-        self.button = self.getComponent(cc.Button);
-        self.scaleDownAction = cc.scaleTo(self.transDuration, self.pressedScale);
-        self.scaleUpAction = cc.scaleTo(self.transDuration, self.initScale);
-        function onTouchDown(event) {
-          this.stopAllActions();
-          this.runAction(self.scaleDownAction);
-        }
-        function onTouchUp(event) {
-          this.stopAllActions();
-          this.runAction(self.scaleUpAction);
-        }
-        this.node.on("touchstart", onTouchDown, this.node);
-        this.node.on("touchend", onTouchUp, this.node);
-        this.node.on("touchcancel", onTouchUp, this.node);
-      }
-    });
-    cc._RF.pop();
-  }, {} ],
   CameraControl: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "27de7cZsrVH5r/Dk0M8SrVL", "CameraControl");
@@ -496,6 +557,30 @@ require = function() {
     });
     cc._RF.pop();
   }, {} ],
+  Config: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "61ee5T8IIVORqDemqwaecMU", "Config");
+    "use strict";
+    cc.Class({
+      extends: cc.Component,
+      properties: {},
+      onLoad: function onLoad() {
+        Global.userInfo.node.active = false;
+        cc.sys.platform == cc.sys.WECHAT_GAME && Global.wxGame.gameClubButton.hide();
+      },
+      loadStoryBoard: function loadStoryBoard() {
+        cc.director.loadScene("StoryBoard", function() {
+          console.log("StoryBoard is loaded.");
+        });
+      },
+      loadAboutScene: function loadAboutScene() {
+        cc.director.loadScene("About", function() {
+          Global.Helpers.displayEgg();
+        });
+      }
+    });
+    cc._RF.pop();
+  }, {} ],
   DeathUI: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "6cd0aWOhd9M2pK4lZ/s5SXf", "DeathUI");
@@ -505,24 +590,21 @@ require = function() {
       properties: {},
       init: function init(game) {
         this.game = game;
-        this.node.active = true;
         this.hide();
       },
       show: function show() {
-        this.node.setPosition(0, 0);
+        this.node.active = true;
       },
       hide: function hide() {
-        this.node.x = 3e3;
+        this.node.active = false;
       },
-      start: function start() {},
       revive: function revive() {
         this.game.revive();
       },
-      cancel: function cancel() {
+      giveUp: function giveUp() {
         this.gameOver();
       },
       gameOver: function gameOver() {
-        this.game.resume();
         this.game.gameOver();
       }
     });
@@ -746,7 +828,6 @@ require = function() {
       },
       death: function death() {
         this.deathUI.show();
-        this.pause();
       },
       revive: function revive() {
         this.resume();
@@ -771,6 +852,7 @@ require = function() {
         this.player.ready();
       },
       gameOver: function gameOver() {
+        this.resume();
         this.deathUI.hide();
         this.gameOverUI.show();
         var app = "paper-star";
@@ -796,6 +878,33 @@ require = function() {
   }, {
     Helpers: "Helpers"
   } ],
+  Global: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "2acbeFK/3FIM6/79MJsQG7X", "Global");
+    "use strict";
+    var _Helpers = require("Helpers");
+    var _Helpers2 = _interopRequireDefault(_Helpers);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
+    var physicsManager = cc.director.getPhysicsManager();
+    physicsManager.enabled = true;
+    var debugFlag = false;
+    debugFlag && (cc.director.getPhysicsManager().debugDrawFlags = cc.PhysicsManager.DrawBits.e_aabbBit | cc.PhysicsManager.DrawBits.e_pairBit | cc.PhysicsManager.DrawBits.e_centerOfMassBit | cc.PhysicsManager.DrawBits.e_jointBit | cc.PhysicsManager.DrawBits.e_shapeBit);
+    window.Global = {
+      Helpers: _Helpers2.default,
+      wxGame: null,
+      userInfo: null,
+      curSceneName: "StartMenu",
+      common: null,
+      commonInfo: null
+    };
+    cc._RF.pop();
+  }, {
+    Helpers: "Helpers"
+  } ],
   Helpers: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "cb817NrY35LHK6kURY6HMba", "Helpers");
@@ -803,24 +912,41 @@ require = function() {
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
+    var ColorList = cc.Enum({
+      blue: "#0078E7",
+      success: "#21ba45",
+      warning: "#f2711c",
+      danger: "#db2828",
+      info: "#42B8DD",
+      purple: "#8e71c1",
+      black: "#000000",
+      dark: "#303133",
+      light: "#eeeeee"
+    });
     exports.default = {
-      ColorList: cc.Enum({
-        blue: "#0078E7",
-        success: "#21ba45",
-        warning: "#f2711c",
-        danger: "#db2828",
-        info: "#42B8DD",
-        purple: "#8e71c1",
-        black: "#000000",
-        dark: "#303133",
-        light: "#eeeeee"
-      }),
+      ColorList: ColorList,
       getRandom: function getRandom(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
       },
       getRandomColor: function getRandomColor() {
         var RoleColor = [ "blue", "success", "warning", "danger", "info", "purple", "black" ];
         return this.ColorList[RoleColor[this.getRandom(0, RoleColor.length - 1)]];
+      },
+      displayEgg: function displayEgg() {
+        console.log("%c Paper Star - @YunYouJun ", "background:#000;color:#fff;padding:2px;border-radius:2px");
+      },
+      loadStartMenu: function loadStartMenu() {
+        cc.director.loadScene("StartMenu", function() {
+          console.log("StartMenu is loaded.");
+        });
+      },
+      loadStoryBoard: function loadStoryBoard() {
+        cc.director.loadScene("StoryBoard");
+      },
+      loadConfigMenu: function loadConfigMenu() {
+        cc.director.loadScene("ConfigMenu", function() {
+          console.log("Config is loaded.");
+        });
       }
     };
     module.exports = exports["default"];
@@ -830,7 +956,13 @@ require = function() {
     "use strict";
     cc._RF.push(module, "ac1b0tvti5F4aPaSKmlTJVi", "InGameUI");
     "use strict";
-    var Player = require("Player");
+    var _Player = require("Player");
+    var _Player2 = _interopRequireDefault(_Player);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
     cc.Class({
       extends: cc.Component,
       properties: {
@@ -839,11 +971,9 @@ require = function() {
         comboDisplay: cc.Node,
         player: {
           default: null,
-          type: Player
+          type: _Player2.default
         },
-        openPanelFlag: true,
-        FullScreenIcon: cc.SpriteFrame,
-        exitFullScreenIcon: cc.SpriteFrame
+        openPanelFlag: true
       },
       start: function start() {
         this.scheduleOnce(this.togglePanel, 3);
@@ -858,7 +988,6 @@ require = function() {
         this.anim = this.node.getChildByName("panel").getComponent(cc.Animation);
         this.shootBtn = this.node.getChildByName("shoot");
         this.shootTouchEvent();
-        this.toggleFullScreenBtn = this.node.getChildByName("FullScreen");
         this.Info = this.node.getChildByName("Info");
         this.HPBar = this.Info.getChildByName("HPBar").getComponent(cc.ProgressBar);
         this.lifeLabel = this.Info.getChildByName("Life").getChildByName("num").getComponent(cc.Label);
@@ -897,18 +1026,6 @@ require = function() {
           self.player._shootFlag = false;
         }, self.player);
       },
-      backToModeMenu: function backToModeMenu() {
-        confirm("Are you sure?") && cc.director.loadScene("ModeMenu");
-      },
-      toggleFullScreen: function toggleFullScreen() {
-        if (cc.screen.fullScreen()) {
-          cc.screen.exitFullScreen();
-          this.toggleFullScreenBtn.getChildByName("icon").getComponent(cc.Sprite).spriteFrame = this.FullScreenIcon;
-        } else {
-          cc.screen.requestFullScreen();
-          this.toggleFullScreenBtn.getChildByName("icon").getComponent(cc.Sprite).spriteFrame = this.exitFullScreenIcon;
-        }
-      },
       togglePanel: function togglePanel() {
         if (this.openPanelFlag) {
           this.anim.play("ClosePanel");
@@ -917,6 +1034,9 @@ require = function() {
           this.anim.play("OpenPanel");
           this.openPanelFlag = true;
         }
+      },
+      loadConfigMenu: function loadConfigMenu() {
+        Global.Helpers.loadConfigMenu();
       },
       update: function update(dt) {}
     });
@@ -1162,114 +1282,6 @@ require = function() {
   }, {
     "polyglot.min": "polyglot.min"
   } ],
-  Launch: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "e86f7h7/ThBVJoTB44r2G7D", "Launch");
-    "use strict";
-    cc.Class({
-      extends: cc.Component,
-      properties: {},
-      onLoad: function onLoad() {
-        cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
-        cc.director.setDisplayStats(false);
-      },
-      start: function start() {
-        this.displayEgg();
-        cc.director.preloadScene("Story", function() {
-          cc.log("Story scene preloaded");
-        });
-        cc.director.preloadScene("StartMenu", function() {
-          cc.log("Start scene preloaded");
-        });
-        cc.sys.platform === cc.sys.WECHAT_GAME && this.initWechat();
-      },
-      initWechat: function initWechat() {
-        var self = this;
-        wx.showShareMenu({
-          success: function success(res) {
-            wx.onShareAppMessage(function() {
-              return {
-                title: "快来进行你的冒险吧~"
-              };
-            });
-          },
-          fail: function fail(res) {
-            console.log("fail");
-            console.log(res);
-          }
-        });
-        wx.setMenuStyle({
-          style: "light"
-        });
-        wx.login({
-          success: function success() {
-            self.createUserInfoButton();
-          }
-        });
-      },
-      displayEgg: function displayEgg() {
-        console.log("%c Paper Star - @YunYouJun ", "background:#000;color:#fff;padding:2px;border-radius:2px");
-      },
-      loadStoryboard: function loadStoryboard() {
-        cc.director.loadScene("Story");
-      },
-      loadStartMenu: function loadStartMenu() {
-        cc.director.loadScene("StartMenu");
-      },
-      createUserInfoButton: function createUserInfoButton() {
-        var self = this;
-        var userInfoButton = wx.createUserInfoButton({
-          type: "text",
-          text: "授权个人信息",
-          style: {
-            left: 66,
-            top: 10,
-            width: 140,
-            height: 40,
-            lineHeight: 40,
-            borderColor: "#000000",
-            borderWidth: 1,
-            backgroundColor: "#ffffff",
-            color: "#000000",
-            textAlign: "center",
-            fontSize: 16,
-            borderRadius: 4
-          }
-        });
-        userInfoButton.onTap(function(res) {
-          console.log(res.userInfo);
-          self.userInfo = res.userInfo;
-          self.storeUserInfo();
-          userInfoButton.text = self.userInfo.nickName;
-          userInfoButton.hide();
-        });
-      },
-      showGameClub: function showGameClub() {
-        var gameClubButton = wx.createGameClubButton({
-          icon: "dark",
-          style: {
-            left: 10,
-            top: 76,
-            width: 40,
-            height: 40
-          }
-        });
-        gameClubButton.onTap(function(res) {
-          console.log(res);
-        });
-      },
-      storeUserInfo: function storeUserInfo() {
-        var self = this;
-        var avatarSize = "46";
-        var avatarUrl = this.userInfo.avatarUrl.split("/");
-        avatarUrl[avatarUrl.length - 1] = avatarSize;
-        avatarUrl = avatarUrl.join("/");
-        this.userInfo.avatarUrl = avatarUrl;
-        cc.sys.localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
-      }
-    });
-    cc._RF.pop();
-  }, {} ],
   LocalizedLabel: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "744dcs4DCdNprNhG0xwq6FK", "LocalizedLabel");
@@ -1382,6 +1394,51 @@ require = function() {
   }, {
     SpriteFrameSet: "SpriteFrameSet"
   } ],
+  Logo: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "e86f7h7/ThBVJoTB44r2G7D", "Logo");
+    "use strict";
+    cc.Class({
+      extends: cc.Component,
+      properties: {
+        wxGame: cc.Node,
+        userInfo: cc.Node,
+        logoAnim: cc.Animation
+      },
+      onLoad: function onLoad() {
+        cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
+        cc.director.setDisplayStats(false);
+        this.userInfo = this.userInfo.getComponent("UserInfo");
+        this.userInfo.init();
+        Global.userInfo = this.userInfo;
+      },
+      start: function start() {
+        Global.Helpers.displayEgg();
+        cc.game.addPersistRootNode(this.userInfo.node);
+        this.userInfo.node.active = false;
+        switch (cc.sys.platform) {
+         case cc.sys.WECHAT_GAME:
+          this.wxGame = this.wxGame.getComponent("wxGame");
+          this.wxGame.init(this.userInfo);
+          Global.wxGame = this.wxGame;
+          cc.game.addPersistRootNode(this.wxGame.node);
+          break;
+
+         default:
+          cc.view.enableAutoFullScreen(true);
+        }
+        this.scheduleOnce(this.next, this.logoAnim.defaultClip.duration);
+      },
+      next: function next() {
+        if (this.userInfo.getUserInfo()) {
+          this.userInfo.node.active = true;
+          this.userInfo.displayUserInfo();
+          Global.Helpers.loadStartMenu();
+        } else Global.Helpers.loadStoryBoard();
+      }
+    });
+    cc._RF.pop();
+  }, {} ],
   MapControl: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "616b0xKWLtFY5rUTgK/fQ7K", "MapControl");
@@ -1463,29 +1520,42 @@ require = function() {
       extends: cc.Component,
       properties: {},
       onLoad: function onLoad() {
-        cc.director.setClearColor(cc.Color.GRAY);
-      },
-      backToStartMenu: function backToStartMenu() {
-        this.loadStartMenu();
-      },
-      loadStartMenu: function loadStartMenu() {
-        cc.director.loadScene("StartMenu", function() {
-          console.log("StartMenu is loaded.");
-        });
+        Global.userInfo.node.active = true;
+        cc.sys.platform == cc.sys.WECHAT_GAME && Global.wxGame.gameClubButton.show();
       },
       loadModeMenu: function loadModeMenu() {
-        this.loadFreeMode();
-      },
-      loadSetMenu: function loadSetMenu() {
-        cc.director.loadScene("SetMenu", function() {
-          console.log("SetMenu is loaded.");
+        cc.director.loadScene("ModeMenu", function() {
+          console.log("ModeMenu is loaded.");
         });
+      },
+      loadConfigMenu: function loadConfigMenu() {
+        Global.Helpers.loadConfigMenu();
       },
       loadAchieveSystem: function loadAchieveSystem() {
         cc.director.loadScene("AchieveSystem", function() {
           console.log("AchieveSystem is loaded.");
         });
       },
+      loadRankSystem: function loadRankSystem() {
+        cc.director.loadScene("RankSystem", function() {
+          console.log("RankSystem is loaded.");
+        });
+      }
+    });
+    cc._RF.pop();
+  }, {} ],
+  Mode: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "f62ebileutIe5SXL6zfmW76", "Mode");
+    "use strict";
+    cc.Class({
+      extends: cc.Component,
+      properties: {},
+      onLoad: function onLoad() {
+        Global.userInfo.node.active = false;
+        cc.sys.platform == cc.sys.WECHAT_GAME && Global.wxGame.gameClubButton.hide();
+      },
+      start: function start() {},
       loadFreeMode: function loadFreeMode() {
         cc.director.loadScene("FreeMode");
       },
@@ -1587,7 +1657,7 @@ require = function() {
     "use strict";
     var _Helpers = require("Helpers");
     var _Helpers2 = _interopRequireDefault(_Helpers);
-    var _Types = require("../Types");
+    var _Types = require("Types");
     var _CameraControl = require("CameraControl");
     var _CameraControl2 = _interopRequireDefault(_CameraControl);
     function _interopRequireDefault(obj) {
@@ -1829,9 +1899,9 @@ require = function() {
     });
     cc._RF.pop();
   }, {
-    "../Types": "Types",
     CameraControl: "CameraControl",
-    Helpers: "Helpers"
+    Helpers: "Helpers",
+    Types: "Types"
   } ],
   PoolMng: [ function(require, module, exports) {
     "use strict";
@@ -1879,51 +1949,6 @@ require = function() {
     NodePool: "NodePool",
     Types: "Types"
   } ],
-  SetMenu: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "61ee5T8IIVORqDemqwaecMU", "SetMenu");
-    "use strict";
-    cc.Class({
-      extends: cc.Component,
-      properties: {
-        fullScreenIcon: cc.SpriteFrame,
-        exitFullScreenIcon: cc.SpriteFrame
-      },
-      onLoad: function onLoad() {
-        this.toggleFullScreenIcon = cc.find("Canvas/menu/ScrollMenu/view/content/FullScreenConfig/item/icon").getComponent(cc.Sprite);
-        this.FullScreenToggle = cc.find("Canvas/menu/ScrollMenu/view/content/FullScreenConfig/FullScreenToggle").getComponent(cc.Toggle);
-      },
-      start: function start() {
-        if (cc.screen.fullScreen()) {
-          this.FullScreenToggle.isChecked = true;
-          this.toggleFullScreenIcon.spriteFrame = this.exitFullScreenIcon;
-        } else {
-          this.FullScreenToggle.isChecked = false;
-          this.toggleFullScreenIcon.spriteFrame = this.fullScreenIcon;
-        }
-      },
-      backToStartMenu: function backToStartMenu() {
-        this.loadStartMenu();
-      },
-      loadStartMenu: function loadStartMenu() {
-        cc.director.loadScene("StartMenu", function() {
-          console.log("StartMenu is loaded.");
-        });
-      },
-      toggleFullScreen: function toggleFullScreen() {
-        if (cc.screen.fullScreen()) {
-          cc.screen.exitFullScreen();
-          this.FullScreenToggle.isChecked = false;
-          this.toggleFullScreenIcon.spriteFrame = this.fullScreenIcon;
-        } else {
-          cc.screen.requestFullScreen();
-          this.FullScreenToggle.isChecked = true;
-          this.toggleFullScreenIcon.spriteFrame = this.exitFullScreenIcon;
-        }
-      }
-    });
-    cc._RF.pop();
-  }, {} ],
   SkillProgress: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "8bb70TI24ZB7Z8nyeck/jOk", "SkillProgress");
@@ -2037,23 +2062,16 @@ require = function() {
     cc.Class({
       extends: cc.Component,
       properties: {
-        bgCanvas: cc.Graphics,
-        avatar: cc.Sprite,
-        nickName: cc.Label
+        bgCanvas: cc.Graphics
       },
-      onLoad: function onLoad() {
-        cc.view.setOrientation(cc.macro.ORIENTATION_LANDSCAPE);
-        cc.director.setDisplayStats(false);
-      },
+      onLoad: function onLoad() {},
       start: function start() {
         this.ctx = this.bgCanvas;
-        this.avatarSprite = this.avatar.spriteFrame;
         this.height = this.bgCanvas.node.height;
         this.center = cc.p(200, this.height / 2);
         this.init();
         this.drawOrbitPlanet();
         this.drawStarLine();
-        this.loadWechatUserInfo();
       },
       init: function init() {
         this.generateRandomOrbitPlanet(8);
@@ -2137,20 +2155,28 @@ require = function() {
         this.ctx.clear();
         this.drawOrbitPlanet();
         this.drawStarLine();
+      }
+    });
+    cc._RF.pop();
+  }, {} ],
+  StoryBoard: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "d2b98ScZvFL2J1NmuEOC2EE", "StoryBoard");
+    "use strict";
+    cc.Class({
+      extends: cc.Component,
+      properties: {
+        bgAnim: cc.Animation,
+        storyBoardAnim: cc.Animation
       },
-      loadWechatUserInfo: function loadWechatUserInfo() {
-        var self = this;
-        if (cc.sys.localStorage.getItem("userInfo")) {
-          this.userInfo = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
-          this.nickName.string = this.userInfo.nickName;
-          var WechatAvatar = {
-            url: this.userInfo.avatarUrl,
-            type: "jpg"
-          };
-          cc.loader.load(WechatAvatar, function(err, texture) {
-            self.avatarSprite.setTexture(texture, null, null, null, cc.size(46, 46));
-          });
-        }
+      onLoad: function onLoad() {},
+      start: function start() {
+        this.scheduleOnce(this.bgFadeIn, this.storyBoardAnim.defaultClip.duration);
+      },
+      bgFadeIn: function bgFadeIn() {
+        this.bgAnim.play("bgFadeIn");
+        this.scheduleOnce(Global.Helpers.loadStartMenu, this.bgAnim.currentClip.duration);
+        console.log(this.bgAnim.currentClip.duration);
       }
     });
     cc._RF.pop();
@@ -2209,6 +2235,62 @@ require = function() {
     exports.AttackType = AttackType;
     exports.BulletType = BulletType;
     exports.PropType = PropType;
+    cc._RF.pop();
+  }, {} ],
+  UserInfo: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "23a05v7EZZIaZ8xxZ9pA9ut", "UserInfo");
+    "use strict";
+    cc.Class({
+      extends: cc.Component,
+      properties: {
+        nickName: cc.Label,
+        avatarSprite: cc.Sprite
+      },
+      start: function start() {},
+      init: function init() {
+        this.avatarSize = 46;
+      },
+      getUserInfo: function getUserInfo() {
+        if (cc.sys.localStorage.getItem("userInfo")) {
+          this.userInfo = JSON.parse(cc.sys.localStorage.getItem("userInfo"));
+          return this.userInfo;
+        }
+        return false;
+      },
+      storeUserInfo: function storeUserInfo(userInfo) {
+        this.userInfo = userInfo;
+        var avatarUrl = this.userInfo.avatarUrl.split("/");
+        avatarUrl[avatarUrl.length - 1] = this.avatarSize;
+        avatarUrl = avatarUrl.join("/");
+        this.userInfo.avatarUrl = avatarUrl;
+        cc.sys.localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
+      },
+      displayUserInfo: function displayUserInfo() {
+        var self = this;
+        this.nickName.string = this.userInfo.nickName;
+        if (cc.sys.platform == cc.sys.WECHAT_GAME) {
+          var image = wx.createImage();
+          image.onload = function() {
+            var texture = new cc.Texture2D();
+            texture.initWithElement(image);
+            texture.handleLoadedTexture();
+            self.avatarSprite.spriteFrame = new cc.SpriteFrame(texture);
+          };
+          image.src = this.userInfo.avatarUrl;
+        } else {
+          var WechatAvatar = {
+            url: "https://yunyoujun.cn/images/avatar.jpg",
+            type: "jpg"
+          };
+          cc.loader.load(WechatAvatar, function(err, texture) {
+            texture.height = self.avatarSize;
+            texture.width = self.avatarSize;
+            self.avatarSprite.spriteFrame.setTexture(texture);
+          });
+        }
+      }
+    });
     cc._RF.pop();
   }, {} ],
   WaveMng: [ function(require, module, exports) {
@@ -2441,29 +2523,6 @@ require = function() {
     });
     cc._RF.pop();
   }, {} ],
-  common: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "b605bpAEohD4KevRc8lgwUh", "common");
-    "use strict";
-    var gameState = cc.Enum({
-      none: 0,
-      start: 1,
-      stop: 2
-    });
-    var common = cc.Class({
-      extends: cc.Component,
-      properties: {},
-      statics: {
-        gameState: gameState
-      },
-      onLoad: function onLoad() {
-        D.commonInfo = common;
-        D.common = this;
-      },
-      start: function start() {}
-    });
-    cc._RF.pop();
-  }, {} ],
   en: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "e4ddc8a/vVFwY6n9VQQvxiE", "en");
@@ -2471,20 +2530,6 @@ require = function() {
     window.i18n || (window.i18n = {});
     window.i18n.languages || (window.i18n.languages = {});
     window.i18n.languages["en"] = {};
-    cc._RF.pop();
-  }, {} ],
-  global: [ function(require, module, exports) {
-    "use strict";
-    cc._RF.push(module, "2acbeFK/3FIM6/79MJsQG7X", "global");
-    "use strict";
-    var physicsManager = cc.director.getPhysicsManager();
-    physicsManager.enabled = true;
-    var debugFlag = false;
-    debugFlag && (cc.director.getPhysicsManager().debugDrawFlags = cc.PhysicsManager.DrawBits.e_aabbBit | cc.PhysicsManager.DrawBits.e_pairBit | cc.PhysicsManager.DrawBits.e_centerOfMassBit | cc.PhysicsManager.DrawBits.e_jointBit | cc.PhysicsManager.DrawBits.e_shapeBit);
-    window.D = {
-      common: null,
-      commonInfo: null
-    };
     cc._RF.pop();
   }, {} ],
   "gravity-radial": [ function(require, module, exports) {
@@ -2695,6 +2740,83 @@ require = function() {
     });
     cc._RF.pop();
   }, {} ],
+  wxGame: [ function(require, module, exports) {
+    "use strict";
+    cc._RF.push(module, "172d2Sf/xdKkaY+P+K+XpSh", "wxGame");
+    "use strict";
+    cc.Class({
+      extends: cc.Component,
+      properties: {},
+      init: function init(userInfo) {
+        this.userInfo = userInfo;
+        var self = this;
+        wx.showShareMenu({
+          success: function success(res) {
+            wx.onShareAppMessage(function() {
+              return {
+                title: "快来进行你的冒险吧~"
+              };
+            });
+          },
+          fail: function fail(res) {
+            console.log("fail");
+            console.log(res);
+          }
+        });
+        wx.setMenuStyle({
+          style: "dark"
+        });
+        wx.login({
+          success: function success() {
+            if (!userInfo.node.active) {
+              var userInfoButton = wx.createUserInfoButton({
+                type: "text",
+                text: "授权个人信息",
+                style: {
+                  left: 66,
+                  top: 10,
+                  width: 140,
+                  height: 40,
+                  lineHeight: 40,
+                  borderColor: "#000000",
+                  borderWidth: 1,
+                  backgroundColor: "#ffffff",
+                  color: "#000000",
+                  textAlign: "center",
+                  fontSize: 16,
+                  borderRadius: 4
+                }
+              });
+              userInfoButton.onTap(function(res) {
+                userInfoButton.text = res.userInfo.nickName;
+                self.userInfo.storeUserInfo(res.userInfo);
+                self.userInfo.getUserInfo();
+                self.userInfo.displayUserInfo();
+                userInfoButton.hide();
+                userInfo.node.active = true;
+              });
+            }
+          }
+        });
+        this.createGameClub();
+      },
+      createGameClub: function createGameClub() {
+        this.gameClubButton = wx.createGameClubButton({
+          icon: "dark",
+          style: {
+            left: 20,
+            top: 80,
+            width: 40,
+            height: 40
+          }
+        });
+        this.gameClubButton.onTap(function(res) {
+          console.log(res);
+        });
+      }
+    });
+    cc._RF.pop();
+  }, {} ],
   zh: [ function(require, module, exports) {
     "use strict";
     cc._RF.push(module, "ec922g5eNBOwqDl8nSECXnf", "zh");
@@ -2709,4 +2831,4 @@ require = function() {
     };
     cc._RF.pop();
   }, {} ]
-}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "BossMng", "Foe", "Spawn", "Game", "MapControl", "Bullet", "gravity-radial", "gravity", "planet", "PlayerFX", "SortMng", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "ComboDisplay", "DeathUI", "InGameUI", "KillDisplay", "WaveUI", "Joystick", "JoystickCommon", "StartMenuUI", "AnimHelper", "Helpers", "common", "global", "Launch", "Menu", "SetMenu", "NodePool", "Player", "SkillProgress", "PoolMng", "Types", "en", "zh", "BossProgress", "ButtonScaler", "WaveProgress" ]);
+}, {}, [ "LanguageData", "LocalizedLabel", "LocalizedSprite", "SpriteFrameSet", "polyglot.min", "Logo", "StoryBoard", "UserInfo", "wxGame", "BossMng", "Foe", "Spawn", "Game", "MapControl", "Bullet", "gravity-radial", "gravity", "planet", "PlayerFX", "SortMng", "CameraControl", "SystemControl", "WaveMng", "GameOverUI", "ComboDisplay", "DeathUI", "InGameUI", "KillDisplay", "WaveUI", "Joystick", "JoystickCommon", "StartMenuUI", "AnimHelper", "Global", "Helpers", "NodePool", "PoolMng", "Types", "About", "Back", "Config", "Menu", "Mode", "Player", "SkillProgress", "en", "zh", "BossProgress", "WaveProgress" ]);

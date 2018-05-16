@@ -92,6 +92,10 @@ window._CCSettings = {
                 "Texture/shoot.png",
                 "cc.Texture2D"
             ],
+            a8Anh32NZGRZegUtSgEj26: [
+                "Texture/singleColor.png",
+                "cc.Texture2D"
+            ],
             "8bJagLpMZPs5RGrC6S0M8H": [
                 "res/common/button/default-button.png",
                 "cc.Texture2D"
@@ -160,10 +164,6 @@ window._CCSettings = {
                 "res/scene/planet/planet-circle.png",
                 "cc.Texture2D"
             ],
-            "32X3hoNTVL47DYFxnz44lQ": [
-                "rf/font/averia.png",
-                "cc.Texture2D"
-            ],
             a3jzO4XypH7r3WhJVkyrQb: [
                 "rf/particles/fxProgress.plist",
                 "cc.ParticleAsset"
@@ -208,24 +208,28 @@ window._CCSettings = {
                 "rf/textures/efx/efx_pixel_dot.png",
                 "cc.Texture2D"
             ],
-            c6z4aLkaNB2q0bUOs6Bo44: [
-                "rf/textures/menu/death/death_btn_cancle.png",
-                "cc.Texture2D"
-            ],
-            "67PcFhwiJN1rWEmnJYHS6V": [
-                "rf/textures/menu/death/death_btn_save.png",
-                "cc.Texture2D"
-            ],
-            "157dbf3b3": [
-                "res/icon/AutoAtlas-icon-1.png",
-                "cc.Texture2D"
-            ],
             "18e3ace03": [
                 "res/anim/star/star-anim-atlas-1.png",
+                "cc.Texture2D"
+            ],
+            "1d139866a": [
+                "res/icon/AutoAtlas-icon-1.png",
                 "cc.Texture2D"
             ]
         },
         internal: {
+            "71VhFCTINJM6/Ky3oX9nBT": [
+                "image/default_btn_disabled.png",
+                "cc.Texture2D"
+            ],
+            "e8Ueib+qJEhL6mXAHdnwbi": [
+                "image/default_btn_normal.png",
+                "cc.Texture2D"
+            ],
+            "b4P/PCArtIdIH38t6mlw8Y": [
+                "image/default_btn_pressed.png",
+                "cc.Texture2D"
+            ],
             cf73jxyN9Jt47QTJU6ziYh: [
                 "image/default_progressbar.png",
                 "cc.Texture2D"
@@ -246,37 +250,37 @@ window._CCSettings = {
                 "image/default_sprite_splash.png",
                 "cc.Texture2D"
             ],
-            "73oJA92A5OPKpn+ZlUPAj1": [
-                "image/default_toggle_checkmark.png",
-                "cc.Texture2D"
-            ],
-            d2kHe6FidKcpV5e1aiNTQM: [
-                "image/default_toggle_normal.png",
-                "cc.Texture2D"
-            ],
             "b2aHrECZ5APKGS/0d2hvT1": [
                 "particle/atom.plist",
                 "cc.ParticleAsset"
             ]
         }
     },
-    launchScene: "db://assets/Scene/Launch/Logo.fire",
+    launchScene: "db://assets/Scene/Begin/Logo.fire",
     scenes: [
         {
-            url: "db://assets/Scene/Launch/Logo.fire",
+            url: "db://assets/Scene/Begin/Logo.fire",
             uuid: "cbDXzHh1RBE4p0pvIhFU/P"
+        },
+        {
+            url: "db://assets/Scene/Begin/About.fire",
+            uuid: "78fRc/siVEgbUviUcFm02T"
+        },
+        {
+            url: "db://assets/Scene/Begin/StoryBoard.fire",
+            uuid: "d6u43SGSFFg6KupJjzc3st"
         },
         {
             url: "db://assets/Scene/game/mode/FreeMode.fire",
             uuid: "3cJOebUrVGj6zySCdnYS7E"
         },
         {
-            url: "db://assets/Scene/Launch/Story.fire",
-            uuid: "d6u43SGSFFg6KupJjzc3st"
+            url: "db://assets/Scene/Menu/ConfigMenu.fire",
+            uuid: "3cbfpuw+NIJ4Wk+1cujgfm"
         },
         {
-            url: "db://assets/Scene/Menu/SetMenu.fire",
-            uuid: "3cbfpuw+NIJ4Wk+1cujgfm"
+            url: "db://assets/Scene/Menu/ModeMenu.fire",
+            uuid: "9bJx0jqLZJHIgfm4drNKwx"
         },
         {
             url: "db://assets/Scene/Menu/StartMenu.fire",
@@ -288,22 +292,14 @@ window._CCSettings = {
         }
     ],
     packedAssets: {
-        "016dc82c9": [
+        "017c593c": [
+            "33WapKyZNKpZuBzb7+PM/8",
             "3cbfpuw+NIJ4Wk+1cujgfm",
             "5cO7kybDxGj4ipyMYdRYZB",
             "5f5dyqtRNNxaFmVzYns6FZ",
             "62OEyIozVIV5TdtzStc8om",
-            "68J8oyAQdFUrqy37MXmbtE",
-            "803/ynb6ZGqJhsQS9d+ZzW",
-            "8amKwqATBB8Z4msSPcc/K0",
-            "90AErWL21A4ZPvtxQ3XG8G",
             "a2MjXRFdtLlYQ5ouAFv/+R",
-            "ddW+Rq1vhINYN5rEfARmem"
-        ],
-        "01a1ff9a9": [
-            "8folOeXkpHP6/jaM4zVsTM",
-            "cbDXzHh1RBE4p0pvIhFU/P",
-            "f3VcYdNLlPqLgC3qB2/MPA"
+            "f7iy1tusJEA4/EeJ/LnFSK"
         ],
         "020cbfdfa": [
             "0cA+/epVBH25JGBw4MHwtE",
@@ -322,7 +318,57 @@ window._CCSettings = {
             "e7urorfURCLp/35l59RUDr",
             "e87kiAmpFFgrcwiHP28uOK"
         ],
-        "0704f23a9": [
+        "0447f085f": [
+            "77Em5zFrFGFrexEEXRkMsQ",
+            "8folOeXkpHP6/jaM4zVsTM",
+            "cbDXzHh1RBE4p0pvIhFU/P",
+            "d7/oOopoBHBaIGwxmeL8AR",
+            "f3VcYdNLlPqLgC3qB2/MPA"
+        ],
+        "0450411c4": [
+            "0dCK7BFrNOJJRiG0ZWUM8d",
+            "1fL+EtJ95EZo1Ndew50xAS",
+            "25L20dT91G0bhSaCsoXNnq",
+            "2dhwvS1pBBp57fjz02xkrd",
+            "4dMK+HfBdDpYtq8RvYqYJx",
+            "9aAzSM2atNzJCvuppyR3aw",
+            "9bPOtEbpFBj4zbHRcJdysG",
+            "9cSymPKwNCGaw9w/+8y2vH",
+            "a2MjXRFdtLlYQ5ouAFv/+R",
+            "adGroavBdFOoHyPEXVzvbo",
+            "adxlWhgLtO75MFlOV1J2sO",
+            "d1XaQxcrNGBaKW4eNWVdiF",
+            "d4hLBwSbJOP73FoMOWxKh4",
+            "d9SBxvpNtGYJa4w26qxcOc"
+        ],
+        "057a12c8c": [
+            "62OEyIozVIV5TdtzStc8om",
+            "ddW+Rq1vhINYN5rEfARmem"
+        ],
+        "072670ea": [
+            "0bFSA9mq1LOa31avhkfzQs",
+            "0fk3EHHvFNFprD3Qdb0t+2",
+            "78fRc/siVEgbUviUcFm02T",
+            "8folOeXkpHP6/jaM4zVsTM",
+            "990EufTUdCRbqeFPKcdFL4",
+            "d3X5g1985D6KoxbmYeyMNA"
+        ],
+        "085feac46": [
+            "2bxakVJFJBm5a0y4tmrOSM",
+            "69Xe3kQjlPGYLPe9yWRYFy",
+            "a2MjXRFdtLlYQ5ouAFv/+R",
+            "d6u43SGSFFg6KupJjzc3st"
+        ],
+        "08a3cdc71": [
+            "29FYIk+N1GYaeWH/q1NxQO",
+            "41D7kWhyFGY7q4NDlzkazn",
+            "62OEyIozVIV5TdtzStc8om",
+            "77Em5zFrFGFrexEEXRkMsQ",
+            "9bJx0jqLZJHIgfm4drNKwx",
+            "e97GVMl6JHh5Ml5qEDdSGa",
+            "f0BIwQ8D5Ml7nTNQbh1YlS"
+        ],
+        "0bd69e542": [
             "07MoA6edZGIaajO+WmoHvA",
             "0859qy5MdFCIS0A63IglkR",
             "0bTOKaBwRKk6llQFez3n00",
@@ -340,20 +386,18 @@ window._CCSettings = {
             "221oclzHRNG7cgaQqygsQ2",
             "222W02RSlCJo3kpJ67jV3K",
             "26AxJXIc9JKatRYe3AI86d",
+            "29FYIk+N1GYaeWH/q1NxQO",
             "29FxHK7hFNd44MJCmcHV1h",
             "29WT9UV1hLqKXLHK8T47PZ",
             "29hlkpahdBpKqM6oOuUEHP",
             "31rGgUHbJBwp6rP2JKHXnP",
-            "33csriJcVDQJHVPIA6YPqP",
             "38syje2gdNBqFZKSFPTt5R",
-            "3a8BIMwjlFNZVYGJUyERav",
             "3blTXkbZNOv4YT125UsceZ",
             "3cBo7ApSdHG5S48+37ug4r",
             "3cJOebUrVGj6zySCdnYS7E",
             "43YIXDsDZDIqlQ3b7Cdsjm",
             "45cv5PYhxH36YtC74Gv4XN",
             "46A9I92Y9F1aaT4CfGdRld",
-            "464sHp97lKR7O1G1WSuVoH",
             "48QLaEY+RI6q/60JLOHJjO",
             "48pSRl5ahOXKlzl0sXqz7e",
             "49ENWaRW9LAq/0Y1Vhvln6",
@@ -369,9 +413,7 @@ window._CCSettings = {
             "60TpivupdKxqRgHIQO2cZV",
             "61bXNPZ0VPVJ7Ia2HdDMAG",
             "62JDHWboBIUIz09NqHvv/+",
-            "62OEyIozVIV5TdtzStc8om",
             "63tCFllJ5AaY/2SGixyB5h",
-            "66DNhMZqpPNZRK1mQTUafm",
             "675ovJ2tVK2aLYfgPUWOMv",
             "6a5xxTnbVJOKKGmkWc21FR",
             "6ct9MnlMRIXqU1xXqdllTs",
@@ -385,15 +427,12 @@ window._CCSettings = {
             "7a1u4vsQxNRYRLKU4x5wgP",
             "7dx92I371OH5QPc8F1pG1h",
             "80E5Bn+I1FDb+oyoIpTtMM",
-            "80LFK3CU1JaovB7aO31zJb",
-            "803/ynb6ZGqJhsQS9d+ZzW",
             "81kxFLPF5D7ouobxHCrKwo",
             "82VnUQ3tlF6YNfw1OQIzMm",
             "840mpFnRFCpbmnW1UrDLFr",
             "87ZYzxcBVAV5AZTT8kq3wa",
             "8855/VlrRKd6H0MSRnFxAU",
             "89FrgPL6lHQ6rm/cCDOXkC",
-            "8amKwqATBB8Z4msSPcc/K0",
             "8ejK6P+VNHX66C7o8KRP5/",
             "9315X1m6xIQK3rymBYDK84",
             "95DqeeY4NPibVd/dr7Tuq7",
@@ -402,6 +441,7 @@ window._CCSettings = {
             "99TxBj+FdEyZLc44WVx3EH",
             "99ZP72PvJAsKTbKa2oGX6B",
             "995XIrZ2tBpKxeCaIL4VCG",
+            "9aAzSM2atNzJCvuppyR3aw",
             "9aacc1cp9PfrHiiQDkP4z7",
             "9bD653+/VJRoAcy+WCVaFS",
             "9bScstyGBEfZeCebdmm4Pl",
@@ -431,60 +471,42 @@ window._CCSettings = {
             "e3FJStnkpHLJaG49SdvcWX",
             "e56bVVkBtIgIHSZIT1wWpe",
             "e59W18i7ZOUqf7iXzrHCol",
+            "e97GVMl6JHh5Ml5qEDdSGa",
             "eacpcvAlZDybsT53WkmsjS",
             "eeYwIQN6RN+ajbI8w9lvY/",
             "ef8iUW9OpLlaiMBRwfKfqS",
+            "f0BIwQ8D5Ml7nTNQbh1YlS",
             "f2u+X3oo5K65fCh85ncKjh",
             "f37CLkoc9PVrk89UyNn4AX",
             "f4sj1xI0VAoozcn0Uy64Pn",
             "f7Dxy4BelJ06ak3mCs1PiX",
             "fdABXojSNMD5bgAvneHWlK",
             "feBbu47hxCNqOL21TASXV9"
-        ],
-        "085feac46": [
-            "2bxakVJFJBm5a0y4tmrOSM",
-            "69Xe3kQjlPGYLPe9yWRYFy",
-            "a2MjXRFdtLlYQ5ouAFv/+R",
-            "d6u43SGSFFg6KupJjzc3st"
-        ],
-        "0bbf7e6be": [
-            "0dCK7BFrNOJJRiG0ZWUM8d",
-            "1fL+EtJ95EZo1Ndew50xAS",
-            "25L20dT91G0bhSaCsoXNnq",
-            "2dhwvS1pBBp57fjz02xkrd",
-            "4dMK+HfBdDpYtq8RvYqYJx",
-            "77Em5zFrFGFrexEEXRkMsQ",
-            "9aAzSM2atNzJCvuppyR3aw",
-            "9bPOtEbpFBj4zbHRcJdysG",
-            "9cSymPKwNCGaw9w/+8y2vH",
-            "a2MjXRFdtLlYQ5ouAFv/+R",
-            "adGroavBdFOoHyPEXVzvbo",
-            "adxlWhgLtO75MFlOV1J2sO",
-            "d1XaQxcrNGBaKW4eNWVdiF",
-            "d4hLBwSbJOP73FoMOWxKh4",
-            "d7/oOopoBHBaIGwxmeL8AR",
-            "d9SBxvpNtGYJa4w26qxcOc"
         ]
     },
     orientation: "landscape",
     debug: true,
     md5AssetsMap: {
-        "01/016dc82c9.json": "294f4",
-        "01/01a1ff9a9.json": "aad80",
+        "01/017c593c.json": "9c7fb",
         "02/020cbfdfa.json": "5276d",
-        "07/0704f23a9.json": "88b3b",
-        "08/085feac46.json": "860b8",
-        "0b/0bbf7e6be.json": "0ac92",
+        "04/0447f085f.json": "650fe",
+        "04/0450411c4.json": "c7942",
+        "05/057a12c8c.json": "8421b",
+        "07/072670ea.json": "77aa5",
+        "08/085feac46.json": "a0729",
+        "08/08a3cdc71.json": "31ca0",
+        "0b/0bd69e542.json": "c879e",
         "12/1252c971-be3b-46fc-b5cb-dae14bd30386.json": "a0f2e",
+        "33/3372cae2-25c5-4340-91d5-3c803a60fa8f.json": "1ed01",
         "35/3578a96c-4a50-4701-9796-c5bbf3d7d2fe.json": "a38b1",
-        "e8/e816d483-572f-48b8-bf4b-079678083695.json": "ef240",
+        "e8/e816d483-572f-48b8-bf4b-079678083695.json": "30058",
         "f6/f63ff780-071f-4e6c-9f59-4ec3af5cd797.json": "a984e",
         "f6/f63ff780-071f-4e6c-9f59-4ec3af5cd797/ArchitectsDaughter.ttf": "c83be",
         "assets/res/anim/star/star-anim-atlas-1.png": "8ae42",
         "assets/res/common/button/default-button.png": "24289",
         "assets/res/common/circle/circle-border-alpha.png": "13b33",
         "assets/res/common/circle/circle.png": "2c763",
-        "assets/res/icon/AutoAtlas-icon-1.png": "5c0e9",
+        "assets/res/icon/AutoAtlas-icon-1.png": "b5be7",
         "assets/res/logo/logo-alpha.png": "8fb81",
         "assets/res/particles/fxSmoke.plist": "54465",
         "assets/res/role/foe/plane.png": "6559e",
@@ -499,7 +521,6 @@ window._CCSettings = {
         "assets/res/role/player_start/pl_start6.png": "58ccc",
         "assets/res/scene/grid.png": "a1fa9",
         "assets/res/scene/planet/planet-circle.png": "2e53f",
-        "assets/rf/font/averia.png": "5396e",
         "assets/rf/particles/fxProgress.plist": "d07c5",
         "assets/rf/textures/battle/ba_timeline_bg.png": "8362e",
         "assets/rf/textures/battle/ba_timeline_boss.png": "50fae",
@@ -511,8 +532,6 @@ window._CCSettings = {
         "assets/rf/textures/efx/efx_fog.png": "751b6",
         "assets/rf/textures/efx/efx_light.png": "588c4",
         "assets/rf/textures/efx/efx_pixel_dot.png": "273f8",
-        "assets/rf/textures/menu/death/death_btn_cancle.png": "76761",
-        "assets/rf/textures/menu/death/death_btn_save.png": "3e146",
         "assets/Texture/battle/ba_combo_bg.png": "8fb0c",
         "assets/Texture/battle/ba_kills_bg.png": "1e400",
         "assets/Texture/battle/ba_wave_bg.png": "b542b",
@@ -522,13 +541,15 @@ window._CCSettings = {
         "assets/Texture/efx/efx_revive_l1.png": "fc426",
         "assets/Texture/menu/death/death_title_bg.png": "79b7a",
         "assets/Texture/shoot.png": "7365f",
+        "assets/Texture/singleColor.png": "e5136",
+        "internal/image/default_btn_disabled.png": "286c6",
+        "internal/image/default_btn_normal.png": "1ecb7",
+        "internal/image/default_btn_pressed.png": "bedf4",
         "internal/image/default_progressbar_bg.png": "9cdfa",
         "internal/image/default_progressbar.png": "69ff9",
         "internal/image/default_scrollbar_vertical_bg.png": "4bb41",
         "internal/image/default_scrollbar_vertical.png": "71821",
         "internal/image/default_sprite_splash.png": "cea68",
-        "internal/image/default_toggle_checkmark.png": "1fc57",
-        "internal/image/default_toggle_normal.png": "0791d",
         "internal/particle/atom.plist": "e31bf"
     }
 };

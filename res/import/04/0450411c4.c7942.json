@@ -164,10 +164,10 @@
     "__type__": "cc.SpriteFrame",
     "content": {
       "name": "trophy",
-      "texture": "157dbf3b3",
+      "texture": "1d139866a",
       "rect": [
-        511,
-        2,
+        820,
+        3,
         178,
         165
       ],
@@ -184,38 +184,11 @@
   {
     "__type__": "cc.SpriteFrame",
     "content": {
-      "name": "default-button",
-      "texture": "8bJagLpMZPs5RGrC6S0M8H",
-      "rect": [
-        0,
-        0,
-        100,
-        100
-      ],
-      "offset": [
-        0,
-        0
-      ],
-      "originalSize": [
-        100,
-        100
-      ],
-      "capInsets": [
-        30,
-        30,
-        30,
-        30
-      ]
-    }
-  },
-  {
-    "__type__": "cc.SpriteFrame",
-    "content": {
       "name": "set",
-      "texture": "157dbf3b3",
+      "texture": "1d139866a",
       "rect": [
-        115,
-        2,
+        420,
+        3,
         200,
         191
       ],
@@ -371,10 +344,10 @@
     "__type__": "cc.SpriteFrame",
     "content": {
       "name": "play",
-      "texture": "157dbf3b3",
+      "texture": "1d139866a",
       "rect": [
-        345,
-        181,
+        1004,
+        3,
         142,
         168
       ],
@@ -413,10 +386,10 @@
     "__type__": "cc.SpriteFrame",
     "content": {
       "name": "rangking",
-      "texture": "157dbf3b3",
+      "texture": "1d139866a",
       "rect": [
-        2,
-        410,
+        209,
+        209,
         200,
         198
       ],
@@ -463,7 +436,7 @@
           "__id__": 3
         },
         {
-          "__id__": 23
+          "__id__": 20
         }
       ],
       "_components": [
@@ -527,12 +500,6 @@
           },
           "bgCanvas": {
             "__id__": 14
-          },
-          "avatar": {
-            "__id__": 20
-          },
-          "nickName": {
-            "__id__": 26
           }
         }
       ],
@@ -1029,88 +996,6 @@
       "_scaleY": 0.5
     },
     {
-      "__type__": "cc.Sprite",
-      "node": {
-        "__id__": 21
-      },
-      "_spriteFrame": {
-        "__uuid__": "d7/oOopoBHBaIGwxmeL8AR"
-      },
-      "_sizeMode": 0
-    },
-    {
-      "__type__": "cc.Node",
-      "_name": "avatar",
-      "_parent": {
-        "__id__": 22
-      },
-      "_components": [
-        {
-          "__id__": 20
-        }
-      ],
-      "_contentSize": {
-        "__type__": "cc.Size",
-        "width": 46,
-        "height": 46
-      }
-    },
-    {
-      "__type__": "cc.Node",
-      "_name": "avatarBorder",
-      "_parent": {
-        "__id__": 23
-      },
-      "_children": [
-        {
-          "__id__": 21
-        }
-      ],
-      "_components": [
-        {
-          "__type__": "cc.Sprite",
-          "node": {
-            "__id__": 22
-          },
-          "_spriteFrame": {
-            "__uuid__": "77Em5zFrFGFrexEEXRkMsQ"
-          },
-          "_sizeMode": 0
-        },
-        {
-          "__type__": "cc.Button",
-          "node": {
-            "__id__": 22
-          },
-          "transition": 3,
-          "_N$target": {
-            "__id__": 22
-          }
-        },
-        {
-          "__type__": "cc.Widget",
-          "node": {
-            "__id__": 22
-          },
-          "_alignFlags": 9,
-          "_left": 10,
-          "_top": 10,
-          "_bottom": 30,
-          "_originalHeight": 100
-        }
-      ],
-      "_contentSize": {
-        "__type__": "cc.Size",
-        "width": 56,
-        "height": 56
-      },
-      "_position": {
-        "__type__": "cc.Vec2",
-        "x": 38,
-        "y": 502
-      }
-    },
-    {
       "__type__": "cc.Node",
       "_name": "menu",
       "_parent": {
@@ -1118,29 +1003,23 @@
       },
       "_children": [
         {
-          "__id__": 24
+          "__id__": 21
         },
         {
-          "__id__": 22
+          "__id__": 23
+        },
+        {
+          "__id__": 25
         },
         {
           "__id__": 27
-        },
-        {
-          "__id__": 29
-        },
-        {
-          "__id__": 31
-        },
-        {
-          "__id__": 33
         }
       ],
       "_components": [
         {
           "__type__": "cc.Sprite",
           "node": {
-            "__id__": 23
+            "__id__": 20
           },
           "_type": 1,
           "_sizeMode": 0
@@ -1148,7 +1027,7 @@
         {
           "__type__": "cc.Widget",
           "node": {
-            "__id__": 23
+            "__id__": 20
           },
           "_alignFlags": 45,
           "_originalWidth": 960,
@@ -1157,7 +1036,7 @@
         {
           "__type__": "5efdeZeEn9OwIEfWcnmZyG7",
           "node": {
-            "__id__": 23
+            "__id__": 20
           }
         }
       ],
@@ -1177,89 +1056,20 @@
     },
     {
       "__type__": "cc.Node",
-      "_name": "Info",
-      "_parent": {
-        "__id__": 23
-      },
-      "_children": [
-        {
-          "__id__": 25
-        }
-      ],
-      "_components": [
-        {
-          "__type__": "cc.Widget",
-          "node": {
-            "__id__": 24
-          },
-          "_alignFlags": 9,
-          "_left": 66,
-          "_top": 10
-        }
-      ],
-      "_color": {
-        "__type__": "cc.Color"
-      },
-      "_contentSize": {
-        "__type__": "cc.Size",
-        "width": 100,
-        "height": 56
-      },
-      "_position": {
-        "__type__": "cc.Vec2",
-        "x": 116,
-        "y": 502
-      }
-    },
-    {
-      "__type__": "cc.Node",
-      "_name": "nickName",
-      "_parent": {
-        "__id__": 24
-      },
-      "_components": [
-        {
-          "__id__": 26
-        }
-      ],
-      "_color": {
-        "__type__": "cc.Color"
-      },
-      "_contentSize": {
-        "__type__": "cc.Size",
-        "width": 40,
-        "height": 56
-      }
-    },
-    {
-      "__type__": "cc.Label",
-      "node": {
-        "__id__": 25
-      },
-      "_useOriginalSize": false,
-      "_actualFontSize": 20,
-      "_fontSize": 20,
-      "_lineHeight": 56,
-      "_N$string": "匿名",
-      "_N$verticalAlign": 1,
-      "_N$fontFamily": "Lato, \"PingFang SC\", \"Microsoft YaHei\", Arial, sans-serif"
-    },
-    {
-      "__type__": "cc.Node",
       "_name": "Play",
       "_parent": {
-        "__id__": 23
+        "__id__": 20
       },
       "_children": [
         {
-          "__id__": 28
+          "__id__": 22
         }
       ],
       "_components": [
         {
           "__type__": "cc.Widget",
           "node": {
-            "__id__": 27
+            "__id__": 21
           },
           "_alignFlags": 10,
           "_left": 155
@@ -1267,7 +1077,7 @@
         {
           "__type__": "cc.Sprite",
           "node": {
-            "__id__": 27
+            "__id__": 21
           },
           "_spriteFrame": {
             "__uuid__": "d9SBxvpNtGYJa4w26qxcOc"
@@ -1277,27 +1087,27 @@
         {
           "__type__": "cc.Button",
           "node": {
-            "__id__": 27
+            "__id__": 21
           },
           "transition": 3,
           "clickEvents": [
             {
               "__type__": "cc.ClickEvent",
               "target": {
-                "__id__": 23
+                "__id__": 20
               },
               "component": "Menu",
               "handler": "loadModeMenu"
             }
           ],
           "_N$target": {
-            "__id__": 27
+            "__id__": 21
           }
         },
         {
           "__type__": "cc.Button",
           "node": {
-            "__id__": 27
+            "__id__": 21
           },
           "transition": 1,
           "_N$normalColor": {
@@ -1307,7 +1117,7 @@
             "b": 254
           },
           "_N$target": {
-            "__id__": 27
+            "__id__": 21
           }
         }
       ],
@@ -1332,13 +1142,13 @@
       "__type__": "cc.Node",
       "_name": "icon",
       "_parent": {
-        "__id__": 27
+        "__id__": 21
       },
       "_components": [
         {
           "__type__": "cc.Sprite",
           "node": {
-            "__id__": 28
+            "__id__": 22
           },
           "_spriteFrame": {
             "__uuid__": "adGroavBdFOoHyPEXVzvbo"
@@ -1359,20 +1169,20 @@
     },
     {
       "__type__": "cc.Node",
-      "_name": "Set",
+      "_name": "Config",
       "_parent": {
-        "__id__": 23
+        "__id__": 20
       },
       "_children": [
         {
-          "__id__": 30
+          "__id__": 24
         }
       ],
       "_components": [
         {
           "__type__": "cc.Widget",
           "node": {
-            "__id__": 29
+            "__id__": 23
           },
           "_target": {
             "__id__": 2
@@ -1385,21 +1195,21 @@
         {
           "__type__": "cc.Button",
           "node": {
-            "__id__": 29
+            "__id__": 23
           },
           "transition": 3,
           "clickEvents": [
             {
               "__type__": "cc.ClickEvent",
               "target": {
-                "__id__": 23
+                "__id__": 20
               },
               "component": "Menu",
-              "handler": "loadSetMenu"
+              "handler": "loadConfigMenu"
             }
           ],
           "_N$target": {
-            "__id__": 29
+            "__id__": 23
           }
         }
       ],
@@ -1418,13 +1228,13 @@
       "__type__": "cc.Node",
       "_name": "icon",
       "_parent": {
-        "__id__": 29
+        "__id__": 23
       },
       "_components": [
         {
           "__type__": "cc.Sprite",
           "node": {
-            "__id__": 30
+            "__id__": 24
           },
           "_spriteFrame": {
             "__uuid__": "9aAzSM2atNzJCvuppyR3aw"
@@ -1442,18 +1252,18 @@
       "__type__": "cc.Node",
       "_name": "Rank",
       "_parent": {
-        "__id__": 23
+        "__id__": 20
       },
       "_children": [
         {
-          "__id__": 32
+          "__id__": 26
         }
       ],
       "_components": [
         {
           "__type__": "cc.Widget",
           "node": {
-            "__id__": 31
+            "__id__": 25
           },
           "_target": {
             "__id__": 2
@@ -1466,21 +1276,21 @@
         {
           "__type__": "cc.Button",
           "node": {
-            "__id__": 31
+            "__id__": 25
           },
           "transition": 3,
           "clickEvents": [
             {
               "__type__": "cc.ClickEvent",
               "target": {
-                "__id__": 23
+                "__id__": 20
               },
               "component": "Menu",
               "handler": "loadSetMenu"
             }
           ],
           "_N$target": {
-            "__id__": 31
+            "__id__": 25
           }
         }
       ],
@@ -1499,13 +1309,13 @@
       "__type__": "cc.Node",
       "_name": "icon",
       "_parent": {
-        "__id__": 31
+        "__id__": 25
       },
       "_components": [
         {
           "__type__": "cc.Sprite",
           "node": {
-            "__id__": 32
+            "__id__": 26
           },
           "_spriteFrame": {
             "__uuid__": "d1XaQxcrNGBaKW4eNWVdiF"
@@ -1523,18 +1333,18 @@
       "__type__": "cc.Node",
       "_name": "Achieve",
       "_parent": {
-        "__id__": 23
+        "__id__": 20
       },
       "_children": [
         {
-          "__id__": 34
+          "__id__": 28
         }
       ],
       "_components": [
         {
           "__type__": "cc.Widget",
           "node": {
-            "__id__": 33
+            "__id__": 27
           },
           "_target": {
             "__id__": 2
@@ -1548,21 +1358,21 @@
         {
           "__type__": "cc.Button",
           "node": {
-            "__id__": 33
+            "__id__": 27
           },
           "transition": 3,
           "clickEvents": [
             {
               "__type__": "cc.ClickEvent",
               "target": {
-                "__id__": 23
+                "__id__": 20
               },
               "component": "Menu",
               "handler": "loadAchieveSystem"
             }
           ],
           "_N$target": {
-            "__id__": 33
+            "__id__": 27
           }
         }
       ],
@@ -1581,13 +1391,13 @@
       "__type__": "cc.Node",
       "_name": "icon",
       "_parent": {
-        "__id__": 33
+        "__id__": 27
       },
       "_components": [
         {
           "__type__": "cc.Sprite",
           "node": {
-            "__id__": 34
+            "__id__": 28
           },
           "_spriteFrame": {
             "__uuid__": "4dMK+HfBdDpYtq8RvYqYJx"
@@ -1602,27 +1412,6 @@
       }
     }
   ],
-  {
-    "__type__": "cc.SpriteFrame",
-    "content": {
-      "name": "user",
-      "texture": "157dbf3b3",
-      "rect": [
-        2,
-        206,
-        190,
-        200
-      ],
-      "offset": [
-        -5,
-        0
-      ],
-      "originalSize": [
-        200,
-        200
-      ]
-    }
-  },
   {
     "__type__": "cc.SpriteFrame",
     "content": {
