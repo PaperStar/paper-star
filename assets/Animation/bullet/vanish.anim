@@ -1,0 +1,40 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "vanish",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 1.5166666666666666,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "props": {},
+    "paths": {
+      "brokenFX/pieceU": {
+        "props": {}
+      },
+      "brokenFX/pieceD": {
+        "props": {}
+      },
+      "sprite": {
+        "props": {
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 255
+            },
+            {
+              "frame": 1.5,
+              "value": 0
+            },
+            {
+              "frame": 1.5166666666666666,
+              "value": 255
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}

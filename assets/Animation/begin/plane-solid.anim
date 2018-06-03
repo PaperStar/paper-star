@@ -1,0 +1,101 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "plane-solid",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 6,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 38,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            -636,
+            -60
+          ],
+          "curve": "linear",
+          "motionPath": [
+            [
+              -60,
+              234,
+              -388,
+              146,
+              281,
+              306
+            ]
+          ]
+        },
+        {
+          "frame": 1.4666666666666666,
+          "value": [
+            600,
+            278
+          ],
+          "motionPath": []
+        },
+        {
+          "frame": 3,
+          "value": [
+            632,
+            13
+          ],
+          "motionPath": [
+            [
+              162,
+              -228,
+              432,
+              -165,
+              -186,
+              -309
+            ]
+          ]
+        },
+        {
+          "frame": 4.966666666666667,
+          "value": [
+            -576,
+            -272
+          ],
+          "motionPath": []
+        },
+        {
+          "frame": 6,
+          "value": [
+            -700,
+            -106
+          ]
+        }
+      ],
+      "rotation": [
+        {
+          "frame": 0,
+          "value": 60
+        },
+        {
+          "frame": 1.4666666666666666,
+          "value": 89
+        },
+        {
+          "frame": 3,
+          "value": 250
+        },
+        {
+          "frame": 3.0166666666666666,
+          "value": 230.88898305084766
+        },
+        {
+          "frame": 4.966666666666667,
+          "value": 272.3000000000009
+        },
+        {
+          "frame": 6,
+          "value": 60
+        }
+      ]
+    }
+  },
+  "events": []
+}

@@ -1,0 +1,110 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "OpenPanel",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.42,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "bg": {
+        "props": {
+          "height": [
+            {
+              "frame": 0.016666666666666666,
+              "value": 50
+            },
+            {
+              "frame": 0.4166666666666667,
+              "value": 100
+            }
+          ],
+          "width": [
+            {
+              "frame": 0.016666666666666666,
+              "value": 50
+            },
+            {
+              "frame": 0.4166666666666667,
+              "value": 220
+            }
+          ]
+        }
+      },
+      "info": {
+        "props": {
+          "scale": [
+            {
+              "frame": 0.25,
+              "value": {
+                "__type__": "cc.Vec2",
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "frame": 0.4166666666666667,
+              "value": {
+                "__type__": "cc.Vec2",
+                "x": 1,
+                "y": 1
+              }
+            }
+          ],
+          "opacity": [
+            {
+              "frame": 0.016666666666666666,
+              "value": 0
+            },
+            {
+              "frame": 0.4166666666666667,
+              "value": 255
+            }
+          ]
+        },
+        "comps": {
+          "cc.Widget": {}
+        }
+      },
+      "icon": {
+        "props": {
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 255
+            },
+            {
+              "frame": 0.08333333333333333,
+              "value": 0
+            }
+          ]
+        }
+      }
+    },
+    "props": {
+      "height": [
+        {
+          "frame": 0,
+          "value": 30
+        },
+        {
+          "frame": 0.08333333333333333,
+          "value": 100
+        }
+      ],
+      "width": [
+        {
+          "frame": 0,
+          "value": 30
+        },
+        {
+          "frame": 0.08333333333333333,
+          "value": 220
+        }
+      ]
+    }
+  },
+  "events": []
+}

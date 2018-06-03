@@ -1,0 +1,26 @@
+{
+  "name": "paper-star",
+  "version": "0.0.2",
+  "description": "A game called paper-star.",
+  "main": "index.js",
+  "author": "YunYouJun <me@yunyoujun.cn>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YunYouJun/paper-star.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YunYouJun/paper-star/issues"
+  },
+  "homepage": "https://github.com/YunYouJun/paper-star#readme",
+  "scripts": {
+    "build:mobile": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=web-mobile;debug=false'",
+    "build:wechatgame": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=wechatgame;debug=false'",
+    "deploy:desktop": "gh-pages -d build/web-desktop",
+    "predeploy:mobile": "npm run build:mobile",
+    "deploy:mobile": "gh-pages -d build/web-mobile"
+  },
+  "dependencies": {
+    "gh-pages": "^1.1.0"
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "break",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 1,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "brokenFX/pieceU": {
+        "props": {
+          "rotation": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.25,
+              "value": 90
+            },
+            {
+              "frame": 0.5,
+              "value": 180
+            },
+            {
+              "frame": 1,
+              "value": 355
+            }
+          ],
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
+                0
+              ],
+              "motionPath": []
+            },
+            {
+              "frame": 0.25,
+              "value": [
+                10,
+                0
+              ],
+              "motionPath": [
+                [
+                  16.19,
+                  -5.3,
+                  16.23,
+                  0.56,
+                  16.44,
+                  -10.16
+                ]
+              ]
+            },
+            {
+              "frame": 1,
+              "value": [
+                10,
+                -10
+              ],
+              "motionPath": []
+            }
+          ],
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 255
+            },
+            {
+              "frame": 1,
+              "value": 0
+            }
+          ]
+        }
+      },
+      "brokenFX/pieceD": {
+        "props": {
+          "rotation": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.5,
+              "value": 180
+            },
+            {
+              "frame": 1,
+              "value": 360
+            }
+          ],
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
+                0
+              ],
+              "motionPath": []
+            },
+            {
+              "frame": 0.5,
+              "value": [
+                -10,
+                0
+              ],
+              "motionPath": [
+                [
+                  -15.76,
+                  5.18,
+                  -15.71,
+                  0.77,
+                  -16.06,
+                  10.22
+                ]
+              ]
+            },
+            {
+              "frame": 1,
+              "value": [
+                -10,
+                10
+              ],
+              "motionPath": []
+            }
+          ],
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 255
+            },
+            {
+              "frame": 1,
+              "value": 0
+            }
+          ]
+        }
+      },
+      "sprite": {
+        "props": {}
+      }
+    },
+    "props": {}
+  },
+  "events": []
+}
