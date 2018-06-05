@@ -34,7 +34,8 @@ cc.Class({
         this.bossMng.init(this)
         this.sortMng = this.foeGroup.getComponent('SortMng')
         this.sortMng.init()
-        cc.director.setClearColor(cc.hexToColor(Helpers.ColorList.dark))    // 默认背景色为暗色
+        cc.director.setClearColor(cc.Color.GRAY)    // 默认背景色为暗色
+        // cc.Camera.main.backgroundColor = cc.Color.GRAY
     },
 
     start () {

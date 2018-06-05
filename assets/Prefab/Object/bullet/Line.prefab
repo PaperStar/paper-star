@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "defaultBullet",
+    "_name": "LineBullet",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -487,7 +487,8 @@
     "canBreak": true,
     "brokenFX": {
       "__id__": 5
-    }
+    },
+    "isVisible": false
   },
   {
     "__type__": "cc.Animation",

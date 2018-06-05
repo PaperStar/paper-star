@@ -28,10 +28,13 @@
       },
       {
         "__id__": 5
+      },
+      {
+        "__id__": 6
       }
     ],
     "_prefab": {
-      "__id__": 6
+      "__id__": 7
     },
     "_id": "",
     "_opacity": 255,
@@ -115,7 +118,7 @@
     },
     "_angularVelocity": 100,
     "_fixedRotation": false,
-    "enabledContactListener": false,
+    "enabledContactListener": true,
     "bullet": false
   },
   {
@@ -140,6 +143,24 @@
     "_radius": 150
   },
   {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "a17f8acf-1898-4ac4-9e58-4cc2ce0480e5"
+    },
+    "_clips": [
+      {
+        "__uuid__": "a17f8acf-1898-4ac4-9e58-4cc2ce0480e5"
+      }
+    ],
+    "playOnLoad": false
+  },
+  {
     "__type__": "5a006pbT5FD4YGqs5SittTt",
     "_name": "",
     "_objFlags": 0,
@@ -147,9 +168,23 @@
       "__id__": 1
     },
     "_enabled": true,
-    "HP": 1000,
+    "planetType": 0,
+    "hp": 1000,
+    "curHp": 1000,
+    "radius": 100,
     "gravityRadial": {
       "__uuid__": "5f913de8-bffc-48f2-9f83-488d16ffbcb1"
+    },
+    "gravityRadius": 200,
+    "gravityForce": 300,
+    "breakSpriteFrame": {
+      "__uuid__": "3f617414-1ae0-49a4-8474-5cd4e4e6c109"
+    },
+    "breakAnim": {
+      "__id__": 5
+    },
+    "hpBarPrefab": {
+      "__uuid__": "d2f7e1a3-8139-43ef-8503-8083ce88fb68"
     }
   },
   {

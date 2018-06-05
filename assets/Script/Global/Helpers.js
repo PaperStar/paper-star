@@ -46,4 +46,16 @@ export default {
     loadStoryBoard () {
         cc.director.loadScene("StoryBoard")
     },
+
+    // damage
+    inflictDamage (otherCollider) {
+        let name = otherCollider.node.name.toLowerCase()
+        if (name.indexOf('bullet')!==-1) {
+            return otherCollider.node.getComponent('Bullet').damage
+        }
+        if (name.indexOf('foe')!==-1) {
+            return 1
+        }
+        return 1
+    },
 }

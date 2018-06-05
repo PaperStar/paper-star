@@ -1,7 +1,12 @@
+const PlanetType = cc.Enum({
+    Simple: -1,
+    Other: -1,
+})
+
 const BossType = cc.Enum({
     Carrier: -1,
     BlackBomber: -1,
-});
+})
 
 const FoeType = cc.Enum({
     Foe0: -1,
@@ -34,6 +39,7 @@ const PropType = cc.Enum({
 })
 
 export {
+    PlanetType,
     BossType,
     FoeType,
     AttackType,

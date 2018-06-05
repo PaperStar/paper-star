@@ -47,16 +47,32 @@ cc.Class({
         this.sprite.node.opacity = 255
         this.role = role
 
-        if (role.node.name == 'player') {
-            this.scheduleOnce(function(){
-                role._delayFlag = false
-            }, this.delay)
+        this.scheduleOnce(function(){
+            role._delayFlag = false
+        }, this.delay)
 
+        let pos = cc.v2(0, 0)
+        role.node.getChildByName('BulletGroup').addChild(this.node)
+        if (role.node.getChildByName('emitter')) {
+            pos = role.node.getChildByName('emitter').getPosition()
+        }
+        let roleName = role.node.name.toLowerCase()
+        if (roleName == 'player') {
+            let pos = role.node.getChildByName('emitter').getPosition()
             // color
             let color = role.node.color
             this.sprite.node.color = color
             this.brokenFX.getChildByName('pieceU').color = color
             this.brokenFX.getChildByName('pieceD').color = color
+        } else if (roleName.indexOf('foe') !== -1) {
+            pos = cc.v2(0, role.sprite.node.height)
+            // role.node.parent.getChildByName('BulletGroup').addChild(this.node)
+            // role.node.getChildByName('BulletGroup').addChild(this.node)
+        }
+        this.node.setPosition(pos)
+
+        if (roleName.indexOf('foe')) {
+            // now nothing
         }
         this.collisionTime = role.bulletCollisionTime
 
@@ -68,7 +84,6 @@ cc.Class({
         this.node.width = this.width
         this.getComponent(cc.PhysicsBoxCollider).size.height = this.length
         this.getComponent(cc.PhysicsBoxCollider).size.width = this.width
-
 
         this.getComponent(cc.RigidBody).linearVelocity = cc.pMult(dir, this.moveSpeed)
         // this.scheduleOnce(this.vanish, this.lifeTime)
@@ -92,10 +107,10 @@ cc.Class({
     onBeginContact: function (contact, selfCollider, otherCollider) {
         switch (otherCollider.node.name) {
             case 'gravity-radial':
-                break;
+                break
             default:
                 this.collisionTime--
-                break;
+                break
         }
         if (this.isVisible && this.collisionTime <= 0) {
             this.isVisible = false

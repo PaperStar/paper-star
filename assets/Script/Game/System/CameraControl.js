@@ -145,10 +145,12 @@ cc.Class({
   },
 
   onEnable: function () {
-      cc.director.getPhysicsManager().attachDebugDrawToCamera(this.camera);
+    //   removed
+    cc.director.getPhysicsManager().attachDebugDrawToCamera(this.camera);
   },
   onDisable: function () {
-      cc.director.getPhysicsManager().detachDebugDrawFromCamera(this.camera);
+    //   removed
+    cc.director.getPhysicsManager().detachDebugDrawFromCamera(this.camera);
   },
 
   // called every frame, uncomment this function to activate update callback
@@ -166,7 +168,7 @@ cc.Class({
           let yDelta = this.pointerPos.y / (this.visibleSize.height/2) - 1;
           xDelta *= this.pointerXMult;
           yDelta *= this.pointerYMult;
-          targetPos = cc.pAdd(targetPos, cc.p(xDelta, yDelta));
+          targetPos = cc.pAdd(targetPos, cc.v2(xDelta, yDelta));
       }
 
       //smooth follow
@@ -230,7 +232,7 @@ cc.Class({
   },
 
   getOverviewTargetsMidpoint () {
-      let midPoint = cc.p(0, 0);
+      let midPoint = cc.v2(0, 0);
       let minX = 99999, minY = 99999, maxX = -99999, maxY = -99999;
       for (let i = 0; i < this.overviewTargets.length; ++i) {
           let target = this.overviewTargets[i];
@@ -245,7 +247,7 @@ cc.Class({
       minY -= this.overviewMargin;
       let distX = Math.abs(maxX - minX);
       let distY = Math.abs(maxY - minY);
-      midPoint = cc.p(minX + distX/2, minY + distY/2);
+      midPoint = cc.v2(minX + distX/2, minY + distY/2);
       let ratio = Math.max(distX / this.visibleSize.width, distY / this.visibleSize.height);
       this.camera.zoomRatio = 1/ratio;
       return midPoint;
@@ -259,7 +261,7 @@ cc.Class({
 
   stopShake () {
       this.anim.stop();
-      this.camera.node.position = cc.p(0, 0);
+      this.camera.node.position = cc.v2(0, 0);
   },
 
   onMouseMove (event) {

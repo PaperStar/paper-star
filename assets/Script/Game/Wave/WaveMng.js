@@ -15,20 +15,20 @@ const Wave = cc.Class({
         }
     },
     init () {
-        this.totalFoes = 0;
-        this.spawnIdx = 0;
+        this.totalFoes = 0
+        this.spawnIdx = 0
         for (let i = 0; i < this.spawns.length; ++i) {
             if (this.spawns[i].isCompany === false) {
-                this.totalFoes += this.spawns[i].total;
+                this.totalFoes += this.spawns[i].total
             }
         }
     },
     getNextSpawn () {// return next spawn
-        this.spawnIdx++;
+        this.spawnIdx++
         if (this.spawnIdx < this.spawns.length) {
-            return this.spawns[this.spawnIdx];
+            return this.spawns[this.spawnIdx]
         } else {
-            return null;
+            return null
         }
     }
 });
@@ -48,14 +48,14 @@ cc.Class({
             default: 0,
             notify: function () {
                 if (!this.currentWave || !this.waveTotalFoes ) {
-                    return;
+                    return
                 }
                 if (this.waveTotalFoes && this.killedFoe >= this.waveTotalFoes) {
                     // this.endWave();
                 }
                 if (this.waveProgress && this.waveTotalFoes) {
                     let ratio = Math.min(this.killedFoe/this.waveTotalFoes, 1);
-                    // this.waveProgress.updateProgress(ratio);
+                    // this.waveProgress.updateProgress(ratio)
                 }
             }
         },
@@ -74,105 +74,100 @@ cc.Class({
         this.currentWave = this.waves[this.waveIdx]
 
         this.foeGroup.setContentSize(this.map.node.getContentSize())
-        // this.waveProgress = this.waveProgress.getComponent('WaveProgress');
-        // this.waveProgress.init(this);
-        // this.bossProgress = this.bossProgress.getComponent('BossProgress');
-        // this.bossProgress.init(this);
+        // this.waveProgress = this.waveProgress.getComponent('WaveProgress')
+        // this.waveProgress.init(this)
+        // this.bossProgress = this.bossProgress.getComponent('BossProgress')
+        // this.bossProgress.init(this)
 
         // test
-        this.testPos = cc.p(0, 0)
+        this.testPos = cc.v2(0, 0)
     },
 
 
     startSpawn () {
-        this.schedule(this.spawnFoe, this.currentSpawn.spawnInterval);
+        this.schedule(this.spawnFoe, this.currentSpawn.spawnInterval)
     },
 
     startBossSpawn (bossSpawn) {
-        this.bossSpawn = bossSpawn;
-        this.waveTotalFoes = bossSpawn.total;
-        this.killedFoe = 0;
-        this.schedule(this.spawnBossFoe, bossSpawn.spawnInterval);
+        this.bossSpawn = bossSpawn
+        this.waveTotalFoes = bossSpawn.total
+        this.killedFoe = 0
+        this.schedule(this.spawnBossFoe, bossSpawn.spawnInterval)
     },
 
     endSpawn () {
-        this.unschedule(this.spawnFoe);
-        let nextSpawn = this.currentWave.getNextSpawn();
+        this.unschedule(this.spawnFoe)
+        let nextSpawn = this.currentWave.getNextSpawn()
         if (nextSpawn) {
-            this.currentSpawn = nextSpawn;
-            this.startSpawn();
+            this.currentSpawn = nextSpawn
+            this.startSpawn()
             if (nextSpawn.isCompany) {
-                this.startBoss();
+                this.startBoss()
             }
         }
     },
 
     startWave () {
-        this.unschedule(this.spawnFoe);
-        this.currentWave.init();
-        this.waveTotalFoes = this.currentWave.totalFoes;
+        this.unschedule(this.spawnFoe)
+        this.currentWave.init()
+        this.waveTotalFoes = this.currentWave.totalFoes
         this.killedFoe = 0;
-        this.currentSpawn = this.currentWave.spawns[this.currentWave.spawnIdx];
-        this.startSpawn();
-        this.game.inGameUI.showWave(this.waveIdx + 1);
+        this.currentSpawn = this.currentWave.spawns[this.currentWave.spawnIdx]
+        this.startSpawn()
+        this.game.inGameUI.showWave(this.waveIdx + 1)
     },
 
     startBoss () {
-        this.bossProgress.show();
-        this.game.bossMng.startBoss();
+        this.bossProgress.show()
+        this.game.bossMng.startBoss()
     },
 
     endWave () {
-        this.bossProgress.hide();
-        this.game.bossMng.endBoss();
+        this.bossProgress.hide()
+        this.game.bossMng.endBoss()
         // update wave index
         if (this.waveIdx < this.waves.length - 1) {
-            this.waveIdx++;
-            this.currentWave = this.waves[this.waveIdx];
-            this.startWave();
+            this.waveIdx++
+            this.currentWave = this.waves[this.waveIdx]
+            this.startWave()
         } else {
-            cc.log('all waves spawned!');
+            cc.log('all waves spawned!')
         }
     },
 
     spawnFoe () {
         if (this.currentSpawn.finished) {
-            this.endSpawn();
-            return;
+            this.endSpawn()
+            return
         }
 
-        let newFoe = this.currentSpawn.spawn(this.game.poolMng);
+        let newFoe = this.currentSpawn.spawn(this.game.poolMng)
         if (newFoe) {
-            this.foeGroup.addChild(newFoe);
-            // newFoe.setPosition(this.getNewFoePosition());
-            newFoe.setPosition( this.testPos.addSelf(cc.p(100, 100)) )
-            newFoe.getComponent('Foe').init(this);
+            this.foeGroup.addChild(newFoe)
+            newFoe.setPosition(this.getNewFoePosition())
+            newFoe.getComponent('Foe').init(this)
+            // newFoe.setPosition( this.testPos.addSelf(cc.v2(100, 100)) )
         }
     },
 
     spawnBossFoe () {
         if (this.bossSpawn.finished) {
-            this.unschedule(this.spawnBossFoe);
+            this.unschedule(this.spawnBossFoe)
         }
-        let newFoe = this.bossSpawn.spawn(this.game.poolMng);
+        let newFoe = this.bossSpawn.spawn(this.game.poolMng)
         if (newFoe) {
-            this.foeGroup.addChild(newFoe);
-            newFoe.setPosition(this.getNewFoePosition());
-            newFoe.getComponent('Foe').init(this);
+            this.foeGroup.addChild(newFoe)
+            newFoe.setPosition(this.getNewFoePosition())
+            newFoe.getComponent('Foe').init(this)
         }
     },
 
     spawnBullet (bulletType, dir, role) {
         let newBullet = this.game.poolMng.getBullet(bulletType)
         if (newBullet) {
-            role.node.getChildByName('BulletGroup').addChild(newBullet)
-            if (role.node.getChildByName('emitter')){
-                let pos = role.node.getChildByName('emitter').getPosition()
-                newBullet.setPosition(pos)
-            }
             newBullet.getComponent('Bullet').init(this, dir, role)
         } else {
-            cc.log('Too many Bullets!')
+            cc.log('Too Many Bullets!')
         }
     },
 
@@ -182,22 +177,22 @@ cc.Class({
     },
     
     hitFoe () {
-        this.game.cameraShake();
+        this.game.cameraShake()
     },
 
     despawnFoe (foe) {
-        let foeType = foe.foeType;
-        this.game.poolMng.putFoe(foeType, foe.node);
+        let foeType = foe.foeType
+        this.game.poolMng.putFoe(foeType, foe.node)
     },
 
     despawnBullet (bullet) {
-        let type = bullet.bulletType;
-        this.game.poolMng.putBullet(type, bullet.node);
+        let type = bullet.bulletType
+        this.game.poolMng.putBullet(type, bullet.node)
     },
 
     getNewFoePosition () {
-        let randX = cc.randomMinus1To1() * (this.foeGroup.width - this.spawnMargin)/2;
-        let randY = cc.randomMinus1To1() * (this.foeGroup.height - this.spawnMargin)/2;
-        return cc.p(randX, randY);
+        let randX = (Math.random() - 0.5) * 2  * (this.foeGroup.width - this.spawnMargin)/2
+        let randY = (Math.random() - 0.5) * 2  * (this.foeGroup.height - this.spawnMargin)/2
+        return cc.v2(randX, randY)
     },
-});
+})

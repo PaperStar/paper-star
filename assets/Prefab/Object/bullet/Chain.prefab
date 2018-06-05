@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "BulletChain",
+    "_name": "ChainBullet",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -457,13 +457,18 @@
       "__id__": 1
     },
     "_enabled": true,
-    "speed": 500,
+    "bulletType": 0,
     "length": 500,
+    "moveSpeed": 500,
+    "delay": 0.3,
+    "width": 2,
+    "lifeTime": 10,
     "collisionTime": 2,
     "damage": 10,
     "sprite": null,
-    "fxBroken": null,
-    "canBreak": false
+    "canBreak": false,
+    "brokenFX": null,
+    "isVisible": false
   },
   {
     "__type__": "cc.PrefabInfo",

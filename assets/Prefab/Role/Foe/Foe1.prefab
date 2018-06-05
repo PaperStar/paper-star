@@ -18,27 +18,30 @@
         "__id__": 2
       },
       {
-        "__id__": 6
+        "__id__": 4
       },
       {
-        "__id__": 9
+        "__id__": 8
+      },
+      {
+        "__id__": 11
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 11
-      },
-      {
-        "__id__": 12
-      },
-      {
         "__id__": 13
+      },
+      {
+        "__id__": 14
+      },
+      {
+        "__id__": 15
       }
     ],
     "_prefab": {
-      "__id__": 14
+      "__id__": 16
     },
     "_id": "",
     "_opacity": 255,
@@ -63,11 +66,11 @@
     "_rotationX": 0,
     "_rotationY": 0,
     "_scaleX": 1,
-    "_scaleY": -1,
+    "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 50
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -75,6 +78,67 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 2
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "emitter",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_tag": -1,
+    "_active": true,
+    "_components": [],
+    "_prefab": {
+      "__id__": 3
+    },
+    "_id": "",
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_cascadeOpacityEnabled": true,
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": 1,
+    "_scaleY": 1,
+    "_position": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 20
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_localZOrder": 0,
+    "_globalZOrder": 0,
+    "_opacityModifyRGB": false,
+    "groupIndex": 0
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "4603d23d-d98f-45d5-a693-e027c675195d"
+    },
+    "fileId": "cbRMY3PZJDyqtrP6J1WH/X",
+    "sync": false
   },
   {
     "__type__": "cc.Node",
@@ -88,14 +152,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 3
+        "__id__": 5
       },
       {
-        "__id__": 4
+        "__id__": 6
       }
     ],
     "_prefab": {
-      "__id__": 5
+      "__id__": 7
     },
     "_id": "",
     "_opacity": 255,
@@ -120,7 +184,7 @@
     "_rotationX": 0,
     "_rotationY": 0,
     "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleY": -1,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -131,14 +195,14 @@
     "_localZOrder": 0,
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
-    "groupIndex": 0
+    "groupIndex": 2
   },
   {
     "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 2
+      "__id__": 4
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -166,7 +230,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 2
+      "__id__": 4
     },
     "_enabled": true,
     "_defaultClip": {
@@ -205,11 +269,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 7
+        "__id__": 9
       }
     ],
     "_prefab": {
-      "__id__": 8
+      "__id__": 10
     },
     "_id": "",
     "_opacity": 255,
@@ -252,7 +316,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 6
+      "__id__": 8
     },
     "_enabled": true,
     "_custom": false,
@@ -364,7 +428,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 10
+      "__id__": 12
     },
     "_id": "",
     "_opacity": 255,
@@ -422,14 +486,15 @@
     },
     "_enabled": true,
     "foeType": 1,
-    "atkType": 0,
+    "atkType": 1,
+    "bulletType": 0,
     "bulletCollisionTime": 2,
     "hp": 100,
     "curHp": 0,
     "score": 50,
     "crashDamage": 0,
     "moveSpeed": 150,
-    "turnSpeed": 2,
+    "turnSpeed": 4,
     "moveDir": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -440,12 +505,20 @@
       "x": 0,
       "y": 0
     },
-    "atkRange": 0,
+    "atkRange": 300,
     "atkDuration": 0,
     "atkPrepTime": 1,
     "fxSmoke": {
-      "__id__": 7
-    }
+      "__id__": 9
+    },
+    "sprite": {
+      "__id__": 5
+    },
+    "hpBarPrefab": {
+      "__uuid__": "d2f7e1a3-8139-43ef-8503-8083ce88fb68"
+    },
+    "_delayFlag": false,
+    "_shootFlag": false
   },
   {
     "__type__": "cc.RigidBody",
@@ -458,7 +531,7 @@
     "_type": 2,
     "_allowSleep": true,
     "_gravityScale": 0,
-    "_linearDamping": 0,
+    "_linearDamping": 0.2,
     "_angularDamping": 1,
     "_linearVelocity": {
       "__type__": "cc.Vec2",
@@ -481,8 +554,8 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
-    "_restitution": 0,
+    "_friction": 0.3,
+    "_restitution": 0.8,
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
@@ -492,53 +565,53 @@
     "points": [
       {
         "__type__": "cc.Vec2",
-        "x": 4.22,
-        "y": -15.46
+        "x": 3.89,
+        "y": 15.47
       },
       {
         "__type__": "cc.Vec2",
-        "x": -2.73,
-        "y": -15.31
+        "x": -2.81,
+        "y": 15.37
       },
       {
         "__type__": "cc.Vec2",
-        "x": -22.61,
-        "y": 3.85
+        "x": -22.2,
+        "y": -3.57
       },
       {
         "__type__": "cc.Vec2",
-        "x": -20.57,
-        "y": 8.12
+        "x": -19.91,
+        "y": -8.21
       },
       {
         "__type__": "cc.Vec2",
-        "x": -11.94,
-        "y": 8.23
+        "x": -12.02,
+        "y": -8.18
       },
       {
         "__type__": "cc.Vec2",
-        "x": -12.05,
-        "y": 17.33
+        "x": -10.9,
+        "y": -16.48
       },
       {
         "__type__": "cc.Vec2",
-        "x": 12.57,
-        "y": 17.57
+        "x": 11.83,
+        "y": -16.49
       },
       {
         "__type__": "cc.Vec2",
-        "x": 12.67,
-        "y": 8.95
+        "x": 12.34,
+        "y": -8.37
       },
       {
         "__type__": "cc.Vec2",
-        "x": 21.73,
-        "y": 8.97
+        "x": 20.66,
+        "y": -8.51
       },
       {
         "__type__": "cc.Vec2",
-        "x": 25.08,
-        "y": 5.09
+        "x": 24.09,
+        "y": -4.06
       }
     ]
   },

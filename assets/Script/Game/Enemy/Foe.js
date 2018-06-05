@@ -1,4 +1,4 @@
-
+import Helpers from 'Helpers'
 import { FoeType, BulletType, AttackType } from 'Types'
 
 cc.Class({
@@ -14,7 +14,7 @@ cc.Class({
             type: AttackType
         },
         bulletType: {
-            default: BulletType.Arrow,
+            default: BulletType.Line,
             type: BulletType
         },
         bulletCollisionTime: {
@@ -33,10 +33,16 @@ cc.Class({
         atkDuration: 0,
         atkPrepTime: 0,
         fxSmoke: cc.ParticleSystem,
+
+        sprite: cc.Sprite,
+        hpBarPrefab: cc.Prefab,
+
+        // shoot
+        _delayFlag: false,
+        _shootFlag: false,
     },
 
     // LIFE-CYCLE CALLBACKS:
-
     // onLoad () {},
 
     start () {
@@ -51,11 +57,23 @@ cc.Class({
         this.isInvincible = false
         this.isMoving = false
         this.curHp = this.hp
-        this.node.rotation = Math.random() * 360 
         this.anim = this.node.getChildByName('sprite').getComponent(cc.Animation)
         this.anim.play('fadeIn')
         this.readyToMove()
         this.body = this.getComponent(cc.RigidBody)
+
+        this.initHpBar()
+        this.node.rotation = Math.random() * 360 
+    },
+
+    initHpBar () {
+        if (this.hpBarPrefab) {
+            let HpBar = cc.instantiate(this.hpBarPrefab)
+            this.node.addChild(HpBar)
+            this.hpBar = HpBar.getComponent('HpBar')
+            this.hpBar.init()
+            this.hpBar.setDisplayPosition(cc.v2(0, this.sprite.node.height))
+        }
     },
 
     readyToMove () {
@@ -74,25 +92,27 @@ cc.Class({
             return
         }
         this.atkDir = cc.pNormalize(cc.pSub(this.player.node.position, this.node.position))
-        // if (this.atkType === AttackType.Melee) {
+        if (this.atkType === AttackType.Melee) {
             
-        // }
+        } else if (this.atkType === AttackType.Range) {
+            
+        }
         this.isAttacking = false
         this.isMoving = true
     },
 
     rotate () {
         let sepAngle = cc.radiansToDegrees( cc.pAngleSigned(this.moveDir, this.atkDir) )
-        if ( sepAngle > 2) {
+        if ( sepAngle > 10) {
             this.node.rotation -= this.turnSpeed
-        } else if ( sepAngle < -1 ) {
+        } else if ( sepAngle < -10 ) {
             this.node.rotation += this.turnSpeed
-        }        
+        }
         this.moveDir = cc.pForAngle( cc.degreesToRadians(90 - this.node.rotation) )
     },
 
     attackOnTarget () {
-
+        this.shoot()
     },
 
     dead () {
@@ -113,19 +133,15 @@ cc.Class({
     },
 
     onBeginContact (contact, selfCollider, otherCollider) {
-        switch (otherCollider.node.name) {
-            case 'bullet':
-                this.hp -= 10
-                break;
-            default:
-                this.hp--
-                break;
-        }
+        this.curHp -= Helpers.inflictDamage(otherCollider)
+        this.hpBar.display(this.curHp, this.hp)
 
-        if (this.hp <= 0 && this.isAlive) {
+        if (this.curHp <= 0 && this.isAlive) {
             this.isAlive = false
             this.dead()
         }
+
+        this.turnSpeed = -this.turnSpeed
     },
 
     update (dt) {
@@ -134,14 +150,44 @@ cc.Class({
         }
         if (!this.isAttacking) {
             this.prepAttack()
-        }
-        if (this.isMoving) {
-            if (this.atkType === AttackType.Melee) {
-                this.body.linearVelocity = cc.pMult(this.moveDir, this.moveSpeed)
+        } else {
+            if (this._shootFlag && !this._delayFlag) {
+                this.shoot()
             }
+        }
+
+        if (this.isMoving) {
+            this.move()
             this.rotate()
         } else {
-            this.body.linearVelocity = cc.v2(0, 0)
+            // this.body.linearVelocity = cc.v2(0, 0)
         }
     },
+
+    shoot () {
+        let radian = cc.degreesToRadians(90 - this.node.rotation)
+        let dir = cc.pForAngle(radian)
+        this._delayFlag = true
+        this.waveMng.spawnBullet(this.bulletType, dir, this)
+    },
+
+    move () {
+        switch (this.atkType) {
+            case AttackType.Melee:
+                this.body.linearVelocity = cc.pMult(this.moveDir, this.moveSpeed)
+                break
+            case AttackType.Range:
+                let distance = cc.pDistance(this.player.node.position, this.node.position)
+                if ( distance < this.atkRange) {
+                    this.isMoving = false
+                    this._shootFlag = true
+                } else {
+                    this._shootFlag = false
+                    this.body.linearVelocity = cc.pMult(this.moveDir, this.moveSpeed)
+                }
+                break
+            default:
+                break
+        }
+    }
 })

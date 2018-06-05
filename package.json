@@ -22,5 +22,8 @@
   },
   "dependencies": {
     "gh-pages": "^1.1.0"
+  },
+  "devDependencies": {
+    "eslint-config-google": "^0.9.1"
   }
 }

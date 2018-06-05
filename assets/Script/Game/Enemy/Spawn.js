@@ -27,7 +27,7 @@ const Spawn = cc.Class({
             }
             return newFoe
         } else {
-            cc.log('max foe count reached, will delay spawn');
+            cc.log('Max foe count reached, will delay spawn!');
             return null
         }
     }

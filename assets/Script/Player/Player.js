@@ -85,8 +85,8 @@ cc.Class({
         this.initPlayer()
         this.onControl()
         // 随机位置
-        // this.node.setPosition(cc.p( cc.randomMinus1To1() * this.game.map.width / 2, cc.randomMinus1To1() * this.game.map.height / 2))
-        this.node.setPosition( cc.p(0, 0) )
+        // this.node.setPosition(cc.v2( (Math.random() - 0.5) * 2  * this.game.map.width / 2, (Math.random() - 0.5) * 2  * this.game.map.height / 2))
+        this.node.setPosition( cc.v2(0, 0) )
         this.oneShootKills = 0
     },
 
@@ -98,7 +98,8 @@ cc.Class({
     //初始化 plane
     initPlayer () {
         // 修改颜色
-        this.RoleColor = cc.hexToColor(Helpers.getRandomColor())
+        let color = cc.Color.BLACK
+        this.RoleColor = color.fromHEX(Helpers.getRandomColor())
         this.node.color = this.RoleColor
         this.jet = this.node.getChildByName('jet')
         this.jet.getChildByName('triangle').color = this.RoleColor
@@ -187,9 +188,7 @@ cc.Class({
     },
 
     shoot () {
-        // 间隔
-        let rotation = this.getComponent(cc.RigidBody).getWorldRotation()
-        let radian = cc.degreesToRadians(90 - rotation)
+        let radian = cc.degreesToRadians(90 - this.node.rotation)
         let dir = cc.pForAngle(radian)
         this._delayFlag = true
         this.game.waveMng.spawnBullet(this.bulletType, dir, this)
@@ -234,27 +233,21 @@ cc.Class({
 
     // 碰撞回调
     onBeginContact (contact, selfCollider, otherCollider) {
-        // if (otherCollider.density >= 100) {
-        //     this.camera.shakeCamera();
-        // }
-        switch (otherCollider.node.name) {
-            case 'planet':
-                this.curHp--
-                break
-            case 'bullet':
-                this.curHp -= otherCollider.node.getComponent('bullet').damage
-                cc.log(otherCollider.node.getComponent('bullet').damage)
-                break
-            default:
-                this.curHp--
-                break
-        }
-        
+        this.curHp -= Helpers.inflictDamage(otherCollider)
         this.game.inGameUI.showHp()
 
         if (this.curHp <= 0 && this.isAlive) {
+            this.isAlive = false
             this.dead()
         }
+
+        // if (otherCollider.density >= 100) {
+        //     this.camera.shakeCamera();
+        // }
+    },
+
+    onEndContact: function (contact, selfCollider, otherCollider) {
+        // cc.log(otherCollider)
     },
 
     dead () {
@@ -275,11 +268,7 @@ cc.Class({
     revive () {
         this.isAlive = true
         this.curHp = this.hp
-    },
-
-    onEndContact: function (contact, selfCollider, otherCollider) {
-        // cc.log(otherCollider)
-    },
+    },    
 
     update () {
         if (this.speedUpFlag) {

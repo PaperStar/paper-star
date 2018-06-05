@@ -94,13 +94,13 @@ cc.Class({
         if(this.touchType == JoystickCommon.TouchType.DEFAULT) {
             this._stickPos = this.ring.getPosition();
             //触摸点与圆圈中心的距离
-            let distance = cc.pDistance(touchPos,cc.p(0,0));
+            let distance = cc.pDistance(touchPos,cc.v2(0,0));
             let posX = this.ring.getPosition().x + touchPos.x;
             let posY = this.ring.getPosition().y + touchPos.y;
             //手指在圆圈内触摸,控杆跟随触摸点
             if(this._radius > distance)
             {
-                this.dot.setPosition(cc.p(posX, posY));
+                this.dot.setPosition(cc.v2(posX, posY));
                 return true;
             }
             return false;
@@ -127,24 +127,24 @@ cc.Class({
         
         // 以圆圈为锚点获取触摸坐标
         let touchPos = this.ring.convertToNodeSpaceAR(event.getLocation());
-        let distance = cc.pDistance(touchPos,cc.p(0,0));
+        let distance = cc.pDistance(touchPos,cc.v2(0,0));
 
         // 由于摇杆的postion是以父节点为锚点，所以定位要加上touch start时的位置
         let posX = this._stickPos.x + touchPos.x;
         let posY = this._stickPos.y + touchPos.y;
         if(this._radius > distance) {
-            this.dot.setPosition(cc.p(posX, posY));
+            this.dot.setPosition(cc.v2(posX, posY));
         } else {
             //控杆永远保持在圈内，并在圈内跟随触摸更新角度
-            var x = this._stickPos.x + Math.cos(cc.pToAngle( cc.pSub(cc.p(posX,posY), this.ring.getPosition() ))) * this._radius;
-            var y = this._stickPos.y + Math.sin(cc.pToAngle( cc.pSub(cc.p(posX,posY), this.ring.getPosition() ))) * this._radius;
-            this.dot.setPosition(cc.p(x, y));
+            var x = this._stickPos.x + Math.cos(cc.pToAngle( cc.pSub(cc.v2(posX,posY), this.ring.getPosition() ))) * this._radius;
+            var y = this._stickPos.y + Math.sin(cc.pToAngle( cc.pSub(cc.v2(posX,posY), this.ring.getPosition() ))) * this._radius;
+            this.dot.setPosition(cc.v2(x, y));
         }
         //更新角度
-        this._angle = cc.radiansToDegrees( cc.pToAngle( cc.pSub(cc.p(posX,posY), this.ring.getPosition())) )
+        this._angle = cc.radiansToDegrees( cc.pToAngle( cc.pSub(cc.v2(posX,posY), this.ring.getPosition())) )
         this.player.moveAngle = this._angle
         //设置实际速度
-        this._setSpeed(cc.p(posX,posY));
+        this._setSpeed(cc.v2(posX,posY));
 
         this.player.getComponent(cc.RigidBody).linearVelocity = cc.v2(this.player.moveDir.x * this.player.moveSpeed, this.player.moveDir.y * this.player.moveSpeed)
         this.player.startMove()
@@ -164,12 +164,12 @@ cc.Class({
     _setSpeed (point)
     {
         //触摸点和遥控杆中心的距离
-        let distance = cc.pDistance(point, this.ring.getPosition());
+        let distance = cc.pDistance(point, this.ring.getPosition())
         //如果半径
         if (distance < this._radius) {
-            this.player.moveSpeed = this.player.normalSpeed;
+            this.player.moveSpeed = this.player.normalSpeed
         } else {
-            this.player.speedUpFlag = true;
+            this.player.speedUpFlag = true
         }
     },
 
@@ -180,4 +180,4 @@ cc.Class({
         let dir = cc.pForAngle(radian)
         this.player.moveDir = dir
     }
-});
+})

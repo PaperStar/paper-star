@@ -66,7 +66,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 100,
+      "x": 0,
       "y": 0
     },
     "_skewX": 0,
@@ -427,7 +427,7 @@
     "score": 0,
     "crashDamage": 0,
     "moveSpeed": 0,
-    "turnSpeed": 0,
+    "turnSpeed": 3,
     "moveDir": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -443,6 +443,12 @@
     "atkPrepTime": 0,
     "fxSmoke": {
       "__id__": 7
+    },
+    "sprite": {
+      "__id__": 3
+    },
+    "hpBarPrefab": {
+      "__uuid__": "d2f7e1a3-8139-43ef-8503-8083ce88fb68"
     }
   },
   {
@@ -465,7 +471,7 @@
     },
     "_angularVelocity": 0,
     "_fixedRotation": false,
-    "enabledContactListener": false,
+    "enabledContactListener": true,
     "bullet": false
   },
   {
@@ -480,7 +486,7 @@
     "_density": 1,
     "_sensor": false,
     "_friction": 0.2,
-    "_restitution": 0,
+    "_restitution": 0.2,
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",

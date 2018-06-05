@@ -13,10 +13,14 @@ cc.Class({
             type: Player
         },
         openPanelFlag: true,
+
+        hpBar: cc.Node,
     },
     
     start () {
+        // deprecated
         cc.director.setClearColor(cc.Color.GRAY)
+        // cc.Camera.main.backgroundColor = cc.Color.GRAY
         if (Global.userInfo) {
             Global.userInfo.node.active = false
         }
@@ -39,7 +43,9 @@ cc.Class({
 
         // info
         this.Info = this.node.getChildByName('Info')
-        this.HPBar = this.Info.getChildByName('HPBar').getComponent(cc.ProgressBar)
+        this.hpBar = this.hpBar.getComponent('HpBar')
+        this.hpBar.init()
+        this.hpBar.show()
         this.lifeLabel = this.Info.getChildByName('Life').getChildByName('num').getComponent(cc.Label)
         this.lifeLabel.string = this.player.life
         this.scoreLabel = this.Info.getChildByName('Score').getComponent(cc.Label)
@@ -59,7 +65,7 @@ cc.Class({
     },
 
     showHp () {
-        this.HPBar.progress = this.player.curHp / this.HPBar.totalLength
+        this.hpBar.display(this.player.curHp, this.player.hp)
     },
 
     showScore (num) {

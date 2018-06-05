@@ -6,12 +6,6 @@ cc.Class({
         avatarSprite: cc.Sprite,
     },
 
-    // onLoad () {},
-
-    start () {
-
-    },
-        
     init () {
         this.avatarSize = 46
     },
@@ -36,10 +30,10 @@ cc.Class({
     // load wechat avatar
     storeUserInfo (userInfo) {
         this.userInfo = userInfo
-        let avatarUrl = this.userInfo.avatarUrl.split('/')
-        avatarUrl[avatarUrl.length-1] = this.avatarSize
-        avatarUrl = avatarUrl.join('/')
-        this.userInfo.avatarUrl = avatarUrl
+        // let avatarUrl = this.userInfo.avatarUrl.split('/')
+        // avatarUrl[avatarUrl.length-1] = this.avatarSize
+        // avatarUrl = avatarUrl.join('/')
+        // this.userInfo.avatarUrl = avatarUrl
 
         cc.sys.localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
     },
@@ -60,9 +54,9 @@ cc.Class({
         } else {
             // test
             let WechatAvatar = {
-                // url: 'https://yunyoujun.cn/images/avatar.jpg',
-                url: 'https://secure.gravatar.com/avatar/18898984c2aeb0dae7530a738f150cba?s=64',    //gravatar
-                type: 'jpg'
+                url: "https://yunyoujun.cn/images/avatar.jpg",
+                // url: 'https://secure.gravatar.com/avatar/18898984c2aeb0dae7530a738f150cba?s=64',    //gravatar
+                type: "jpg"
             }
             cc.loader.load(WechatAvatar, function(err, texture){
                 texture.height = self.avatarSize

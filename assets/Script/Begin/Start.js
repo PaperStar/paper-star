@@ -45,9 +45,14 @@ cc.Class({
     // 判断是否可以读取到用户信息
     next () {
         if (Global.userInfo.getUserInfo()) {
-            Global.userInfo.show()
             Global.userInfo.displayUserInfo()
+            Global.userInfo.show()
         } else {
+            let userInfo = {
+                nickName: '匿名',
+                avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIYS5cD3BZMvoJe6LSC6jOyuKIYnMlibuqAxiaz586GoTuXXm6VEO4W85zqnxrUicWYh6KO83yunhHlw/132'
+            }
+            Global.userInfo.storeUserInfo(userInfo)
             Global.Helpers.loadStoryBoard()
         }
     },

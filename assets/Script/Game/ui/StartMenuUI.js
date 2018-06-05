@@ -12,7 +12,7 @@ cc.Class({
     start () {
         this.ctx = this.bgCanvas
         this.height = this.bgCanvas.node.height
-        this.center = cc.p(200, this.height/2)
+        this.center = cc.v2(200, this.height/2)
         this.init()
         this.drawOrbitPlanet()
         this.drawStarLine()
@@ -94,7 +94,7 @@ cc.Class({
         let ctx = this.ctx
         ctx.lineWidth = 3
         // ctx.moveTo(this.center.x, this.center.y)
-        let firstPlanet = cc.p(Math.cos(this.planets[0].radian) * this.orbits[0].radius + this.center.x, Math.sin(this.planets[0].radian) * this.orbits[0].radius + this.center.y)
+        let firstPlanet = cc.v2(Math.cos(this.planets[0].radian) * this.orbits[0].radius + this.center.x, Math.sin(this.planets[0].radian) * this.orbits[0].radius + this.center.y)
         ctx.moveTo(firstPlanet.x, firstPlanet.y)
         ctx.strokeColor = this.StarLineColor
         for (let i = 1; i < this.planets.length; i++) {
