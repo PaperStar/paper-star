@@ -1,16 +1,16 @@
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        
-    },
+  properties: {
 
-    // onLoad () {},
+  },
 
-    start () {
-        if (Global.userInfo) {
-            Global.userInfo.hide()
-        }
-    },
+  // onLoad () {},
 
-})
+  start() {
+    if (Global.userInfo) {
+      Global.userInfo.hide();
+    }
+  },
+
+});

@@ -31,6 +31,15 @@
 
 - [ ] Use `cc.director.pause()` to pause, button can respond, but scale effect disabled.
 
+## Dev
+
+```sh
+yarn
+# lint
+# eslint assets/Script
+yarn lint --fix
+```
+
 ## Reference
 
 - [tutorial-dark-slash](https://github.com/cocos-creator/tutorial-dark-slash)

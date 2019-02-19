@@ -1,82 +1,90 @@
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        
-    },
+  properties: {
 
-    start () {
-        function callback(event) {
-            event.stopPropagation()
-        }
-        this.node.on(cc.Node.EventType.TOUCH_START, callback, this)
-        this.node.on(cc.Node.EventType.TOUCH_MOVE, callback, this)
-        this.node.on(cc.Node.EventType.TOUCH_END, callback, this)
-        this.node.on(cc.Node.EventType.TOUCH_CANCEL, callback, this)
-    },
+  },
 
-    open () {
-        this.node.active = true
-    },
+  start() {
+    /**
+     *
+     *
+     * @param {*} event
+     */
+    function callback(event) {
+      event.stopPropagation();
+    }
+    this.node.on(cc.Node.EventType.TOUCH_START, callback, this);
+    this.node.on(cc.Node.EventType.TOUCH_MOVE, callback, this);
+    this.node.on(cc.Node.EventType.TOUCH_END, callback, this);
+    this.node.on(cc.Node.EventType.TOUCH_CANCEL, callback, this);
+  },
 
-    close () {
-        this.node.active = false
-    },
+  open() {
+    this.node.active = true;
+  },
 
-    test () {
-        cc.log('test')
-    },
+  close() {
+    this.node.active = false;
+  },
 
-    show (title, content) {
-        switch (cc.sys.platform) {
-            case cc.sys.WECHAT_GAME:
-                let info = {
-                    title,
-                    content,
-                    showCancel: false,
-                    cancelText: '我知道啦',
-                }
-                wx.showModal(info)
-                break
-            default:
-                window.open(content)
-                break
-        }
-    },
+  test() {
+    cc.log('test');
+  },
 
-    openProjectShow () {
-        let title = '游戏演示'
-        let projectShowUrl = 'https://yunle.fun/show/'
-        this.show(title, projectShowUrl)
-    },
+  show(title, content) {
+    /* eslint no-case-declarations: "error"*/
+    switch (cc.sys.platform) {
+      case cc.sys.WECHAT_GAME: {
+        const info = {
+          title,
+          content,
+          showCancel: false,
+          cancelText: '我知道啦',
+        };
+        wx.showModal(info);
+        break;
+      }
+      default: {
+        window.open(content);
+        break;
+      }
+    }
+  },
 
-    openProjectGitHub () {
-        let title = 'GitHub 项目地址'
-        let projectGitHubUrl = 'https://github.com/PaperStar/'
-        this.show(title, projectGitHubUrl)
-    },
+  openProjectShow() {
+    const title = '游戏演示';
+    const projectShowUrl = 'https://yunle.fun/show/';
+    this.show(title, projectShowUrl);
+  },
 
-    openAuthorGitHub () {
-        let title = '作者 GitHub 地址'
-        let myGitHubUrl = 'https://github.com/YunYouJun/'
-        this.show(title, myGitHubUrl)
-    },
+  openProjectGitHub() {
+    const title = 'GitHub 项目地址';
+    const projectGitHubUrl = 'https://github.com/PaperStar/';
+    this.show(title, projectGitHubUrl);
+  },
 
-    openAuthorWeibo () {
-        let title = '作者微博'
-        let myWeiboUrl = 'https://weibo.com/jizhideyunyoujun'
-        this.show(title, myWeiboUrl)
-    },
+  openAuthorGitHub() {
+    const title = '作者 GitHub 地址';
+    const myGitHubUrl = 'https://github.com/YunYouJun/';
+    this.show(title, myGitHubUrl);
+  },
 
-    openGameWeb () {
-        let title = '游戏官网'
-        let gameWebUrl = 'https://yunle.fun/'
-        this.show(title, gameWebUrl)
-    },
+  openAuthorWeibo() {
+    const title = '作者微博';
+    const myWeiboUrl = 'https://weibo.com/jizhideyunyoujun';
+    this.show(title, myWeiboUrl);
+  },
 
-    sendEmail () {
-        let title = '作者邮箱'
-        let EmailUrl = 'me@yunyoujun.cn'
-        this.show(title, EmailUrl)
-    },
-})
+  openGameWeb() {
+    const title = '游戏官网';
+    const gameWebUrl = 'https://yunle.fun/';
+    this.show(title, gameWebUrl);
+  },
+
+  sendEmail() {
+    const title = '作者邮箱';
+    const EmailUrl = 'me@yunyoujun.cn';
+    this.show(title, EmailUrl);
+  },
+});

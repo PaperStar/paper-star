@@ -1,19 +1,19 @@
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        
-    },
+  properties: {
 
-    // LIFE-CYCLE CALLBACKS:
+  },
 
-    onLoad () {
+  // LIFE-CYCLE CALLBACKS:
 
-    },
+  onLoad() {
 
-    start () {
+  },
 
-    },
+  start() {
 
-    // update (dt) {},
+  },
+
+  // update (dt) {},
 });

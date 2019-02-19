@@ -1,33 +1,33 @@
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        fxParticle: cc.ParticleSystem,
-    },
+  properties: {
+    fxParticle: cc.ParticleSystem,
+  },
 
-    // LIFE-CYCLE CALLBACKS:
+  // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+  // onLoad () {},
 
-    start () {
+  start() {
 
-    },
+  },
 
-    init (waveMng) {
-        this.waveMng = waveMng
-    },
+  init(waveMng) {
+    this.waveMng = waveMng;
+  },
 
-    show () {
-        this.node.active = true
-    },
+  show() {
+    this.node.active = true;
+  },
 
-    hide () {
-        this.node.active = false
-    },
+  hide() {
+    this.node.active = false;
+  },
 
-    showParticle () {
-        this.fxParticle.resetSystem();
-    }
+  showParticle() {
+    this.fxParticle.resetSystem();
+  },
 
-    // update (dt) {},
+  // update (dt) {},
 });

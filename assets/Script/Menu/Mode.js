@@ -1,37 +1,37 @@
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-       
-    },
+  properties: {
 
-    onLoad () {
-        if (Global.userInfo) {
-            Global.userInfo.node.active = false
-        }
-        if (cc.sys.platform == cc.sys.WECHAT_GAME) {
-            Global.wxGame.gameClubButton.hide()
-        }
-    },
+  },
 
-    start () {
+  onLoad() {
+    if (Global.userInfo) {
+      Global.userInfo.node.active = false;
+    }
+    if (cc.sys.platform == cc.sys.WECHAT_GAME) {
+      Global.wxGame.gameClubButton.hide();
+    }
+  },
 
-    },
+  start() {
 
-    // mode
-    loadFreeMode () {
-        cc.director.loadScene("FreeMode")
-    },
+  },
 
-    loadGravityMode () {
-        cc.director.loadScene("GravityMode")
-    },
+  // mode
+  loadFreeMode() {
+    cc.director.loadScene('FreeMode');
+  },
 
-    loadMissionMode () {
-        cc.director.loadScene("MissionMode")
-    },
+  loadGravityMode() {
+    cc.director.loadScene('GravityMode');
+  },
 
-    loadPropsMode () {
-        cc.director.loadScene("PropsMode")
-    },
-})
+  loadMissionMode() {
+    cc.director.loadScene('MissionMode');
+  },
+
+  loadPropsMode() {
+    cc.director.loadScene('PropsMode');
+  },
+});

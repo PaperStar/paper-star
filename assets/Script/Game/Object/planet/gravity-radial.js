@@ -1,29 +1,30 @@
-let Gravity = require('gravity');
+import Gravity from 'gravity';
 
 cc.Class({
-    extends: Gravity,
+  extends: Gravity,
 
-    properties: {
-        gravityForce: 500,
-    },
+  properties: {
+    gravityForce: 500,
+  },
 
-    onLoad: function () {
-        this._position = cc.v2();
-        this._center = cc.v2();
-    },
-    
-    _applyForce: function (body) {
-        let position = this._position;
-        let center = this._center;
+  onLoad() {
+    this._position = cc.v2();
+    this._center = cc.v2();
+  },
 
-        body.getWorldPosition(position);
-        this.body.getWorldPosition(center);
+  _applyForce(body) {
+    const position = this._position;
+    const center = this._center;
 
-        let dir = cc.pSub(center, position)
-        if (dir.x != 0 && dir.y !=0) {
-            let f = center.subSelf(position).normalizeSelf().mulSelf(this.gravityForce * body.getMass());
-            body.applyForce(f, position, false);
-        }
+    body.getWorldPosition(position);
+    this.body.getWorldPosition(center);
 
+    const dir = cc.pSub(center, position);
+    if (dir.x != 0 && dir.y != 0) {
+      const f = center.subSelf(position).normalizeSelf().mulSelf(
+          this.gravityForce * body.getMass()
+      );
+      body.applyForce(f, position, false);
     }
+  },
 });

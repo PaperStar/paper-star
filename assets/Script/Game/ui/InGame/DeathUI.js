@@ -1,32 +1,32 @@
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        
-    },
+  properties: {
 
-    init (game) {
-        this.game = game
-        this.hide()
-    },
+  },
 
-    show () {
-        this.node.active = true
-    },
+  init(game) {
+    this.game = game;
+    this.hide();
+  },
 
-    hide () {
-        this.node.active = false
-    },
+  show() {
+    this.node.active = true;
+  },
 
-    revive () {
-        this.game.revive()
-    },
+  hide() {
+    this.node.active = false;
+  },
 
-    giveUp () {
-        this.gameOver()
-    },
+  revive() {
+    this.game.revive();
+  },
 
-    gameOver() {
-        this.game.gameOver()
-    },
-})
+  giveUp() {
+    this.gameOver();
+  },
+
+  gameOver() {
+    this.game.gameOver();
+  },
+});

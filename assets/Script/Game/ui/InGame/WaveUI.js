@@ -1,28 +1,28 @@
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        labelWave: cc.Label,
-    },
+  properties: {
+    labelWave: cc.Label,
+  },
 
-    // LIFE-CYCLE CALLBACKS:
+  // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
-        this.anim = this.getComponent(cc.Animation)
-    },
+  onLoad() {
+    this.anim = this.getComponent(cc.Animation);
+  },
 
-    start () {
+  start() {
 
-    },
+  },
 
-    show (num) {
-        this.labelWave.string = num
-        this.anim.play('wave-pop')
-    },
+  show(num) {
+    this.labelWave.string = num;
+    this.anim.play('wave-pop');
+  },
 
-    hide () {
-        this.node.active = false
-    }
+  hide() {
+    this.node.active = false;
+  },
 
-    // update (dt) {},
+  // update (dt) {},
 });

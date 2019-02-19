@@ -1,9 +1,10 @@
 {
-  "ver": "1.0.0",
+  "ver": "2.2.0",
   "uuid": "dea3490b-d2b8-4afe-b4ad-9bdaa26f7a16",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
+  "premultiplyAlpha": false,
   "subMetas": {
     "ba_kills_bg": {
       "ver": "1.0.3",

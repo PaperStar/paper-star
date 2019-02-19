@@ -18,12 +18,13 @@
     "build:wechatgame": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=wechatgame;debug=false'",
     "deploy:desktop": "gh-pages -d build/web-desktop",
     "predeploy:mobile": "npm run build:mobile",
-    "deploy:mobile": "gh-pages -d build/web-mobile"
+    "deploy:mobile": "gh-pages -d build/web-mobile",
+    "lint": "eslint assets/Script"
   },
-  "dependencies": {
-    "gh-pages": "^1.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "eslint-config-google": "^0.9.1"
+    "eslint": "^5.14.1",
+    "eslint-config-google": "^0.12.0",
+    "gh-pages": "^2.0.1"
   }
 }

@@ -9,8 +9,7 @@
             "args": ["http://localhost:7456/update-db"],
             "isShellCommand": true,
             "isBackground": true,
-            "showOutput": "always",
-            "isBuildCommand": true
+            "showOutput": "always"
         }    
     ]
 }
