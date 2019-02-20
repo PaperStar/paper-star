@@ -112,7 +112,11 @@ cc.Class({
     } else if (sepAngle < -10) {
       this.node.rotation += this.turnSpeed;
     }
-    this.moveDir = cc.pForAngle(cc.degreesToRadians(90 - this.node.rotation));
+    const radian = cc.degreesToRadians(90 - this.node.rotation);
+    this.moveDir = cc.v2(
+        Math.cos(radian),
+        Math.sin(radian)
+    );
   },
 
   attackOnTarget() {
@@ -168,7 +172,7 @@ cc.Class({
 
   shoot() {
     const radian = cc.degreesToRadians(90 - this.node.rotation);
-    const dir = cc.pForAngle(radian);
+    const dir = cc.v2(Math.cos(radian), Math.sin(radian));
     this._delayFlag = true;
     this.waveMng.spawnBullet(this.bulletType, dir, this);
   },

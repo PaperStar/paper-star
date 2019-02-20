@@ -21,6 +21,15 @@
     "deploy:mobile": "gh-pages -d build/web-mobile",
     "lint": "eslint assets/Script"
   },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "yarn lint",
+      "git add"
+    ]
+  },
   "dependencies": {},
   "devDependencies": {
     "eslint": "^5.14.1",

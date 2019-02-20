@@ -187,7 +187,10 @@ cc.Class({
     // 刚体旋转
     const rotation = this.player.getComponent(cc.RigidBody).getWorldRotation();
     const radian = cc.degreesToRadians(90 - rotation);
-    const dir = cc.pForAngle(radian);
+    const dir = cc.v2(
+        Math.cos(radian),
+        Math.sin(radian)
+    );
     this.player.moveDir = dir;
   },
 });

@@ -74,10 +74,11 @@ cc.Class({
     this.currentWave = this.waves[this.waveIdx];
 
     this.foeGroup.setContentSize(this.map.node.getContentSize());
-    // this.waveProgress = this.waveProgress.getComponent('WaveProgress')
-    // this.waveProgress.init(this)
-    // this.bossProgress = this.bossProgress.getComponent('BossProgress')
-    // this.bossProgress.init(this)
+    // bug? can not find?
+    this.waveProgress = this.waveProgress.getComponent('WaveProgress');
+    this.waveProgress.init(this);
+    this.bossProgress = this.bossProgress.getComponent('BossProgress');
+    this.bossProgress.init(this);
 
     // test
     this.testPos = cc.v2(0, 0);

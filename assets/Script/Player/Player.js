@@ -192,7 +192,10 @@ cc.Class({
 
   shoot() {
     const radian = cc.degreesToRadians(90 - this.node.rotation);
-    const dir = cc.pForAngle(radian);
+    const dir = cc.v2(
+        Math.cos(radian),
+        Math.sin(radian)
+    );
     this._delayFlag = true;
     this.game.waveMng.spawnBullet(this.bulletType, dir, this);
   },
@@ -280,7 +283,11 @@ cc.Class({
     if (this._shootFlag && !this._delayFlag) {
       this.shoot();
     }
-    this.moveDir = cc.pForAngle(cc.degreesToRadians(this.moveAngle));
+    const radian = cc.degreesToRadians(this.moveAngle);
+    this.moveDir = cc.v2(
+        Math.cos(radian),
+        Math.sin(radian)
+    );
     this.roleRotate();
     if (!this.isStop) {
       this.getComponent(cc.RigidBody).linearVelocity = cc.v2(

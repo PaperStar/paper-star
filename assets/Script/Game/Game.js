@@ -40,7 +40,7 @@ cc.Class({
   },
 
   start() {
-    this.playerFX.playIntro();
+    // this.playerFX.playIntro();
     // UI initialization
     this.inGameUI = this.inGameUI.getComponent('InGameUI');
     this.inGameUI.init(this);
