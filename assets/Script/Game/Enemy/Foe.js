@@ -92,7 +92,7 @@ cc.Class({
       return;
     }
     this.atkDir = cc.pNormalize(
-        cc.pSub(this.player.node.position, this.node.position)
+        this.player.node.position.sub(this.node.position)
     );
     // if (this.atkType === AttackType.Melee) {
 
@@ -180,7 +180,7 @@ cc.Class({
   move() {
     switch (this.atkType) {
       case AttackType.Melee: {
-        this.body.linearVelocity = cc.pMult(this.moveDir, this.moveSpeed);
+        this.body.linearVelocity = this.moveDir.mul(this.moveSpeed);
         break;
       }
       case AttackType.Range: {
@@ -193,7 +193,7 @@ cc.Class({
           this._shootFlag = true;
         } else {
           this._shootFlag = false;
-          this.body.linearVelocity = cc.pMult(this.moveDir, this.moveSpeed);
+          this.body.linearVelocity = this.moveDir.mul(this.moveSpeed);
         }
         break;
       }

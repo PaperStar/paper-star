@@ -100,6 +100,7 @@ cc.Class({
 
   // 初始化 plane
   initPlayer() {
+    // console.log(this.getPosition())
     // 修改颜色
     const color = cc.Color.BLACK;
     this.RoleColor = color.fromHEX(Helpers.getRandomColor());
@@ -119,19 +120,19 @@ cc.Class({
   onKeyDown(event) {
     switch (event.keyCode) {
       // shoot
-      case cc.KEY.space:
+      case cc.macro.KEY.space:
         this._shootFlag = true;
         break;
-      case cc.KEY.up:
-      case cc.KEY.w:
+      case cc.macro.KEY.up:
+      case cc.macro.KEY.w:
         this.moveUp();
         break;
-      case cc.KEY.left:
-      case cc.KEY.a:
+      case cc.macro.KEY.left:
+      case cc.macro.KEY.a:
         this.moveLeft();
         break;
-      case cc.KEY.right:
-      case cc.KEY.d:
+      case cc.macro.KEY.right:
+      case cc.macro.KEY.d:
         this.moveRight();
         break;
       default:
@@ -142,19 +143,19 @@ cc.Class({
   onKeyUp(event) {
     switch (event.keyCode) {
       // release shoot
-      case cc.KEY.space:
+      case cc.macro.KEY.space:
         this._shootFlag = false;
         break;
-      case cc.KEY.up:
-      case cc.KEY.w:
+      case cc.macro.KEY.up:
+      case cc.macro.KEY.w:
         this.stopMove();
         break;
-      case cc.KEY.left:
-      case cc.KEY.a:
+      case cc.macro.KEY.left:
+      case cc.macro.KEY.a:
         this.moveLeftFlag = false;
         break;
-      case cc.KEY.right:
-      case cc.KEY.d:
+      case cc.macro.KEY.right:
+      case cc.macro.KEY.d:
         this.moveRightFlag = false;
         break;
       default:
@@ -191,13 +192,13 @@ cc.Class({
   },
 
   shoot() {
-    const radian = cc.degreesToRadians(90 - this.node.rotation);
+    const radian = cc.misc.degreesToRadians(90 - this.node.rotation);
     const dir = cc.v2(
         Math.cos(radian),
         Math.sin(radian)
     );
     this._delayFlag = true;
-    this.game.waveMng.spawnBullet(this.bulletType, dir, this);
+    this.game.bulletMng.spawnBullet(this.bulletType, dir, this);
   },
 
   roleRotate() {
@@ -283,7 +284,7 @@ cc.Class({
     if (this._shootFlag && !this._delayFlag) {
       this.shoot();
     }
-    const radian = cc.degreesToRadians(this.moveAngle);
+    const radian = cc.misc.degreesToRadians(this.moveAngle);
     this.moveDir = cc.v2(
         Math.cos(radian),
         Math.sin(radian)

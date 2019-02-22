@@ -39,8 +39,8 @@ cc.Class({
   // LIFE-CYCLE CALLBACKS:
   // onLoad () {},
 
-  init(waveMng, dir, role) {
-    this.waveMng = waveMng;
+  init(bulletMng, dir, role) {
+    this.bulletMng = bulletMng;
     this.isVisible = true;
     this.node.rotation = 0;
     this.sprite.enabled = true;
@@ -85,10 +85,7 @@ cc.Class({
     this.getComponent(cc.PhysicsBoxCollider).size.height = this.length;
     this.getComponent(cc.PhysicsBoxCollider).size.width = this.width;
 
-    this.getComponent(cc.RigidBody).linearVelocity = cc.pMult(
-        dir,
-        this.moveSpeed
-    );
+    this.getComponent(cc.RigidBody).linearVelocity = dir.mul(this.moveSpeed);
     // this.scheduleOnce(this.vanish, this.lifeTime)
 
     // fx
@@ -127,7 +124,7 @@ cc.Class({
   },
 
   recycle() {
-    this.waveMng.despawnBullet(this);
+    this.bulletMng.despawnBullet(this);
   },
 
   update(dt) {

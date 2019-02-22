@@ -163,15 +163,6 @@ cc.Class({
     }
   },
 
-  spawnBullet(bulletType, dir, role) {
-    const newBullet = this.game.poolMng.getBullet(bulletType);
-    if (newBullet) {
-      newBullet.getComponent('Bullet').init(this, dir, role);
-    } else {
-      cc.log('Too Many Bullets!');
-    }
-  },
-
   killFoe(score) {
     this.killedFoe++;
     this.player.addScore(score);
@@ -184,11 +175,6 @@ cc.Class({
   despawnFoe(foe) {
     const {foeType} = foe;
     this.game.poolMng.putFoe(foeType, foe.node);
-  },
-
-  despawnBullet(bullet) {
-    const type = bullet.bulletType;
-    this.game.poolMng.putBullet(type, bullet.node);
   },
 
   getNewFoePosition() {

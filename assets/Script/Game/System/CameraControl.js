@@ -144,17 +144,11 @@ cc.Class({
     }
   },
 
-  onEnable() {
-    //   removed
-    cc.director.getPhysicsManager().attachDebugDrawToCamera(this.camera);
-  },
-  onDisable() {
-    //   removed
-    cc.director.getPhysicsManager().detachDebugDrawFromCamera(this.camera);
-  },
-
   // called every frame, uncomment this function to activate update callback
   lateUpdate(dt) {
+    this.camera.x = this.target.x;
+    this.camera.y = this.target.y;
+
     let targetPos;
 
     if (this.overview) {

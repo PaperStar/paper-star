@@ -134,21 +134,16 @@ cc.Class({
       this.dot.setPosition(cc.v2(posX, posY));
     } else {
       // 控杆永远保持在圈内，并在圈内跟随触摸更新角度
-      const x = this._stickPos.x + Math.cos(
-          cc.pToAngle(
-              cc.pSub(cc.v2(posX, posY), this.ring.getPosition())
-          )
-      ) * this._radius;
-      const y = this._stickPos.y + Math.sin(
-          cc.pToAngle(
-              cc.pSub(cc.v2(posX, posY), this.ring.getPosition())
-          )
-      ) * this._radius;
+      const r = cc.pToAngle(
+          cc.v2(posX, posY).sub(this.ring.getPosition())
+      );
+      const x = this._stickPos.x + Math.cos(r) * this._radius;
+      const y = this._stickPos.y + Math.sin(r) * this._radius;
       this.dot.setPosition(cc.v2(x, y));
     }
     // 更新角度
     this._angle = cc.radiansToDegrees(
-        cc.pToAngle(cc.pSub(cc.v2(posX, posY), this.ring.getPosition()))
+        cc.pToAngle(cc.v2(posX, posY).sub(this.ring.getPosition()))
     );
     this.player.moveAngle = this._angle;
     // 设置实际速度

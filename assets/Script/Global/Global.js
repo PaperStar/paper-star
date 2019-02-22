@@ -30,5 +30,6 @@ function debug() {
     curSceneName: 'StartMenu',
     common: null, // public method
     commonInfo: null, // some const
+    game: null,
   };
 }

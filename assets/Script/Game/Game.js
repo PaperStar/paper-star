@@ -1,4 +1,5 @@
 // import Helpers from 'Helpers';
+import BulletMng from 'BulletMng';
 
 cc.Class({
   extends: cc.Component,
@@ -14,7 +15,8 @@ cc.Class({
     foeGroup: cc.Node,
     deathUI: cc.Node,
     gameOverUI: cc.Node,
-    cameraRoot: cc.Animation,
+    mainCamera: cc.Animation,
+    bulletMng: BulletMng,
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -35,12 +37,14 @@ cc.Class({
     // this.bossMng.init(this);
     this.sortMng = this.foeGroup.getComponent('SortMng');
     this.sortMng.init();
+
+    this.initMng();
+
     cc.Camera.main.backgroundColor = cc.Color.GRAY; // set default bg color gray
-    // cc.Camera.main.backgroundColor = cc.Color.GRAY
   },
 
   start() {
-    // this.playerFX.playIntro();
+    this.playerFX.playIntro();
     // UI initialization
     this.inGameUI = this.inGameUI.getComponent('InGameUI');
     this.inGameUI.init(this);
@@ -48,6 +52,10 @@ cc.Class({
     this.deathUI.init(this);
     this.gameOverUI = this.gameOverUI.getComponent('GameOverUI');
     this.gameOverUI.init(this);
+  },
+
+  initMng() {
+    this.bulletMng.init(this);
   },
 
   pause() {
@@ -59,7 +67,7 @@ cc.Class({
   },
 
   cameraShake() {
-    this.cameraRoot.play('shake');
+    this.mainCamera.play('shake');
   },
 
   death() {

@@ -19,7 +19,7 @@ cc.Class({
     body.getWorldPosition(position);
     this.body.getWorldPosition(center);
 
-    const dir = cc.pSub(center, position);
+    const dir = center.sub(position);
     if (dir.x != 0 && dir.y != 0) {
       const f = center.subSelf(position).normalizeSelf().mulSelf(
           this.gravityForce * body.getMass()
