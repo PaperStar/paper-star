@@ -88,5 +88,10 @@
       "build_platform": [
       ]
     }
-  ]
+  ],
+  "game": {
+    "name": "Paper Star",
+    "appid": "638508230",
+    "cid": "0"
+  }
 }

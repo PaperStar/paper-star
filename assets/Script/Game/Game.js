@@ -29,13 +29,13 @@ cc.Class({
     this.player.node.active = false;
     this.poolMng = this.poolMng.getComponent('PoolMng');
     this.poolMng.init();
-    this.waveMng = this.waveMng.getComponent('WaveMng');
-    this.waveMng.init(this);
-    this.bossMng = this.bossMng.getComponent('BossMng');
-    this.bossMng.init(this);
+    // this.waveMng = this.waveMng.getComponent('WaveMng');
+    // this.waveMng.init(this);
+    // this.bossMng = this.bossMng.getComponent('BossMng');
+    // this.bossMng.init(this);
     this.sortMng = this.foeGroup.getComponent('SortMng');
     this.sortMng.init();
-    cc.director.setClearColor(cc.Color.GRAY); // 默认背景色为暗色
+    cc.Camera.main.backgroundColor = cc.Color.GRAY; // set default bg color gray
     // cc.Camera.main.backgroundColor = cc.Color.GRAY
   },
 
@@ -91,7 +91,7 @@ cc.Class({
 
   playerReady() {
     // this.resume()
-    this.waveMng.startWave();
+    // this.waveMng.startWave();
     this.player.node.active = true;
     this.player.ready();
 

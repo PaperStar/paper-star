@@ -19,7 +19,7 @@ cc.Class({
 
   start() {
     // deprecated
-    cc.director.setClearColor(cc.Color.GRAY);
+    cc.Camera.main.backgroundColor = cc.Color.GRAY;
     // cc.Camera.main.backgroundColor = cc.Color.GRAY
     if (Global.userInfo) {
       Global.userInfo.node.active = false;
