@@ -1,0 +1,103 @@
+[
+  {
+    "__type__": "cc.SceneAsset",
+    "_name": "AchieveSystem",
+    "scene": {
+      "__id__": 1
+    },
+    "asyncLoadAssets": null
+  },
+  {
+    "__type__": "cc.Scene",
+    "_name": "New Node",
+    "_children": [
+      {
+        "__id__": 2
+      }
+    ],
+    "_anchorPoint": {
+      "__type__": "cc.Vec2"
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "autoReleaseAssets": false
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "Canvas",
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [
+      {
+        "__id__": 3
+      }
+    ],
+    "_components": [
+      {
+        "__type__": "cc.Canvas",
+        "node": {
+          "__id__": 2
+        },
+        "_designResolution": {
+          "__type__": "cc.Size",
+          "width": 960,
+          "height": 540
+        }
+      },
+      {
+        "__type__": "c56e24/nZJC44XO5j/Cqw3O",
+        "node": {
+          "__id__": 2
+        }
+      }
+    ],
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 960,
+      "height": 540
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": 480,
+      "y": 270
+    },
+    "_scaleX": 1,
+    "_scaleY": 1,
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_id": "be5GAhXNlLBYTeVOaBMEM9"
+  },
+  {
+    "__type__": "cc.Node",
+    "_parent": {
+      "__id__": 2
+    },
+    "_id": "2b4Rg/y9tFaJrnNL69/7rf",
+    "_prefab": {
+      "__type__": "cc.PrefabInfo",
+      "root": {
+        "__id__": 3
+      },
+      "asset": {
+        "__uuid__": "ddW+Rq1vhINYN5rEfARmem"
+      },
+      "fileId": "f94e8AmRZD5b6uhTO8zV8h",
+      "sync": true
+    },
+    "_name": "Back",
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": -425,
+      "y": 215
+    }
+  }
+]
