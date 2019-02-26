@@ -1,6 +1,4 @@
 {
-  "appKey": "",
-  "appSecret": "",
   "encryptJs": true,
   "excludeScenes": [
     "b4a11e98-b3b9-47d4-a235-fbfe33884d6c",
@@ -8,14 +6,11 @@
     "b8c82973-f425-423e-89ee-59f702e50953"
   ],
   "fb-instant-games": {},
-  "includeAnySDK": false,
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
-  "jailbreakPlatform": false,
   "md5Cache": true,
   "mergeStartScene": false,
-  "oauthLoginServer": "",
   "optimizeHotUpdate": false,
   "orientation": {
     "landscapeLeft": true,
@@ -24,11 +19,9 @@
     "upsideDown": false
   },
   "packageName": "org.cocos2d.paperstar",
-  "privateKey": "",
   "qqplay": {
     "orientation": "portrait"
   },
-  "renderMode": "0",
   "startScene": "cb0d7cc7-8754-4113-8a74-a6f221154fcf",
   "title": "PaperStar",
   "webOrientation": "landscape",
@@ -39,5 +32,13 @@
     "subContext": ""
   },
   "xxteaKey": "f38b55ca-cf07-4b",
-  "zipCompressJs": true
+  "zipCompressJs": true,
+  "android-instant": {
+    "REMOTE_SERVER_ROOT": "",
+    "pathPattern": "",
+    "scheme": "https",
+    "host": "",
+    "skipRecord": false,
+    "recordPath": ""
+  }
 }

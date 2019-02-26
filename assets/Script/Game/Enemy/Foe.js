@@ -112,7 +112,7 @@ cc.Class({
     } else if (sepAngle < -10) {
       this.node.rotation += this.turnSpeed;
     }
-    const radian = cc.degreesToRadians(90 - this.node.rotation);
+    const radian = cc.misc.degreesToRadians(90 - this.node.rotation);
     this.moveDir = cc.v2(
         Math.cos(radian),
         Math.sin(radian)
@@ -171,7 +171,7 @@ cc.Class({
   },
 
   shoot() {
-    const radian = cc.degreesToRadians(90 - this.node.rotation);
+    const radian = cc.misc.degreesToRadians(90 - this.node.rotation);
     const dir = cc.v2(Math.cos(radian), Math.sin(radian));
     this._delayFlag = true;
     this.waveMng.spawnBullet(this.bulletType, dir, this);
@@ -184,10 +184,8 @@ cc.Class({
         break;
       }
       case AttackType.Range: {
-        const distance = cc.pDistance(
-            this.player.node.position,
-            this.node.position
-        );
+        const distance =
+          this.player.node.position.sub(this.node.position).mag();
         if (distance < this.atkRange) {
           this.isMoving = false;
           this._shootFlag = true;

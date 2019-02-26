@@ -181,7 +181,7 @@ cc.Class({
             targetPos,
             this.followRatio
         );
-        if (cc.pDistance(targetPos, this.node.position) <= this.minFollowDist) {
+        if (targetPos.sub(this.node.position).mag() <= this.minFollowDist) {
           this.startFollow = false;
         }
       }

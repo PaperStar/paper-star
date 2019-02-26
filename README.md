@@ -10,6 +10,7 @@
 
 ## Intend
 
+- [ ] Upgrade to Cocos Creator v2.0
 - Battle Logic
 - Prop
 - Foe Damage
@@ -17,6 +18,8 @@
 - Enemy
   - Floating Air Carrier (release simple black paper plane)
   - Black Bomber
+- [ ] Analytics
+  - [ ] Add Cocos Analytics
 
 ### Wechat Game
 

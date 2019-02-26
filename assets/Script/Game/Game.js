@@ -16,7 +16,6 @@ cc.Class({
     deathUI: cc.Node,
     gameOverUI: cc.Node,
     mainCamera: cc.Animation,
-    bulletMng: BulletMng,
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -55,6 +54,7 @@ cc.Class({
   },
 
   initMng() {
+    this.bulletMng = new BulletMng();
     this.bulletMng.init(this);
   },
 

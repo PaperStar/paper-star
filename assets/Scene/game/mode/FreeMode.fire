@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.22375626773199261,
-      "y": 0.22375626773199261,
+      "x": 0.22973967099940568,
+      "y": 0.22973967099940568,
       "z": 1
     },
     "_quat": {
@@ -4068,7 +4068,7 @@
         "__id__": 216
       }
     ],
-    "_active": false,
+    "_active": true,
     "_level": 0,
     "_components": [
       {
@@ -4947,7 +4947,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 19.07,
-      "height": 30
+      "height": 50
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4995,7 +4995,7 @@
     "_string": "3",
     "_N$string": "3",
     "_fontSize": 30,
-    "_lineHeight": 30,
+    "_lineHeight": 50,
     "_enableWrapText": false,
     "_N$file": {
       "__uuid__": "f63ff780-071f-4e6c-9f59-4ec3af5cd797"
@@ -5347,7 +5347,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 23.67,
-      "height": 30
+      "height": 50
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -5395,7 +5395,7 @@
     "_string": "0",
     "_N$string": "0",
     "_fontSize": 30,
-    "_lineHeight": 30,
+    "_lineHeight": 50,
     "_enableWrapText": true,
     "_N$file": {
       "__uuid__": "f63ff780-071f-4e6c-9f59-4ec3af5cd797"
@@ -5417,7 +5417,7 @@
       "__id__": 115
     },
     "_enabled": true,
-    "alignMode": 0,
+    "alignMode": 2,
     "_target": {
       "__id__": 2
     },
@@ -6253,7 +6253,7 @@
       "__id__": 149
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_level": 1,
     "_components": [
       {
@@ -6302,9 +6302,9 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_zIndex": -32768,
+    "_zIndex": 0,
     "groupIndex": 0,
-    "_id": "1cCUOTMVZJ2o6WeGn74OWY"
+    "_id": "4dqQn4qEFHRZOUL3/THdD+"
   },
   {
     "__type__": "cc.Label",
@@ -6330,7 +6330,7 @@
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
-    "_id": "b1AiDSsOpG84OMEqYU8Wp+"
+    "_id": "fddyJW3W5DJYjh+3a+S1e1"
   },
   {
     "__type__": "cc.RichText",
@@ -14787,7 +14787,9 @@
     "gameOverUI": {
       "__id__": 265
     },
-    "cameraRoot": null,
+    "mainCamera": {
+      "__id__": 4
+    },
     "_id": "89/0V0kRdFdLBfToZiXRGK"
   },
   {

@@ -92,7 +92,7 @@ cc.Class({
     if (this.touchType == JoystickCommon.TouchType.DEFAULT) {
       this._stickPos = this.ring.getPosition();
       // 触摸点与圆圈中心的距离
-      const distance = cc.pDistance(touchPos, cc.v2(0, 0));
+      const distance = touchPos.mag();
       const posX = this.ring.getPosition().x + touchPos.x;
       const posY = this.ring.getPosition().y + touchPos.y;
       // 手指在圆圈内触摸,控杆跟随触摸点
@@ -125,26 +125,25 @@ cc.Class({
 
     // 以圆圈为锚点获取触摸坐标
     const touchPos = this.ring.convertToNodeSpaceAR(event.getLocation());
-    const distance = cc.pDistance(touchPos, cc.v2(0, 0));
+    const distance = touchPos.mag();
 
     // 由于摇杆的postion是以父节点为锚点，所以定位要加上touch start时的位置
     const posX = this._stickPos.x + touchPos.x;
     const posY = this._stickPos.y + touchPos.y;
+
+    const p = cc.v2(posX, posY).sub(this.ring.getPosition());
+    const r = Math.atan2(p.y, p.x);
+
     if (this._radius > distance) {
       this.dot.setPosition(cc.v2(posX, posY));
     } else {
       // 控杆永远保持在圈内，并在圈内跟随触摸更新角度
-      const r = cc.pToAngle(
-          cc.v2(posX, posY).sub(this.ring.getPosition())
-      );
       const x = this._stickPos.x + Math.cos(r) * this._radius;
       const y = this._stickPos.y + Math.sin(r) * this._radius;
       this.dot.setPosition(cc.v2(x, y));
     }
     // 更新角度
-    this._angle = cc.radiansToDegrees(
-        cc.pToAngle(cc.v2(posX, posY).sub(this.ring.getPosition()))
-    );
+    this._angle = cc.misc.radiansToDegrees(r);
     this.player.moveAngle = this._angle;
     // 设置实际速度
     this._setSpeed(cc.v2(posX, posY));
@@ -169,7 +168,7 @@ cc.Class({
   // 设置实际速度
   _setSpeed(point) {
     // 触摸点和遥控杆中心的距离
-    const distance = cc.pDistance(point, this.ring.getPosition());
+    const distance = point.sub(this.ring.getPosition()).mag();
     // 如果半径
     if (distance < this._radius) {
       this.player.moveSpeed = this.player.normalSpeed;
@@ -181,7 +180,7 @@ cc.Class({
   update() {
     // 刚体旋转
     const rotation = this.player.getComponent(cc.RigidBody).getWorldRotation();
-    const radian = cc.degreesToRadians(90 - rotation);
+    const radian = cc.misc.degreesToRadians(90 - rotation);
     const dir = cc.v2(
         Math.cos(radian),
         Math.sin(radian)
