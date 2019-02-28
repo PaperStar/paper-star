@@ -1,5 +1,3 @@
-import Player from 'Player';
-
 cc.Class({
   extends: cc.Component,
 
@@ -7,18 +5,12 @@ cc.Class({
     waveUI: cc.Node,
     killDisplay: cc.Node,
     comboDisplay: cc.Node,
-
-    player: {
-      default: null,
-      type: Player,
-    },
     openPanelFlag: true,
-
     hpBar: cc.Node,
+    joystick: cc.Node,
   },
 
   start() {
-    // deprecated
     cc.Camera.main.backgroundColor = cc.Color.GRAY;
     if (Global.userInfo) {
       Global.userInfo.node.active = false;
@@ -27,6 +19,7 @@ cc.Class({
   },
 
   init(game) {
+    this.game = game;
     this.waveUI = this.waveUI.getComponent('WaveUI');
     this.waveUI.node.active = false;
     this.killDisplay = this.killDisplay.getComponent('KillDisplay');
@@ -47,8 +40,15 @@ cc.Class({
     this.hpBar.show();
     this.lifeLabel = this.Info.getChildByName('Life')
         .getChildByName('num').getComponent(cc.Label);
-    this.lifeLabel.string = this.player.life;
+    this.lifeLabel.string = this.game.player.life;
     this.scoreLabel = this.Info.getChildByName('Score').getComponent(cc.Label);
+
+    this.initJoystick();
+  },
+
+  initJoystick() {
+    this.joystick = this.joystick.getComponent('Joystick');
+    this.joystick.init(this.game.player);
   },
 
   showWave(num) {
@@ -61,11 +61,11 @@ cc.Class({
   },
 
   showLife() {
-    this.lifeLabel.string = this.player.life;
+    this.lifeLabel.string = this.game.player.life;
   },
 
   showHp() {
-    this.hpBar.display(this.player.curHp, this.player.hp);
+    this.hpBar.display(this.game.player.curHp, this.game.player.hp);
   },
 
   showScore(num) {
@@ -106,7 +106,4 @@ cc.Class({
     Global.config.open();
   },
 
-  update(dt) {
-
-  },
 });

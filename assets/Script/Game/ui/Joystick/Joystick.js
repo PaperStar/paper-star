@@ -1,5 +1,5 @@
 import JoystickCommon from 'JoystickCommon';
-import Player from 'Player';
+// import Player from 'Player';
 
 cc.Class({
   extends: cc.Component,
@@ -8,57 +8,64 @@ cc.Class({
     dot: {
       default: null,
       type: cc.Node,
-      displayName: '摇杆操纵点',
+      displayName: 'Dot',
+      tooltip: '摇杆操纵点',
     },
     ring: {
       default: null,
       type: cc.Node,
-      displayName: '摇杆背景节点',
-    },
-    player: {
-      default: null,
-      type: Player,
-      displayName: '操控的角色',
+      displayName: 'Ring',
+      tooltip: '摇杆背景节点',
     },
 
-    stickX: {
-      default: 0,
-      displayName: '摇杆 X 位置',
-    },
-    stickY: {
-      default: 0,
-      displayName: '摇杆 Y 位置',
+    // player: {
+    //   default: null,
+    //   type: Player,
+    //   displayName: 'Player',
+    //   tooltip: '操控角色',
+    // },
+
+    position: {
+      default: cc.v2(0, 0),
+      displayName: 'Position',
+      tooltip: '摇杆位置',
     },
 
     touchType: {
       default: JoystickCommon.TouchType.DEFAULT,
       type: JoystickCommon.TouchType,
-      displayName: '触摸类型',
+      displayName: 'Touch Type',
+      tooltip: '触摸类型',
     },
 
     directionType: {
       default: JoystickCommon.DirectionType.ALL,
       type: JoystickCommon.DirectionType,
-      displayName: '方向类型',
+      displayName: 'Direction Type',
+      tooltip: '方向类型',
     },
 
     _stickPos: {
       default: null,
       type: cc.Node,
-      displayName: '摇杆当前位置',
+      tooltip: '摇杆当前位置',
     },
 
     _touchLocation: {
       default: null,
       type: cc.Node,
-      displayName: '摇杆当前位置',
+      tooltip: '摇杆当前位置',
 
     },
 
     _angle: {
       default: 0,
-      displayName: '当前触摸的角度',
+      tooltip: '当前触摸的角度',
     },
+  },
+
+  init(player) {
+    this.player = player;
   },
 
   onLoad() {
@@ -73,8 +80,8 @@ cc.Class({
 
   _createStickSprite() {
     // 调整摇杆的位置
-    this.ring.setPosition(this.stickX, this.stickY);
-    this.dot.setPosition(this.stickX, this.stickY);
+    this.ring.setPosition(this.position);
+    this.dot.setPosition(this.position);
   },
 
   _initTouchEvent() {
@@ -148,7 +155,7 @@ cc.Class({
     // 设置实际速度
     this._setSpeed(cc.v2(posX, posY));
 
-    this.player.getComponent(cc.RigidBody).linearVelocity = cc.v2(
+    this.player.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(
         this.player.moveDir.x * this.player.moveSpeed,
         this.player.moveDir.y * this.player.moveSpeed
     );
@@ -178,13 +185,16 @@ cc.Class({
   },
 
   update() {
-    // 刚体旋转
-    const rotation = this.player.getComponent(cc.RigidBody).getWorldRotation();
-    const radian = cc.misc.degreesToRadians(90 - rotation);
-    const dir = cc.v2(
-        Math.cos(radian),
-        Math.sin(radian)
-    );
-    this.player.moveDir = dir;
+    // get move direction from rotation
+
+    // console.log(this.player)
+    // const rotation = this.player.node.getComponent(cc.RigidBody)
+    //                    .getWorldRotation();
+    // const radian = cc.misc.degreesToRadians(90 - rotation);
+    // const dir = cc.v2(
+    //     Math.cos(radian),
+    //     Math.sin(radian)
+    // );
+    // this.player.moveDir = dir;
   },
 });

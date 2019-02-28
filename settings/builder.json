@@ -1,7 +1,14 @@
 {
+  "android-instant": {
+    "REMOTE_SERVER_ROOT": "",
+    "host": "",
+    "pathPattern": "",
+    "recordPath": "",
+    "scheme": "https",
+    "skipRecord": false
+  },
   "encryptJs": true,
   "excludeScenes": [
-    "b4a11e98-b3b9-47d4-a235-fbfe33884d6c",
     "47d46582-28a8-41b6-835f-19df8cc81920",
     "b8c82973-f425-423e-89ee-59f702e50953"
   ],
@@ -32,13 +39,5 @@
     "subContext": ""
   },
   "xxteaKey": "f38b55ca-cf07-4b",
-  "zipCompressJs": true,
-  "android-instant": {
-    "REMOTE_SERVER_ROOT": "",
-    "pathPattern": "",
-    "scheme": "https",
-    "host": "",
-    "skipRecord": false,
-    "recordPath": ""
-  }
+  "zipCompressJs": true
 }

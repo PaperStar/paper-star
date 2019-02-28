@@ -6,7 +6,6 @@ cc.Class({
 
   properties: {
     map: cc.Node,
-    player: cc.Node,
     inGameUI: cc.Node,
     playerFX: cc.Node,
     waveMng: cc.Node,
@@ -15,7 +14,7 @@ cc.Class({
     foeGroup: cc.Node,
     deathUI: cc.Node,
     gameOverUI: cc.Node,
-    mainCamera: cc.Animation,
+    mainCamera: cc.Camera,
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -25,9 +24,8 @@ cc.Class({
     this.map.init(this);
     this.playerFX = this.playerFX.getComponent('PlayerFX');
     this.playerFX.init(this);
-    this.player = this.player.getComponent('Player');
-    this.player.init(this);
-    this.player.node.active = false;
+    // init UI & Camera in player
+    this.initPlayer();
     this.poolMng = this.poolMng.getComponent('PoolMng');
     this.poolMng.init();
     // this.waveMng = this.waveMng.getComponent('WaveMng');
@@ -38,12 +36,36 @@ cc.Class({
     this.sortMng.init();
 
     this.initMng();
-
-    cc.Camera.main.backgroundColor = cc.Color.GRAY; // set default bg color gray
   },
 
   start() {
     this.playerFX.playIntro();
+  },
+
+  initPlayer() {
+    cc.loader.loadRes('prefab/role/player/main', (err, prefab) => {
+      if (err) {
+        cc.error(err.message || err);
+        return;
+      }
+      this.player = cc.instantiate(prefab).getComponent('Player');
+      this.node.addChild(this.player.node);
+      this.player.init(this);
+      this.player.node.active = false;
+
+      this.initUI();
+      this.initCamera();
+    });
+  },
+
+  initCamera() {
+    // set default bg color gray
+    cc.Camera.main.backgroundColor = cc.Color.GRAY;
+    this.mainCamera = this.mainCamera.getComponent('MainCamera');
+    this.mainCamera.init(this.player.node);
+  },
+
+  initUI() {
     // UI initialization
     this.inGameUI = this.inGameUI.getComponent('InGameUI');
     this.inGameUI.init(this);
@@ -67,7 +89,7 @@ cc.Class({
   },
 
   cameraShake() {
-    this.mainCamera.play('shake');
+    this.mainCamera.node.getComponent(cc.Animation).play('shake');
   },
 
   death() {

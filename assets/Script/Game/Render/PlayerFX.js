@@ -13,6 +13,11 @@ cc.Class({
     this.introAnim.node.active = false;
     this.deadAnim.node.active = false;
     this.reviveAnim.node.active = false;
+
+    // finish callback
+    this.introAnim.on('finished', this.introFinish, this);
+    this.deadAnim.on('finished', this.deadFinish, this);
+    this.reviveAnim.on('finished', this.reviveFinish, this);
   },
 
   playIntro() {

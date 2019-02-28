@@ -36,10 +36,14 @@ cc.Class({
       default: cc.Color.BLACK,
       displayName: '玩家颜色',
     },
-    isStop: true,
+    isStop: {
+      default: true,
+      tooltip: '是否停止',
+    },
     moveDir: {
       default: cc.v2(0, 1),
-      displayName: '移动方向',
+      displayName: 'Move Dir',
+      tooltip: '移动方向',
     },
 
     moveAngle: {

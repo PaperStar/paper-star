@@ -118,6 +118,9 @@ cc.Class({
 
   // use this for initialization
   onLoad() {
+    // get player node in game
+    this.target = this.target.getComponent('Game').player.node;
+
     this.startFollow = false;
     const canvas = cc.find('Canvas').getComponent(cc.Canvas);
     this.visibleSize = cc.view.getVisibleSize();
