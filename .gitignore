@@ -3,10 +3,7 @@ node_modules/
 rf/
 
 # packages
-packages/*
-!packages
-packages/cocos-analytics-preview-script/*
-!packages/cocos-analytics-preview-script
+packages/
 
 #/////////////////////////////////////////////////////////////////////////////
 # Fireball Projects
