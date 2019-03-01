@@ -16,7 +16,7 @@
         "iOS",
         "HTML5"
       ],
-      "package_download_url": "http://download.cocos.com/CocosServices/plugins/service-analytics/1.1.4_2.0.1.zip",
+      "package_download_url": "http://download.cocos.com/CocosServices/plugins/service-analytics/1.1.5_2.0.1.zip",
       "package_version_desc": "1、新增对游戏浏览器模式预览的支持，以方便调试<br>2、更新 CocosAnalytics SDK 到 2.0.1 版本<br>3、 如有相关问题咨询或者需求， 可以联系我们技术支持邮箱 <a href=' '>support-cocos@cocos.com</a>",
       "service_component_name": "service-analytics",
       "package_versions": [
@@ -103,9 +103,17 @@
       "services": [
         {
           "service_id": "235",
-          "enable": false
+          "enable": true,
+          "params": {
+            "appid": "15657",
+            "appsecret": "e57fd18e6f4e5b36dd1ab8d9f72a5265",
+            "channelid": "html5",
+            "storeid": "web",
+            "version": "1.1.5_2.0.1"
+          }
         }
       ]
     }
-  ]
+  ],
+  "needExecNative": true
 }

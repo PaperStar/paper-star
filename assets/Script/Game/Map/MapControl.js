@@ -1,5 +1,4 @@
 import NodePool from 'NodePool';
-// import Helpers from 'Helpers';
 import {PlanetType} from 'Types';
 
 cc.Class({

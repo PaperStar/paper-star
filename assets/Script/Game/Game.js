@@ -1,4 +1,3 @@
-// import Helpers from 'Helpers';
 import BulletMng from 'BulletMng';
 
 cc.Class({
@@ -43,7 +42,7 @@ cc.Class({
   },
 
   initPlayer() {
-    cc.loader.loadRes('prefab/role/player/main', (err, prefab) => {
+    cc.loader.loadRes('Prefab/Role/Player/Main', (err, prefab) => {
       if (err) {
         cc.error(err.message || err);
         return;
