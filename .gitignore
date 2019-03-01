@@ -3,7 +3,7 @@ node_modules/
 rf/
 
 # packages
-packages/*
+# packages/*
 packages/cocos-analytics-preview-script/*
 
 #/////////////////////////////////////////////////////////////////////////////
