@@ -4,6 +4,7 @@ rf/
 
 # packages
 packages/
+!packages/cocos-analytics-preview-script/
 
 #/////////////////////////////////////////////////////////////////////////////
 # Fireball Projects
