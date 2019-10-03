@@ -70,31 +70,31 @@
           ]
         }
       ],
-      "rotation": [
+      "angle": [
         {
           "frame": 0,
-          "value": 52,
+          "value": -52,
           "curve": "cubicIn"
         },
         {
           "frame": 2,
-          "value": 89
+          "value": -89
         },
         {
           "frame": 3.5,
-          "value": 250
+          "value": -250
         },
         {
           "frame": 3.5166666666666666,
-          "value": 230.88898305084766
+          "value": -230.88898305084766
         },
         {
           "frame": 5.466666666666667,
-          "value": 272.3000000000009
+          "value": -272.3000000000009
         },
         {
           "frame": 6.5,
-          "value": 60
+          "value": -60
         }
       ]
     }

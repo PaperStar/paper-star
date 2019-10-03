@@ -1,13 +1,16 @@
 {
-  "ver": "2.2.0",
+  "ver": "2.3.3",
   "uuid": "149b8e93-00b1-481c-bb3c-df80f7b20039",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "platformSettings": {},
   "subMetas": {
     "weibo": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "0b15203d-9aad-4b39-adf5-6af8647f342c",
       "rawTextureUuid": "149b8e93-00b1-481c-bb3c-df80f7b20039",
       "trimType": "auto",

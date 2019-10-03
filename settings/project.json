@@ -69,7 +69,10 @@
     "MotionStreak",
     "DragonBones",
     "StudioComponent",
-    "Native NetWork"
+    "Native NetWork",
+    "Geom Utils",
+    "3D",
+    "3D Primitive"
   ],
   "facebook": {
     "appID": "",

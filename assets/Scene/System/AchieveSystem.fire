@@ -90,8 +90,6 @@
       "width": 960,
       "height": 540
     },
-    "_rotationX": 0,
-    "_rotationY": 0,
     "_scaleX": 1,
     "_scaleY": 1,
     "_position": {
@@ -123,8 +121,6 @@
       "x": -425,
       "y": 215
     },
-    "_rotationX": 0,
-    "_rotationY": 0,
     "_localZOrder": 0,
     "_globalZOrder": 0
   },

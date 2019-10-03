@@ -1,13 +1,16 @@
 {
-  "ver": "2.2.0",
+  "ver": "2.3.3",
   "uuid": "5ca37d4b-91d7-47ac-9129-460b355f58f9",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "platformSettings": {},
   "subMetas": {
     "planet-break": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "07f6afed-6df3-45c6-b042-ed109dd430fe",
       "rawTextureUuid": "5ca37d4b-91d7-47ac-9129-460b355f58f9",
       "trimType": "auto",

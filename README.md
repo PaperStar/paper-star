@@ -20,6 +20,7 @@
   - Black Bomber
 - [ ] Analytics
   - [ ] Add Cocos Analytics
+- [ ] Move game design docs to [GDD](https://github.com/PaperStar/GDD)
 
 ### Wechat Game
 
@@ -33,8 +34,33 @@
 ## BUG
 
 - [ ] Use `cc.director.pause()` to pause, button can respond, but scale effect disabled.
+- [ ] Upgrade to 2.x: Wrong coordinate system
 
 ## Dev
+
+### Download
+
+Install `git-lfs`
+
+#### Windows
+
+```sh
+git lfs install
+```
+
+#### macOS
+
+```sh
+brew install git-lfs
+```
+
+---
+
+```sh
+git clone https://github.com/PaperStar/paper-star.git
+```
+
+### Lint
 
 ```sh
 yarn
