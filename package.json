@@ -23,7 +23,7 @@
     "lint": "eslint assets/Script"
   },
   "husky": {
-    "hooks": {  
+    "hooks": {
       "pre-commit": "lint-staged"
     }
   },
