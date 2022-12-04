@@ -1,5 +1,9 @@
 {
-  "ver": "1.0.1",
+  "ver": "1.0.25",
+  "importer": "image",
+  "imported": false,
   "uuid": "33fa0d2a-8901-4b74-959f-b8197f17f241",
-  "subMetas": {}
+  "files": [],
+  "subMetas": {},
+  "userData": {}
 }

@@ -1,8 +1,13 @@
 {
-  "ver": "1.2.1",
+  "ver": "1.1.40",
+  "importer": "prefab",
+  "imported": true,
   "uuid": "f9291da9-4c76-4794-83fd-5b60ab254091",
-  "optimizationPolicy": "AUTO",
-  "asyncLoadAssets": false,
-  "readonly": false,
-  "subMetas": {}
+  "files": [
+    ".json"
+  ],
+  "subMetas": {},
+  "userData": {
+    "syncNodeName": "Chain"
+  }
 }

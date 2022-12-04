@@ -1,13 +1,12 @@
 {
-  "ver": "2.3.3",
+  "ver": "1.0.25",
+  "importer": "image",
+  "imported": true,
   "uuid": "9773cbf4-7e98-4425-aaa1-90df75cf3dd4",
-  "type": "sprite",
-  "wrapMode": "clamp",
-  "filterMode": "bilinear",
-  "premultiplyAlpha": false,
-  "genMipmaps": false,
-  "packable": true,
-  "platformSettings": {},
+  "files": [
+    ".json",
+    ".png"
+  ],
   "subMetas": {
     "logo-alpha": {
       "ver": "1.0.4",
@@ -28,7 +27,44 @@
       "borderBottom": 0,
       "borderLeft": 0,
       "borderRight": 0,
+      "subMetas": {},
+      "importer": "*",
+      "imported": false,
+      "files": [],
+      "userData": {},
+      "displayName": "",
+      "id": "",
+      "name": ""
+    },
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "9773cbf4-7e98-4425-aaa1-90df75cf3dd4@6c48a",
+      "displayName": "logo-alpha",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "9773cbf4-7e98-4425-aaa1-90df75cf3dd4",
+        "visible": true
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
       "subMetas": {}
     }
+  },
+  "userData": {
+    "type": "texture",
+    "fixAlphaTransparencyArtifacts": true,
+    "hasAlpha": true,
+    "redirect": "9773cbf4-7e98-4425-aaa1-90df75cf3dd4@6c48a"
   }
 }

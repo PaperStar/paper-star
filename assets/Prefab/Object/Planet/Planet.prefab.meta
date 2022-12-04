@@ -1,8 +1,13 @@
 {
-  "ver": "1.2.1",
+  "ver": "1.1.40",
+  "importer": "prefab",
+  "imported": true,
   "uuid": "79a05b60-ae4e-4baf-abbd-3d4567fffa10",
-  "optimizationPolicy": "AUTO",
-  "asyncLoadAssets": false,
-  "readonly": false,
-  "subMetas": {}
+  "files": [
+    ".json"
+  ],
+  "subMetas": {},
+  "userData": {
+    "syncNodeName": "Planet"
+  }
 }

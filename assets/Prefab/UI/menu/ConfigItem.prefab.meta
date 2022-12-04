@@ -1,8 +1,13 @@
 {
-  "ver": "1.2.1",
+  "ver": "1.1.40",
+  "importer": "prefab",
+  "imported": true,
   "uuid": "175f310c-50f6-4ca5-a066-15304c6b14f5",
-  "optimizationPolicy": "AUTO",
-  "asyncLoadAssets": false,
-  "readonly": false,
-  "subMetas": {}
+  "files": [
+    ".json"
+  ],
+  "subMetas": {},
+  "userData": {
+    "syncNodeName": "ConfigItem"
+  }
 }

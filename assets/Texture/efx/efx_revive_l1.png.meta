@@ -1,13 +1,12 @@
 {
-  "ver": "2.3.3",
+  "ver": "1.0.25",
+  "importer": "image",
+  "imported": true,
   "uuid": "ff4fb059-f001-4f47-857a-2b491b3c8442",
-  "type": "sprite",
-  "wrapMode": "clamp",
-  "filterMode": "bilinear",
-  "premultiplyAlpha": false,
-  "genMipmaps": false,
-  "packable": true,
-  "platformSettings": {},
+  "files": [
+    ".json",
+    ".png"
+  ],
   "subMetas": {
     "efx_revive_l1": {
       "ver": "1.0.4",
@@ -28,7 +27,44 @@
       "borderBottom": 0,
       "borderLeft": 0,
       "borderRight": 0,
+      "subMetas": {},
+      "importer": "*",
+      "imported": false,
+      "files": [],
+      "userData": {},
+      "displayName": "",
+      "id": "",
+      "name": ""
+    },
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "ff4fb059-f001-4f47-857a-2b491b3c8442@6c48a",
+      "displayName": "efx_revive_l1",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "ff4fb059-f001-4f47-857a-2b491b3c8442",
+        "visible": true
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
       "subMetas": {}
     }
+  },
+  "userData": {
+    "type": "texture",
+    "fixAlphaTransparencyArtifacts": true,
+    "hasAlpha": true,
+    "redirect": "ff4fb059-f001-4f47-857a-2b491b3c8442@6c48a"
   }
 }

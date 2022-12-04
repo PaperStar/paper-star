@@ -1,13 +1,12 @@
 {
-  "ver": "2.3.3",
+  "ver": "1.0.25",
+  "importer": "image",
+  "imported": true,
   "uuid": "1e47c353-7b4f-40b4-88bf-384874d9e63a",
-  "type": "sprite",
-  "wrapMode": "clamp",
-  "filterMode": "bilinear",
-  "premultiplyAlpha": false,
-  "genMipmaps": false,
-  "packable": true,
-  "platformSettings": {},
+  "files": [
+    ".json",
+    ".png"
+  ],
   "subMetas": {
     "plane-line-alpha": {
       "ver": "1.0.4",
@@ -28,7 +27,44 @@
       "borderBottom": 0,
       "borderLeft": 0,
       "borderRight": 0,
+      "subMetas": {},
+      "importer": "*",
+      "imported": false,
+      "files": [],
+      "userData": {},
+      "displayName": "",
+      "id": "",
+      "name": ""
+    },
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "1e47c353-7b4f-40b4-88bf-384874d9e63a@6c48a",
+      "displayName": "plane-line-alpha",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "1e47c353-7b4f-40b4-88bf-384874d9e63a",
+        "visible": true
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
       "subMetas": {}
     }
+  },
+  "userData": {
+    "type": "texture",
+    "fixAlphaTransparencyArtifacts": true,
+    "hasAlpha": true,
+    "redirect": "1e47c353-7b4f-40b4-88bf-384874d9e63a@6c48a"
   }
 }

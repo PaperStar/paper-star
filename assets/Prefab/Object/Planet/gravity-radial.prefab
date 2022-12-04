@@ -1,12 +1,14 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "",
+    "_name": "gravity-radial",
     "_objFlags": 0,
     "_rawFiles": null,
     "data": {
       "__id__": 1
-    }
+    },
+    "asyncLoadAssets": false,
+    "persistent": false
   },
   {
     "__type__": "cc.Node",
