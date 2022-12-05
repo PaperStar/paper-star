@@ -1,9 +1,42 @@
 {
   "ver": "1.0.25",
   "importer": "image",
-  "imported": false,
+  "imported": true,
   "uuid": "73ccef8b-7c7b-46cf-8b9f-dfd7355faded",
-  "files": [],
-  "subMetas": {},
-  "userData": {}
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "73ccef8b-7c7b-46cf-8b9f-dfd7355faded@6c48a",
+      "displayName": "planet",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "73ccef8b-7c7b-46cf-8b9f-dfd7355faded",
+        "visible": true
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "texture",
+    "fixAlphaTransparencyArtifacts": true,
+    "hasAlpha": true,
+    "redirect": "73ccef8b-7c7b-46cf-8b9f-dfd7355faded@6c48a"
+  }
 }

@@ -2,13 +2,17 @@
   "name": "paper-star",
   "version": "3.6.2",
   "description": "A game called paper-star.",
-  "main": "index.js",
+  "creator": {
+    "version": "3.6.2"
+  },
+  "uuid": "49e1baab-0777-476f-8a84-1a538ed31e0d",
   "author": {
     "email": "me@yunyoujun.cn",
     "name": "YunYouJun",
     "url": "https://www.yunyoujun.cn"
   },
   "license": "MPL-2.0",
+  "homepage": "https://github.com/YunYouJun/paper-star#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/YunYouJun/paper-star.git"
@@ -16,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/YunYouJun/paper-star/issues"
   },
-  "homepage": "https://github.com/YunYouJun/paper-star#readme",
+  "main": "index.js",
   "scripts": {
     "build:desktop": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=web-desktop;buildPath=build/web-desktop;debug=false'",
     "build:mobile": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=web-mobile;buildPath=build/web-mobile;debug=false'",
@@ -24,29 +28,19 @@
     "deploy:desktop": "gh-pages -d build/web-desktop",
     "deploy:mobile": "gh-pages -d build/web-mobile",
     "predeploy:mobile": "npm run build:mobile",
-    "lint": "eslint assets/Script"
+    "lint": "eslint assets/scripts",
+    "prepare": "husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.33.1",
+    "eslint": "^8.29.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "typescript": "^4.9.3"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
+    "*.{js,ts,json,yml}": [
+      "eslint --fix"
     ]
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "eslint": "^5.14.1",
-    "eslint-config-google": "^0.12.0",
-    "gh-pages": "^2.0.1",
-    "husky": "^1.3.1",
-    "lint-staged": "^8.1.4"
-  },
-  "creator": {
-    "version": "3.6.2"
-  },
-  "uuid": "49e1baab-0777-476f-8a84-1a538ed31e0d"
+  }
 }

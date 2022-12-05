@@ -63,10 +63,10 @@ git clone https://github.com/PaperStar/paper-star.git
 ### Lint
 
 ```sh
-yarn
+pnpm i
 # lint
-# eslint assets/Script
-yarn lint --fix
+# eslint assets/scripts
+npm run lint --fix
 ```
 
 ## Reference
