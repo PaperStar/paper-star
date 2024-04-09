@@ -2,12 +2,12 @@
   "ver": "2.0.3",
   "importer": "animation-clip",
   "imported": true,
-  "uuid": "e4a7b576-fe60-4214-9245-c221798680f2",
+  "uuid": "36a4ee73-8a3b-48e5-b395-c141669d663f",
   "files": [
     ".cconb"
   ],
   "subMetas": {},
   "userData": {
-    "name": "bg-fade-in"
+    "name": "fade-out"
   }
 }

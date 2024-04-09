@@ -1,5 +1,6 @@
-import type { Vec2 } from 'cc'
-import { Color, Component, Graphics, UITransform, _decorator, v2 } from 'cc'
+import type { Node, Vec2 } from 'cc'
+import { Animation, Color, Component, Graphics, UITransform, _decorator, find, v2 } from 'cc'
+import { Logo } from '../begin/Logo'
 
 const { ccclass, property } = _decorator
 
@@ -11,28 +12,66 @@ export class StartMenuUI extends Component {
   })
   bgGraphics: Graphics = null
 
-  @property({
-    type: Color,
-    tooltip: 'Start Line Color',
-  })
-  startLineColor = new Color(0, 0, 0, 1)
-
   center: Vec2
 
   orbits = []
   planets = []
 
+  @property({
+    type: Logo,
+    tooltip: 'Logo Display',
+  })
+  Logo: Logo
+
+  @property({
+    type: Color,
+    tooltip: 'Start Line Color',
+  })
+  startLineColor = new Color(255, 255, 255, 1)
+
+  /**
+   * Start Menu Background
+   */
+  startMenuBg: Node
+
+  onLoad(): void {
+    // TODO: Loading
+  }
+
   start() {
+    this.startMenuBg = find('Canvas/start-menu-bg')
+
+    this.Logo.node.active = true
+    this.Logo.fadeInOut(() => {
+      this.Logo.bgAnim.on(Animation.EventType.FINISHED, () => {
+        this.Logo.node.destroy()
+      })
+      this.Logo.bgAnim.play()
+    })
+
     const height = this.bgGraphics.node.getComponent(UITransform).height
     this.center = v2(200, height / 2)
-    this.init()
+    this.showStartMenuBg()
+  }
+
+  /**
+   * Show Start Menu Background
+   */
+  showStartMenuBg() {
+    this.startMenuBg.active = true
+    this.generateRandomOrbitPlanet(8)
+    this.startLineColor = this.getRandomColor()
     this.drawOrbitPlanet()
     this.drawStarLine()
   }
 
-  init() {
-    this.generateRandomOrbitPlanet(8)
-    this.startLineColor = new Color(0, 0, 0, 50 + 150 * Math.random())
+  getRandomColor() {
+    return new Color(
+      255,
+      255,
+      255,
+      50 + 150 * Math.random(),
+    )
   }
 
   generateRandomOrbitPlanet(num: number) {
@@ -40,7 +79,7 @@ export class StartMenuUI extends Component {
     this.planets = []
     for (let i = 0; i < num; i++) {
       const radius = 100 + Math.random() * 20 + i * 80
-      const strokeColor = new Color(0, 0, 0, 50 + 100 * Math.random())
+      const strokeColor = this.getRandomColor()
       const orbit = {
         radius,
         strokeColor,
@@ -56,8 +95,10 @@ export class StartMenuUI extends Component {
       const radius = 10 + Math.random() * 20
       const hasRing = Math.random() > 0.5
       const speed = Math.random() * 0.5
-      const fillColor = new Color(0, 0, 0, 200 + 55 * Math.random())
-      const strokeColor = new Color(0, 0, 0, 50 + 150 * Math.random())
+
+      const fillColor = this.getRandomColor()
+      const strokeColor = this.getRandomColor()
+
       const ringRadius = radius + 10 + 5 * Math.random()
       const lineWidth = 6 + 4 * Math.random()
       const planet = {
@@ -134,6 +175,9 @@ export class StartMenuUI extends Component {
   }
 
   update(_deltaTime: number) {
+    if (this.startMenuBg.active === false)
+      return
+
     for (let i = 0; i < this.planets.length; i++) {
       // this.planets[i].radian -= this.planets[i].speed * Math.PI / 180
       this.planets[i].radian -= this.planets[i].speed * Math.PI / 180
