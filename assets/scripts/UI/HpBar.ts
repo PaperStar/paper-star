@@ -1,5 +1,6 @@
 import type { Node } from 'cc'
 import { Color, Component, ProgressBar, _decorator } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('HpBar')

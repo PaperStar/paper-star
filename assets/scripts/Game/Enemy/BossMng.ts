@@ -1,6 +1,7 @@
 import { Component, _decorator } from 'cc'
 import { BossType } from '../../types'
 import type { Spawn } from './Spawn'
+
 const { ccclass, property } = _decorator
 
 @ccclass('BossMngt')
@@ -23,4 +24,3 @@ export class BossMng extends Component {
     this.bossIdx++
   }
 }
-

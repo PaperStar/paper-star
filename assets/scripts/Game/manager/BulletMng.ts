@@ -1,4 +1,5 @@
 import { Component, _decorator, log } from 'cc'
+
 const { ccclass } = _decorator
 
 @ccclass('BulletMng')

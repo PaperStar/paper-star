@@ -1,4 +1,5 @@
 import { Component, _decorator, director, v2 } from 'cc'
+
 const { ccclass } = _decorator
 
 @ccclass('Gravity')

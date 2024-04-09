@@ -1,5 +1,6 @@
 import type { Camera } from 'cc'
 import { Component, _decorator } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('MainCamera')

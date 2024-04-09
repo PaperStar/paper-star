@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.SceneAsset",
-    "_name": "",
+    "_name": "free-mode",
     "_objFlags": 0,
     "_native": "",
     "scene": {
@@ -55,7 +55,7 @@
     "_zIndex": 0,
     "groupIndex": 0,
     "autoReleaseAssets": false,
-    "_id": "3c24e79b-52b5-468f-acf2-482767612ec4"
+    "_id": "f48af6ea-6c3d-42dc-be21-1aaef7e54ac7"
   },
   {
     "__type__": "cc.Node",
@@ -7650,7 +7650,16 @@
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
-    "_id": "23fuqIBI1N5oOzXa0hIgC7"
+    "_id": "23fuqIBI1N5oOzXa0hIgC7",
+    "_enableOutline": true,
+    "_outlineWidth": 2,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    }
   },
   {
     "__type__": "cc.LabelOutline",
@@ -7660,14 +7669,6 @@
       "__id__": 178
     },
     "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_width": 2,
     "_id": "03XIN2xS9LCJ5+wM8TW/8Y"
   },
   {
@@ -7758,7 +7759,16 @@
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
-    "_id": "28EpyJCwJEc5WlFYL71stB"
+    "_id": "28EpyJCwJEc5WlFYL71stB",
+    "_enableOutline": true,
+    "_outlineWidth": 3,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    }
   },
   {
     "__type__": "cc.LabelOutline",
@@ -7768,14 +7778,6 @@
       "__id__": 181
     },
     "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_width": 3,
     "_id": "dfg9HFQAtFv6zadwqeqqoW"
   },
   {
@@ -8268,7 +8270,16 @@
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0,
-    "_id": "50VJHujcBDlJlY+uHHLw9g"
+    "_id": "50VJHujcBDlJlY+uHHLw9g",
+    "_enableOutline": true,
+    "_outlineWidth": 1,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 255
+    }
   },
   {
     "__type__": "cc.LabelOutline",
@@ -8278,14 +8289,6 @@
       "__id__": 194
     },
     "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_width": 1,
     "_id": "b1rz3fF2pBsqHs0KuZ3CPW"
   },
   {

@@ -2,6 +2,7 @@ import type { Node } from 'cc'
 import { Component, _decorator } from 'cc'
 
 import type { Wave } from './Wave'
+
 const { ccclass, property } = _decorator
 
 @ccclass('WaveMng')
@@ -133,9 +134,9 @@ export class WaveMng extends Component {
 
   getNewFoePosition() {
     const randX = (Math.random() - 0.5)
-        * 2 * (this.foeGroup.width - this.spawnMargin) / 2
+      * 2 * (this.foeGroup.width - this.spawnMargin) / 2
     const randY = (Math.random() - 0.5)
-        * 2 * (this.foeGroup.height - this.spawnMargin) / 2
+      * 2 * (this.foeGroup.height - this.spawnMargin) / 2
     return cc.v2(randX, randY)
   }
 }

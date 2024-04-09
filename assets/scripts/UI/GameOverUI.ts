@@ -1,5 +1,6 @@
 import type { Label } from 'cc'
 import { Component, _decorator, director, sys } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('GameOverUI')

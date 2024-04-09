@@ -1,5 +1,6 @@
 import type { Animation, Camera, Node } from 'cc'
 import { Component, _decorator, v2, view } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('CameraControl')
@@ -192,7 +193,7 @@ export class CameraControl extends Component {
     // smooth follow
     if (this.smoothFollow) {
       if (Math.abs(targetPos.x - this.node.x) >= this.followX
-                || Math.abs(targetPos.y - this.node.y) >= this.followY) {
+        || Math.abs(targetPos.y - this.node.y) >= this.followY) {
         // when camera and target distance is larger than max distance
         this.startFollow = true
       }
@@ -215,7 +216,7 @@ export class CameraControl extends Component {
       let ratio = 0
       if (curSpeed > this.zoomOutSpeed) {
         ratio = 1 - (curSpeed - this.zoomOutSpeed)
-            / (this.zoomInSpeed - this.zoomOutSpeed)
+        / (this.zoomInSpeed - this.zoomOutSpeed)
         this.camera.zoomRatio = cc.lerp(this.camera.zoomRatio, ratio, 0.02)
       }
       else {

@@ -1,0 +1,70 @@
+{
+  "ver": "1.0.26",
+  "importer": "image",
+  "imported": true,
+  "uuid": "6dd61ec5-4ff8-48be-a3a5-41d8edfada29",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "GitHub": {
+      "ver": "1.0.4",
+      "uuid": "0f937107-1ef1-4d16-9ac3-dd075bd2dfb6",
+      "rawTextureUuid": "6dd61ec5-4ff8-48be-a3a5-41d8edfada29",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 205,
+      "height": 200,
+      "rawWidth": 205,
+      "rawHeight": 200,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {},
+      "importer": "*",
+      "imported": false,
+      "files": [],
+      "userData": {},
+      "displayName": "",
+      "id": "",
+      "name": ""
+    },
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "6dd61ec5-4ff8-48be-a3a5-41d8edfada29@6c48a",
+      "displayName": "GitHub",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "6dd61ec5-4ff8-48be-a3a5-41d8edfada29",
+        "visible": false
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "texture",
+    "fixAlphaTransparencyArtifacts": true,
+    "hasAlpha": true,
+    "redirect": "6dd61ec5-4ff8-48be-a3a5-41d8edfada29@6c48a"
+  }
+}

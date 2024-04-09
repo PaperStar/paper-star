@@ -1,5 +1,6 @@
 import type { Label } from 'cc'
 import { Animation, Component, _decorator } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('WaveUI')

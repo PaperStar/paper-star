@@ -2,6 +2,7 @@ import type { Node, SpriteFrame } from 'cc'
 import { Color, Component, _decorator, sys } from 'cc'
 
 import type NodePool from 'NodePool'
+
 const { ccclass, property } = _decorator
 
 @ccclass('Rank')

@@ -2,6 +2,7 @@ import type Spawn from 'Spawn'
 
 import { Component, _decorator } from 'cc'
 import { BossType } from '../../types'
+
 const { ccclass, property } = _decorator
 
 @ccclass('Wave')

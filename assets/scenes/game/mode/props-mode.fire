@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.SceneAsset",
-    "_name": "",
+    "_name": "props-mode",
     "_objFlags": 0,
     "_rawFiles": null,
     "scene": {
@@ -21,7 +21,7 @@
     "_active": true,
     "_components": [],
     "_prefab": null,
-    "_id": "47d46582-28a8-41b6-835f-19df8cc81920",
+    "_id": "d966c4b3-06c5-4084-8620-cd71501b309e",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",

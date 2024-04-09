@@ -1,6 +1,7 @@
 import type { Node } from 'cc'
 import { Camera, Color, Component, _decorator, director, error, instantiate, resources } from 'cc'
 import { BulletMng } from './manager/BulletMng'
+
 const { ccclass, property } = _decorator
 
 @ccclass('Game')
@@ -141,4 +142,3 @@ export class Game extends Component {
     director.loadScene('FreeMode')
   }
 }
-

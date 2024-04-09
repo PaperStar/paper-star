@@ -71,5 +71,6 @@ npm run lint --fix
 
 ## Reference
 
+- [cocos-tutorial-airplane](https://github.com/cocos/cocos-tutorial-airplane/)
 - [tutorial-dark-slash](https://github.com/cocos-creator/tutorial-dark-slash)
 - [aircraft_war](https://github.com/A123asdo11/aircraft_war)

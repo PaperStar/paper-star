@@ -1,6 +1,7 @@
 import type { Vec2 } from 'cc'
 import { Component, Node, _decorator, v2 } from 'cc'
 import JoystickCommon from './JoystickCommon'
+
 const { ccclass, property } = _decorator
 
 @ccclass('Joystick')

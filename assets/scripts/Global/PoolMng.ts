@@ -1,5 +1,6 @@
 import { Component, _decorator } from 'cc'
 import type { PrefabPoolMng } from './PrefabPoolMng'
+
 // import {FoeType, BulletType} from 'Types';
 
 const { ccclass, property } = _decorator

@@ -1,4 +1,5 @@
 import { Component, Node, _decorator, sys } from 'cc'
+
 const { ccclass } = _decorator
 
 @ccclass('About')

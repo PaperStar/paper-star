@@ -24,7 +24,7 @@ const menu = [
  *
  *
  * @param {*} SceneName
- * @return {String}
+ * @return {string}
  */
 function getParentMenu(SceneName) {
   for (let i = 0; i < menu.length; i++) {

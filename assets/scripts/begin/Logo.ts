@@ -1,4 +1,5 @@
 import { Animation, Component, _decorator, log, macro, profiler, sys, view } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('Logo')
@@ -20,4 +21,3 @@ export class Logo extends Component {
     }, this.logoAnim.defaultClip.duration)
   }
 }
-

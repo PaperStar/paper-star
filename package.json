@@ -1,9 +1,11 @@
 {
   "name": "paper-star",
+  "type": "module",
   "version": "3.6.2",
+  "packageManager": "pnpm@8.15.6",
   "description": "A game called paper-star.",
   "creator": {
-    "version": "3.6.2"
+    "version": "3.8.2"
   },
   "uuid": "49e1baab-0777-476f-8a84-1a538ed31e0d",
   "author": {
@@ -22,21 +24,24 @@
   },
   "main": "index.js",
   "scripts": {
-    "build:desktop": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=web-desktop;buildPath=build/web-desktop;debug=false'",
-    "build:mobile": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=web-mobile;buildPath=build/web-mobile;debug=false'",
-    "build:wechatgame": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=wechatgame;buildPath=build/wechatgame;debug=false'",
+    "build": "pnpm run build:mac:desktop",
+    "build:mac:desktop": "/Applications/Cocos/Creator/3.8.2/CocosCreator.app/Contents/MacOS/CocosCreator --project . --build 'platform=web-desktop;buildPath=build/web-desktop;debug=false'",
+    "build:win:desktop": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=web-desktop;buildPath=build/web-desktop;debug=false'",
+    "build:win:mobile": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=web-mobile;buildPath=build/web-mobile;debug=false'",
+    "build:win:wechatgame": "C:/CocosCreator/CocosCreator.exe --path . --build 'platform=wechatgame;buildPath=build/wechatgame;debug=false'",
     "deploy:desktop": "gh-pages -d build/web-desktop",
     "deploy:mobile": "gh-pages -d build/web-mobile",
     "predeploy:mobile": "npm run build:mobile",
     "lint": "eslint assets/scripts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.33.1",
-    "eslint": "^8.29.0",
-    "husky": "^8.0.2",
-    "lint-staged": "^13.1.0",
-    "typescript": "^4.9.3"
+    "@antfu/eslint-config": "^2.13.0",
+    "eslint": "^9.0.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "typescript": "^5.4.4"
   },
   "lint-staged": {
     "*.{js,ts,json,yml}": [

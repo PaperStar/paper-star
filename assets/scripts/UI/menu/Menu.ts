@@ -1,5 +1,6 @@
 import type { Node } from 'cc'
 import { Component, _decorator, sys } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('Menu')

@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.SceneAsset",
-    "_name": "",
+    "_name": "gravity-mode",
     "_objFlags": 0,
     "_rawFiles": null,
     "scene": {
@@ -24,7 +24,7 @@
     "_active": true,
     "_components": [],
     "_prefab": null,
-    "_id": "b8c82973-f425-423e-89ee-59f702e50953",
+    "_id": "385c3f0a-13fc-4fa6-9adb-78a9657c81a7",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",

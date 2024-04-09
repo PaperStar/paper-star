@@ -1,4 +1,5 @@
 import { Component, _decorator, director, sys } from 'cc'
+
 const { ccclass } = _decorator
 
 @ccclass('Mode')

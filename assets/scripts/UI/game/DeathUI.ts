@@ -1,4 +1,5 @@
 import { Component, _decorator } from 'cc'
+
 const { ccclass } = _decorator
 
 @ccclass('DeathUI')

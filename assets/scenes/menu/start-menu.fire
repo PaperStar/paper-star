@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.SceneAsset",
-    "_name": "",
+    "_name": "start-menu",
     "_objFlags": 0,
     "_native": "",
     "scene": {
@@ -7588,7 +7588,16 @@
     "_isUnderline": false,
     "_underlineHeight": 2,
     "_cacheMode": 0,
-    "_id": "a1YOvvkCNJqYd7DtocE3aO"
+    "_id": "a1YOvvkCNJqYd7DtocE3aO",
+    "_enableOutline": true,
+    "_outlineWidth": 1,
+    "_outlineColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    }
   },
   {
     "__type__": "cc.LabelOutline",
@@ -7599,14 +7608,6 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_width": 1,
     "_id": "ec4jl2tgZNzYBCrFcgMPdB"
   },
   {

@@ -1,5 +1,6 @@
 import type { Node } from 'cc'
 import { Component, _decorator, director, log, sys } from 'cc'
+
 const { ccclass } = _decorator
 
 @ccclass('Config')

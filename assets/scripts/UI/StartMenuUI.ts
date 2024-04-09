@@ -1,5 +1,6 @@
 import type { Vec2 } from 'cc'
 import { Color, Component, Graphics, _decorator, v2 } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('StartMenuUI')
@@ -93,7 +94,8 @@ export class StartMenuUI extends Component {
       ctx.stroke()
       if (this.planets[i].hasRing) {
         ctx.circle(
-          this.planets[i].x, this.planets[i].y,
+          this.planets[i].x,
+          this.planets[i].y,
           this.planets[i].ringRadius,
         )
         ctx.lineWidth = this.planets[i].lineWidth
@@ -109,9 +111,9 @@ export class StartMenuUI extends Component {
     // ctx.moveTo(this.center.x, this.center.y)
     const firstPlanet = v2(
       Math.cos(this.planets[0].radian) * this.orbits[0].radius
-         + this.center.x,
+      + this.center.x,
       Math.sin(this.planets[0].radian) * this.orbits[0].radius
-         + this.center.y,
+      + this.center.y,
     )
     ctx.moveTo(firstPlanet.x, firstPlanet.y)
     ctx.strokeColor = this.startLineColor

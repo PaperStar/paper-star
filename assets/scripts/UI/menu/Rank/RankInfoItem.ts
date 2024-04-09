@@ -1,5 +1,6 @@
 import type { Label, Sprite } from 'cc'
 import { Component, _decorator } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('RankInfoItem')

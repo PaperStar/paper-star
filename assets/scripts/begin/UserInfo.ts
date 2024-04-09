@@ -1,5 +1,6 @@
 import type { Label, Sprite } from 'cc'
 import { Component, SpriteFrame, _decorator, resources, sys } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('UserInfo')

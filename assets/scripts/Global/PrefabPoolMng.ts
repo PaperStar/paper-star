@@ -1,5 +1,6 @@
 import type { Prefab } from 'cc'
 import { Component, NodePool, _decorator, instantiate } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('PrefabPoolMng')
@@ -30,4 +31,3 @@ export class PrefabPoolMng extends Component {
     return this.nodePool.put(obj)
   }
 }
-

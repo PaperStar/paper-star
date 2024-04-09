@@ -1,5 +1,6 @@
 import type { Node } from 'cc'
 import { Camera, Color, Component, _decorator } from 'cc'
+
 const { ccclass, property } = _decorator
 
 @ccclass('InGameUI')

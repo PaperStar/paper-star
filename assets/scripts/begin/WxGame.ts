@@ -1,4 +1,5 @@
 import { Component, _decorator, log } from 'cc'
+
 const { ccclass } = _decorator
 
 @ccclass('WxGame')
@@ -78,4 +79,3 @@ export class WxGame extends Component {
     })
   }
 }
-

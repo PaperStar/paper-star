@@ -1,0 +1,70 @@
+{
+  "ver": "1.0.26",
+  "importer": "image",
+  "imported": true,
+  "uuid": "58af972c-f8d5-46ab-8af1-87cc15033371",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "plane-line": {
+      "ver": "1.0.4",
+      "uuid": "1f2fe12d-27de-4466-8d4d-75ec39d31012",
+      "rawTextureUuid": "58af972c-f8d5-46ab-8af1-87cc15033371",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 29,
+      "trimY": 12,
+      "width": 142,
+      "height": 176,
+      "rawWidth": 200,
+      "rawHeight": 200,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {},
+      "importer": "*",
+      "imported": false,
+      "files": [],
+      "userData": {},
+      "displayName": "",
+      "id": "",
+      "name": ""
+    },
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "58af972c-f8d5-46ab-8af1-87cc15033371@6c48a",
+      "displayName": "plane-line",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "58af972c-f8d5-46ab-8af1-87cc15033371",
+        "visible": false
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "texture",
+    "fixAlphaTransparencyArtifacts": true,
+    "hasAlpha": true,
+    "redirect": "58af972c-f8d5-46ab-8af1-87cc15033371@6c48a"
+  }
+}

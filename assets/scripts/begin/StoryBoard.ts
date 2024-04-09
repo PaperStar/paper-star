@@ -6,10 +6,10 @@ const { ccclass, property } = _decorator
 
 @ccclass('StoryBoard')
 export class StoryBoard extends Component {
-  bgAnim: Animation
+  bgAnim: Animation = null
 
   @property()
-  storyBoardAnim: Animation
+  storyBoardAnim: Animation = null
 
   start() {
     this.scheduleOnce(this.bgFadeIn, this.storyBoardAnim.defaultClip.duration)
