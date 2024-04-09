@@ -1,16 +1,18 @@
-import type NodePool from 'NodePool'
-import type { Node, Prefab } from 'cc'
-import { Component, _decorator, instantiate } from 'cc'
+import type { Prefab } from 'cc'
+import { Component, Node, NodePool, _decorator, instantiate } from 'cc'
 import { PlanetType } from '../../types'
 
 const { ccclass, property } = _decorator
 
 @ccclass('MapControl')
 export class MapControl extends Component {
-  @property()
+  @property({
+    type: Node,
+    tooltip: '地图节点',
+  })
   map: Node
 
-  planetPools: NodePool = []
+  planetPools: NodePool = new NodePool()
 
   planetNum = 10
   fiveStarAnim: Prefab
@@ -18,7 +20,7 @@ export class MapControl extends Component {
   twoStarAnim: Prefab
 
   init() {
-    for (let i = 0; i < this.planetPools.length; ++i)
+    for (let i = 0; i < this.planetPools.size(); ++i)
       this.planetPools[i].init()
 
     this.StarAnim = this.node.getChildByName('bg').getChildByName('StarAnim')

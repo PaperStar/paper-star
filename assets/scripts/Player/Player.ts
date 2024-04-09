@@ -1,5 +1,4 @@
-import type { ParticleSystem } from 'cc'
-import { Color, Component, KeyCode, _decorator, log, sys, v2 } from 'cc'
+import { Color, Component, KeyCode, ParticleSystem, _decorator, log, sys, v2 } from 'cc'
 import { getRandomColor, inflictDamage } from '../utils'
 import { BulletType } from '../types'
 import type { CameraControl } from '../system/CameraControl'
@@ -8,7 +7,10 @@ const { ccclass, property } = _decorator
 
 @ccclass('Player')
 export class Player extends Component {
-  @property()
+  @property({
+    type: ParticleSystem,
+    tooltip: '拖尾特效',
+  })
   fxTrail: ParticleSystem
 
   camera: CameraControl

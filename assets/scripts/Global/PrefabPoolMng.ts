@@ -1,11 +1,13 @@
-import type { Prefab } from 'cc'
-import { Component, NodePool, _decorator, instantiate } from 'cc'
+import { Component, NodePool, Prefab, _decorator, instantiate } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('PrefabPoolMng')
 export class PrefabPoolMng extends Component {
-  @property()
+  @property({
+    type: Prefab,
+    tooltip: '预制体',
+  })
   prefab: Prefab
 
   @property({
@@ -13,7 +15,9 @@ export class PrefabPoolMng extends Component {
   })
   maxSize = 0
 
-  @property()
+  @property({
+    tooltip: '节点池',
+  })
   nodePool = new NodePool()
 
   init() {

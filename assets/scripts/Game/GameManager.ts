@@ -1,41 +1,70 @@
 import type { Node } from 'cc'
-import { Camera, Color, Component, _decorator, director, error, instantiate, resources } from 'cc'
+import { Animation, Camera, Color, Component, _decorator, director, error, instantiate, resources } from 'cc'
+import type { PoolMng } from '../global/PoolMng'
+import type { Player } from '../player/Player'
+import type { DeathUI } from '../ui/game/DeathUI'
+import type { GameOverUI } from '../ui/GameOverUI'
+import type { InGameUI } from '../ui/game/InGameUI'
+import type { UserInfo } from '../begin/UserInfo'
+import type { SortMng } from './render/SortMng'
+import type { PlayerFX } from './render/PlayerFX'
 import { BulletMng } from './manager/BulletMng'
+import { MapControl } from './map/MapControl'
+import type { WaveMng } from './wave/WaveMng'
+
+import type { BossMng } from './enemy/BossMng'
 
 const { ccclass, property } = _decorator
 
-@ccclass('Game')
-export class Game extends Component {
-  @property()
-  map: Node
+@ccclass('GameManager')
+export class GameManager extends Component {
+  @property(MapControl)
+  map: MapControl
 
-  inGameUI: Node
-  playerFX: Node
-  waveMng: Node
-  bossMng: Node
-  poolMng: Node
+  // user
+  userInfo: UserInfo
+
+  player: Player
+  playerFX: PlayerFX
   foeGroup: Node
-  deathUI: Node
-  gameOverUI: Node
   mainCamera: Camera
 
+  // manager
+  bulletMng: BulletMng
+  poolMng: PoolMng
+  sortMng: SortMng
+  waveMng: WaveMng
+  bossMng: BossMng
+
+  // ui
+  deathUI: DeathUI
+  gameOverUI: GameOverUI
+  inGameUI: InGameUI
+
+  startTime: number
+
   onLoad() {
-    this.map = this.map.getComponent('MapControl')
-    this.map.init(this)
-    this.playerFX = this.playerFX.getComponent('PlayerFX')
+    this.map = this.map.getComponent('MapControl') as MapControl
+    this.map.init()
+
+    this.playerFX = this.playerFX.getComponent('PlayerFX') as PlayerFX
     this.playerFX.init(this)
+
     // init UI & Camera in player
     this.initPlayer()
-    this.poolMng = this.poolMng.getComponent('PoolMng')
+    this.poolMng = this.poolMng.getComponent('PoolMng') as PoolMng
     this.poolMng.init()
     // this.waveMng = this.waveMng.getComponent('WaveMng');
     // this.waveMng.init(this);
     // this.bossMng = this.bossMng.getComponent('BossMng');
     // this.bossMng.init(this);
-    this.sortMng = this.foeGroup.getComponent('SortMng')
-    this.sortMng.init()
-
+    this.sortMng = this.foeGroup.getComponent('SortMng') as SortMng
     this.initMng()
+
+    // user
+    director.addPersistRootNode(this.userInfo.node)
+    this.userInfo = this.userInfo.getComponent('UserInfo') as UserInfo
+    this.userInfo.init()
   }
 
   start() {
@@ -48,7 +77,8 @@ export class Game extends Component {
         error(err.message || err)
         return
       }
-      this.player = instantiate(prefab).getComponent('Player')
+      const playerInstance = instantiate(prefab)
+      this.player = playerInstance.getComponent('Player') as Player
       this.node.addChild(this.player.node)
       this.player.init(this)
       this.player.node.active = false
@@ -67,11 +97,11 @@ export class Game extends Component {
 
   initUI() {
     // UI initialization
-    this.inGameUI = this.inGameUI.getComponent('InGameUI')
+    this.inGameUI = this.inGameUI.getComponent('InGameUI') as InGameUI
     this.inGameUI.init(this)
-    this.deathUI = this.deathUI.getComponent('DeathUI')
+    this.deathUI = this.deathUI.getComponent('DeathUI') as DeathUI
     this.deathUI.init(this)
-    this.gameOverUI = this.gameOverUI.getComponent('GameOverUI')
+    this.gameOverUI = this.gameOverUI.getComponent('GameOverUI') as GameOverUI
     this.gameOverUI.init(this)
   }
 
@@ -125,12 +155,12 @@ export class Game extends Component {
     this.player.node.active = true
     this.player.ready()
 
-    this.startTime = new Date()
+    this.startTime = new Date().valueOf()
   }
 
   gameOver() {
-    this.endTime = new Date()
-    this.player.cost_ms = this.endTime - this.startTime
+    const endTime = new Date().valueOf()
+    this.player.cost_ms = endTime - this.startTime
     // this.resume()
     this.player.storeUserGameData()
     this.deathUI.hide()

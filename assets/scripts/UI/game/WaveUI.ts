@@ -1,5 +1,4 @@
-import type { Label } from 'cc'
-import { Animation, Component, _decorator } from 'cc'
+import { Animation, Component, Label, _decorator } from 'cc'
 
 const { ccclass, property } = _decorator
 
@@ -7,7 +6,10 @@ const { ccclass, property } = _decorator
 export class WaveUI extends Component {
   anim: Animation
 
-  @property()
+  @property({
+    type: Label,
+    tooltip: '显示波数',
+  })
   labelWave: Label
 
   onLoad() {

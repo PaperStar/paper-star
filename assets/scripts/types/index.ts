@@ -1,5 +1,7 @@
 import { Enum } from 'cc'
 
+export * from './data'
+
 export const PlanetType = Enum({
   Simple: -1,
   Other: -1,

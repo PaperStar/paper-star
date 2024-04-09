@@ -1,20 +1,19 @@
-import type { Node } from 'cc'
-import { Component, _decorator, sys } from 'cc'
+import { Component, Node, _decorator, sys } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('Menu')
 export class Menu extends Component {
-  @property()
+  @property({
+    type: Node,
+    tooltip: 'Config node',
+  })
   config: Node
 
   rank: Node
 
   onLoad() {
-    if (Global.userInfo)
-      Global.userInfo.show()
-
-    if (sys.platform === sys.WECHAT_GAME)
+    if (sys.platform === sys.Platform.WECHAT_GAME)
       Global.wxGame.gameClubButton.show()
   }
 

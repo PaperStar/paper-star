@@ -1,29 +1,36 @@
-import type { Color, Label, Sprite } from 'cc'
-import { Component, _decorator } from 'cc'
+import type { Color, Sprite } from 'cc'
+import { Animation, Component, Label, _decorator } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('ComboDisplay')
 export class ComboDisplay extends Component {
-  @property()
+  @property({
+    type: Label,
+    tooltip: '显示连击数',
+  })
+
+  @property({
+    tooltip: '展示时间',
+  })
+
+  anim: Animation
+
   labelCombo: Label
 
   spFlare: Sprite
   comboColors: Color[]
 
-  @property({
-    tooltip: '展示时间',
-  })
+  comboCount = 0
   showDuration = 0
+  showTimer = 0
 
   onLoad() {
-    this.anim = this.getComponent(cc.Animation)
+    this.anim = this.getComponent(Animation) as Animation
   }
 
   init() {
-    this.comboCount = 0
     this.node.active = false
-    this.showTimer = 0
   }
 
   // use this for initialization

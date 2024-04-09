@@ -1,18 +1,32 @@
-import type { Animation } from 'cc'
-import { Component, _decorator } from 'cc'
+import { Animation, Component, _decorator } from 'cc'
+import type { GameManager } from '../GameManager'
 
 const { ccclass, property } = _decorator
 
 @ccclass('PlayerFX')
 export class PlayerFX extends Component {
-  @property()
+  @property({
+    type: Animation,
+    tooltip: 'Intro animation',
+  })
   introAnim: Animation
 
+  @property({
+    type: Animation,
+    tooltip: 'Dead animation',
+  })
   deadAnim: Animation
+
+  @property({
+    type: Animation,
+    tooltip: 'Revive animation',
+  })
   reviveAnim: Animation
 
+  game: GameManager
+
   // use this for initialization
-  init(game) {
+  init(game: GameManager) {
     this.game = game
     this.introAnim.node.active = false
     this.deadAnim.node.active = false

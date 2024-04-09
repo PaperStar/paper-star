@@ -1,10 +1,10 @@
-import { Component, _decorator } from 'cc'
+import { CCInteger, Component, _decorator } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('SortMng')
 export class SortMng extends Component {
-  @property()
+  @property(CCInteger)
   frameCount = 0
 
   update() {

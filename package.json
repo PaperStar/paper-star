@@ -1,7 +1,7 @@
 {
   "name": "paper-star",
   "type": "module",
-  "version": "3.6.2",
+  "version": "0.2.0",
   "packageManager": "pnpm@8.15.6",
   "description": "A game called paper-star.",
   "creator": {
@@ -22,7 +22,6 @@
   "bugs": {
     "url": "https://github.com/YunYouJun/paper-star/issues"
   },
-  "main": "index.js",
   "scripts": {
     "build": "pnpm run build:mac:desktop",
     "build:mac:desktop": "/Applications/Cocos/Creator/3.8.2/CocosCreator.app/Contents/MacOS/CocosCreator --project . --build 'platform=web-desktop;buildPath=build/web-desktop;debug=false'",

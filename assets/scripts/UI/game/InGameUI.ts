@@ -1,20 +1,27 @@
-import type { Node } from 'cc'
-import { Camera, Color, Component, _decorator } from 'cc'
+import { Camera, Color, Component, Node, _decorator } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('InGameUI')
 export class InGameUI extends Component {
-  @property()
+  @property({
+    type: Node,
+    tooltip: 'Wave UI',
+  })
   waveUI: Node
 
   killDisplay: Node
   comboDisplay: Node
 
-  @property()
+  @property({
+    tooltip: 'Open panel flag',
+  })
   openPanelFlag = true
 
-  @property()
+  @property({
+    type: Node,
+    tooltip: 'HP Bar',
+  })
   hpBar: Node
 
   joystick: Node

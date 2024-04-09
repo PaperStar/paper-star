@@ -1,26 +1,30 @@
 import type { Vec2 } from 'cc'
-import { Color, Component, Graphics, _decorator, v2 } from 'cc'
+import { Color, Component, Graphics, UITransform, _decorator, v2 } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('StartMenuUI')
 export class StartMenuUI extends Component {
-  @property(Graphics)
-  bgCanvas: Graphics = null
+  @property({
+    type: Graphics,
+    tooltip: 'Background Graphics',
+  })
+  bgGraphics: Graphics = null
 
-  startLineColor: Color
+  @property({
+    type: Color,
+    tooltip: 'Start Line Color',
+  })
+  startLineColor = new Color(0, 0, 0, 1)
 
-  ctx = null
-  height = 0
   center: Vec2
 
   orbits = []
   planets = []
 
   start() {
-    this.ctx = this.bgCanvas
-    this.height = this.bgCanvas.node.height
-    this.center = v2(200, this.height / 2)
+    const height = this.bgGraphics.node.getComponent(UITransform).height
+    this.center = v2(200, height / 2)
     this.init()
     this.drawOrbitPlanet()
     this.drawStarLine()
@@ -71,7 +75,8 @@ export class StartMenuUI extends Component {
   }
 
   drawOrbitPlanet() {
-    const { ctx } = this
+    const ctx = this.bgGraphics
+
     // draw orbit
     for (let i = 0; i < this.orbits.length; i++) {
       ctx.lineWidth = 2
@@ -106,7 +111,8 @@ export class StartMenuUI extends Component {
   }
 
   drawStarLine() {
-    const { ctx } = this
+    const ctx = this.bgGraphics
+
     ctx.lineWidth = 3
     // ctx.moveTo(this.center.x, this.center.y)
     const firstPlanet = v2(
@@ -132,7 +138,7 @@ export class StartMenuUI extends Component {
       // this.planets[i].radian -= this.planets[i].speed * Math.PI / 180
       this.planets[i].radian -= this.planets[i].speed * Math.PI / 180
     }
-    this.ctx.clear()
+    this.bgGraphics.clear()
     this.drawOrbitPlanet()
     this.drawStarLine()
   }

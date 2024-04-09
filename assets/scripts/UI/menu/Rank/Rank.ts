@@ -1,13 +1,14 @@
-import type { Node, SpriteFrame } from 'cc'
-import { Color, Component, _decorator, sys } from 'cc'
-
-import type NodePool from 'NodePool'
+import type { Node, NodePool } from 'cc'
+import { Color, Component, SpriteFrame, _decorator, sys } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('Rank')
 export class Rank extends Component {
-  @property()
+  @property({
+    type: SpriteFrame,
+    tooltip: 'King crown',
+  })
   king: SpriteFrame
 
   rankInfoItem: NodePool

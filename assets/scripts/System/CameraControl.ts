@@ -1,18 +1,23 @@
-import type { Animation, Camera, Node } from 'cc'
-import { Component, _decorator, v2, view } from 'cc'
+import type { Animation, Camera } from 'cc'
+import { Component, Node, _decorator, v2, view } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('CameraControl')
 export class CameraControl extends Component {
-  @property()
+  @property({
+    type: Node,
+    tooltip: 'The target node to follow',
+  })
   target: Node = null
 
   camera: Camera
 
   anim: Animation
   // Jump Zoom
-  @property()
+  @property({
+    tooltip: 'Jump zoom',
+  })
   jumpZoom = false
 
   centerAtStart = false

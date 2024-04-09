@@ -1,10 +1,13 @@
 import { Component, _decorator, log } from 'cc'
+import type { GameManager } from '../GameManager'
 
 const { ccclass } = _decorator
 
 @ccclass('BulletMng')
 export class BulletMng extends Component {
-  init(game) {
+  game: GameManager
+
+  init(game: GameManager) {
     this.game = game
   }
 

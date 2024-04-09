@@ -21,12 +21,10 @@ const menu = [
 ]
 
 /**
- *
- *
+ * Get Parent Menu
  * @param {*} SceneName
- * @return {string}
  */
-function getParentMenu(SceneName) {
+function getParentMenu(SceneName: string) {
   for (let i = 0; i < menu.length; i++) {
     if (menu[i].children) {
       for (let j = 0; j < menu[i].children.length; j++) {
@@ -42,12 +40,9 @@ const { ccclass } = _decorator
 
 @ccclass('Back')
 export class Back extends Component {
-  start() {
-    Global.curSceneName = director.getScene().name
-  }
-
   back() {
-    const parentScene = getParentMenu(Global.curSceneName)
+    const curSceneName = director.getScene().name
+    const parentScene = getParentMenu(curSceneName)
     director.loadScene(parentScene, () => {
       log(`Back To ${parentScene}`)
     })

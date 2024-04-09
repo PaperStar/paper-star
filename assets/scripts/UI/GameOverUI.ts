@@ -1,15 +1,23 @@
-import type { Label } from 'cc'
-import { Component, _decorator, director, sys } from 'cc'
+import { Component, Label, _decorator, director, sys } from 'cc'
+import type { GameManager } from '../game/GameManager'
 
 const { ccclass, property } = _decorator
 
 @ccclass('GameOverUI')
 export class GameOverUI extends Component {
-  @property()
+  @property({
+    type: Label,
+    tooltip: '分数',
+  })
   score: Label
 
-  @property()
+  @property({
+    type: Label,
+    tooltip: '游戏耗时',
+  })
   costTime: Label
+
+  game: GameManager
 
   start() {
     // const app = 'paper-star';
@@ -18,7 +26,7 @@ export class GameOverUI extends Component {
     this.costTime.string = this.formatTime(curRecord.cost_ms)
   }
 
-  init(game) {
+  init(game: GameManager) {
     this.game = game
     this.hide()
   }

@@ -1,10 +1,10 @@
-import { Component, _decorator, v2 } from 'cc'
+import { CCInteger, Component, _decorator, v2 } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('GravityRadial')
 export class GravityRadial extends Component {
-  @property()
+  @property(CCInteger)
   gravityForce = 500
 
   onLoad() {

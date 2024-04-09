@@ -1,20 +1,23 @@
-import type { ParticleSystem } from 'cc'
-import { Component, _decorator } from 'cc'
+import type { EventHandler } from 'cc'
+import { Component, ParticleSystem, _decorator } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('AnimHelper')
 export class AnimHelper extends Component {
-  @property()
+  @property({
+    type: ParticleSystem,
+    tooltip: 'Particle to play',
+  })
   particleToPlay: ParticleSystem
 
-  finishHandler: Component.EventHandler
-  fireHandler: Component.EventHandler
+  finishHandler: EventHandler
+  fireHandler: EventHandler
 
   // use this for initialization
   playParticle() {
     if (this.particleToPlay)
-      this.particleToPlay.resetSystem()
+      this.particleToPlay.resetInEditor()
   }
 
   fire() {

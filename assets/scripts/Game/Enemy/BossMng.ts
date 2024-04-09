@@ -1,23 +1,27 @@
 import { Component, _decorator } from 'cc'
 import { BossType } from '../../types'
-import type { Spawn } from './Spawn'
+import type { GameManager } from '../GameManager'
+import { Spawn } from './Spawn'
 
 const { ccclass, property } = _decorator
 
-@ccclass('BossMngt')
+@ccclass('BossMng')
 export class BossMng extends Component {
-  @property()
+  @property(Spawn)
   demonSpawn: Spawn
 
-  init(game) {
+  bossIdx: number
+
+  game: GameManager
+
+  init(game: GameManager) {
     this.game = game
-    this.waveMng = game.waveMng
     this.bossIdx = 0
   }
 
   startBoss() {
     if (this.bossIdx === BossType.Carrier)
-      this.waveMng.startBossSpawn(this.demonSpawn)
+      this.game.waveMng.startBossSpawn(this.demonSpawn)
   }
 
   endBoss() {

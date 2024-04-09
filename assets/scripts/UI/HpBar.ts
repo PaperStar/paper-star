@@ -1,25 +1,33 @@
-import type { Node } from 'cc'
-import { Color, Component, ProgressBar, _decorator } from 'cc'
+import { Color, Component, Node, ProgressBar, _decorator } from 'cc'
 
 const { ccclass, property } = _decorator
 
 @ccclass('HpBar')
 export class HpBar extends Component {
-  @property()
+  @property({
+    type: Node,
+    tooltip: 'Progress bar',
+  })
   bar: Node
 
-  @property()
+  @property({
+    type: Animation,
+    tooltip: 'Fade animation',
+  })
   anim: Animation
+
+  progressBar: ProgressBar
 
   init() {
     this.node.opacity = 0
     this.progressBar = this.getComponent(ProgressBar)
   }
 
-  setDisplayPosition(pos) {
-    const percent = pos.y / (this.node.height * this.node.scale)
-    this.node.setAnchorPoint(0.5, -percent)
-    this.bar.setAnchorPoint(0, -percent)
+  setDisplayPosition(_pos) {
+    // const percent = pos.y / (this.node.height * this.node.scale)
+    // TODO: setAnchorPoint
+    // this.node.setAnchorPoint(0.5, -percent)
+    // this.bar.setAnchorPoint(0, -percent)
   }
 
   show() {

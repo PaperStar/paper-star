@@ -9,7 +9,10 @@ const { ccclass, property } = _decorator
 export class Foe extends Component {
   foeType = FoeType.Foe1
   atkType = AttackType.Melee
-  @property()
+  @property({
+    tooltip: '子弹类型',
+    type: BulletType,
+  })
   bulletType = BulletType.Line
 
   @property({

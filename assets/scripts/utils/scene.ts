@@ -1,6 +1,9 @@
 import { director, log } from 'cc'
 
 //  Paper Star - @YunYouJun
+/**
+ * 展示彩蛋
+ */
 export function displayEgg() {
   log(
     '%c Paper Star - @YunYouJun ',
@@ -9,11 +12,11 @@ export function displayEgg() {
 }
 
 export function loadStartMenu() {
-  director.loadScene('StartMenu', () => {
+  director.loadScene('start-menu', () => {
     log('StartMenu is loaded.')
   })
 }
 
 export function loadStoryBoard() {
-  director.loadScene('StoryBoard')
+  director.loadScene('story-board')
 }

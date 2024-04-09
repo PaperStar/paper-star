@@ -5,11 +5,15 @@ const { ccclass, property } = _decorator
 
 @ccclass('Spawn')
 export class Spawn extends Component {
+  @property({
+    type: FoeType,
+    tooltip: 'Foe Type',
+  })
   foeType = FoeType.Foe1
+
   total = 0
   spawnInterval = 0
 
-  @property()
   isCompany = false
 
   ctor() {

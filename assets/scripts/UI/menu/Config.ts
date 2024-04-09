@@ -1,19 +1,20 @@
-import type { Node } from 'cc'
 import { Component, _decorator, director, log, sys } from 'cc'
+import { loadStartMenu } from '../../utils'
+import type { About } from './About'
 
 const { ccclass } = _decorator
 
 @ccclass('Config')
 export class Config extends Component {
-  about: Node
+  about: About
 
   onLoad() {
-    this.about = this.about.getComponent('About')
+    this.about = this.about.getComponent('About') as About
   }
 
   backToStartMenu() {
     this.close()
-    Global.Helpers.loadStartMenu()
+    loadStartMenu()
   }
 
   loadStoryBoard() {

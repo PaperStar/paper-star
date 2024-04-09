@@ -1,5 +1,7 @@
 import type { Node } from 'cc'
-import { Component, _decorator, game, sys, view } from 'cc'
+import { Component, _decorator, director, sys, view } from 'cc'
+import { loadStoryBoard } from '../utils'
+import type { UserInfo } from './UserInfo'
 
 const { ccclass, property } = _decorator
 
@@ -10,16 +12,11 @@ export class Start extends Component {
   })
   wxGame: Node = null
 
-  userInfo: Node = null
+  userInfo: UserInfo = null
 
   start() {
-    if (!Global.userInfo)
-      this.initUserInfo()
-
-    Global.userInfo.show()
-
     switch (sys.platform) {
-      case sys.WECHAT_GAME:
+      case sys.Platform.WECHAT_GAME:
         if (!Global.wxGame)
           this.initWxGame()
 
@@ -32,15 +29,8 @@ export class Start extends Component {
     this.next()
   }
 
-  initUserInfo() {
-    game.addPersistRootNode(this.userInfo)
-    this.userInfo = this.userInfo.getComponent('UserInfo')
-    this.userInfo.init()
-    Global.userInfo = this.userInfo
-  }
-
   initWxGame() {
-    game.addPersistRootNode(this.wxGame)
+    director.addPersistRootNode(this.wxGame)
     this.wxGame = this.wxGame.getComponent('wxGame')
     this.wxGame.init(Global.userInfo)
     Global.wxGame = this.wxGame
@@ -58,7 +48,7 @@ export class Start extends Component {
         avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIYS5cD3BZMvoJe6LSC6jOyuKIYnMlibuqAxiaz586GoTuXXm6VEO4W85zqnxrUicWYh6KO83yunhHlw/132',
       }
       Global.userInfo.storeUserInfo(userInfo)
-      Global.Helpers.loadStoryBoard()
+      loadStoryBoard()
     }
   }
 }
