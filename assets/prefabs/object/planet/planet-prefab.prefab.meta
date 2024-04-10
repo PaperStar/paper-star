@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "965583e2-643d-48a9-bb88-251782a99bfe",
+  "uuid": "0e88375e-d384-491b-b3c1-8563ae374d2a",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "gravity-radial"
+    "syncNodeName": "planet-prefab"
   }
 }

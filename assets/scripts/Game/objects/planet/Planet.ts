@@ -1,37 +1,89 @@
-import type { Animation, Prefab, SpriteFrame } from 'cc'
-import { Component, Sprite, _decorator, instantiate, v2 } from 'cc'
+import type { Animation, SpriteFrame } from 'cc'
+import { CircleCollider2D, Color, Component, Enum, Prefab, RigidBody2D, Sprite, _decorator, instantiate, v2 } from 'cc'
 import { PlanetType } from '../../../types'
 import { getRandom, getRandomColor } from '../../../utils'
+import type { MapControl } from '../../map/MapControl'
+import { HpBar } from '../../../ui/HpBar'
 
 const { ccclass, property } = _decorator
 
-@ccclass('NewComponent')
-export class NewComponent extends Component {
+@ccclass('Planet')
+export class Planet extends Component {
   @property({
+    type: Enum(PlanetType),
     tooltip: '星球类型',
   })
   planetType = PlanetType.Simple
 
+  @property({
+    tooltip: '血量上限',
+  })
   hp = 1000
-  curHp = 1000
-  radius = 100
-  gravityRadial: Prefab
-  gravityRadius = 200
-  gravityForce = 300
-  breakSpriteFrame: SpriteFrame
-  breakAnim: Animation
 
+  hpBar: HpBar
+  @property({
+    type: Prefab,
+    tooltip: '血条预制体',
+  })
   hpBarPrefab: Prefab
 
-  init(map) {
+  @property({
+    tooltip: '当前血量',
+  })
+  curHp = 1000
+
+  @property({
+    tooltip: '半径',
+  })
+  radius = 100
+
+  @property({
+    tooltip: '引力预制体',
+  })
+  gravityRadial: Prefab
+
+  @property({
+    tooltip: '引力半径',
+  })
+  gravityRadius = 200
+
+  @property({
+    tooltip: '引力大小',
+  })
+  gravityForce = 300
+
+  @property({
+    tooltip: '碎裂帧动画',
+  })
+  breakSpriteFrame: SpriteFrame
+
+  @property({
+    tooltip: '碎裂动画',
+  })
+  breakAnim: Animation
+
+  map: MapControl
+
+  init(map: MapControl) {
     this.map = map
     this.curHp = this.hp
-    const color = cc.Color.BLACK
-    this.node.color = color.fromHEX(getRandomColor())
-    this.getComponent(cc.RigidBody).angularVelocity
-      = (Math.random() - 0.5) * 2 * 200
-    this.node.scale = Math.random() * 1 + 0.3
-    this.node.rotation = getRandom(0, 360)
+
+    // set random color
+    const sprite = this.getComponent(Sprite)
+    Color.fromHEX(sprite.color, getRandomColor())
+
+    // enable rigid rotation
+    const rigidBody2D = this.getComponent(RigidBody2D)
+    const velocity = (Math.random() - 0.5) * 2 * 200
+    rigidBody2D.angularVelocity = velocity
+
+    // collider radius
+    const collider2D = this.getComponent(CircleCollider2D)
+    collider2D.radius = this.radius
+
+    const scale = Math.random() * 1 + 0.3
+    this.node.setScale(scale, scale)
+    this.node.setRotationFromEuler(0, 0, getRandom(0, 360))
 
     this.initGravity()
     this.initHpBar()
@@ -39,9 +91,9 @@ export class NewComponent extends Component {
 
   initHpBar() {
     if (this.hpBarPrefab) {
-      const HpBar = instantiate(this.hpBarPrefab)
-      this.node.addChild(HpBar)
-      this.hpBar = HpBar.getComponent('HpBar')
+      const hpBar = instantiate(this.hpBarPrefab)
+      this.node.addChild(hpBar)
+      this.hpBar = hpBar.getComponent(HpBar)
       this.hpBar.init()
       this.hpBar.setDisplayPosition(v2(0, 0))
     }
@@ -49,19 +101,19 @@ export class NewComponent extends Component {
 
   initGravity() {
     // gravity
-    let planeGravityRadial = ''
-    if (this.node.getChildByName('gravity-radial'))
-      planeGravityRadial = this.node.getChildByName('gravity-radial')
+    // let planeGravityRadial = ''
+    // if (this.node.getChildByName('gravity-radial'))
+    //   planeGravityRadial = this.node.getChildByName('gravity-radial')
 
-    else
-      planeGravityRadial = instantiate(this.gravityRadial)
+    // else
+    //   planeGravityRadial = instantiate(this.gravityRadial)
 
-    planeGravityRadial.parent = this.node
-    planeGravityRadial.getComponent(cc.PhysicsCircleCollider).radius
-      = this.node.width + Math.random() * 200
-    this.gravityForce = 100 + Math.random() * 200
-    planeGravityRadial.getComponent('gravity-radial').gravityForce
-      = this.gravityForce
+    // planeGravityRadial.parent = this.node
+    // planeGravityRadial.getComponent(cc.PhysicsCircleCollider).radius
+    //   = this.node.width + Math.random() * 200
+    // this.gravityForce = 100 + Math.random() * 200
+    // planeGravityRadial.getComponent('gravity-radial').gravityForce
+    //   = this.gravityForce
   }
 
   onBeginContact(contact, selfCollider, otherCollider) {

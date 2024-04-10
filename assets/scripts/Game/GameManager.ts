@@ -1,5 +1,5 @@
 import type { Node } from 'cc'
-import { Animation, Camera, Color, Component, _decorator, director, error, instantiate, resources } from 'cc'
+import { Animation, Camera, Color, Component, _decorator, director, error, find, instantiate, resources } from 'cc'
 import type { PoolMng } from '../global/PoolMng'
 import type { Player } from '../player/Player'
 import type { DeathUI } from '../ui/game/DeathUI'
@@ -14,13 +14,10 @@ import type { WaveMng } from './wave/WaveMng'
 
 import type { BossMng } from './enemy/BossMng'
 
-const { ccclass, property } = _decorator
+const { ccclass } = _decorator
 
 @ccclass('GameManager')
 export class GameManager extends Component {
-  @property(MapControl)
-  map: MapControl
-
   // user
   userInfo: UserInfo
 
@@ -44,8 +41,9 @@ export class GameManager extends Component {
   startTime: number
 
   onLoad() {
-    this.map = this.map.getComponent('MapControl') as MapControl
-    this.map.init()
+    const mapNode = find('Canvas/map')
+    const mapControl = mapNode.getComponent(MapControl)
+    mapControl.init()
 
     this.playerFX = this.playerFX.getComponent('PlayerFX') as PlayerFX
     this.playerFX.init(this)

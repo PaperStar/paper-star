@@ -2,10 +2,10 @@ import { Enum } from 'cc'
 
 export * from './data'
 
-export const PlanetType = Enum({
-  Simple: -1,
-  Other: -1,
-})
+export enum PlanetType {
+  Simple,
+  Other,
+}
 
 export const BossType = Enum({
   Carrier: -1,

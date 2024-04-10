@@ -33,9 +33,9 @@ export class PlayerFX extends Component {
     this.reviveAnim.node.active = false
 
     // finish callback
-    this.introAnim.on('finished', this.introFinish, this)
-    this.deadAnim.on('finished', this.deadFinish, this)
-    this.reviveAnim.on('finished', this.reviveFinish, this)
+    this.introAnim.on(Animation.EventType.FINISHED, this.introFinish, this)
+    this.deadAnim.on(Animation.EventType.FINISHED, this.deadFinish, this)
+    this.reviveAnim.on(Animation.EventType.FINISHED, this.reviveFinish, this)
   }
 
   playIntro() {
