@@ -1,7 +1,7 @@
+import type { Node } from 'cc'
 import { Component, _decorator } from 'cc'
+import type { BulletType, FoeType } from '../types'
 import type { PrefabPoolMng } from './PrefabPoolMng'
-
-// import {FoeType, BulletType} from 'Types';
 
 const { ccclass, property } = _decorator
 
@@ -23,19 +23,19 @@ export class PoolMng extends Component {
       this.bulletPools[i].init()
   }
 
-  getFoe(foeType) {
+  getFoe(foeType: FoeType) {
     return this.foePools[foeType].get()
   }
 
-  putFoe(foeType, obj) {
-    return this.foePools[foeType].put(obj)
+  putFoe(foeType: FoeType, node: Node) {
+    return this.foePools[foeType].put(node)
   }
 
-  getBullet(type) {
+  getBullet(type: BulletType) {
     return this.bulletPools[type].get()
   }
 
-  putBullet(type, obj) {
-    return this.bulletPools[type].put(obj)
+  putBullet(type: BulletType, node: Node) {
+    return this.bulletPools[type].put(node)
   }
 }

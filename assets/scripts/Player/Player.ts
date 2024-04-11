@@ -1,17 +1,24 @@
-import { Color, Component, KeyCode, ParticleSystem, _decorator, log, sys, v2 } from 'cc'
+import type { EventKeyboard, IPhysics2DContact, Node } from 'cc'
+import { Collider2D, Color, Component, Contact2DType, Enum, Input, KeyCode, ParticleSystem2D, RigidBody2D, UIOpacity, _decorator, input, log, misc, v2, v3 } from 'cc'
 import { getRandomColor, inflictDamage } from '../utils'
 import { BulletType } from '../types'
 import type { CameraControl } from '../system/CameraControl'
+import type { GameManager } from '../game/GameManager'
 
 const { ccclass, property } = _decorator
+
+export const PLAY_ACTION = Enum({
+  MOVE: 'move',
+  STOP_MOVE: 'stop_move',
+})
 
 @ccclass('Player')
 export class Player extends Component {
   @property({
-    type: ParticleSystem,
+    type: ParticleSystem2D,
     tooltip: '拖尾特效',
   })
-  fxTrail: ParticleSystem
+  fxTrail: ParticleSystem2D
 
   camera: CameraControl
   bulletType = BulletType.Line
@@ -42,7 +49,7 @@ export class Player extends Component {
   @property({
     displayName: '玩家颜色',
   })
-  RoleColor = Color.BLACK
+  roleColor = new Color()
 
   @property({
     tooltip: '是否停止',
@@ -88,18 +95,50 @@ export class Player extends Component {
   _delayFlag = false
   _shootFlag = false
 
-  init(game) {
+  game: GameManager
+
+  /**
+   * 连续击杀数
+   */
+  oneShootKills = 0
+
+  /**
+   * 是否存活
+   */
+  isAlive = true
+
+  /**
+   * 是否启用输入
+   */
+  inputEnabled = true
+
+  @property({
+    tooltip: '喷气',
+  })
+  jet: Node
+
+  // internal
+  moveLeftFlag = false
+  moveRightFlag = false
+
+  start() {
+    // bind begin contact event
+    const collider = this.getComponent(Collider2D)
+    collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this)
+  }
+
+  init(game: GameManager) {
     this.game = game
     this.curHp = this.hp
     this.score = 0
-    this.initPlayer()
+    this.initPlane()
     this.onControl()
     // 随机位置
+    // const mapSize = this.game.map.node.getComponent(UITransform).contentSize
     // this.node.setPosition(
-    //   cc.v2( (Math.random() - 0.5) * 2  * this.game.map.width / 2,
-    //   (Math.random() - 0.5) * 2  * this.game.map.height / 2)
+    //   v3((Math.random() - 0.5) * 2 * mapSize.width / 2, (Math.random() - 0.5) * 2 * mapSize.height / 2),
     // )
-    this.node.setPosition(cc.v2(0, 0))
+    this.node.setPosition(v3(0, 0, 0))
     this.oneShootKills = 0
   }
 
@@ -109,25 +148,24 @@ export class Player extends Component {
   }
 
   // 初始化 plane
-  initPlayer() {
+  initPlane() {
     // console.log(this.getPosition())
     // 修改颜色
-    const color = Color.BLACK
-    this.RoleColor = color.fromHEX(getRandomColor())
-    this.node.color = this.RoleColor
+    Color.fromHEX(this.roleColor, getRandomColor())
+    // this.node.color = this.RoleColor
     this.jet = this.node.getChildByName('jet')
-    this.jet.getChildByName('triangle').color = this.RoleColor
+    // this.jet.getChildByName('triangle').color = this.RoleColor
 
-    this.emitter = this.node.getChildByName('emitter')
+    // this.emitter = this.node.getChildByName('emitter')
   }
 
   // 控制
   onControl() {
-    systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this)
-    systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this)
+    input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this)
+    input.on(Input.EventType.KEY_UP, this.onKeyUp, this)
   }
 
-  onKeyDown(event) {
+  onKeyDown(event: EventKeyboard) {
     switch (event.keyCode) {
       // shoot
       case KeyCode.SPACE:
@@ -150,7 +188,7 @@ export class Player extends Component {
     }
   }
 
-  onKeyUp(event) {
+  onKeyUp(event: EventKeyboard) {
     switch (event.keyCode) {
       // release shoot
       case KeyCode.SPACE:
@@ -188,22 +226,22 @@ export class Player extends Component {
 
   startMove() {
     this.isStop = false
-    this.getComponent(cc.RigidBody).linearDamping = 0
-    this.node.getChildByName('jet').opacity = 255
+    this.getComponent(RigidBody2D).linearDamping = 0
+    this.node.getChildByName('jet').getComponent(UIOpacity).opacity = 255
     this.fxTrail.resetSystem()
   }
 
   stopMove() {
     this.isStop = true
     this.speedUpFlag = false
-    this.getComponent(cc.RigidBody).linearDamping = 0.5
-    this.node.getChildByName('jet').opacity = 0
+    this.getComponent(RigidBody2D).linearDamping = 0.5
+    this.node.getChildByName('jet').getComponent(UIOpacity).opacity = 0
     this.fxTrail.stopSystem()
   }
 
   shoot() {
-    const radian = cc.misc.degreesToRadians(90 - this.node.rotation)
-    const dir = cc.v2(
+    const radian = misc.degreesToRadians(90 - this.node.rotation.z)
+    const dir = v2(
       Math.cos(radian),
       Math.sin(radian),
     )
@@ -219,7 +257,7 @@ export class Player extends Component {
       this.moveAngle -= 2
 
     const degree = 90 - this.moveAngle
-    this.node.rotation = degree
+    this.node.setRotationFromEuler(0, 0, degree)
   }
 
   speedUp() {
@@ -247,7 +285,8 @@ export class Player extends Component {
   }
 
   // 碰撞回调
-  onBeginContact(_contact, _selfCollider, _otherCollider) {
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
     this.curHp -= inflictDamage(otherCollider)
     this.game.inGameUI.showHp()
 
@@ -273,7 +312,7 @@ export class Player extends Component {
     if (this.life > 0) {
       this.scheduleOnce(() => {
         this.game.death()
-      }, this.game.playerFX.deadAnim.currentClip.duration)
+      }, this.game.playerFX.deadAnim.defaultClip.duration)
     }
     else {
       this.game.gameOver()
@@ -292,14 +331,14 @@ export class Player extends Component {
     if (this._shootFlag && !this._delayFlag)
       this.shoot()
 
-    const radian = cc.misc.degreesToRadians(this.moveAngle)
-    this.moveDir = cc.v2(
+    const radian = misc.degreesToRadians(this.moveAngle)
+    this.moveDir = v2(
       Math.cos(radian),
       Math.sin(radian),
     )
     this.roleRotate()
     if (!this.isStop) {
-      this.getComponent(cc.RigidBody).linearVelocity = cc.v2(
+      this.getComponent(RigidBody2D).linearVelocity = v2(
         this.moveSpeed * this.moveDir.x,
         this.moveSpeed * this.moveDir.y,
       )
@@ -323,40 +362,55 @@ export class Player extends Component {
       this.game.inGameUI.showKills(this.oneShootKills)
   }
 
-  // net
-  storeUserGameData() {
-    const KVData = {
-      nickName: Global.userInfo ? Global.userInfo.nickName.string : '匿名',
-      wxgame: {
-        score: this.score,
-        update_time: Date.parse(new Date()),
-      },
-      cost_ms: this.cost_ms,
+  /**
+   * 玩家行为
+   */
+  playAction(action: {
+    type: keyof typeof PLAY_ACTION
+    data: any
+  }) {
+    switch (action.type) {
+      case PLAY_ACTION.MOVE:
+        break
+      default:
+        break
     }
-
-    if (sys.platform === sys.WECHAT_GAME) {
-      const KVDataList = []
-      KVDataList.push(JSON.stringify(KVData))
-      wx.setUserCloudStorage({
-        KVDataList,
-      })
-    }
-    //  else {
-    let records = sys.localStorage.getItem('records')
-    if (records) {
-      records = JSON.parse(records)
-      if (!(Array.isArray(records)))
-        records = []
-
-      else if (records.length >= 20)
-        log(records.pop())
-
-      records.unshift(KVData)
-    }
-    sys.localStorage.setItem('curRecord', JSON.stringify(KVData))
-    sys.localStorage.setItem('records', JSON.stringify(records))
-    // }
-
-    Global.rank.fresh()
   }
+
+  // net
+  // storeUserGameData() {
+  //   const KVData = {
+  //     nickName: Global.userInfo ? Global.userInfo.nickName.string : '匿名',
+  //     wxgame: {
+  //       score: this.score,
+  //       update_time: Date.parse(new Date()),
+  //     },
+  //     cost_ms: this.cost_ms,
+  //   }
+
+  //   if (sys.platform === sys.Platform.WECHAT_GAME) {
+  //     const KVDataList = []
+  //     KVDataList.push(JSON.stringify(KVData))
+  //     wx.setUserCloudStorage({
+  //       KVDataList,
+  //     })
+  //   }
+  //   //  else {
+  //   let records = sys.localStorage.getItem('records')
+  //   if (records) {
+  //     records = JSON.parse(records)
+  //     if (!(Array.isArray(records)))
+  //       records = []
+
+  //     else if (records.length >= 20)
+  //       log(records.pop())
+
+  //     records.unshift(KVData)
+  //   }
+  //   sys.localStorage.setItem('curRecord', JSON.stringify(KVData))
+  //   sys.localStorage.setItem('records', JSON.stringify(records))
+  //   // }
+
+  //   Global.rank.fresh()
+  // }
 }

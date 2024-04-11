@@ -1,12 +1,13 @@
-import { Component, _decorator, log } from 'cc'
+import { Component, Enum, _decorator, log } from 'cc'
 import { FoeType } from '../../types'
+import type { PoolMng } from '../../global/PoolMng'
 
 const { ccclass, property } = _decorator
 
 @ccclass('Spawn')
 export class Spawn extends Component {
   @property({
-    type: FoeType,
+    type: Enum(FoeType),
     tooltip: 'Foe Type',
   })
   foeType = FoeType.Foe1
@@ -16,12 +17,15 @@ export class Spawn extends Component {
 
   isCompany = false
 
+  spawned = 0
+  finished = false
+
   ctor() {
     this.spawned = 0
     this.finished = false
   }
 
-  spawn(poolMng) {
+  spawn(poolMng: PoolMng) {
     if (this.spawned >= this.total)
       return
 

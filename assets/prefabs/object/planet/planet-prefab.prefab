@@ -59,7 +59,7 @@
       "z": 1
     },
     "_mobility": 0,
-    "_layer": 1073741824,
+    "_layer": 2,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -186,10 +186,10 @@
     "enabledContactListener": true,
     "bullet": false,
     "awakeOnLoad": true,
-    "_group": 1,
+    "_group": 2,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 1,
+    "_gravityScale": 0,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -221,8 +221,12 @@
     "hp": 1000,
     "curHp": 1000,
     "radius": 100,
+    "minRadius": 50,
+    "maxRadius": 150,
     "gravityRadius": 200,
     "gravityForce": 300,
+    "minAngularVelocity": 0,
+    "maxAngularVelocity": 5,
     "_id": ""
   },
   {

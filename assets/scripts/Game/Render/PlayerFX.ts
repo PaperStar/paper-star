@@ -25,6 +25,12 @@ export class PlayerFX extends Component {
 
   game: GameManager
 
+  animation: Animation
+
+  protected onLoad(): void {
+    this.animation = this.getComponent(Animation)
+  }
+
   // use this for initialization
   init(game: GameManager) {
     this.game = game
@@ -39,8 +45,9 @@ export class PlayerFX extends Component {
   }
 
   playIntro() {
-    this.introAnim.node.active = true
-    this.introAnim.play('start')
+    // this.introAnim.node.active = true
+    // this.introAnim.play('start')
+    // console.log(this.animation.clips)
   }
 
   playDead() {

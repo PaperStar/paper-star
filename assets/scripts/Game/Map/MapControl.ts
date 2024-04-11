@@ -1,6 +1,7 @@
-import type { Node, Rect } from 'cc'
-import { CCInteger, Component, NodePool, Prefab, UITransform, _decorator, instantiate, rect, v2, v3 } from 'cc'
+import type { Rect } from 'cc'
+import { CCInteger, Component, Node, NodePool, Prefab, Size, _decorator, find, instantiate, rect, v2, v3 } from 'cc'
 import { PlanetType } from '../../types'
+import { Planet } from '../objects/planet/Planet'
 
 const { ccclass, property } = _decorator
 
@@ -10,6 +11,12 @@ export class MapControl extends Component {
     [PlanetType.Simple]: new NodePool(),
     [PlanetType.Other]: new NodePool(),
   }
+
+  @property({
+    type: Size,
+    tooltip: '地图大小',
+  })
+  mapSize = new Size(2000, 2000)
 
   @property({
     type: CCInteger,
@@ -47,80 +54,99 @@ export class MapControl extends Component {
   })
   planetMargin = 100
 
-  PlanetRectArray = []
+  /**
+   * 用于检测星球是否重叠
+   */
+  planetRectArray: Rect[] = []
 
-  curPlanet: Node
+  curPlanet: Planet
   curPlanetRect: Rect
+  /**
+   * 当前星球大小(random)
+   */
+  curPlanetSize: number
 
-  StarAnim: Node
+  @property({
+    type: Node,
+    tooltip: '星星动画容器',
+  })
+  starAnimContainer: Node
+
+  protected onLoad(): void {
+    this.starAnimContainer = find('Canvas/map/bg/star-anim-container')
+  }
 
   init() {
-    this.StarAnim = this.node.getChildByName('bg').getChildByName('StarAnim')
     this.generatePlanet(this.planetNum)
     this.generateManyStarAnim(30)
   }
 
-  getPlanet(planetType: PlanetType) {
-    let planet = this.planetPools[planetType].get()
-    if (!planet) {
-      planet = instantiate(this.planetPrefab)
-      this.planetPools[planetType].put(planet)
-    }
-    return this.planetPools[planetType].get()
-  }
-
-  putPlanet(planetType: PlanetType, obj) {
-    return this.planetPools[planetType].put(obj)
-  }
-
   generatePlanet(num: number) {
     for (let i = 0; i < num; i++) {
-      this.curPlanet = this.getPlanet(PlanetType.Simple)
-      const curPlanetSize = this.curPlanet.getComponent(UITransform).contentSize
-      const mapSize = this.getComponent(UITransform).contentSize
+      const planetNode = instantiate(this.planetPrefab)
+      this.planetPools[PlanetType.Simple].put(planetNode)
+
+      this.curPlanet = planetNode.getComponent(Planet)
+      // 随机位置，不要靠近边缘
+      const margin = 500
+
+      const rectHalfSize = this.curPlanet.radius + this.planetMargin
       const pos = v3(
-        (Math.random() - 0.5) * 2 * (mapSize.width - 500) / 2,
-        (Math.random() - 0.5) * 2 * (mapSize.height - 500) / 2,
+        (Math.random() - 0.5) * 2 * (this.mapSize.width - margin) / 2 - rectHalfSize,
+        (Math.random() - 0.5) * 2 * (this.mapSize.height - margin) / 2 - rectHalfSize,
         0,
       )
+      this.curPlanet.initRadius()
+
       this.curPlanetRect = rect(
         pos.x,
         pos.y,
-        curPlanetSize.width + this.planetMargin,
-        curPlanetSize.height + this.planetMargin,
+        rectHalfSize,
+        rectHalfSize,
       )
 
-      // 检验当前位置是否已有 planet
-      for (let j = 0; j < i; j++) {
-        this.oldPlanetRect = this.PlanetRectArray[j]
-        this.checkIntersectPlanet()
-      }
-      this.PlanetRectArray.push(this.curPlanetRect)
-      this.node.addChild(this.curPlanet)
-      this.curPlanet.setPosition(pos)
-      this.curPlanet.getComponent('Planet').init(this)
-    }
-  }
-
-  checkIntersectPlanet() {
-    const planetSize = this.curPlanet.getComponent(UITransform).contentSize
-    const mapSize = this.getComponent(UITransform).contentSize
-    if (this.oldPlanetRect.intersects(this.curPlanetRect)) {
-      const pos = v2(
-        (Math.random() - 0.5) * 2 * (mapSize.width - 500) / 2,
-        (Math.random() - 0.5) * 2 * (mapSize.height - 500) / 2,
-      )
-      this.curPlanetRect = rect(
-        pos.x,
-        pos.y,
-        planetSize.width + this.planetMargin,
-        planetSize.height + this.planetMargin,
-      )
+      // 检验当前位置是否已有 planet，并更新新的位置
       this.checkIntersectPlanet()
+      this.planetRectArray.push(this.curPlanetRect)
+
+      const terrainNode = find('Canvas/map/terrain')
+      terrainNode.addChild(this.curPlanet.node)
+
+      this.curPlanet.node.setPosition(pos)
+      this.curPlanet.init(this)
     }
   }
 
-  generateManyStarAnim(num) {
+  /**
+   * 检测星球是否重叠
+   */
+  checkIntersectPlanet() {
+    const rectHalfSize = this.curPlanet.radius + this.planetMargin
+
+    for (let i = 0; i < this.planetRectArray.length; i++) {
+      const planetRect = this.planetRectArray[i]
+      if (this.curPlanetRect.intersects(planetRect)) {
+        // 创建新位置
+        const pos = v2(
+          (Math.random() - 0.5) * 2 * (this.mapSize.width - 500) / 2 - rectHalfSize,
+          (Math.random() - 0.5) * 2 * (this.mapSize.height - 500) / 2 - rectHalfSize,
+        )
+        this.curPlanetRect = rect(
+          pos.x,
+          pos.y,
+          rectHalfSize,
+          rectHalfSize,
+        )
+        // this.checkIntersectPlanet()
+        break
+      }
+    }
+  }
+
+  /**
+   * 生成多个星星动画
+   */
+  generateManyStarAnim(num: number) {
     for (let i = 0; i < num; i++) {
       this.generateStarAnim(this.fiveStarAnim)
       this.generateStarAnim(this.fourStarAnim)
@@ -129,17 +155,19 @@ export class MapControl extends Component {
   }
 
   generateStarAnim(StarPrefab: Prefab) {
-    const Star = instantiate(StarPrefab)
-    Star.parent = this.StarAnim
-    const mapSize = this.getComponent(UITransform).contentSize
+    if (!StarPrefab)
+      return
+
+    const star = instantiate(StarPrefab)
+    star.parent = this.starAnimContainer
     const randomPosition = v3(
-      (Math.random() - 0.5) * 2 * mapSize.width / 2,
-      (Math.random() - 0.5) * 2 * mapSize.height / 2,
+      (Math.random() - 0.5) * 2 * this.mapSize.width / 2,
+      (Math.random() - 0.5) * 2 * this.mapSize.height / 2,
       0,
     )
-    Star.setPosition(randomPosition)
+    star.setPosition(randomPosition)
     // Star.scale = Math.random() + 0.1
     const scale = Math.random() + 0.1
-    Star.setScale(scale, scale, 1)
+    star.setScale(scale, scale, 1)
   }
 }

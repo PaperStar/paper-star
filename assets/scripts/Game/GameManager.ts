@@ -1,30 +1,33 @@
 import type { Node } from 'cc'
-import { Animation, Camera, Color, Component, _decorator, director, error, find, instantiate, resources } from 'cc'
-import type { PoolMng } from '../global/PoolMng'
-import type { Player } from '../player/Player'
+import { Animation, Component, Prefab, _decorator, director, find, instantiate } from 'cc'
+import { PoolMng } from '../global/PoolMng'
+import { Player } from '../player/Player'
 import type { DeathUI } from '../ui/game/DeathUI'
 import type { GameOverUI } from '../ui/GameOverUI'
 import type { InGameUI } from '../ui/game/InGameUI'
-import type { UserInfo } from '../begin/UserInfo'
+import { UserInfo } from '../begin/UserInfo'
+import { MainCamera } from '../system/camera/MainCamera'
+import { ResourceUtil } from '../framework/utils'
 import type { SortMng } from './render/SortMng'
-import type { PlayerFX } from './render/PlayerFX'
+import { PlayerFX } from './render/PlayerFX'
 import { BulletMng } from './manager/BulletMng'
 import { MapControl } from './map/MapControl'
 import type { WaveMng } from './wave/WaveMng'
 
 import type { BossMng } from './enemy/BossMng'
 
-const { ccclass } = _decorator
+const { ccclass, property } = _decorator
 
 @ccclass('GameManager')
 export class GameManager extends Component {
+  static isGameStart = false
+
   // user
   userInfo: UserInfo
 
   player: Player
   playerFX: PlayerFX
   foeGroup: Node
-  mainCamera: Camera
 
   // manager
   bulletMng: BulletMng
@@ -40,67 +43,79 @@ export class GameManager extends Component {
 
   startTime: number
 
-  onLoad() {
+  @property({
+    type: Prefab,
+    tooltip: 'Player Prefab',
+  })
+  playerPrefab: Prefab
+
+  @property({
+    type: Prefab,
+    tooltip: 'Fight Panel Prefab',
+  })
+  fightPanelPrefab: Prefab
+
+  // internal
+  mainCamera: MainCamera
+  map: MapControl
+
+  fightPanelNode: Node
+
+  async onLoad() {
+    this.mainCamera = find('Canvas/Camera').getComponent(MainCamera)
+
     const mapNode = find('Canvas/map')
     const mapControl = mapNode.getComponent(MapControl)
-    mapControl.init()
-
-    this.playerFX = this.playerFX.getComponent('PlayerFX') as PlayerFX
-    this.playerFX.init(this)
+    this.map = mapControl
+    this.map.init()
 
     // init UI & Camera in player
     this.initPlayer()
-    this.poolMng = this.poolMng.getComponent('PoolMng') as PoolMng
+
+    this.poolMng = find('pool-mng').getComponent(PoolMng)
     this.poolMng.init()
     // this.waveMng = this.waveMng.getComponent('WaveMng');
     // this.waveMng.init(this);
     // this.bossMng = this.bossMng.getComponent('BossMng');
     // this.bossMng.init(this);
-    this.sortMng = this.foeGroup.getComponent('SortMng') as SortMng
+    // this.sortMng = this.foeGroup.getComponent(SortMng)
     this.initMng()
 
     // user
-    director.addPersistRootNode(this.userInfo.node)
-    this.userInfo = this.userInfo.getComponent('UserInfo') as UserInfo
+    this.userInfo = find('UICanvas/user-info').getComponent(UserInfo)
     this.userInfo.init()
+
+    this.fightPanelNode = await ResourceUtil.createUI(this.fightPanelPrefab)
   }
 
   start() {
-    this.playerFX.playIntro()
+    // 进入动画
+    this.playerFX?.playIntro()
   }
 
   initPlayer() {
-    resources.load('prefab/role/player/main', (err, prefab) => {
-      if (err) {
-        error(err.message || err)
-        return
-      }
-      const playerInstance = instantiate(prefab)
-      this.player = playerInstance.getComponent('Player') as Player
-      this.node.addChild(this.player.node)
-      this.player.init(this)
-      this.player.node.active = false
+    const playerInstance = instantiate(this.playerPrefab)
+    this.player = playerInstance.getComponent(Player)
+    this.player.node.active = true
+    this.node.addChild(this.player.node)
+    this.player.init(this)
 
-      this.initUI()
-      this.initCamera()
-    })
-  }
+    this.playerFX = this.player.node.getChildByName('playerFX').getComponent(PlayerFX)
+    // TODO: playerFX
+    // this.playerFX.init(this)
 
-  initCamera() {
-    // set default bg color gray
-    Camera.main.backgroundColor = Color.GRAY
-    this.mainCamera = this.mainCamera.getComponent('MainCamera')
-    this.mainCamera.init(this.player.node)
+    this.initUI()
+    this.mainCamera.setTarget(this.player.node)
   }
 
   initUI() {
     // UI initialization
-    this.inGameUI = this.inGameUI.getComponent('InGameUI') as InGameUI
-    this.inGameUI.init(this)
-    this.deathUI = this.deathUI.getComponent('DeathUI') as DeathUI
-    this.deathUI.init(this)
-    this.gameOverUI = this.gameOverUI.getComponent('GameOverUI') as GameOverUI
-    this.gameOverUI.init(this)
+    // this.inGameUI = this.inGameUI.getComponent(InGameUI)
+    // this.inGameUI.init(this)
+    // this.deathUI = this.deathUI.getComponent(DeathUI)
+    // this.deathUI.init(this)
+    // this.gameOverUI = this.gameOverUI.getComponent(GameOverUI)
+    // this.gameOverUI.init(this)
   }
 
   initMng() {
@@ -160,7 +175,8 @@ export class GameManager extends Component {
     const endTime = new Date().valueOf()
     this.player.cost_ms = endTime - this.startTime
     // this.resume()
-    this.player.storeUserGameData()
+    // TODO: store data
+    // this.player.storeUserGameData()
     this.deathUI.hide()
     this.gameOverUI.show()
   }

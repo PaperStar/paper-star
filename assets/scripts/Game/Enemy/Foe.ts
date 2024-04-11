@@ -1,5 +1,5 @@
 import type { ParticleSystem, Prefab, Sprite } from 'cc'
-import { Component, _decorator, instantiate, misc, v2 } from 'cc'
+import { Component, Enum, _decorator, instantiate, misc, v2 } from 'cc'
 import { inflictDamage } from '../../utils'
 import { AttackType, BulletType, FoeType } from '../../types'
 
@@ -11,7 +11,7 @@ export class Foe extends Component {
   atkType = AttackType.Melee
   @property({
     tooltip: '子弹类型',
-    type: BulletType,
+    type: Enum(BulletType),
   })
   bulletType = BulletType.Line
 

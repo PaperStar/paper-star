@@ -1,5 +1,5 @@
 import type { Node, Sprite } from 'cc'
-import { BoxCollider, Component, RigidBody, _decorator, v2 } from 'cc'
+import { BoxCollider, Component, Enum, RigidBody, _decorator, v2 } from 'cc'
 import { BulletType } from '../../../types'
 
 const { ccclass, property } = _decorator
@@ -7,8 +7,8 @@ const { ccclass, property } = _decorator
 @ccclass('Bullet')
 export class Bullet extends Component {
   @property({
-    type: BulletType,
     tooltip: '子弹类型',
+    type: Enum(BulletType),
   })
   bulletType = BulletType.Line
 

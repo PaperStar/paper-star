@@ -33,9 +33,19 @@ export class Planet extends Component {
   curHp = 1000
 
   @property({
-    tooltip: '半径',
+    tooltip: '默认半径',
   })
   radius = 100
+
+  @property({
+    tooltip: '最小半径',
+  })
+  minRadius = 50
+
+  @property({
+    tooltip: '最大半径',
+  })
+  maxRadius = 150
 
   @property({
     tooltip: '引力预制体',
@@ -62,7 +72,21 @@ export class Planet extends Component {
   })
   breakAnim: Animation
 
+  @property({
+    tooltip: '最小旋转速度',
+  })
+  minAngularVelocity = 0
+
+  @property({
+    tooltip: '最大旋转速度',
+  })
+  maxAngularVelocity = 5
+
   map: MapControl
+
+  initRadius() {
+    this.radius = getRandom(this.minRadius, this.maxRadius)
+  }
 
   init(map: MapControl) {
     this.map = map
@@ -74,7 +98,7 @@ export class Planet extends Component {
 
     // enable rigid rotation
     const rigidBody2D = this.getComponent(RigidBody2D)
-    const velocity = (Math.random() - 0.5) * 2 * 200
+    const velocity = getRandom(this.minAngularVelocity, this.maxAngularVelocity)
     rigidBody2D.angularVelocity = velocity
 
     // collider radius
@@ -127,7 +151,7 @@ export class Planet extends Component {
     else if (this.curHp <= 0) {
       // play break anim
       this.breakAnim.play('break')
-      this.map.putPlanet(PlanetType.Simple, this.node)
+      this.map.planetPools[PlanetType.Simple].put(this.node)
     }
 
     this.hpBar.display(this.curHp, this.hp)

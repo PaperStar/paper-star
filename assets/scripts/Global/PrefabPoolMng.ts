@@ -1,3 +1,4 @@
+import type { Node } from 'cc'
 import { Component, NodePool, Prefab, _decorator, instantiate } from 'cc'
 
 const { ccclass, property } = _decorator
@@ -31,7 +32,7 @@ export class PrefabPoolMng extends Component {
     return this.nodePool.get()
   }
 
-  put(obj) {
+  put(obj: Node) {
     return this.nodePool.put(obj)
   }
 }
