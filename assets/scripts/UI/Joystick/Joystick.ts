@@ -1,7 +1,7 @@
-import type { EventTouch, Vec2 } from 'cc'
-import { Component, Node, UITransform, Vec3, _decorator, view } from 'cc'
-import { Player } from '../../player/Player'
+import type { EventTouch } from 'cc'
+import { Component, Node, UITransform, Vec3, _decorator, v3, view } from 'cc'
 import { GameManager } from '../../game/GameManager'
+import { GameState, PLAYER_ACTION } from '../../constants'
 import { DIRECTION_TYPE, TOUCH_TYPE } from './constants'
 
 const { ccclass, property } = _decorator
@@ -10,11 +10,11 @@ const screenHeight = view.getVisibleSize().height // 屏幕可视范围高度
 
 @ccclass('Joystick')
 export class Joystick extends Component {
-  @property({
-    type: Player,
-    tooltip: '操控角色',
-  })
-  player: Player
+  // @property({
+  //   type: Player,
+  //   tooltip: '操控角色',
+  // })
+  // player: Player
 
   @property({
     type: Node,
@@ -40,6 +40,11 @@ export class Joystick extends Component {
   })
   directionType = DIRECTION_TYPE.ALL
 
+  @property({
+    tooltip: '检测时间间隔',
+  })
+  checkInterval: number = 0.04 // 每40ms刷新一次
+
   @property({ displayName: '启动半透明' })
   public isEnableTransparent: boolean = false
 
@@ -48,13 +53,6 @@ export class Joystick extends Component {
 
   @property({ displayName: '内圈大小' })
   public innerSize: number = 10
-
-  /**
-   * 摇杆当前位置
-   */
-  _stickPos: Node
-
-  _touchLocation: Vec2
 
   onEndCb: Function = null!
 
@@ -65,11 +63,15 @@ export class Joystick extends Component {
   /**
    * 当前触摸的角度
    */
-  private _angle = 0
-  /**
-   * 圆圈初始位置
-   */
-  private _oriRingPos: Vec3 = null!
+  angle = 0
+  private _oldAngle: number = 0// 之前的角度
+
+  @property({
+    type: Vec3,
+    tooltip: '圆圈初始位置',
+  })
+  oriRingPos: Vec3 = v3(0, 0, 0)
+
   private _targetRingPos: Vec3 = new Vec3() // 圆圈背景位置
   /**
    * 中间按钮初始坐标
@@ -85,14 +87,15 @@ export class Joystick extends Component {
    * 开始触碰位置
    */
   private _touchStartLocation = new Vec3()
-  private _touchMoveLocation: Vec3 = new Vec3()// 移动触碰位置
-  private _touchEndLocation: Vec3 = new Vec3()// 结束触碰位置
+  private _touchMoveLocation: Vec3 = new Vec3() // 移动触碰位置
+  private _touchEndLocation: Vec3 = new Vec3() // 结束触碰位置
 
-  private _isOutInnerSize = false// 终点拖动的点是否超出按钮圆圈背景
+  private _isOutInnerSize = false // 终点拖动的点是否超出按钮圆圈背景
+  private _currentTime: number = 0 // 当前累积时间
 
-  init(player: Player) {
-    this.player = player
-  }
+  // init(player: Player) {
+  //   this.player = player
+  // }
 
   protected onEnable(): void {
     this.node.on(Node.EventType.TOUCH_START, this._touchStartEvent, this)
@@ -100,6 +103,8 @@ export class Joystick extends Component {
     // 触摸在圆圈内离开或在圆圈外离开后，摇杆归位，player速度为0
     this.node.on(Node.EventType.TOUCH_END, this._touchEndEvent, this)
     this.node.on(Node.EventType.TOUCH_CANCEL, this._touchEndEvent, this)
+
+    this.ring.setPosition(this.oriRingPos)
   }
 
   protected onDisable(): void {
@@ -110,26 +115,26 @@ export class Joystick extends Component {
     this.node.off(Node.EventType.TOUCH_CANCEL, this._touchEndEvent, this)
 
     // reset
-    this.dot.setPosition(this._oriRingPos)
-    if (this._oriRingPos)
-      this.ring.setPosition(this._oriRingPos)
+    this.dot.setPosition(this._oriDotPos)
+    this.ring.setPosition(this.oriRingPos)
   }
 
   _touchStartEvent(event: EventTouch) {
     // 记录触摸的世界坐标，给touch move使用
     const touch = event.getUILocation()
     this._touchStartLocation.set(touch.x, touch.y, 0)
-    let touchPos = this.node.getComponent(UITransform)?.convertToNodeSpaceAR(this._touchStartLocation)
+    let touchPos = this.node.getComponent(UITransform)!.convertToNodeSpaceAR(this._touchStartLocation)
 
-    if (!this._oriRingPos)
-      this._oriRingPos = this.ring.getPosition().clone()
+    if (!this.oriRingPos)
+      this.oriRingPos = this.ring.getPosition().clone()
 
     if (!this.isFollowStart) {
-      touchPos = this.ring.getComponent(UITransform)?.convertToNodeSpaceAR(this._touchStartLocation)
+      const ringUITransform = this.ring.getComponent(UITransform)!
+      touchPos = ringUITransform.convertToNodeSpaceAR(this._touchStartLocation)
 
       // 触摸点与圆圈中心的距离
       const distance = touchPos.length()
-      const width = this.ring.getComponent(UITransform)?.contentSize.width
+      const width = ringUITransform.contentSize.width
       // 圆圈半径
       const radius = width / 2
 
@@ -178,7 +183,9 @@ export class Joystick extends Component {
     // 以圆圈为锚点获取触摸坐标
     const touch = event.getUILocation()
     this._touchMoveLocation.set(touch.x, touch.y, 0)
-    const touchPos = this.ring.getComponent(UITransform)?.convertToNodeSpaceAR(this._touchMoveLocation)
+
+    const ringUITransform = this.ring.getComponent(UITransform)!
+    const touchPos = ringUITransform.convertToNodeSpaceAR(this._touchMoveLocation)
 
     const distance = touchPos.length()
 
@@ -191,14 +198,14 @@ export class Joystick extends Component {
     }
 
     // 有拖动且有角度才视为开始游戏
-    if (!GameManager.isGameStart && this.isMoving) {
+    if (GameManager.curState !== GameState.PLAYING && this.isMoving) {
+      GameManager.setCurState(GameState.PLAYING)
       // ClientEvent.dispatchEvent(Constant.EVENT_TYPE.MONSTER_MOVE)
 
-      // this._currentTime = this._checkInterval
-      GameManager.isGameStart = true
+      this._currentTime = this.checkInterval
     }
 
-    const width = this.ring.getComponent(UITransform)?.contentSize.width
+    const width = ringUITransform.contentSize.width as number
     // 圆圈半径
     const radius = width / 2
     let rate = 0
@@ -269,7 +276,7 @@ export class Joystick extends Component {
 
     if (this.touchType === TOUCH_TYPE.FOLLOW || this.touchType === TOUCH_TYPE.FOLLOW_ALWAYS || this.touchType === TOUCH_TYPE.FOLLOW_DOT) {
       this._targetRingPos = null!
-      this.ring.setPosition(this._oriRingPos)
+      this.ring.setPosition(this.oriRingPos)
     }
     // this.player.stopMove()
   }
@@ -277,23 +284,25 @@ export class Joystick extends Component {
   // methods
 
   // 设置实际速度
-  _setSpeed(point) {
-    // 触摸点和遥控杆中心的距离
-    const distance = point.sub(this.ring.getPosition()).mag()
-    // 如果半径
-    if (distance < this._radius)
-      this.player.moveSpeed = this.player.normalSpeed
-    else
-      this.player.speedUpFlag = true
-  }
+  // _setSpeed(point) {
+  //   // 触摸点和遥控杆中心的距离
+  //   const distance = point.sub(this.ring.getPosition()).mag()
+  //   // 如果半径
+  //   if (distance < this._radius)
+  //     this.player.moveSpeed = this.player.normalSpeed
+  //   else
+  //     this.player.speedUpFlag = true
+  // }
 
   private _updateAngle(pos: Vec3) {
-    this._angle = Math.round(Math.atan2(pos.y, pos.x) * 180 / Math.PI)
-    return this._angle
+    this.angle = Math.round(Math.atan2(pos.y, pos.x) * 180 / Math.PI)
+    return this.angle
   }
 
-  update() {
+  update(deltaTime: number) {
     // get move direction from rotation
+    if (GameManager.curState !== GameState.PLAYING || !GameManager.player)
+      return
 
     // console.log(this.player)
     // const rotation = this.player.node.getComponent(cc.RigidBody)
@@ -304,5 +313,34 @@ export class Joystick extends Component {
     //     Math.sin(radian)
     // );
     // this.player.moveDir = dir;
+
+    // 设置终点按钮位置
+    // TOUCH_TYPE.FOLLOW_ALWAYS
+
+    // if (this._targetRingPos) {
+    //   this._curRingPos_1.set(0, 0, 0)
+    //   Vec3.lerp(this._curRingPos_1, this.ring.position, this._targetRingPos, 20 * deltaTime)
+    //   this.ring.setPosition(this._curRingPos_1)
+    // }
+
+    this._currentTime += deltaTime
+
+    if (this._currentTime >= this.checkInterval) {
+      this._currentTime = 0
+
+      if (this.isMoving) {
+        if (this.angle !== this._oldAngle) {
+          this._oldAngle = this.angle
+          // 移动角色
+          GameManager.player.playAction({ type: PLAYER_ACTION.MOVE, data: this.angle })
+        }
+      }
+      else {
+        this.isMoving = false
+        // 停止移动
+        if (GameManager.player.isMoving)
+          GameManager.player.playAction({ type: PLAYER_ACTION.STOP_MOVE })
+      }
+    }
   }
 }

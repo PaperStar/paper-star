@@ -1,16 +1,11 @@
-import type { EventKeyboard, IPhysics2DContact, Node } from 'cc'
-import { Collider2D, Color, Component, Contact2DType, Enum, Input, KeyCode, ParticleSystem2D, RigidBody2D, UIOpacity, _decorator, input, log, misc, v2, v3 } from 'cc'
+import type { EventKeyboard, IPhysics2DContact } from 'cc'
+import { Collider2D, Color, Component, Contact2DType, Input, KeyCode, Node, ParticleSystem2D, RigidBody2D, UIOpacity, _decorator, input, log, macro, misc, v2, v3 } from 'cc'
 import { getRandomColor, inflictDamage } from '../utils'
 import { BulletType } from '../types'
-import type { CameraControl } from '../system/CameraControl'
-import type { GameManager } from '../game/GameManager'
+import { GameManager } from '../game/GameManager'
+import { PLAYER_ACTION } from '../constants'
 
 const { ccclass, property } = _decorator
-
-export const PLAY_ACTION = Enum({
-  MOVE: 'move',
-  STOP_MOVE: 'stop_move',
-})
 
 @ccclass('Player')
 export class Player extends Component {
@@ -18,14 +13,25 @@ export class Player extends Component {
     type: ParticleSystem2D,
     tooltip: '拖尾特效',
   })
-  fxTrail: ParticleSystem2D
+  fxTrail: ParticleSystem2D = null!
 
-  camera: CameraControl
+  @property({
+    type: Node,
+    tooltip: '喷气',
+  })
+  jet: Node = null!
+
+  @property({
+    type: BulletType,
+    tooltip: '子弹类型',
+  })
   bulletType = BulletType.Line
+
+  @property({
+    displayName: '生命值',
+  })
   hp = 100
-  curHp = 100
-  score = 0
-  cost_ms = 0
+
   @property({
     displayName: '子弹可碰撞次数',
   })
@@ -52,13 +58,8 @@ export class Player extends Component {
   roleColor = new Color()
 
   @property({
-    tooltip: '是否停止',
-  })
-  isStop = true
-
-  @property({
     displayName: 'Move Dir',
-    tooltip: '移动方向',
+    tooltip: '默认移动方向',
   })
   moveDir = v2(0, 1)
 
@@ -92,38 +93,36 @@ export class Player extends Component {
   })
   maxSpeed = 300
 
-  _delayFlag = false
-  _shootFlag = false
-
-  game: GameManager
-
+  game: GameManager = null!
+  // 当前生命值
+  curHp = 100
+  // 当前分数
+  score = 0
+  /**
+   * 是否正在移动
+   */
+  isMoving = false
   /**
    * 连续击杀数
    */
   oneShootKills = 0
-
   /**
    * 是否存活
    */
   isAlive = true
-
   /**
    * 是否启用输入
    */
   inputEnabled = true
-
-  @property({
-    tooltip: '喷气',
-  })
-  jet: Node
-
   // internal
   moveLeftFlag = false
   moveRightFlag = false
+  _delayFlag = false
+  _shootFlag = false
 
   start() {
     // bind begin contact event
-    const collider = this.getComponent(Collider2D)
+    const collider = this.getComponent(Collider2D)!
     collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this)
   }
 
@@ -153,7 +152,6 @@ export class Player extends Component {
     // 修改颜色
     Color.fromHEX(this.roleColor, getRandomColor())
     // this.node.color = this.RoleColor
-    this.jet = this.node.getChildByName('jet')
     // this.jet.getChildByName('triangle').color = this.RoleColor
 
     // this.emitter = this.node.getChildByName('emitter')
@@ -224,19 +222,37 @@ export class Player extends Component {
     this.moveRightFlag = true
   }
 
-  startMove() {
-    this.isStop = false
-    this.getComponent(RigidBody2D).linearDamping = 0
-    this.node.getChildByName('jet').getComponent(UIOpacity).opacity = 255
+  startMove(angle?: number) {
+    this.isMoving = true
+    this.getComponent(RigidBody2D)!.linearDamping = 0
+    this.node.getChildByName('jet')!.getComponent(UIOpacity)!.opacity = 255
     this.fxTrail.resetSystem()
+
+    if (typeof angle === 'number') {
+      const radian = angle * macro.RAD
+      this.moveDir.x = Math.round(Math.cos(radian) * 1)
+      this.moveDir.y = Math.round(Math.sin(radian) * 1)
+
+      this.isMoving = true
+
+      this.moveAngle = angle
+      this.moveAngle = this.moveAngle < 0
+        ? this.moveAngle + 360
+        : this.moveAngle > 360
+          ? this.moveAngle - 360
+          : this.moveAngle
+    }
   }
 
   stopMove() {
-    this.isStop = true
+    this.isMoving = false
     this.speedUpFlag = false
-    this.getComponent(RigidBody2D).linearDamping = 0.5
-    this.node.getChildByName('jet').getComponent(UIOpacity).opacity = 0
+    this.getComponent(RigidBody2D)!.linearDamping = 0.5
+    this.node.getChildByName('jet')!.getComponent(UIOpacity)!.opacity = 0
     this.fxTrail.stopSystem()
+
+    this.moveDir.x = 0
+    this.moveDir.y = 0
   }
 
   shoot() {
@@ -246,7 +262,7 @@ export class Player extends Component {
       Math.sin(radian),
     )
     this._delayFlag = true
-    this.game.bulletMng.spawnBullet(this.bulletType, dir, this)
+    GameManager.bulletMng.spawnBullet(this.bulletType, dir, this)
   }
 
   roleRotate() {
@@ -266,7 +282,7 @@ export class Player extends Component {
   }
 
   // 获取杀死一个 NPC 得到的经验
-  getExp(enemyLv) {
+  getExp(enemyLv: number) {
     if (enemyLv === 0)
       return 50
 
@@ -288,7 +304,7 @@ export class Player extends Component {
   // eslint-disable-next-line unused-imports/no-unused-vars
   onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
     this.curHp -= inflictDamage(otherCollider)
-    this.game.inGameUI.showHp()
+    GameManager.inGameUI.showHp()
 
     if (this.curHp <= 0 && this.isAlive) {
       this.isAlive = false
@@ -307,12 +323,13 @@ export class Player extends Component {
   dead() {
     this.isAlive = false
     this.life--
-    this.game.playerFX.playDead()
-    this.game.inGameUI.showLife()
+    const playerFX = this.game.playerFX
+    playerFX.playDead()
+    GameManager.inGameUI.showLife()
     if (this.life > 0) {
       this.scheduleOnce(() => {
         this.game.death()
-      }, this.game.playerFX.deadAnim.defaultClip.duration)
+      }, playerFX.deadAnim.defaultClip?.duration)
     }
     else {
       this.game.gameOver()
@@ -337,8 +354,8 @@ export class Player extends Component {
       Math.sin(radian),
     )
     this.roleRotate()
-    if (!this.isStop) {
-      this.getComponent(RigidBody2D).linearVelocity = v2(
+    if (!this.isMoving) {
+      this.getComponent(RigidBody2D)!.linearVelocity = v2(
         this.moveSpeed * this.moveDir.x,
         this.moveSpeed * this.moveDir.y,
       )
@@ -349,28 +366,32 @@ export class Player extends Component {
 
   addKills() {
     this.oneShootKills++
-    this.game.inGameUI.addCombo()
+    GameManager.inGameUI.addCombo()
   }
 
-  addScore(score) {
+  addScore(score: number) {
     this.score += score
-    this.game.inGameUI.showScore(this.score)
+    GameManager.inGameUI.showScore(this.score)
   }
 
   onAtkFinished() {
     if (this.oneShootKills >= 3)
-      this.game.inGameUI.showKills(this.oneShootKills)
+      GameManager.inGameUI.showKills(this.oneShootKills)
   }
 
   /**
    * 玩家行为
    */
   playAction(action: {
-    type: keyof typeof PLAY_ACTION
-    data: any
+    type: PLAYER_ACTION
+    data?: any
   }) {
     switch (action.type) {
-      case PLAY_ACTION.MOVE:
+      case PLAYER_ACTION.MOVE:
+        this.startMove(180 - action.data as number)
+        break
+      case PLAYER_ACTION.STOP_MOVE:
+        this.stopMove()
         break
       default:
         break

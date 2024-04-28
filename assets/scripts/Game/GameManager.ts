@@ -8,6 +8,7 @@ import type { InGameUI } from '../ui/game/InGameUI'
 import { UserInfo } from '../begin/UserInfo'
 import { MainCamera } from '../system/camera/MainCamera'
 import { ResourceUtil } from '../framework/utils'
+import { GameState } from '../constants'
 import type { SortMng } from './render/SortMng'
 import { PlayerFX } from './render/PlayerFX'
 import { BulletMng } from './manager/BulletMng'
@@ -15,65 +16,86 @@ import { MapControl } from './map/MapControl'
 import type { WaveMng } from './wave/WaveMng'
 
 import type { BossMng } from './enemy/BossMng'
+import { Foe } from './enemy/Foe'
+import { Bullet } from './objects/bullet/Bullet'
 
 const { ccclass, property } = _decorator
 
 @ccclass('GameManager')
 export class GameManager extends Component {
-  static isGameStart = false
+  static curState = GameState.INIT
 
   // user
-  userInfo: UserInfo
+  static userInfo: UserInfo
+  static player: Player
 
-  player: Player
-  playerFX: PlayerFX
-  foeGroup: Node
+  playerFX: PlayerFX = null!
+  foeGroup: Node = null!
 
   // manager
-  bulletMng: BulletMng
-  poolMng: PoolMng
-  sortMng: SortMng
-  waveMng: WaveMng
-  bossMng: BossMng
+  static bulletMng: BulletMng
+  static poolMng: PoolMng
+  static sortMng: SortMng
+  static waveMng: WaveMng
+  static bossMng: BossMng
 
   // ui
-  deathUI: DeathUI
-  gameOverUI: GameOverUI
-  inGameUI: InGameUI
+  static deathUI: DeathUI
+  static gameOverUI: GameOverUI
+  static inGameUI: InGameUI
 
-  startTime: number
+  /**
+   * 游戏开始时间
+   */
+  static startTime: number
+  static costTime: number
 
   @property({
     type: Prefab,
     tooltip: 'Player Prefab',
   })
-  playerPrefab: Prefab
+  playerPrefab: Prefab = null!
 
   @property({
     type: Prefab,
     tooltip: 'Fight Panel Prefab',
   })
-  fightPanelPrefab: Prefab
+  fightPanelPrefab: Prefab = null!
 
   // internal
-  mainCamera: MainCamera
-  map: MapControl
+  static mainCamera: MainCamera
+  static map: MapControl
+  static fightPanelNode: Node
 
-  fightPanelNode: Node
+  /**
+   * 改变游戏状态
+   */
+  static setCurState(state: GameState) {
+    this.curState = state
+    switch (state) {
+      case GameState.INIT:
+        break
+      case GameState.PLAYING:
+        break
+      case GameState.OVER:
+        break
+      default:
+        break
+    }
+  }
 
   async onLoad() {
-    this.mainCamera = find('Canvas/Camera').getComponent(MainCamera)
+    GameManager.mainCamera = find('Canvas/Camera')!.getComponent(MainCamera)!
 
-    const mapNode = find('Canvas/map')
-    const mapControl = mapNode.getComponent(MapControl)
-    this.map = mapControl
-    this.map.init()
+    const mapNode = find('Canvas/map')!
+    GameManager.map = mapNode.getComponent(MapControl)!
+    GameManager.map.init()
 
     // init UI & Camera in player
     this.initPlayer()
 
-    this.poolMng = find('pool-mng').getComponent(PoolMng)
-    this.poolMng.init()
+    GameManager.poolMng = find('pool-mng')!.getComponent(PoolMng)!
+    GameManager.poolMng.init()
     // this.waveMng = this.waveMng.getComponent('WaveMng');
     // this.waveMng.init(this);
     // this.bossMng = this.bossMng.getComponent('BossMng');
@@ -82,10 +104,10 @@ export class GameManager extends Component {
     this.initMng()
 
     // user
-    this.userInfo = find('UICanvas/user-info').getComponent(UserInfo)
-    this.userInfo.init()
+    GameManager.userInfo = find('UICanvas/user-info')!.getComponent(UserInfo)!
+    GameManager.userInfo.init()
 
-    this.fightPanelNode = await ResourceUtil.createUI(this.fightPanelPrefab)
+    GameManager.fightPanelNode = await ResourceUtil.createUI(this.fightPanelPrefab)
   }
 
   start() {
@@ -95,17 +117,17 @@ export class GameManager extends Component {
 
   initPlayer() {
     const playerInstance = instantiate(this.playerPrefab)
-    this.player = playerInstance.getComponent(Player)
-    this.player.node.active = true
-    this.node.addChild(this.player.node)
-    this.player.init(this)
+    GameManager.player = playerInstance.getComponent(Player)!
+    GameManager.player.node.active = true
+    this.node.addChild(GameManager.player.node)
+    GameManager.player.init(this)
 
-    this.playerFX = this.player.node.getChildByName('playerFX').getComponent(PlayerFX)
+    this.playerFX = GameManager.player.node.getChildByName('playerFX')!.getComponent(PlayerFX)!
     // TODO: playerFX
     // this.playerFX.init(this)
 
     this.initUI()
-    this.mainCamera.setTarget(this.player.node)
+    GameManager.mainCamera.setTarget(GameManager.player.node)
   }
 
   initUI() {
@@ -119,8 +141,8 @@ export class GameManager extends Component {
   }
 
   initMng() {
-    this.bulletMng = new BulletMng()
-    this.bulletMng.init(this)
+    GameManager.bulletMng = new BulletMng()
+    GameManager.bulletMng.init(this)
   }
 
   pause() {
@@ -132,30 +154,30 @@ export class GameManager extends Component {
   }
 
   cameraShake() {
-    this.mainCamera.node.getComponent(Animation).play('shake')
+    GameManager.mainCamera.node.getComponent(Animation)?.play('shake')
   }
 
   death() {
     // this.pause()
-    this.deathUI.show()
+    GameManager.deathUI.show()
   }
 
   revive() {
     // this.resume()
-    this.deathUI.hide()
+    GameManager.deathUI.hide()
     this.playerFX.playRevive()
-    this.player.revive()
+    GameManager.player.revive()
   }
 
   clearAllFoes() {
     const nodeList = this.foeGroup.children
     for (let i = 0; i < nodeList.length; ++i) {
-      const foe = nodeList[i].getComponent('Foe')
+      const foe = nodeList[i].getComponent(Foe)
       if (foe) {
         foe.dead()
       }
       else {
-        const bullet = nodeList[i].getComponent('bullet')
+        const bullet = nodeList[i].getComponent(Bullet)
         if (bullet)
           bullet.broke()
       }
@@ -165,20 +187,21 @@ export class GameManager extends Component {
   playerReady() {
     // this.resume()
     // this.waveMng.startWave();
-    this.player.node.active = true
-    this.player.ready()
+    GameManager.player.node.active = true
+    GameManager.player.ready()
 
-    this.startTime = new Date().valueOf()
+    GameManager.startTime = new Date().valueOf()
   }
 
   gameOver() {
     const endTime = new Date().valueOf()
-    this.player.cost_ms = endTime - this.startTime
+    GameManager.costTime = endTime - GameManager.startTime
+
     // this.resume()
     // TODO: store data
     // this.player.storeUserGameData()
-    this.deathUI.hide()
-    this.gameOverUI.show()
+    GameManager.deathUI.hide()
+    GameManager.gameOverUI.show()
   }
 
   restart() {

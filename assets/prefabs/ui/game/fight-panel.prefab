@@ -645,9 +645,16 @@
     },
     "touchType": 1,
     "directionType": 0,
+    "checkInterval": 0.04,
     "isEnableTransparent": false,
     "isFollowStart": true,
     "innerSize": 10,
+    "oriRingPos": {
+      "__type__": "cc.Vec3",
+      "x": -120,
+      "y": -300,
+      "z": 0
+    },
     "_id": ""
   },
   {

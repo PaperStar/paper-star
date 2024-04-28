@@ -1037,6 +1037,11 @@
     "fxTrail": {
       "__id__": 39
     },
+    "jet": {
+      "__id__": 24
+    },
+    "bulletType": 0,
+    "hp": 100,
     "bulletCollisionTime": 2,
     "life": 3,
     "curExp": 0,
@@ -1048,7 +1053,6 @@
       "b": 0,
       "a": 255
     },
-    "isStop": true,
     "moveDir": {
       "__type__": "cc.Vec2",
       "x": 0,
